@@ -7,7 +7,6 @@ interface InputProps extends Omit<TextFieldProps, "onChange" | "onClick"> {
 	placeholder?: string;
 	onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 	error?: boolean;
-	onClick?: () => void;
 	value?: string | number;
 	disabled?: boolean;
 	inputColor?: string;
@@ -33,7 +32,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			placeholder,
 			onChange,
 			error,
-			onClick,
+			
 			value,
 			disabled,
 			inputColor,
