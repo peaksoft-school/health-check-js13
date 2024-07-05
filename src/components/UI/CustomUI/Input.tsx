@@ -9,19 +9,11 @@ interface InputProps extends Omit<TextFieldProps, "onChange" | "onClick"> {
 	error?: boolean;
 	value?: string | number;
 	disabled?: boolean;
-	inputColor?: string;
-	backgroundColor?: string;
-	borderColor?: string;
-	focusedBorderColor?: string;
-	hoverBorderColor?: string;
-}
-
-interface TextFieldPropsStyled {
-	inputColor?: string;
-	backgroundColor?: string;
-	borderColor?: string;
-	focusedBorderColor?: string;
-	hoverBorderColor?: string;
+	inputcolor?: string;
+	backgroundcolor?: string;
+	bordercolor?: string;
+	focusedbordercolor?: string;
+	hoverbordercolor?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -32,14 +24,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			placeholder,
 			onChange,
 			error,
-			
 			value,
 			disabled,
-			inputColor,
-			backgroundColor,
-			borderColor,
-			focusedBorderColor,
-			hoverBorderColor,
 			size,
 			...rest
 		},
@@ -55,11 +41,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 				placeholder={placeholder}
 				disabled={disabled}
 				ref={ref}
-				inputColor={inputColor}
-				backgroundColor={backgroundColor}
-				borderColor={borderColor}
-				focusedBorderColor={focusedBorderColor}
-				hoverBorderColor={hoverBorderColor}
 				size={size}
 				{...rest}
 			/>
@@ -67,51 +48,41 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 	}
 );
 
-const StyledInput = styled(TextField)<TextFieldPropsStyled>(
-	({
-		theme,
-		inputColor,
-		backgroundColor,
-		borderColor,
-		focusedBorderColor,
-		hoverBorderColor,
-		error,
-	}) => ({
-		height: "42px",
-		borderRadius: "8px",
-		caretColor: theme.palette.primary.darkGreen,
-		backgroundColor: backgroundColor || "inherit",
+const StyledInput = styled(TextField)(({ theme, error }) => ({
+	height: "42px",
+	borderRadius: "8px",
+	caretColor: theme.palette.primary.darkGreen,
+	backgroundColor: "inherit",
 
-		"& .MuiOutlinedInput-input": {
-			borderRadius: "2px",
-			color: inputColor || theme.palette.secondary.lightBlack,
+	"& .MuiOutlinedInput-input": {
+		borderRadius: "2px",
+		color: theme.palette.secondary.lightBlack,
+	},
+
+	"& .MuiOutlinedInput-root": {
+		"& fieldset": {
+			borderColor: error
+				? theme.palette.error.main
+				: theme.palette.secondary.lightBlack,
 		},
 
-		"& .MuiOutlinedInput-root": {
-			"& fieldset": {
-				borderColor: error
-					? theme.palette.error.main
-					: borderColor || theme.palette.secondary.lightBlack,
-			},
-
-			"&:hover fieldset": {
-				borderColor: error
-					? theme.palette.error.main
-					: hoverBorderColor || theme.palette.secondary.darkGrey,
-			},
-
-			"&.Mui-focused fieldset": {
-				borderWidth: "1px",
-				borderColor: error
-					? theme.palette.error.main
-					: focusedBorderColor || theme.palette.primary.darkGreen,
-			},
-
-			"&.Mui-disabled .MuiOutlinedInput-notchedOutline": {
-				borderColor: theme.palette.secondary.main,
-			},
+		"&:hover fieldset": {
+			borderColor: error
+				? theme.palette.error.main
+				: theme.palette.secondary.darkGrey,
 		},
-	})
-);
+
+		"&.Mui-focused fieldset": {
+			borderWidth: "1px",
+			borderColor: error
+				? theme.palette.error.main
+				: theme.palette.primary.darkGreen,
+		},
+
+		"&.Mui-disabled .MuiOutlinedInput-notchedOutline": {
+			borderColor: theme.palette.secondary.main,
+		},
+	},
+}));
 
 export default Input;
