@@ -1,4 +1,4 @@
-import { Box, Modal as MuiModal } from "@mui/material";
+import { Box, Modal as MuiModal, styled } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 type ModalTypes = {
@@ -10,22 +10,21 @@ type ModalTypes = {
 const Modal: FC<ModalTypes> = ({ children, open, onClose, ...rest }) => {
 	return (
 		<MuiModal open={open} onClose={onClose} {...rest}>
-			<Box
-				sx={{
-					position: "absolute",
-					top: "50%",
-					left: "50%",
-					transform: "translate(-50%, -50%)",
-					bgcolor: "background.paper",
-					border: "none",
-					boxShadow: 24,
-					p: 4,
-					borderRadius: "20px",
-				}}>
-				{children}
-			</Box>
+			<ContentModal>{children}</ContentModal>
 		</MuiModal>
 	);
 };
 
 export default Modal;
+
+const ContentModal = styled(Box)(() => ({
+	position: "absolute",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	backgroundColor: "white",
+	border: "none",
+	boxShadow: "24px",
+	padding: "15px",
+	borderRadius: "20px",
+}));
