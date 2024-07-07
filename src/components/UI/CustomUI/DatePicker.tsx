@@ -1,32 +1,38 @@
 import { forwardRef } from "react";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Controller, Control } from "react-hook-form";
-import { styled } from "@mui/material";
+import { Typography, styled } from "@mui/material";
 
 interface CustomDatePickerProps {
 	control?: Control<any>;
 	label?: string;
 	name: string;
+	disabled?: boolean;
 }
 
 const CustomDatePicker = forwardRef<HTMLInputElement, CustomDatePickerProps>(
-	({ control, label, name }, ref) => {
+	({ control, label, name, disabled }, ref) => {
 		return (
-			<Controller
-				name={name}
-				control={control}
-				defaultValue={null}
-				render={({ field: { onChange, value } }) => (
-					<DatePickerStyled
-						inputRef={ref}
-						label={label}
-						value={value}
-						onChange={(newValue) => {
-							onChange(newValue);
-						}}
-					/>
-				)}
-			/>
+			<LabelDiv>
+				<Typography sx={{ color: disabled ? "lightgray" : "black" }}>
+					{label}
+				</Typography>
+				<Controller
+					name={name}
+					control={control}
+					defaultValue={null}
+					render={({ field: { onChange, value } }) => (
+						<DatePickerStyled
+							disabled={disabled}
+							inputRef={ref}
+							value={value}
+							onChange={(newValue) => {
+								onChange(newValue);
+							}}
+						/>
+					)}
+				/>
+			</LabelDiv>
 		);
 	}
 );
@@ -40,5 +46,14 @@ const DatePickerStyled = styled(DatePicker)({
 		fontSize: "16px",
 		color: "rgba(0, 0, 0, 0.87)",
 		backgroundColor: "white",
+		"&.Mui-focused": {
+			borderColor: "#048741",
+			boxShadow: "0 0 0 0.2rem rgba(0, 128, 0, 0.25)",
+		},
 	},
+});
+
+const LabelDiv = styled("div")({
+	display: "flex",
+	flexDirection: "column",
 });
