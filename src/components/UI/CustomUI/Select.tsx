@@ -1,4 +1,9 @@
-import { MenuItem, Select as MySelect, styled } from "@mui/material";
+import {
+	MenuItem,
+	Select as MySelect,
+	styled,
+	Typography,
+} from "@mui/material";
 import { forwardRef } from "react";
 
 interface Option {
@@ -11,25 +16,36 @@ interface SelectProps {
 	options: Option[];
 	value?: string;
 	onChange?: () => void;
+	label?: string;
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
-	({ disabled, options, value, onChange }, ref) => {
+	({ disabled, options, value, onChange, label }, ref) => {
 		return (
-			<StyledMySelect
-				value={value}
-				onChange={onChange}
-				disabled={disabled}
-				inputRef={ref}>
-				{options.map((item) => (
-					<MenuItem key={item.value} value={item.value}>
-						{item.label}
-					</MenuItem>
-				))}
-			</StyledMySelect>
+			<StyledDiv>
+				<Typography sx={{ color: disabled ? "lightgray" : "#939292" }}>
+					{label}
+				</Typography>
+				<StyledMySelect
+					value={value}
+					onChange={onChange}
+					disabled={disabled}
+					inputRef={ref}>
+					{options.map((item) => (
+						<MenuItem key={item.value} value={item.value}>
+							{item.label}
+						</MenuItem>
+					))}
+				</StyledMySelect>
+			</StyledDiv>
 		);
 	}
 );
+
+const StyledDiv = styled("div")({
+	display: "flex",
+	flexDirection: "column",
+});
 
 const StyledMySelect = styled(MySelect)(({ theme }) => ({
 	width: "490px",
