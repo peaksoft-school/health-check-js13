@@ -8,6 +8,8 @@ interface SwitcherProps {
 		checked: boolean
 	) => void;
 	disabled?: boolean;
+	label?: string;
+	labelPlacement?: "bottom" | "top" | "end" | "start" | undefined;
 }
 
 interface StyledSwitchProps extends React.ComponentProps<typeof Switch> {
@@ -15,7 +17,7 @@ interface StyledSwitchProps extends React.ComponentProps<typeof Switch> {
 }
 
 const Switcher = forwardRef<HTMLInputElement, SwitcherProps>(
-	({ checked, onChange, disabled, ...rest }, ref) => (
+	({ checked, onChange, label, disabled, labelPlacement, ...rest }, ref) => (
 		<FormControlLabel
 			control={
 				<StyledSwitch
@@ -32,8 +34,8 @@ const Switcher = forwardRef<HTMLInputElement, SwitcherProps>(
 					disabled={disabled}
 				/>
 			}
-			label=""
-			labelPlacement="start"
+			label={label}
+			labelPlacement={labelPlacement}
 		/>
 	)
 );
@@ -49,7 +51,6 @@ const StyledSwitch = styled(Switch)<StyledSwitchProps>(({ theme }) => ({
 		padding: "0",
 		margin: "2px",
 		transitionDuration: "300ms",
-		
 
 		"&.Mui-checked": {
 			transform: "translateX(16px)",
@@ -63,25 +64,20 @@ const StyledSwitch = styled(Switch)<StyledSwitchProps>(({ theme }) => ({
 
 			"&.Mui-disabled + .MuiSwitch-track": {
 				opacity: "0.5",
-			
 			},
 		},
 
 		"&.Mui-focusVisible .MuiSwitch-thumb": {
 			color: theme.palette.primary.main,
 			border: `6px solid ${theme.palette.primary.main}`,
-			
-		
 		},
 
 		"&.Mui-disabled .MuiSwitch-thumb": {
 			color: theme.palette.secondary.main,
-			
 		},
 
 		"&.Mui-disabled + .MuiSwitch-track": {
-			opacity: theme.palette.mode === "light" ? "0.7" : "0.3",
-			
+			opacity: theme.palette.mode === "light" ? "0.2" : "0.3",
 		},
 	},
 
@@ -89,13 +85,12 @@ const StyledSwitch = styled(Switch)<StyledSwitchProps>(({ theme }) => ({
 		boxSizing: "border-box",
 		width: "22px",
 		height: "22px",
-		backgroundColor: 'white'
+		backgroundColor: "white",
 	},
 
 	"& .MuiSwitch-track": {
 		borderRadius: `${26 / 2}px`,
 		backgroundColor: "#8a8989",
 		opacity: "100",
-
 	},
 }));
