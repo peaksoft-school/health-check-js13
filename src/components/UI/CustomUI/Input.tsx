@@ -1,8 +1,16 @@
-import { forwardRef, ChangeEvent } from "react";
-import { TextField, TextFieldProps, styled } from "@mui/material";
+import { forwardRef, ChangeEvent, useState } from "react";
+import {
+	InputAdornment,
+	TextField,
+	TextFieldProps,
+	Typography,
+	styled,
+} from "@mui/material";
+import eye from "../../../assets/icons/eye.svg";
+import eyenot from "../../../assets/icons/noteye.svg";
 
 interface InputProps extends Omit<TextFieldProps, "onChange" | "onClick"> {
-	type?: string;
+	type: "text" | "password";
 	label?: string;
 	placeholder?: string;
 	onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -27,39 +35,78 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			value,
 			disabled,
 			size,
+			fullWidth,
 			...rest
 		},
 		ref
 	) => {
+		const [showPassword, setShowPassword] = useState(false);
+
+		const handleClickEye = () => {
+			setShowPassword((prev) => !prev);
+		};
+
+		const getType = () => {
+			if (type === "password") {
+				return showPassword ? "text" : "password";
+			}
+			return type;
+		};
+
 		return (
-			<StyledInput
-				error={!!error}
-				type={type}
-				label={label}
-				value={value}
-				onChange={onChange}
-				placeholder={placeholder}
-				disabled={disabled}
-				ref={ref}
-				size={size}
-				{...rest}
-			/>
+			<LabelDiv>
+				<Typography sx={{ color: disabled ? "lightgray" : "#939292" }}>
+					{label}
+				</Typography>
+				<StyledInput
+					error={!!error}
+					type={getType()}
+					value={value}
+					onChange={onChange}
+					placeholder={placeholder}
+					disabled={disabled}
+					ref={ref}
+					size={size}
+					fullWidth={fullWidth}
+					InputProps={{
+						endAdornment: type === "password" && (
+							<InputAdornment position="end">
+								<img
+									onClick={handleClickEye}
+									src={showPassword ? eye : eyenot}
+									alt={showPassword ? "eye" : "eyenot"}
+									style={{ cursor: "pointer" }}
+								/>
+							</InputAdornment>
+						),
+					}}
+					{...rest}
+				/>
+			</LabelDiv>
 		);
 	}
 );
 
 const StyledInput = styled(TextField)(({ theme, error }) => ({
-	height: "42px",
-	borderRadius: "8px",
+	width: "100%",
+	borderRadius: "10px",
 	caretColor: theme.palette.primary.darkGreen,
 	backgroundColor: "inherit",
 
 	"& .MuiOutlinedInput-input": {
-		borderRadius: "2px",
+		padding: "8px 18px",
+		borderRadius: "8px",
 		color: theme.palette.secondary.lightBlack,
+	},
+	"& .MuiFormLabel-root": {
+		"&.Mui-focused ": {
+			color: theme.palette.secondary.darkGrey,
+		},
 	},
 
 	"& .MuiOutlinedInput-root": {
+		borderRadius: "8px",
+
 		"& fieldset": {
 			borderColor: error
 				? theme.palette.error.main
@@ -74,6 +121,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
 
 		"&.Mui-focused fieldset": {
 			borderWidth: "1px",
+			color: theme.palette.secondary,
 			borderColor: error
 				? theme.palette.error.main
 				: theme.palette.primary.darkGreen,
@@ -84,5 +132,9 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
 		},
 	},
 }));
+const LabelDiv = styled("div")({
+	display: "flex",
+	flexDirection: "column",
+});
 
 export default Input;
