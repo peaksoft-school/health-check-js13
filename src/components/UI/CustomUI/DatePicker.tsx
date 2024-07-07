@@ -14,7 +14,7 @@ const CustomDatePicker = forwardRef<HTMLInputElement, CustomDatePickerProps>(
 	({ control, label, name, disabled }, ref) => {
 		return (
 			<LabelDiv>
-				<Typography sx={{ color: disabled ? "lightgray" : "black" }}>
+				<Typography sx={{ color: disabled ? "lightgray" : "#939292" }}>
 					{label}
 				</Typography>
 				<Controller
