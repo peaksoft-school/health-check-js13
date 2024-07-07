@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Controller, Control } from "react-hook-form";
+import { styled } from "@mui/material";
 
 interface CustomDatePickerProps {
 	control?: Control<any>;
@@ -16,7 +17,7 @@ const CustomDatePicker = forwardRef<HTMLInputElement, CustomDatePickerProps>(
 				control={control}
 				defaultValue={null}
 				render={({ field: { onChange, value } }) => (
-					<DatePicker
+					<DatePickerStyled
 						inputRef={ref}
 						label={label}
 						value={value}
@@ -31,3 +32,13 @@ const CustomDatePicker = forwardRef<HTMLInputElement, CustomDatePickerProps>(
 );
 
 export default CustomDatePicker;
+
+const DatePickerStyled = styled(DatePicker)({
+	"& .MuiInputBase-input": {
+		padding: "8px 18px",
+		borderRadius: "4px",
+		fontSize: "16px",
+		color: "rgba(0, 0, 0, 0.87)",
+		backgroundColor: "white",
+	},
+});
