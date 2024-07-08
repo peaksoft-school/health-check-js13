@@ -17,23 +17,27 @@ const StyledMessage = styled(Typography)(({ theme }) => ({
 export const toastifyMessage = ({
 	message = "Успешно",
 	status = "success",
-	duration = 1000,
+	duration = 2000,
 }: ShowToastProps): void => {
 	let borderColor: string;
+	let backroundColor: string;
 
 	switch (status) {
 		case "error":
 			borderColor = "red";
+			backroundColor = "#fff8f8";
 			break;
 		default:
 			borderColor = "green";
+			backroundColor = "#f0fef3";
 			break;
 	}
 
 	const style: React.CSSProperties = {
 		borderLeft: "10px solid",
 		borderLeftColor: borderColor,
-		borderRadius: 0,
+		borderRadius: 3,
+		backgroundColor: backroundColor,
 	};
 
 	const toastOptions: ToastOptions = {
