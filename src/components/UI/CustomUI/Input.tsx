@@ -6,29 +6,26 @@ import {
 	Typography,
 	styled,
 } from "@mui/material";
-import eye from "../../../assets/icons/eye.svg";
-import eyenot from "../../../assets/icons/noteye.svg";
+import eye from "../assets/icons/eye.svg";
+import eyenot from "../assets/icons/eyenot.svg";
 
 interface InputProps extends Omit<TextFieldProps, "onChange" | "onClick"> {
-	type: "text" | "password";
+	type?: "text" | "password" | "email" | "number";
 	label?: string;
 	placeholder?: string;
 	onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 	error?: boolean;
 	value?: string | number;
 	disabled?: boolean;
-	inputcolor?: string;
-	backgroundcolor?: string;
-	bordercolor?: string;
-	focusedbordercolor?: string;
-	hoverbordercolor?: string;
+	icon?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
 	(
 		{
-			type,
+			type = "text",
 			label,
+			icon,
 			placeholder,
 			onChange,
 			error,
@@ -79,6 +76,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 								/>
 							</InputAdornment>
 						),
+						startAdornment: icon && (
+							<InputAdornment position="start">
+								{icon === "" ? "" : <img src={icon} alt="icon" />}
+							</InputAdornment>
+						),
 					}}
 					{...rest}
 				/>
@@ -89,12 +91,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
 const StyledInput = styled(TextField)(({ theme, error }) => ({
 	width: "100%",
+	height: "42px",
 	borderRadius: "10px",
 	caretColor: theme.palette.primary.darkGreen,
 	backgroundColor: "inherit",
 
 	"& .MuiOutlinedInput-input": {
-		padding: "8px 18px",
 		borderRadius: "8px",
 		color: theme.palette.secondary.lightBlack,
 	},
@@ -106,7 +108,6 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
 
 	"& .MuiOutlinedInput-root": {
 		borderRadius: "8px",
-
 		"& fieldset": {
 			borderColor: error
 				? theme.palette.error.main
