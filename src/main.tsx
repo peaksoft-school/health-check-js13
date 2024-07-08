@@ -5,11 +5,13 @@ import "./index.css";
 import Themes from "./theme/ThemeProvider.tsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Notification from "./components/UI/Notification.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<Themes>
+				<Notification />
 				<App />
 			</Themes>
 		</LocalizationProvider>
