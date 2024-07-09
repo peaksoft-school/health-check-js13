@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
 import users from "../../../assets/icons/UserIcon.svg";
+import { styled } from "@mui/material";
 
 export default function AuthDropdown() {
 	const [open, setOpen] = React.useState(false);
@@ -84,8 +85,8 @@ export default function AuthDropdown() {
 										id="composition-menu"
 										aria-labelledby="composition-button"
 										onKeyDown={handleListKeyDown}>
-										<MenuItem onClick={handleClose}>Войти</MenuItem>
-										<MenuItem onClick={handleClose}>Регистрация</MenuItem>
+										<ButtonMui onClick={handleClose}>Войти</ButtonMui>
+										<ButtonMui onClick={handleClose}>Регистрация</ButtonMui>
 									</MenuList>
 								</ClickAwayListener>
 							</Paper>
@@ -96,3 +97,9 @@ export default function AuthDropdown() {
 		</Stack>
 	);
 }
+
+const ButtonMui = styled(MenuItem)(() => ({
+	"&:hover": {
+		color: "#048741",
+	},
+}));

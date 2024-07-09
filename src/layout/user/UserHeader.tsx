@@ -191,12 +191,7 @@ const Input = styled(TextField)(() => ({
 		borderRadius: "24px",
 		border: "none",
 		outline: "none",
-		// border: "1px solid black",
 	},
-	// "& .MuiInputBase-input": {
-	//   padding: "0 10px",
-	//   backgroundColor: "#F3F1F1",
-	// },
 }));
 const ContentNumber = styled("div")(() => ({
 	display: "flex",
