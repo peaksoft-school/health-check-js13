@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { InputAdornment, styled, TextField } from "@mui/material";
 import Instagram from "../../assets/icons/HeaderInstagram.svg";
 import Telegram from "../../assets/icons/HeaderTelegram.svg";
 import WhatsApp from "../../assets/icons/HeaderWhatsApp.svg";
@@ -6,7 +6,7 @@ import Telephone from "../../assets/icons/CallIcon.svg";
 import theMap from "../../assets/icons/JpsIcon.svg";
 import hour from "../../assets/icons/TimeIcon.svg";
 import MEDCHECK from "../../assets/icons/HealthCheckMainIcon.svg";
-// import search from "../../assets/icons/SearchIcon.svg";
+import search from "../../assets/icons/SearchIcon.svg";
 import Button from "../../components/UI/CustomUI/Button";
 import AuthDropdown from "../../components/UI/menuItem/AuthDropdown";
 
@@ -46,7 +46,23 @@ const UserHeader = () => {
 							</ContainerNom>
 						</ContentNom>
 						<ContentInput>
-							<Input type="text" placeholder="Поиск по сайту" />
+							<Input
+								fullWidth
+								size="small"
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position="end">
+											<img
+												style={{ cursor: "pointer", marginRight: "20px" }}
+												src={search}
+												alt=""
+											/>
+										</InputAdornment>
+									),
+								}}
+								type="text"
+								placeholder="Поиск по сайту"
+							/>
 						</ContentInput>
 						<ContainerCards>
 							<IconContainer>
@@ -162,16 +178,26 @@ const HR = styled("hr")(() => ({
 	border: "1px solid #D9D9D9",
 }));
 
-const Input = styled("input")(() => ({
-	width: "367px",
-	height: "40px",
-	border: "none",
-	outline: "none",
-	borderRadius: "24px",
-	backgroundColor: "#F3F1F1",
-	padding: " 0 0 0 10px",
+const Input = styled(TextField)(() => ({
+	"& .MuiOutlinedInput-root": {
+		// height: "42px",
+		borderRadius: "24px",
+		width: "367px",
+		height: "40px",
+		backgroundColor: "#F3F1F1",
+		padding: " 0 0 0 5px",
+	},
+	"& .MuiOutlinedInput-notchedOutline": {
+		borderRadius: "24px",
+		border: "none",
+		outline: "none",
+		// border: "1px solid black",
+	},
+	// "& .MuiInputBase-input": {
+	//   padding: "0 10px",
+	//   backgroundColor: "#F3F1F1",
+	// },
 }));
-
 const ContentNumber = styled("div")(() => ({
 	display: "flex",
 	flexDirection: "column",
