@@ -1,10 +1,12 @@
 import { FC } from "react";
-import FeedbackSlider from "./components/UI/CustomUI/Slider";
+import Switcher from "./components/UI/CustomUI/Switcher";
 
 const App: FC = () => {
-	return <div>
-		<FeedbackSlider/>
-	</div>;
+	return (
+		<div>
+			<Switcher label="Create"  labelPlacement="bottom" />
+		</div>
+	);
 };
 
 export default App;
