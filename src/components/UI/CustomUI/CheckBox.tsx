@@ -1,8 +1,7 @@
-import React, { forwardRef } from "react";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import { forwardRef } from "react";
+import { Checkbox as MuiCheckbox, FormControlLabel, CheckboxProps } from "@mui/material";
 
-interface CheckboxUIProps {
+interface Props extends Omit<CheckboxProps, "checked" | "onChange"> {
 	label?: string;
 	checked?: boolean;
 	onChange?: (
@@ -11,22 +10,21 @@ interface CheckboxUIProps {
 	) => void;
 }
 
-const CheckboxMui = forwardRef<HTMLInputElement, CheckboxUIProps>(
-	({ label, checked, onChange }, ref) => {
-		return (
-			<FormControlLabel
-				label={label}
-				control={
-					<Checkbox
-						checked={checked}
-						onChange={onChange}
-						inputRef={ref}
-						style={{ color: "green" }}
-					/>
-				}
-			/>
-		);
-	}
+const Checkbox = forwardRef<HTMLInputElement, Props>(
+	({ label, checked, onChange, ...rest }, ref) => (
+		<FormControlLabel
+			label={label}
+			control={
+				<MuiCheckbox
+					checked={checked}
+					onChange={onChange}
+					inputRef={ref}
+					{...rest}
+					color="success"
+				/>
+			}
+		/>
+	)
 );
 
-export default CheckboxMui;
+export default Checkbox;
