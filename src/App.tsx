@@ -1,7 +1,10 @@
 import { FC } from "react";
+import FeedbackSlider from "./components/UI/CustomUI/Slider";
 
 const App: FC = () => {
-	return <div>Hello Мир</div>;
+	return <div>
+		<FeedbackSlider/>
+	</div>;
 };
 
 export default App;
