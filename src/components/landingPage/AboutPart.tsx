@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { styled } from '@mui/material';
-import { date } from '../utils/constants/aboutCards';
+import { date } from '../../utils/constants/aboutCards';
 
 const AboutPart: FC = () => {
   return (
@@ -64,10 +64,8 @@ const Cards = styled('div')(() => ({
   width: '389px',
   height: '280px',
   backgroundColor: '#DBEBFF',
-  padding: '35px',
-  paddingRight: '65px',
+  padding: '25px 65px 35px 35px',
   borderRadius: '4px',
-  cursor: 'pointer',
 }));
 
 const Span = styled('span')(() => ({
