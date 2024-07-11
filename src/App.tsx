@@ -1,14 +1,5 @@
-import { FC } from "react";
-import UserHeader from "./layout/user/UserHeader";
-// import Switcher from "./components/UI/CustomUI/Switcher";
+import { FC } from 'react';
 
-const App: FC = () => {
-	return (
-		<div>
-			{/* <Switcher label="Create"  labelPlacement="bottom" /> */}
-			<UserHeader />
-		</div>
-	);
-};
+const App: FC = () => <h1>Health check</h1>;
 
 export default App;
