@@ -1,10 +1,10 @@
 import { FC } from "react";
-import Switcher from "./components/UI/CustomUI/Switcher";
+import Welcome from "./components/Welcome";
 
 const App: FC = () => {
 	return (
 		<div>
-			<Switcher label="Create"  labelPlacement="bottom" />
+			<Welcome/>
 		</div>
 	);
 };
