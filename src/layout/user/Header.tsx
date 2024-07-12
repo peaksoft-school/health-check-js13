@@ -11,8 +11,8 @@ import Button from '../../components/UI/CustomUI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 
-const UserHeader = () => (
-  <Header>
+const Header = () => (
+  <HeaderClass>
     <Box className="container">
       <Content>
         <ContentCards>
@@ -77,27 +77,18 @@ const UserHeader = () => (
             ))}
             <ContentButton>
               <ButtonClass variant="outlined">получить результаты</ButtonClass>
-              <Button
-                style={{
-                  width: '158px',
-                  height: '43px',
-                  borderRadius: '24px',
-                  padding: '10px',
-                  fontSize: '14px',
-                }}>
-                запись онлайн
-              </Button>
+              <Button1>запись онлайн</Button1>
             </ContentButton>
           </BoxContent>
         </ContentCards>
       </Content>
     </Box>
-  </Header>
+  </HeaderClass>
 );
 
-export default UserHeader;
+export default Header;
 
-const Header = styled('header')(() => ({
+const HeaderClass = styled('header')(() => ({
   padding: '10px',
 }));
 
@@ -275,6 +266,15 @@ const ButtonClass = styled(Button)(() => ({
       color: '#FFFFFF',
       padding: '10px',
     },
+  },
+}));
+const Button1 = styled(Button)(() => ({
+  '&.MuiButtonBase-root': {
+    width: '158px',
+    height: '43px',
+    borderRadius: '24px',
+    padding: '10px',
+    fontSize: '14px',
   },
 }));
 
