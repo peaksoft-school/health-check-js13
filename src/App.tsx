@@ -1,12 +1,7 @@
-import { FC } from "react";
-import Welcome from "./components/Welcome";
+import { FC } from 'react';
 
 const App: FC = () => {
-	return (
-		<div>
-			<Welcome/>
-		</div>
-	);
+   return <div></div>;
 };
 
 export default App;
