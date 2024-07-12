@@ -1,9 +1,4 @@
-import {
-  InputAdornment,
-  styled,
-  TextField,
-  Button as ButtonMui,
-} from '@mui/material';
+import { Box, InputAdornment, styled, TextField } from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
@@ -16,108 +11,89 @@ import Button from '../../components/UI/CustomUI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 
-const UserHeader = () => {
-  return (
-    <Header>
-      <div className="container">
-        <Content>
-          <ContentCards>
-            <ContentNom>
-              <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
-                <ContainerNom>
-                  <SentryImg src={TheMap} alt="theMap" />
-                  <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
-                </ContainerNom>
-              </ALink>
+const UserHeader = () => (
+  <Header>
+    <Box className="container">
+      <Content>
+        <ContentCards>
+          <ContentNom>
+            <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
               <ContainerNom>
-                <SentryImg src={Hour} alt="hour" />
-                <GreenP>пн-сб</GreenP>
-                <MaxNumber>08:00 до 18:00</MaxNumber>
+                <SentryImg src={TheMap} alt="theMap" />
+                <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
               </ContainerNom>
-            </ContentNom>
-            <ContentInput>
-              <Input
-                fullWidth
-                size="small"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <SearchImg src={Search} alt="search" />
-                    </InputAdornment>
-                  ),
-                }}
-                type="text"
-                placeholder="Поиск по сайту"
-              />
-            </ContentInput>
-            <ContainerCards>
-              <IconContainer>
-                <a href="https://www.instagram.com/_i.a.n.05_/">
-                  <ImgNetworks src={Instagram} alt="instagram" />
-                </a>
-                <a href="https://t.me/+996500344433">
-                  <ImgNetworks src={Telegram} alt="telegram" />
-                </a>
-                <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
-                  <ImgNetworks src={WhatsApp} alt="whatsApp" />
-                </a>
-              </IconContainer>
-              <ContentNumber>
-                <NumberCards>
-                  <img src={Telephone} alt="telephone" />
-                  <span>+996(800) 000 000</span>
-                </NumberCards>
-                <Span>+996(505) 000 000</Span>
-              </ContentNumber>
-              <AuthDropdown />
-            </ContainerCards>
-          </ContentCards>
-          <HR />
-          <ContentCards>
-            <BoxContent>
-              <HealthCheck src={Medcheck} alt="medcheck" />
-              {Text.map((item, index) => (
-                <div key={index}>
-                  <Title>{item.title}</Title>
-                </div>
-              ))}
-              <ContentButton>
-                <ButtonMui
-                  sx={{
-                    width: '205px',
-                    height: '43px',
-                    borderRadius: '24px',
-                    border: '1px solid #048741',
-                    padding: '10px',
-                    fontSize: '14px',
-                    color: '#048741',
-                    transition: '0.5s',
-                    '&:hover': {
-                      backgroundColor: '#0CBB6B',
-                      color: '#FFFFFF',
-                    },
-                  }}
-                  variant="text">
-                  получить результаты
-                </ButtonMui>
-                <Button
-                  style={{
-                    width: '158px',
-                    height: '43px',
-                    borderRadius: '24px',
-                    padding: '10px',
-                    fontSize: '14px',
-                  }}>
-                  запись онлайн
-                </Button>
-              </ContentButton>
-            </BoxContent>
-          </ContentCards>
-        </Content>
-      </div>
-    </Header>
-  );
-};
+            </ALink>
+            <ContainerNom>
+              <SentryImg src={Hour} alt="hour" />
+              <GreenP>пн-сб</GreenP>
+              <MaxNumber>08:00 до 18:00</MaxNumber>
+            </ContainerNom>
+          </ContentNom>
+          <ContentInput>
+            <Input
+              fullWidth
+              size="small"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <SearchImg src={Search} alt="search" />
+                  </InputAdornment>
+                ),
+              }}
+              type="text"
+              placeholder="Поиск по сайту"
+            />
+          </ContentInput>
+          <ContainerCards>
+            <IconContainer>
+              <a href="https://www.instagram.com/_i.a.n.05_/">
+                <ImgNetworks src={Instagram} alt="instagram" />
+              </a>
+              <a href="https://t.me/+996500344433">
+                <ImgNetworks src={Telegram} alt="telegram" />
+              </a>
+              <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
+                <ImgNetworks src={WhatsApp} alt="whatsApp" />
+              </a>
+            </IconContainer>
+            <ContentNumber>
+              <NumberCards>
+                <img src={Telephone} alt="telephone" />
+                <span>+996(800) 000 000</span>
+              </NumberCards>
+              <Span>+996(505) 000 000</Span>
+            </ContentNumber>
+            <AuthDropdown />
+          </ContainerCards>
+        </ContentCards>
+        <HR />
+        <ContentCards>
+          <BoxContent>
+            <HealthCheck src={Medcheck} alt="medcheck" />
+            {Text.map((item, index) => (
+              <Box key={index}>
+                <Title>{item.title}</Title>
+              </Box>
+            ))}
+            <ContentButton>
+              <ButtonClass variant="outlined">получить результаты</ButtonClass>
+              <Button
+                style={{
+                  width: '158px',
+                  height: '43px',
+                  borderRadius: '24px',
+                  padding: '10px',
+                  fontSize: '14px',
+                }}>
+                запись онлайн
+              </Button>
+            </ContentButton>
+          </BoxContent>
+        </ContentCards>
+      </Content>
+    </Box>
+  </Header>
+);
 
 export default UserHeader;
 
@@ -281,6 +257,24 @@ const ContentButton = styled('div')(() => ({
     marginLeft: '0',
     width: '100%',
     marginTop: '10px',
+  },
+}));
+
+const ButtonClass = styled(Button)(() => ({
+  '&.MuiButtonBase-root': {
+    width: '205px',
+    height: '43px',
+    borderRadius: '24px',
+    border: '1px solid #048741',
+    padding: '10px',
+    fontSize: '14px',
+    color: '#048741',
+    transition: '0.7s',
+    '&:hover': {
+      backgroundColor: '#0CBB6B',
+      color: '#FFFFFF',
+      padding: '10px',
+    },
   },
 }));
 
