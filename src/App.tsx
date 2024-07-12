@@ -1,14 +1,11 @@
-import { FC } from "react";
-import Switcher from "./components/UI/CustomUI/Switcher";
-import Column from "./utils/constants/Column";
+
+import { FC } from 'react';
+// import Switcher from "./components/UI/CustomUI/Switcher";
 
 const App: FC = () => {
-	return (
-		<div>
-			<Switcher label="Create"  labelPlacement="bottom" />
-			<Column/>
-		</div>
-	);
+  return (
+    <div>{/* <Switcher label="Create"  labelPlacement="bottom" /> */}</div>
+  );
 };
 
 export default App;
