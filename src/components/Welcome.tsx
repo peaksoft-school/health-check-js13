@@ -10,11 +10,15 @@ import Close from '../assets/icons/CloseIcon.svg';
 
 interface IFormTypes {
   name: string;
-  phone: number;
+  phone: string;
 }
 
 const Welcome = () => {
-  const { register, handleSubmit } = useForm<IFormTypes>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<IFormTypes>({ mode: 'onChange' });
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
 
@@ -36,7 +40,10 @@ const Welcome = () => {
   };
 
   const submitHandler: SubmitHandler<IFormTypes> = data => {
-    console.log(data);
+    if (isValid) {
+      console.log(data);
+      handleOpenSecondModal();
+    }
   };
 
   return (
@@ -54,7 +61,7 @@ const Welcome = () => {
           </StyledText>
         </div>
 
-        <div>
+        <div>  
           <StyledButtonMain onClick={handleOpen}>
             Оставьте заявку
           </StyledButtonMain>
@@ -72,35 +79,62 @@ const Welcome = () => {
           </div>
 
           <StyledP>
-            <p>Оставьте свой номер и наши специалисты свяжутся</p>
-            <p>с Вами в ближайшее время</p>
+            <StyledSpan>Оставьте свой номер и наши специалисты свяжутся</StyledSpan>
+            <StyledSpan>с Вами в ближайшее время</StyledSpan>
           </StyledP>
 
           <StyledFormContainer
             component="form"
             onSubmit={handleSubmit(submitHandler)}>
             <StyledInputContent>
-              <Input
-                {...register('name', {
-                  required: 'Name required',
-                })}
-                icon={MaleFemale}
-                placeholder="Введите имя"
-                label="Как к Вам обратиться?"
-              />
+              <div>
+                <Input
+                  {...register('name', {
+                    required: 'Введите имя',
+                    minLength: {
+                      value: 2,
+                      message: 'Имя должно содержать минимум 2 символа',
+                    },
+                  })}
+                  icon={MaleFemale}
+                  placeholder="Введите имя"
+                  label="Как к Вам обратиться?"
+                />
+                {errors.name && (
+                  <StyledError>{errors.name.message}</StyledError>
+                )}
+              </div>
 
-              <Input
-                {...register('phone', {
-                  required: 'Phone number required',
-                })}
-                icon={CallProgres}
-                label="Номер мобильного телефона"
-                placeholder="+996(___) __-__-__"
-                type="text"
-              />
+              <div>
+                <Input
+                  {...register('phone', {
+                    required: 'Введите номер телефона',
+                    pattern: {
+                      value: /^\+996/,
+                      message: 'Введите номер в формате +996(___) __-__-__',
+                    },
+                    maxLength: {
+                      value: 15,
+                      message: 'Номер телефон должен содержать максимум 15 символов',
+                    },
+                    minLength: {
+                      value: 11,
+                      message: 'Номер телефон должен содержать минимум 11 символов',
+                    },
+                  })}
+                  icon={CallProgres}
+                  label="Номер мобильного телефона"
+                  placeholder="+996(___) __-__-__"
+                  type="text"
+                  error={!!errors.phone}
+                  helperText={
+                    errors.phone?.message ? errors.phone?.message : ''
+                  }
+                />
+              </div>
             </StyledInputContent>
 
-            <StyledButton onClick={handleOpenSecondModal} type="submit">
+            <StyledButton type="submit">
               ОТПРАВИТЬ ЗАЯВКУ
               <StyledImg src={Arrow} alt="" />
             </StyledButton>
@@ -115,8 +149,8 @@ const Welcome = () => {
           <h2> Заявка успешно отправлена!</h2>
 
           <StyledParagraf>
-            <p>В ближайшее время с вами свяжется администратор</p>
-            <p>для согласования деталей.</p>
+            <StyledSpan>В ближайшее время с вами свяжется администратор</StyledSpan>
+            <StyledSpan>для согласования деталей.</StyledSpan>
           </StyledParagraf>
 
           <StyledModalImg onClick={handleCloseSecondModal} src={Close} alt="" />
@@ -145,7 +179,7 @@ const StyledContentText = styled('div')`
 `;
 
 const StyledH1 = styled('h1')`
-  font-size: 3.700rem;
+  font-size: 3.7rem;
   line-height: 1.1;
   font-weight: bold;
   margin-bottom: 30px;
@@ -155,6 +189,7 @@ const StyledH1 = styled('h1')`
   font-weight: 900;
   font-family: 'Manrope', sans-serif;
 `;
+
 const StyledText = styled('p')`
   width: 90%;
   color: #333;
@@ -179,12 +214,9 @@ const StyledH2 = styled('h1')`
   font-weight: 500;
 `;
 
-
 const StyledImg = styled('img')`
   margin-left: 30px;
 `;
-
-
 
 const StyledButton = styled('button')`
   width: 220px;
@@ -200,20 +232,31 @@ const StyledButton = styled('button')`
   border-radius: 2rem;
   padding: 8px, 12px, 8px, 24px;
   font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  &:hover{
+    background: #02653b;
+    transition: all 0.3s;
+  }
 `;
 
 const StyledButtonMain = styled('button')`
+  width: 200px;
   border-radius: 30px;
-  padding: 10px 26px;
   border: 1px solid #048741;
   color: #048741;
+  background: white;
   transition: all 0.3s;
   height: 42px;
   font-family: 'Manrope', sans-serif;
   font-size: 16px;
+  cursor: pointer;
+  &:hover{
+    background: #eae9e9;
+    transition: all 0.3s;
+  }
 `;
 
-const StyledP = styled('p')`
+const StyledP = styled('div')`
   width: 25rem;
   display: flex;
   flex-direction: column;
@@ -221,6 +264,14 @@ const StyledP = styled('p')`
   align-items: center;
   margin-top: 20px;
   margin-bottom: 2rem;
+`;
+
+const StyledSpan = styled('span')`
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-family: 'Manrope', sans-serif;
 `;
 
 const ModalContent = styled(Box)`
@@ -282,11 +333,17 @@ const StyledSecondModal = styled(Box)`
   }
 `;
 
-const StyledParagraf = styled('p')`
+const StyledParagraf = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: -30px;
   margin-bottom: 2rem;
+`;
+
+const StyledError = styled('span')`
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 `;
