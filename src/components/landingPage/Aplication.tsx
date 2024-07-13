@@ -1,7 +1,9 @@
 import { Box, styled } from '@mui/material';
 
 const Aplication = () => {
-  return <Container></Container>;
+  return <Container>
+    
+  </Container>;
 };
 
 export default Aplication;
