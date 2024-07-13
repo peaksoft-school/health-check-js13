@@ -11,7 +11,7 @@ const Doctors: FC = () => {
           <TextContent>
             <DoctorsText>
               <Span>Лучшие</Span>
-              <Span1>врачи</Span1>
+              <TextGreen>врачи</TextGreen>
             </DoctorsText>
             <P>Попасть в команду медицинской клиники «MedCheck» могут</P>
             <Text>
@@ -29,7 +29,7 @@ const Doctors: FC = () => {
             ))}
           </Cards>
           <ContentButton>
-            <Button1 variant="outlined">Все врачи клиники</Button1>
+            <ButtonClass variant="outlined">Все врачи клиники</ButtonClass>
           </ContentButton>
         </Box>
       </Box>
@@ -52,7 +52,7 @@ const Span = styled('span')(() => ({
   fontSize: '36px',
 }));
 
-const Span1 = styled('span')(() => ({
+const TextGreen = styled('span')(() => ({
   fontSize: '36px',
   color: '#048741',
 }));
@@ -108,7 +108,7 @@ const ContentButton = styled('div')(() => ({
   marginTop: '3.4375rem',
 }));
 
-const Button1 = styled(Button)(() => ({
+const ButtonClass = styled(Button)(() => ({
   '&.MuiButtonBase-root': {
     width: '181px',
     height: '42px',
