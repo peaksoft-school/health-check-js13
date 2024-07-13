@@ -219,7 +219,7 @@ const NumberCards = styled('div')(() => ({
 
 const BoxContent = styled('div')(() => ({
   display: 'flex',
-  gap: '3.125rem',
+  gap: '2.8125rem',
   alignItems: 'center',
   marginTop: '0.875rem',
   flexWrap: 'wrap',
