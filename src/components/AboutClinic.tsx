@@ -5,11 +5,11 @@ import Restangle2 from '../assets/images/Rectangle2.png';
 import Podrovnee from '../assets/icons/Podrovnee.svg';
 import { styled, Typography, Box } from '@mui/material';
 
-const AboutClinic = () => {
+const AboutClinic = () => (
   <StyledContainer>
     <StyledImageContainerText>
       <StyledTextHealt>
-        О нашей клинике <span style={{ color: '#048741' }}>“HealthCheck”</span>
+        О нашей клинике <StyledSapn>“HealthCheck”</StyledSapn>
       </StyledTextHealt>
       <StyledText>
         <p>
@@ -50,8 +50,8 @@ const AboutClinic = () => {
         <StyledImg src={Restangle2} alt="Restangle" />
       </StyledContainerImage>
     </StyledBox>
-  </StyledContainer>;
-};
+  </StyledContainer>
+);
 
 export default AboutClinic;
 
@@ -66,6 +66,9 @@ const StyledImageContainerText = styled(Box)`
   justify-content: flex-start;
   flex-direction: column;
 `;
+const StyledSapn = styled("span")`
+color: green;
+`
 
 const StyledContainerImage = styled(Box)`
   display: flex;
@@ -87,7 +90,7 @@ const StyledContainer = styled(Box)`
 
 const StyledText = styled(Typography)`
   width: 629px;
-  height: 524px;
+  height: 504px;
   font-family: 'Manrope', sans-serif;
   margin-top: 50px;
   font-size: 16.9px;
@@ -99,7 +102,7 @@ const StyledText = styled(Typography)`
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-top: 105px;
+  margin-top: 90px;
 `;
 
 const StyledTextHealt = styled(Typography)`
