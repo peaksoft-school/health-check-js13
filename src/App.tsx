@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import FeedbackSlider from './components/UI/CustomUI/Slider';
 
-const App: FC = () => <FeedbackSlider/>;
+const App: FC = () => <h1>Health check</h1>;
 
 export default App;
