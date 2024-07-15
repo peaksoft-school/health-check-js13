@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const App: FC = () => <h1>Health check</h1>;
+const App: FC = () => <div>ernest</div>
 
 
 export default App;
