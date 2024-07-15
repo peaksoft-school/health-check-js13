@@ -1,10 +1,5 @@
 import { FC } from 'react';
-// import Switcher from "./components/UI/CustomUI/Switcher";
 
-const App: FC = () => {
-  return (
-    <div>{/* <Switcher label="Create"  labelPlacement="bottom" /> */}</div>
-  );
-};
+const App: FC = () => <div>health check js-13</div>;
 
 export default App;
