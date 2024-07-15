@@ -37,7 +37,6 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
       color: theme.palette.primary.main,
       transition: 'all 0.2s ',
       height: '44px',
-      width: '191px',
 
       '&:hover': {
         background: 'linear-gradient(181deg, #08DF7D 0.95%, #048F50 82.76%)',
@@ -65,7 +64,6 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
         color: theme.palette.primary.darkGreen,
         transition: 'all 0.3s ',
         height: '42px',
-        width: '111px',
 
         '&:hover': {
           border: '1px solid #08DF7D',
@@ -97,7 +95,6 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
         border: '1px solid',
         color: theme.palette.secondary.dark,
         height: '39px',
-        width: '124px',
 
         '&:hover': {
           backgroundColor: theme.palette.primary.backgroundAdmin,
