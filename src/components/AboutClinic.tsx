@@ -2,8 +2,9 @@ import Restangle from '../assets/images/Rectangle.png';
 import Restangle1 from '../assets/images/Rectangle1.png';
 import Restangle3 from '../assets/images/Rectangle3.png';
 import Restangle2 from '../assets/images/Rectangle2.png';
-import { Box } from '@mui/system';
-import { styled, Typography } from '@mui/material';
+import Podrovnee from "../assets/icons/Podrovnee.svg"
+import { styled, Typography, Box } from '@mui/material';
+
 const AboutClinic = () => {
   return (
     <StyledContainer>
@@ -13,32 +14,40 @@ const AboutClinic = () => {
           <span style={{ color: '#048741' }}>“HealthCheck”</span>
         </StyledTextHealt>
         <StyledText>
+
+        <p>
           Вся наша команда готова обеспечить вам медицинский уход и заботу на
           самом высоком уровне. Наша главная задача — оказать Вам теплый прием и
           обеспечить самый лучший медицинский уход. У нас Вы в хороших руках! В
           нашей клинике используются только качественные материалы и проверенные
-          технологии. Для каждого клиента специалисты нашей клиники разработают
-          индивидуальный план лечения, подробно рассказывая о каждом этапе.
-        </StyledText>
-        <StyledTexts>
+          технологии. Для каждого клиента специалисты нашей клиники  разработают<br />
+          индивидуальный план лечения, подробно рассказывая о каждом <br /> этапе.
+        </p>
+        <p>
           Доброжелательность и уважительное отношение к пациентам, не только
           материальная, но и моральная ответственность за результаты лечения —
-          все это взято за основу политики Medical Clinic. Профессионализм и
-          высокое качество оказываемых услуг помогают нам привлечь пациентов
-          которые рекомендуют нас своим родным и близким. Уже 20 лет мы работаем
+          все это взято за основу политики Medical Clinic. Профессионализм
+          и высокое качество оказываемых услуг помогают нам привлечь пациентов
+          которые рекомендуют нас своим родным и близким. 
+        </p>
+        <p>
+        Уже 20 лет мы работаем
           на уровне лучших мировых стандартов, внедряя и развивая передовые
-          методы лечения для сохранения здоровья наших пациентов.
-        </StyledTexts>
-        <StyledTextsss>Читать подробнее о клинике</StyledTextsss>
+          методы лечения для сохранения здоровья наших пациентов. 
+        </p>
+
+        </StyledText>
+        <StyledTextIcon>Читать подробнее о клинике <img src={Podrovnee} alt="" /></StyledTextIcon>
       </StyledImageContainerText>
+
       <StyledBox>
         <StyledImageContainer>
           <img src={Restangle} alt="Restangle" />
         </StyledImageContainer>
         <StyledContainerImage>
-          <img src={Restangle1} alt="Restangle" />
-          <img src={Restangle3} alt="Restangle" />
-          <img src={Restangle2} alt="Restangle" />
+          <StyledImg src={Restangle1} alt="Restangle" />
+          <StyledImg src={Restangle3} alt="Restangle" />
+          <StyledImg src={Restangle2} alt="Restangle" />
         </StyledContainerImage>
       </StyledBox>
     </StyledContainer>
@@ -51,49 +60,62 @@ const StyledImageContainer = styled(Box)`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  /* width: 600px; */
 `;
 
 const StyledImageContainerText = styled(Box)`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-direction: column;
-  width: 580px;
 `;
 
 const StyledContainerImage = styled(Box)`
   display: flex;
-  margin-top: 26px;
+  margin-top: 16px;
   gap: 30px;
 `;
+const StyledImg = styled("img")`
+  width: 200px;
+
+`
 
 const StyledContainer = styled(Box)`
   display: flex;
   justify-content: space-between;
-  width: 1444px;
-  margin: 0 auto;
+  width: 100%;
+  min-width: 1200px;
+  max-width: 1440px;
+  margin: 20px auto;
 `;
 
 const StyledText = styled(Typography)`
-  margin-top: -60px;
+  width: 629px;
+  height: 524px;
+  font-family: "Manrope", sans-serif; 
+  margin-top: 50px;
+  font-size: 16.9px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
 `;
 
-const StyledTexts = styled(Typography)`
-  margin-top: -100px;
-`;
+
 
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-top: 150px;
+  margin-top: 105px;
 `;
 
 const StyledTextHealt = styled(Typography)`
   font-size: 36px;
+  
 `;
 
-const StyledTextsss = styled(Typography)`
-  color: #048741;
-  font-size: 16px;
-  margin-top: -120px;
+
+const StyledTextIcon = styled(Typography)`
+  font-size: 18;
+  margin-top: 48px;
+  font-family: "Manrope", sans-serif; 
+  color: #10aa10;
 `;
