@@ -10,35 +10,13 @@ import Search from '../../assets/icons/SearchIcon.svg';
 import Button from '../../components/UI/CustomUI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
-import { useState, useEffect } from 'react';
 
 const Header = () => {
-  const [showBoxContent, setShowBoxContent] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
-
-  const handleScroll = () => {
-    if (scrollY > 50) {
-      setShowBoxContent(false);
-      setScrolled(true);
-    } else {
-      setShowBoxContent(true);
-      setScrolled(false);
-    }
-  };
-
-  useEffect(() => {
-    addEventListener('scroll', handleScroll);
-
-    return () => {
-      removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <HeaderClass>
       <Box className="container">
         <Content>
-          <ContentCards className={scrolled ? 'scrolled' : ''}>
+          <ContentCards>
             <ContentNom>
               <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
                 <ContainerNom>
@@ -91,7 +69,7 @@ const Header = () => {
             <HR />
           </ContentCards>
           <ContentCards1>
-            <BoxContent className={showBoxContent ? 'show' : 'hide'}>
+            <BoxContent>
               <HealthCheck src={Medcheck} alt="medcheck" />
               {Text.map((item, index) => (
                 <Box key={index}>
@@ -117,8 +95,9 @@ export default Header;
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
-  zIndex: '999',
-  marginTop: '10px',
+  zIndex: 999,
+  backgroundColor: '#fff',
+  padding: '5px 1px 3px 0',
 }));
 
 const ALink = styled('a')({
@@ -139,10 +118,6 @@ const ContentCards = styled('div')(() => ({
   flexWrap: 'wrap',
   paddingTop: 5,
   transition: 'background-color 0.3s ease',
-  padding: '10px 0 3px 0 ',
-  '&.scrolled': {
-    backgroundColor: '#fff',
-  },
 }));
 
 const ContentCards1 = styled('div')(() => ({
