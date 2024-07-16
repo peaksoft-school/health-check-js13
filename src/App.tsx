@@ -1,5 +1,10 @@
 import { FC } from 'react';
+import Aplication from './components/landingPage/Aplication';
 
-const App: FC = () => <h1>Health check</h1>;
+const App: FC = () => (
+  <div>
+    <Aplication />
+  </div>
+);
 
 export default App;
