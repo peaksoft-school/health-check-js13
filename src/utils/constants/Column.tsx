@@ -1,11 +1,17 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Box } from '@mui/material';
 import Korzina from '../../assets/icons/Korzina.svg';
-import Table from '../../components/UI/CustomUI/Table';
+import Table from '../../components/UI/Table';
 import pacient from '../constants/pacient.json';
-import tableOne from '../constants/tableOne.json';
-import statusBody from '../constants/statusBody.json';
-import applicationBody from '../constants/applicationBody.json';
+// import tableOne from '../constants/tableOne.json';
+// import statusBody from '../constants/statusBody.json';
+// import applicationBody from '../constants/applicationBody.json';
+
+import Specialist from '../helpers/Specialist';
+import ActionsStatus from '../helpers/Actions';
+import Switcher from '../../components/UI/Switcher';
+import Checkbox from '../../components/UI/CheckBox';
+
 type BodyTableOneTypes = {
   id?: number;
   first_name?: string;
@@ -63,12 +69,12 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           gap: '5px',
           cursor: 'pointer',
         }}>
-        <input type="checkbox" />
+        <Checkbox />
         <img src={Korzina} alt="delete" />
       </Box>
     ),
     accessorKey: 'hello',
-    cell: () => <input type="checkbox" />,
+    cell: () => <Checkbox />,
   },
   {
     header: '№',
@@ -106,7 +112,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
         style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'end',
+          justifyContent: 'center',
           cursor: 'pointer',
         }}>
         <img src={Korzina} />
@@ -138,17 +144,16 @@ export const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
   {
     header: 'Статус',
     accessorKey: 'status',
-    cell: () => <input type="checkbox" />,
+    cell: () => <Switcher />,
   },
   {
     header: 'Специалист',
     accessorKey: 'name',
-    cell: ({ row }: any) => {
-      console.log(row, 'bermet');
-
-      return (
-        
-      );
+    cell: ({ cell }: any) => {
+      console.log(cell);
+      if (cell) {
+        return <Specialist {...cell} />;
+      }
     },
   },
   {
@@ -162,39 +167,30 @@ export const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
   {
     header: 'Действие',
     accessorKey: 'actions',
-    cell: ({ row }) => {
-      console.log(row.original);
-
-      return (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'start',
-            gap: 20,
-          }}>
-          <img
-            style={{ display: 'block', cursor: 'pointer' }}
-            src={Korzina}
-            alt="edit"
-          />
-          {row.original.name.img}
-          <img
-            style={{ display: 'block', cursor: 'pointer' }}
-            src={Korzina}
-            alt="delete"
-          />
-        </div>
-      );
-    },
+    cell: () => <ActionsStatus />,
   },
 ];
 
 export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
   {
-    header: () => <input type="checkbox" />,
+    header: () => (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'start',
+          cursor: 'pointer',
+        }}>
+        <Checkbox />
+        <img
+          style={{ width: '25px', margin: '0 0 3px 0' }}
+          src={Korzina}
+          alt="korzina"
+        />
+      </div>
+    ),
     accessorKey: 'nello',
-    cell: () => <input type="checkbox" />,
+    cell: () => <Checkbox />,
   },
   {
     header: '№',
@@ -221,7 +217,7 @@ export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
           marginLeft: '26px',
           cursor: 'pointer',
         }}>
-        <input type="checkbox" />
+        <Checkbox />
       </div>
     ),
   },
@@ -276,7 +272,7 @@ export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
 ];
 
 const Column = () => {
-  return <Table columns={statusHeader} data={statusBody} />;
+  return <Table columns={pacientHeader} data={pacient} />;
 };
 
 export default Column;

@@ -3,13 +3,21 @@ interface ITypes {
   img: string;
   professi: string;
 }
-const Specialist = ({ row }: ITypes) => {
+
+interface IRow {
+  original: {
+    name: ITypes | string;
+  };
+}
+
+const Specialist = ({ row }: { row: IRow }) => {
+  console.log(row);
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-      {typeof row.original.name === 'object' ? (
+      {typeof row?.original.name === 'object' ? (
         <>
           <img
-            src={row.original.name.img}
+            src={row?.original.name.img}
             alt="specialist"
             style={{ width: '40px', height: '40px', cursor: 'pointer' }}
           />
@@ -21,7 +29,7 @@ const Specialist = ({ row }: ITypes) => {
           </div>
         </>
       ) : (
-        <div>{row.original}</div>
+        <div>{row?.original.name}</div>
       )}
     </div>
   );

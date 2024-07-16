@@ -54,7 +54,9 @@ const Table = <T,>({ columns, data }: TypesPropsTable<T>) => {
 export default Table;
 
 const TableContainerStyled = styled(Box)({
-  width: '1200px',
+  width: '100%',
+  minWidth: '1200px',
+  maxWidth: '1440px',
   margin: '0 auto',
   minHeight: '746px',
 });
@@ -64,14 +66,17 @@ const TableStyled = styled('table')({
   borderCollapse: 'collapse',
   '& thead th': {
     borderBottom: '1px solid #ddd',
-    padding: '1rem',
+    padding: '17px',
     textAlign: 'left',
-    fontSize: '13px',
+    fontSize: '15px',
+  },
+  '& thead th:first-child': {
+    width: '100px',
   },
   '& tbody td': {
     borderBottom: '1px solid #ddd',
-    padding: '10px 10px 10px 15px',
-    fontSize: '12px',
+    padding: '17px',
+    fontSize: '13px',
   },
   '& tbody tr:hover': {
     backgroundColor: '#f1f1f1',
