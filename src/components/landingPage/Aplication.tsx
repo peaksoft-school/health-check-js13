@@ -47,7 +47,6 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
                   icon={MaleFemaleIcon}
                   label="Как к Вам обратиться?"
                   placeholder="Введите имя"
-                  // className="inputsCor"
                   error={!!errors.name}
                   helperText={errors.name?.message ? errors.name.message : ''}
                 />
@@ -67,7 +66,6 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
                   icon={CallProgressIcon}
                   label="Номер мобильного телефона"
                   placeholder="+996 (___) __-__-__"
-                  // className="inputsCor"
                   error={!!errors.number}
                   helperText={
                     errors.number?.message ? errors.number.message : ''
