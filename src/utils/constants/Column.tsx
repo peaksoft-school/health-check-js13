@@ -1,13 +1,61 @@
+import { ColumnDef } from '@tanstack/react-table';
 import { Box } from '@mui/material';
 import Korzina from '../../assets/icons/Korzina.svg';
-import Switcher from '../../components/UI/CustomUI/Switcher';
-import UpdateIcon from '../../assets/icons/UpdateIcon.svg';
 import Table from '../../components/UI/CustomUI/Table';
-import { pacient } from './pacient';
+import pacient from '../constants/pacient.json';
+import tableOne from '../constants/tableOne.json';
+import statusBody from '../constants/statusBody.json';
+import applicationBody from '../constants/applicationBody.json';
+type BodyTableOneTypes = {
+  id?: number;
+  first_name?: string;
+  phone?: string;
+  email?: string;
+  service?: string | null;
+  date?: string;
+  addService?: string;
+  progress?: boolean;
+  and?: string;
+};
 
-export const TableOne = [
+type BodyTableStatusTypes = {
+  id?: number;
+  status?: string | boolean;
+  name: {
+    img?: string;
+    name?: string;
+    professi?: string;
+  };
+  deport?: string;
+  date?: string;
+  actions?: string;
+};
+
+type BodyTablePacientTypes = {
+  id?: number;
+  first_name?: string;
+  phone?: string;
+  email?: string;
+  date?: string;
+};
+
+type BodyTableApplicationTypes = {
+  id?: number;
+  first_name?: string;
+  phone?: string;
+  date?: string;
+  processing?: boolean;
+};
+
+export type CombineTypeTables =
+  | BodyTableApplicationTypes
+  | BodyTablePacientTypes
+  | BodyTableStatusTypes
+  | BodyTableOneTypes;
+
+export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
   {
-    Header: (
+    header: () => (
       <Box
         sx={{
           display: 'flex',
@@ -15,45 +63,45 @@ export const TableOne = [
           gap: '5px',
           cursor: 'pointer',
         }}>
-        <Switcher />
+        <input type="checkbox" />
         <img src={Korzina} alt="delete" />
       </Box>
     ),
-    accessor: 'hello',
-    Cell: () => <Switcher />,
+    accessorKey: 'hello',
+    cell: () => <input type="checkbox" />,
   },
   {
-    Header: '№',
-    accessor: 'id',
+    header: '№',
+    accessorKey: 'id',
   },
   {
-    Header: 'Имя и фамилия',
-    accessor: 'first_name',
+    header: 'Имя и фамилия',
+    accessorKey: 'first_name',
   },
   {
-    Header: 'Номер телефона',
-    accessor: 'phone',
+    header: 'Номер телефона',
+    accessorKey: 'phone',
   },
   {
-    Header: 'Почта',
-    accessor: 'email',
+    header: 'Почта',
+    accessorKey: 'email',
   },
   {
-    Header: 'Выбор услуги',
-    accessor: 'service',
+    header: 'Выбор услуги',
+    accessorKey: 'service',
   },
   {
-    Header: 'Выбор специалиста',
-    accessor: 'addService',
+    header: 'Выбор специалиста',
+    accessorKey: 'addService',
   },
   {
-    Header: 'Дата и время',
-    accessor: 'date',
+    header: 'Дата и время',
+    accessorKey: 'date',
   },
   {
-    Header: 'Обработан',
-    accessor: 'progress',
-    Cell: () => (
+    header: 'Обработан',
+    accessorKey: 'progress',
+    cell: () => (
       <div
         style={{
           display: 'flex',
@@ -61,14 +109,14 @@ export const TableOne = [
           justifyContent: 'end',
           cursor: 'pointer',
         }}>
-        <Switcher />
+        <img src={Korzina} />
       </div>
     ),
   },
   {
-    Header: 'Action',
-    accessor: 'and',
-    Cell: () => (
+    header: 'Action',
+    accessorKey: 'and',
+    cell: () => (
       <div
         style={{
           display: 'flex',
@@ -81,113 +129,106 @@ export const TableOne = [
     ),
   },
 ];
-export const statusHeader = [
+
+export const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
   {
-    Header: '№',
-    accessor: 'id',
+    header: '№',
+    accessorKey: 'id',
   },
   {
-    Header: 'Статус',
-    accessor: 'status',
-    Cell: () => <Switcher />,
+    header: 'Статус',
+    accessorKey: 'status',
+    cell: () => <input type="checkbox" />,
   },
   {
-    Header: 'Специалист',
-    accessor: 'name',
-    Cell: ({ cell: { value } }: any) => (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        {typeof value === 'object' ? (
-          <>
-            <img
-              src={value.img}
-              alt="specialist"
-              style={{ width: '40px', height: '40px', cursor: 'pointer' }}
-            />
-            <div>
-              <div>{value.name}</div>
-              <div style={{ fontSize: '13px', color: 'gray' }}>
-                {value.professi}
-              </div>
-            </div>
-          </>
-        ) : (
-          <div>{value}</div>
-        )}
-      </div>
-    ),
+    header: 'Специалист',
+    accessorKey: 'name',
+    cell: ({ row }: any) => {
+      console.log(row, 'bermet');
+
+      return (
+        
+      );
+    },
   },
   {
-    Header: 'Отделение',
-    accessor: 'deport',
+    header: 'Отделение',
+    accessorKey: 'deport',
   },
   {
-    Header: 'Расписание',
-    accessor: 'date',
+    header: 'Расписание',
+    accessorKey: 'date',
   },
   {
-    Header: 'Действие',
-    accessor: 'actions',
-    Cell: () => (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'start',
-          gap: 20,
-        }}>
-        <img
-          style={{ display: 'block', cursor: 'pointer' }}
-          src={UpdateIcon}
-          alt="edit"
-        />
-        <img
-          style={{ display: 'block', cursor: 'pointer' }}
-          src={Korzina}
-          alt="delete"
-        />
-      </div>
-    ),
+    header: 'Действие',
+    accessorKey: 'actions',
+    cell: ({ row }) => {
+      console.log(row.original);
+
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'start',
+            gap: 20,
+          }}>
+          <img
+            style={{ display: 'block', cursor: 'pointer' }}
+            src={Korzina}
+            alt="edit"
+          />
+          {row.original.name.img}
+          <img
+            style={{ display: 'block', cursor: 'pointer' }}
+            src={Korzina}
+            alt="delete"
+          />
+        </div>
+      );
+    },
   },
 ];
-export const applicationHeader = [
+
+export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
   {
-    Header: <Switcher />,
-    accessor: 'nello',
-    Cell: () => <Switcher />,
+    header: () => <input type="checkbox" />,
+    accessorKey: 'nello',
+    cell: () => <input type="checkbox" />,
   },
   {
-    Header: '№',
-    accessor: 'id',
+    header: '№',
+    accessorKey: 'id',
   },
   {
-    Header: 'Имя',
-    accessor: 'first_name',
+    header: 'Имя',
+    accessorKey: 'first_name',
   },
   {
-    Header: 'Дата',
-    accessor: 'date',
+    header: 'Дата',
+    accessorKey: 'date',
   },
   {
-    Header: 'Номер Телефона',
-    accessor: 'phone',
+    header: 'Номер Телефона',
+    accessorKey: 'phone',
   },
   {
-    Header: 'Обработан',
-    accessor: 'processing',
-    Cell: () => (
+    header: 'Обработан',
+    accessorKey: 'processing',
+    cell: () => (
       <div
         style={{
           marginLeft: '26px',
           cursor: 'pointer',
         }}>
-        <Switcher />
+        <input type="checkbox" />
       </div>
     ),
   },
   {
-    Header: 'Действия',
-    accessor: '',
-    Cell: () => (
+    header: 'Действия',
+    accessorKey: 'actions',
+    cell: () => (
       <div
         style={{
           marginLeft: '26px',
@@ -198,43 +239,44 @@ export const applicationHeader = [
     ),
   },
 ];
-export const pacientHeader = [
+export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
   {
-    Header: '№',
-    accessor: 'id',
+    header: '№',
+    accessorKey: 'id',
   },
   {
-    Header: 'Имя Фамилия',
-    accessor: 'first_name',
+    header: 'Имя Фамилия',
+    accessorKey: 'first_name',
   },
   {
-    Header: 'Номер телефона',
-    accessor: 'phone',
+    header: 'Номер телефона',
+    accessorKey: 'phone',
   },
   {
-    Header: 'Почта',
-    accessor: 'email',
+    header: 'Почта',
+    accessorKey: 'email',
   },
   {
-    Header: 'Дата сдачи',
-    accessor: 'date',
+    header: 'Дата сдачи',
+    accessorKey: 'date',
   },
   {
-    Header: 'Действия',
-    accessor: 'srfds',
-    Cell: (
+    header: 'Действия',
+    accessorKey: 'srfds',
+    cell: () => (
       <div
         style={{
           marginLeft: '26px',
           cursor: 'pointer',
         }}>
         <img src={Korzina} alt="delete" />
-      </div>  
+      </div>
     ),
   },
 ];
+
 const Column = () => {
-  return <Table column={pacientHeader} data={pacient} />;
+  return <Table columns={statusHeader} data={statusBody} />;
 };
 
 export default Column;
