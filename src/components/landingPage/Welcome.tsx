@@ -21,7 +21,7 @@ const Welcome = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<IFormTypes>({ mode: 'onChange' });
+  } = useForm<IFormTypes>({ mode: 'onSubmit' });
 
   const handleOpen = () => setIsOpen(true);
 
@@ -91,7 +91,7 @@ const Welcome = () => {
             <StyledInputContent>
               <div>
                 <Input
-                  size='small'
+                  size="small"
                   {...register('name', {
                     required: 'Введите имя',
                     minLength: {
@@ -109,16 +109,16 @@ const Welcome = () => {
 
               <div>
                 <Input
-                  size='small'
+                  size="small"
                   {...register('phone', {
                     required: 'Введите номер телефона',
                     pattern: {
-                      value: /^\+996/,
+                      value: /^\+996\d{9}$/,
                       message: 'Введите номер в формате +996(___) __-__-__',
                     },
                     maxLength: {
                       value: 15,
-                      message: 'Номер телефон должен максимум 15 символов',
+                      message: 'Enter your valid number',
                     },
                     minLength: {
                       value: 11,
@@ -208,7 +208,6 @@ const StyledH1 = styled('h1')`
   }
 `;
 
-
 const StyledText = styled('p')`
   width: 90%;
   color: #333;
@@ -225,6 +224,7 @@ const StyledModalImg = styled('img')`
   position: absolute;
   top: 10px;
   right: 10px;
+  cursor: pointer;
 `;
 
 const StyledH2 = styled('h1')`
