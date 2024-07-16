@@ -81,6 +81,7 @@ const StyledContainer = styled(Box)`
   justify-content: space-between;
   width: 100%;
   max-width: 90rem;
+  min-width: 76.25rem;
   margin: 1.25rem auto;
   padding: 2%;
 `;
