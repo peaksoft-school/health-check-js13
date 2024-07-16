@@ -1,141 +1,141 @@
-import { forwardRef, ChangeEvent, useState } from "react";
+import { forwardRef, ChangeEvent, useState } from 'react';
 import {
-	InputAdornment,
-	TextField,
-	TextFieldProps,
-	Typography,
-	styled,
-} from "@mui/material";
-import eye from "../assets/icons/eye.svg";
-import eyenot from "../assets/icons/eyenot.svg";
+  InputAdornment,
+  TextField,
+  TextFieldProps,
+  Typography,
+  styled,
+} from '@mui/material';
+import eye from '../../assets/icons/eye.svg';
+import noteye from '../../assets/icons/noteye.svg';
 
-interface InputProps extends Omit<TextFieldProps, "onChange" | "onClick"> {
-	type?: "text" | "password" | "email" | "number";
-	label?: string;
-	placeholder?: string;
-	onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-	error?: boolean;
-	value?: string | number;
-	disabled?: boolean;
-	icon?: string;
+interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
+  type?: 'text' | 'password' | 'email' | 'number';
+  label?: string;
+  placeholder?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  error?: boolean;
+  value?: string | number;
+  disabled?: boolean;
+  icon?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-	(
-		{
-			type = "text",
-			label,
-			icon,
-			placeholder,
-			onChange,
-			error,
-			value,
-			disabled,
-			size,
-			fullWidth,
-			...rest
-		},
-		ref
-	) => {
-		const [showPassword, setShowPassword] = useState(false);
+  (
+    {
+      type = 'text',
+      label,
+      icon,
+      placeholder,
+      onChange,
+      error,
+      value,
+      disabled,
+      size,
+      fullWidth,
+      ...rest
+    },
+    ref
+  ) => {
+    const [showPassword, setShowPassword] = useState(false);
 
-		const handleClickEye = () => {
-			setShowPassword((prev) => !prev);
-		};
+    const handleClickEye = () => {
+      setShowPassword(prev => !prev);
+    };
 
-		const getType = () => {
-			if (type === "password") {
-				return showPassword ? "text" : "password";
-			}
-			return type;
-		};
+    const getType = () => {
+      if (type === 'password') {
+        return showPassword ? 'text' : 'password';
+      }
+      return type;
+    };
 
-		return (
-			<LabelDiv>
-				<Typography sx={{ color: disabled ? "lightgray" : "#939292" }}>
-					{label}
-				</Typography>
-				<StyledInput
-					error={!!error}
-					type={getType()}
-					value={value}
-					onChange={onChange}
-					placeholder={placeholder}
-					disabled={disabled}
-					ref={ref}
-					size={size}
-					fullWidth={fullWidth}
-					InputProps={{
-						endAdornment: type === "password" && (
-							<InputAdornment position="end">
-								<img
-									onClick={handleClickEye}
-									src={showPassword ? eye : eyenot}
-									alt={showPassword ? "eye" : "eyenot"}
-									style={{ cursor: "pointer" }}
-								/>
-							</InputAdornment>
-						),
-						startAdornment: icon && (
-							<InputAdornment position="start">
-								{icon === "" ? "" : <img src={icon} alt="icon" />}
-							</InputAdornment>
-						),
-					}}
-					{...rest}
-				/>
-			</LabelDiv>
-		);
-	}
+    return (
+      <LabelDiv>
+        <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
+          {label}
+        </Typography>
+        <StyledInput
+          error={!!error}
+          type={getType()}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          disabled={disabled}
+          ref={ref}
+          size={size}
+          fullWidth={fullWidth}
+          InputProps={{
+            endAdornment: type === 'password' && (
+              <InputAdornment position="end">
+                <img
+                  onClick={handleClickEye}
+                  src={showPassword ? eye : noteye}
+                  alt={showPassword ? 'eye' : 'eyenot'}
+                  style={{ cursor: 'pointer' }}
+                />
+              </InputAdornment>
+            ),
+            startAdornment: icon && (
+              <InputAdornment position="start">
+                {icon === '' ? '' : <img src={icon} alt="icon" />}
+              </InputAdornment>
+            ),
+          }}
+          {...rest}
+        />
+      </LabelDiv>
+    );
+  }
 );
 
 const StyledInput = styled(TextField)(({ theme, error }) => ({
-	width: "100%",
-	height: "42px",
-	borderRadius: "10px",
-	caretColor: theme.palette.primary.darkGreen,
-	backgroundColor: "inherit",
+  width: '100%',
+  height: '40px',
+  borderRadius: '10px',
+  caretColor: theme.palette.primary.darkGreen,
+  backgroundColor: '#fff',
+  '& .MuiOutlinedInput-input': {
+    borderRadius: '8px',
+    color: theme.palette.secondary.lightBlack,
+    backgroundColor: '#fff',
+  },
+  '& .MuiFormLabel-root': {
+    '&.Mui-focused ': {
+      color: theme.palette.secondary.darkGrey,
+    },
+  },
 
-	"& .MuiOutlinedInput-input": {
-		borderRadius: "8px",
-		color: theme.palette.secondary.lightBlack,
-	},
-	"& .MuiFormLabel-root": {
-		"&.Mui-focused ": {
-			color: theme.palette.secondary.darkGrey,
-		},
-	},
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '8px',
+    '& fieldset': {
+      borderColor: error
+        ? theme.palette.error.main
+        : theme.palette.secondary.lightBlack,
+    },
 
-	"& .MuiOutlinedInput-root": {
-		borderRadius: "8px",
-		"& fieldset": {
-			borderColor: error
-				? theme.palette.error.main
-				: theme.palette.secondary.lightBlack,
-		},
+    '&:hover fieldset': {
+      borderColor: error
+        ? theme.palette.error.main
+        : theme.palette.secondary.darkGrey,
+    },
 
-		"&:hover fieldset": {
-			borderColor: error
-				? theme.palette.error.main
-				: theme.palette.secondary.darkGrey,
-		},
+    '&.Mui-focused fieldset': {
+      borderWidth: '1px',
+      color: theme.palette.secondary,
+      borderColor: error
+        ? theme.palette.error.main
+        : theme.palette.primary.darkGreen,
+    },
 
-		"&.Mui-focused fieldset": {
-			borderWidth: "1px",
-			color: theme.palette.secondary,
-			borderColor: error
-				? theme.palette.error.main
-				: theme.palette.primary.darkGreen,
-		},
-
-		"&.Mui-disabled .MuiOutlinedInput-notchedOutline": {
-			borderColor: theme.palette.secondary.main,
-		},
-	},
+    '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.secondary.main,
+    },
+  },
 }));
-const LabelDiv = styled("div")({
-	display: "flex",
-	flexDirection: "column",
+const LabelDiv = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 export default Input;
