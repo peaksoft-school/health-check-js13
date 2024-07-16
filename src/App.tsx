@@ -1,5 +1,6 @@
 import { FC } from 'react';
+import Welcome from './components/landingPage/Welcome';
 
-const App: FC = () => <h1>Health check</h1>;
+const App: FC = () => <Welcome/>;
 
 export default App;

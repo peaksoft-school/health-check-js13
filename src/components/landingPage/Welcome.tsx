@@ -192,7 +192,22 @@ const StyledH1 = styled('h1')`
   -webkit-text-fill-color: transparent;
   font-weight: 900;
   font-family: 'Manrope', sans-serif;
+  background-size: 200% 200%;
+  animation: gradientAnimation 3s linear infinite;
+
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 `;
+
 
 const StyledText = styled('p')`
   width: 90%;
