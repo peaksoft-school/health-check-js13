@@ -9,7 +9,7 @@ const AboutClinic = () => (
   <StyledContainer>
     <StyledImageContainerText>
       <StyledTextHealt>
-        О нашей клинике <StyledSapn>“HealthCheck”</StyledSapn>
+        О нашей клинике <span>“HealthCheck”</span>
       </StyledTextHealt>
       <StyledText>
         <p>
@@ -45,9 +45,9 @@ const AboutClinic = () => (
         <img src={Restangle} alt="Restangle" />
       </StyledImageContainer>
       <StyledContainerImage>
-        <StyledImg src={Restangle1} alt="Restangle" />
-        <StyledImg src={Restangle3} alt="Restangle" />
-        <StyledImg src={Restangle2} alt="Restangle" />
+        <img src={Restangle1} alt="Restangle" />
+        <img src={Restangle3} alt="Restangle" />
+        <img src={Restangle2} alt="Restangle" />
       </StyledContainerImage>
     </StyledBox>
   </StyledContainer>
@@ -66,34 +66,31 @@ const StyledImageContainerText = styled(Box)`
   justify-content: flex-start;
   flex-direction: column;
 `;
-const StyledSapn = styled("span")`
-color: green;
-`
 
 const StyledContainerImage = styled(Box)`
   display: flex;
-  margin-top: 16px;
-  gap: 30px;
-`;
-const StyledImg = styled('img')`
-  width: 200px;
+  margin-top: 1rem;
+  gap: 1.5rem;
+  img {
+    width: 70%;
+  }
 `;
 
 const StyledContainer = styled(Box)`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  min-width: 1200px;
-  max-width: 1440px;
-  margin: 20px auto;
+  max-width: 90rem;
+  margin: 1.25rem auto;
+  padding: 2%;
 `;
 
 const StyledText = styled(Typography)`
-  width: 629px;
-  height: 504px;
+  width: 80%;
+  height: 90%;
   font-family: 'Manrope', sans-serif;
-  margin-top: 50px;
-  font-size: 16.9px;
+  margin-top: 3.125rem;
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -102,16 +99,19 @@ const StyledText = styled(Typography)`
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-top: 90px;
+  margin-top: 5.5rem;
 `;
 
 const StyledTextHealt = styled(Typography)`
-  font-size: 36px;
+  font-size: 2.25rem;
+  span {
+    color: green;
+  }
 `;
 
 const StyledTextIcon = styled(Typography)`
-  font-size: 18;
-  margin-top: 48px;
+  font-size: 1.125rem;
+  margin-top: 3rem;
   font-family: 'Manrope', sans-serif;
   color: #10aa10;
   cursor: pointer;
