@@ -1,7 +1,7 @@
 import { styled, Modal as MuiModal, Box } from '@mui/material';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Input from './UI/CustomUI/Input';
+import Input from './UI/Input';
 import Image from '../assets/images/DoctorMakc.png';
 import MaleFemale from '../assets/icons/MaleFemaleIcon.svg';
 import CallProgres from '../assets/icons/CallProgressIcon.svg';
