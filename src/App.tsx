@@ -1,10 +1,6 @@
 import { FC } from 'react';
-import Column from './utils/constants/Column';
+import AboutClinic from './components/landingPage/AboutClinic';
 
-const App: FC = () => (
-  <div>
-    <Column />
-  </div>
-);
+const App: FC = () => <AboutClinic/>;
 
 export default App;
