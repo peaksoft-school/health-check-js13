@@ -88,9 +88,9 @@ const StyledContainer = styled(Box)`
 
 const StyledText = styled(Typography)`
   width: 80%;
-  height: 90%;
+  height: 80%;
   font-family: 'Manrope', sans-serif;
-  margin-top: 3.125rem;
+  margin-top: 2.4rem;
   font-size: 1rem;
   display: flex;
   flex-direction: column;
@@ -100,7 +100,7 @@ const StyledText = styled(Typography)`
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-top: 6.4rem;
+  margin-top: 5.8rem;
   
 `;
 
