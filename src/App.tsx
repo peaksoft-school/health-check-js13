@@ -1,5 +1,6 @@
 import { FC } from 'react';
+import AboutClinic from './components/landingPage/AboutClinic';
 
-const App: FC = () => <h1>Health check</h1>;
+const App: FC = () => <AboutClinic/>;
 
 export default App;
