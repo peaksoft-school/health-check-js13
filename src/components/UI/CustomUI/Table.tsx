@@ -1,13 +1,14 @@
-import { useTable } from 'react-table';
-import { FC, useMemo } from 'react';
+import { Column, Row, useTable } from 'react-table';
+import { useMemo } from 'react';
 import { Paper, Box, styled } from '@mui/material';
+import { ColumnTypesTable, CombineTypeTables } from '../../../types/table';
 
-type TypesPropsTable = {
-  column: any[];
-  data: any[];
+type TypesPropsTable<T> = {
+  column: Column[];
+  data: Row<CombineTypeTables>[];
 };
 
-const Table: FC<TypesPropsTable> = ({ column, data }) => {
+const Table = <T,>({ column, data }: TypesPropsTable<T>) => {
   const tableData = useMemo(() => data, [data]);
   const columns = useMemo(() => column, [column]);
 

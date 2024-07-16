@@ -1,5 +1,10 @@
 import { FC } from 'react';
+import Column from './utils/constants/Column';
 
-const App: FC = () => <h1>Health check</h1>;
+const App: FC = () => (
+  <div>
+    <Column />
+  </div>
+);
 
 export default App;

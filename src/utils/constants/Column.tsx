@@ -3,7 +3,8 @@ import Korzina from '../../assets/icons/Korzina.svg';
 import Switcher from '../../components/UI/CustomUI/Switcher';
 import UpdateIcon from '../../assets/icons/UpdateIcon.svg';
 import Table from '../../components/UI/CustomUI/Table';
-import status from '../constants/status.json';
+import { pacient } from './pacient';
+
 export const TableOne = [
   {
     Header: (
@@ -80,7 +81,7 @@ export const TableOne = [
     ),
   },
 ];
-export const StatusHeader = [
+export const statusHeader = [
   {
     Header: '№',
     accessor: 'id',
@@ -131,7 +132,7 @@ export const StatusHeader = [
         style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'start',
           gap: 20,
         }}>
         <img
@@ -148,7 +149,7 @@ export const StatusHeader = [
     ),
   },
 ];
-export const TableTwo = [
+export const applicationHeader = [
   {
     Header: <Switcher />,
     accessor: 'nello',
@@ -197,7 +198,7 @@ export const TableTwo = [
     ),
   },
 ];
-export const TableThree = [
+export const pacientHeader = [
   {
     Header: '№',
     accessor: 'id',
@@ -228,12 +229,12 @@ export const TableThree = [
           cursor: 'pointer',
         }}>
         <img src={Korzina} alt="delete" />
-      </div>
+      </div>  
     ),
   },
 ];
 const Column = () => {
-  return <Table column={StatusHeader} data={status} />;
+  return <Table column={pacientHeader} data={pacient} />;
 };
 
 export default Column;

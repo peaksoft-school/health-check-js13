@@ -1,17 +1,22 @@
-type DataTypesOnlineRegistration = {
+export type ColumnTypesTable<T> = {
+  Header: string | JSX.Element;
+  accessor: string;
+  Cell?: (data: T) => JSX.Element;
+};
+
+type BodyTableOneTypes = {
   id: number;
   first_name: string;
   phone: string;
   email: string;
   service: string;
-  addService: string;
   date: string;
+  addService: string;
   progress: boolean;
 };
-
-type DataTypesStatus = {
+type BodyTableStatusTypes = {
   id: number;
-  status: boolean;
+  status: string;
   name: {
     img: string;
     name: string;
@@ -20,11 +25,24 @@ type DataTypesStatus = {
   deport: string;
   date: string;
 };
-
-type DataTypesApplicationm = {
+type BodyTablePacientTypes = {
   id: number;
   first_name: string;
-  date: string;
   phone: string;
+  email: string;
+  date: string;
+};
+
+type BodyTableApplicationTypes = {
+  id: number;
+  first_name: string;
+  phone: string;
+  date: string;
   processing: boolean;
 };
+
+export type CombineTypeTables =
+  | BodyTableApplicationTypes
+  | BodyTablePacientTypes
+  | BodyTableStatusTypes
+  | BodyTableOneTypes;
