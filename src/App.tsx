@@ -1,7 +1,5 @@
 import { FC } from 'react';
 
-const App: FC = () => {
-return <div>Hello Mir</div>;
-};
+const App: FC = () => <h1>Health check</h1>;
 
 export default App;
