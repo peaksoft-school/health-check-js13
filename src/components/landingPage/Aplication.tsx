@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 import MaleFemaleIcon from '../../assets/icons/MaleFemaleIcon.svg';
@@ -25,19 +25,19 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
 
   return (
     <Container>
-      <div className="boxs">
+      <Box className="boxs">
         <AplicationBox>
-          <p className="h1text">Оставьте заявку</p>
+          <Typography className="h1text">Оставьте заявку</Typography>
 
-          <p className="h3text">
+          <Typography className="h3text">
             Оставьте свой номер и наши специалисты свяжутся с Вами
             <br />
             в ближайшее время
-          </p>
+          </Typography>
 
           <BoxForm component={'form'} onSubmit={handleSubmit(onSubmit)}>
-            <div className="inputBox">
-              <div className="inBox">
+            <Box className="inputBox">
+              <Box className="inBox">
                 <Input
                   {...register('name', {
                     required: 'Обязательное поле',
@@ -50,9 +50,9 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
                   error={!!errors.name}
                   helperText={errors.name?.message ? errors.name.message : ''}
                 />
-              </div>
+              </Box>
 
-              <div className="inBox">
+              <Box className="inBox">
                 <Input
                   {...register('number', {
                     required: 'Ведите ваш действительный номер',
@@ -71,10 +71,10 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
                     errors.number?.message ? errors.number.message : ''
                   }
                 />
-              </div>
-            </div>
+              </Box>
+            </Box>
 
-            <div className="buttonBox">
+            <Box className="buttonBox">
               <Button
                 className="myButton"
                 size="large"
@@ -82,14 +82,14 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
                 variant="contained">
                 ОТПРАВИТЬ ЗАЯВКУ
               </Button>
-            </div>
+            </Box>
           </BoxForm>
         </AplicationBox>
 
         <BoxMui>
           <img className="imgGirl" src={GirlDoctor} alt="GirlDoctor" />
         </BoxMui>
-      </div>
+      </Box>
     </Container>
   );
 };
