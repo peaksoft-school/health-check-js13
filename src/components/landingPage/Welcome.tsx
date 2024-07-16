@@ -1,12 +1,13 @@
 import { styled, Modal as MuiModal, Box } from '@mui/material';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Input from './UI/CustomUI/Input';
-import Image from '../assets/images/DoctorMakc.png';
-import MaleFemale from '../assets/icons/MaleFemaleIcon.svg';
-import CallProgres from '../assets/icons/CallProgressIcon.svg';
-import Arrow from '../assets/icons/ArrowIcon.svg';
-import Close from '../assets/icons/CloseIcon.svg';
+import Input from '../UI/Input';
+import Image from '../../assets/images/DoctorMakc.png';
+import MaleFemale from '../../assets/icons/MaleFemaleIcon.svg';
+import CallProgres from '../../assets/icons/CallProgressIcon.svg';
+import Arrow from '../../assets/icons/ArrowIcon.svg';
+import Close from '../../assets/icons/CloseIcon.svg';
+import Button from '../UI/Button';
 
 interface IFormTypes {
   name: string;
@@ -14,17 +15,15 @@ interface IFormTypes {
 }
 
 const Welcome = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<IFormTypes>({ mode: 'onChange' });
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+  const handleOpen = () => setIsOpen(true);
 
   const handleCloseSecondModal = () => {
     setIsOpenSecondModal(false);
@@ -55,16 +54,16 @@ const Welcome = () => {
 
         <div>
           <StyledText>
-            Международная Медицинская клиника «HealthCheck— это клиника, в
-            которой применяются новейшие диагностические и лечебные технологии и
-            ведут прием лучшие специалисты.
+            Медицинская клиника «HealthCheck— это клиника, в которой применяются
+            новейшие диагностические и лечебные технологии и ведут прием лучшие
+            специалисты.
           </StyledText>
         </div>
 
-        <div>  
-          <StyledButtonMain onClick={handleOpen}>
+        <div>
+          <ButtonClass variant="outlined" onClick={handleOpen}>
             Оставьте заявку
-          </StyledButtonMain>
+          </ButtonClass>
         </div>
       </StyledContentText>
 
@@ -79,7 +78,10 @@ const Welcome = () => {
           </div>
 
           <StyledP>
-            <StyledSpan>Оставьте свой номер и наши специалисты свяжутся</StyledSpan>
+            <StyledSpan>
+              Оставьте свой номер и наши специалисты свяжутся
+            </StyledSpan>
+
             <StyledSpan>с Вами в ближайшее время</StyledSpan>
           </StyledP>
 
@@ -89,24 +91,25 @@ const Welcome = () => {
             <StyledInputContent>
               <div>
                 <Input
+                  size='small'
                   {...register('name', {
                     required: 'Введите имя',
                     minLength: {
                       value: 2,
-                      message: 'Имя должно содержать минимум 2 символа',
+                      message: 'Имя должно минимум 2 символа',
                     },
                   })}
+                  helperText={errors.name?.message}
+                  error={!!errors.name}
                   icon={MaleFemale}
                   placeholder="Введите имя"
                   label="Как к Вам обратиться?"
                 />
-                {errors.name && (
-                  <StyledError>{errors.name.message}</StyledError>
-                )}
               </div>
 
               <div>
                 <Input
+                  size='small'
                   {...register('phone', {
                     required: 'Введите номер телефона',
                     pattern: {
@@ -115,11 +118,11 @@ const Welcome = () => {
                     },
                     maxLength: {
                       value: 15,
-                      message: 'Номер телефон должен содержать максимум 15 символов',
+                      message: 'Номер телефон должен максимум 15 символов',
                     },
                     minLength: {
                       value: 11,
-                      message: 'Номер телефон должен содержать минимум 11 символов',
+                      message: 'Номер телефон минимум 11 символов',
                     },
                   })}
                   icon={CallProgres}
@@ -127,9 +130,7 @@ const Welcome = () => {
                   placeholder="+996(___) __-__-__"
                   type="text"
                   error={!!errors.phone}
-                  helperText={
-                    errors.phone?.message ? errors.phone?.message : ''
-                  }
+                  helperText={errors.phone?.message}
                 />
               </div>
             </StyledInputContent>
@@ -149,7 +150,10 @@ const Welcome = () => {
           <h2> Заявка успешно отправлена!</h2>
 
           <StyledParagraf>
-            <StyledSpan>В ближайшее время с вами свяжется администратор</StyledSpan>
+            <StyledSpan>
+              В ближайшее время с вами свяжется администратор
+            </StyledSpan>
+
             <StyledSpan>для согласования деталей.</StyledSpan>
           </StyledParagraf>
 
@@ -188,7 +192,22 @@ const StyledH1 = styled('h1')`
   -webkit-text-fill-color: transparent;
   font-weight: 900;
   font-family: 'Manrope', sans-serif;
+  background-size: 200% 200%;
+  animation: gradientAnimation 3s linear infinite;
+
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 `;
+
 
 const StyledText = styled('p')`
   width: 90%;
@@ -218,43 +237,39 @@ const StyledImg = styled('img')`
   margin-left: 30px;
 `;
 
-const StyledButton = styled('button')`
-  width: 220px;
-  height: 44px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  margin-left: 9rem;
-  background: #04884c;
-  color: white;
-  font-weight: 500;
-  border-radius: 2rem;
-  padding: 8px, 12px, 8px, 24px;
-  font-family: 'Manrope', sans-serif;
-  cursor: pointer;
-  &:hover{
-    background: #02653b;
-    transition: all 0.3s;
-  }
-`;
+const StyledButton = styled(Button)(() => ({
+  '&.MuiButtonBase-root': {
+    height: '43px',
+    borderRadius: '24px',
+    padding: '10px',
+    fontSize: '14px',
+    marginLeft: '9rem',
+    marginTop: '1rem',
+    width: '230px',
+    display: 'flex',
+    paddingLeft: '14px',
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+}));
 
-const StyledButtonMain = styled('button')`
-  width: 200px;
-  border-radius: 30px;
-  border: 1px solid #048741;
-  color: #048741;
-  background: white;
-  transition: all 0.3s;
-  height: 42px;
-  font-family: 'Manrope', sans-serif;
-  font-size: 16px;
-  cursor: pointer;
-  &:hover{
-    background: #eae9e9;
-    transition: all 0.3s;
-  }
-`;
+const ButtonClass = styled(Button)(() => ({
+  '&.MuiButtonBase-root': {
+    width: '205px',
+    height: '43px',
+    borderRadius: '24px',
+    border: '1px solid #048741',
+    padding: '10px',
+    fontSize: '14px',
+    color: '#048741',
+    transition: '0.7s',
+    '&:hover': {
+      backgroundColor: '#0CBB6B',
+      color: '#FFFFFF',
+      padding: '10px',
+    },
+  },
+}));
 
 const StyledP = styled('div')`
   width: 25rem;
@@ -340,10 +355,4 @@ const StyledParagraf = styled('div')`
   align-items: center;
   margin-top: -30px;
   margin-bottom: 2rem;
-`;
-
-const StyledError = styled('span')`
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
 `;
