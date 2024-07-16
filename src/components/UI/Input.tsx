@@ -6,8 +6,8 @@ import {
 	Typography,
 	styled,
 } from "@mui/material";
-import eye from "../assets/icons/eye.svg";
-import eyenot from "../assets/icons/eyenot.svg";
+import eye from "../../assets/icons/eye.svg";
+import eyenot from "../../assets/icons/noteye.svg";
 
 interface InputProps extends Omit<TextFieldProps, "onChange" | "onClick"> {
 	type?: "text" | "password" | "email" | "number";
