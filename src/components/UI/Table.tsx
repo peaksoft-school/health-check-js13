@@ -58,7 +58,7 @@ const TableContainerStyled = styled(Box)({
   minWidth: '1200px',
   maxWidth: '1440px',
   margin: '0 auto',
-  minHeight: '746px',
+  minHeight: '100vh',
 });
 
 const TableStyled = styled('table')({
