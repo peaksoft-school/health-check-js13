@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Rating, styled } from '@mui/material';
 import Slider from 'react-slick';
-import NextImg from '../../../assets/icons/nextImg.svg';
-import PreviousImg from '../../../assets/icons/previousImg.svg';
-import PaginationDot from '../../../assets/icons/PaginationDot';
-import { InfoSlide } from '../../../utils/constants/slider';
+import NextSvg from '../../assets/icons/nextImg.svg';
+import PreviousSvg from '../../assets/icons/previousImg.svg';
+import PaginationDot from '../../assets/icons/PaginationDot';
+import { InfoSlide } from '../../utils/constants/slider';
 
 const customDots = (dots: React.ReactNode) => <div>{dots}</div>;
 const customPaging = () => <PaginationDot />;
@@ -19,8 +19,8 @@ const FeedbackSlider: FC = () => {
     slidesToScroll: 1,
     appendDots: (dots: React.ReactNode) => customDots(dots),
     customPaging: () => customPaging(),
-    nextArrow: <img src={NextImg} />,
-    prevArrow: <img src={PreviousImg} />,
+    nextArrow: <img src={NextSvg} />,
+    prevArrow: <img src={PreviousSvg} />,
   };
 
   return (
@@ -115,6 +115,7 @@ const StyledSlider = styled(Slider)({
     backgroundColor: '#F3F1F1',
     borderRadius: '20px',
   },
+  '& .next-arrow': {},
 
   '& .slick-dots': {
     listStyle: 'none',
