@@ -1,8 +1,8 @@
-import Restangle from '../assets/images/Rectangle.png';
-import Restangle1 from '../assets/images/Rectangle1.png';
-import Restangle3 from '../assets/images/Rectangle3.png';
-import Restangle2 from '../assets/images/Rectangle2.png';
-import Podrovnee from '../assets/icons/Podrovnee.svg';
+import Restangle from '../../assets/images/Rectangle.png';
+import Restangle1 from '../../assets/images/Rectangle1.png';
+import Restangle3 from '../../assets/images/Rectangle3.png';
+import Restangle2 from '../../assets/images/Rectangle2.png';
+import Podrovnee from '../../assets/icons/Podrovnee.svg';
 import { styled, Typography, Box } from '@mui/material';
 
 const AboutClinic = () => (
@@ -100,7 +100,8 @@ const StyledText = styled(Typography)`
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-top: 5.5rem;
+  margin-top: 6.4rem;
+  
 `;
 
 const StyledTextHealt = styled(Typography)`

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import AboutClinic from './components/AboutClinic';
+import AboutClinic from './components/landingPage/AboutClinic';
 
 const App: FC = () => <AboutClinic/>;
 
