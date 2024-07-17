@@ -83,7 +83,7 @@ const StyledContainer = styled(Box)`
   max-width: 90rem;
   min-width: 76.25rem;
   margin: 1.25rem auto;
-  padding: 2%;
+  padding: 2% 7rem 0 7rem;
 `;
 
 const StyledText = styled(Typography)`
