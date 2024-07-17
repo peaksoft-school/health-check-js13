@@ -1,5 +1,5 @@
-import { styled, Modal as MuiModal, Box } from '@mui/material';
 import { useState } from 'react';
+import { styled, Modal as MuiModal, Box } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../UI/Input';
 import Image from '../../assets/images/DoctorMakc.png';
@@ -14,7 +14,7 @@ interface IFormTypes {
   phone: string;
 }
 
-const Welcome = () => {
+export const Welcome = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
   const {
@@ -48,34 +48,34 @@ const Welcome = () => {
   return (
     <StyledContainer>
       <StyledContentText>
-        <div>
+        <Box>
           <StyledH1>Добро пожаловать в клинику HealthCheck</StyledH1>
-        </div>
+        </Box>
 
-        <div>
+        <Box>
           <StyledText>
             Медицинская клиника «HealthCheck— это клиника, в которой применяются
             новейшие диагностические и лечебные технологии и ведут прием лучшие
             специалисты.
           </StyledText>
-        </div>
+        </Box>
 
-        <div>
+        <Box>
           <ButtonClass variant="outlined" onClick={handleOpen}>
             Оставьте заявку
           </ButtonClass>
-        </div>
+        </Box>
       </StyledContentText>
 
-      <div>
+      <Box>
         <img src={Image} alt="HealthCheck" />
-      </div>
+      </Box>
 
       <MuiModal open={isOpen} onClose={handleClose}>
         <ModalContent>
-          <div>
+          <Box>
             <StyledH2>Оставьте заявку</StyledH2>
-          </div>
+          </Box>
 
           <StyledP>
             <StyledSpan>
@@ -89,7 +89,7 @@ const Welcome = () => {
             component="form"
             onSubmit={handleSubmit(submitHandler)}>
             <StyledInputContent>
-              <div>
+              <Box>
                 <Input
                   size="small"
                   {...register('name', {
@@ -105,24 +105,24 @@ const Welcome = () => {
                   placeholder="Введите имя"
                   label="Как к Вам обратиться?"
                 />
-              </div>
+              </Box>
 
-              <div>
+              <Box>
                 <Input
                   size="small"
                   {...register('phone', {
                     required: 'Введите номер телефона',
                     pattern: {
                       value: /^\+996\d{9}$/,
-                      message: 'Введите номер в формате +996(___) __-__-__',
+                      message: 'Введите номер в формате +996...',
                     },
                     maxLength: {
                       value: 15,
-                      message: 'Enter your valid number',
+                      message: 'Введите действительный номер',
                     },
                     minLength: {
                       value: 11,
-                      message: 'Номер телефон минимум 11 символов',
+                      message: ' Минимум 11 символов',
                     },
                   })}
                   icon={CallProgres}
@@ -132,7 +132,7 @@ const Welcome = () => {
                   error={!!errors.phone}
                   helperText={errors.phone?.message}
                 />
-              </div>
+              </Box>
             </StyledInputContent>
 
             <StyledButton type="submit">
@@ -140,7 +140,7 @@ const Welcome = () => {
               <StyledImg src={Arrow} alt="" />
             </StyledButton>
 
-            <StyledModalImg onClick={handleClose} src={Close} alt="" />
+            <StyledModalIcon onClick={handleClose} src={Close} alt="" />
           </StyledFormContainer>
         </ModalContent>
       </MuiModal>
@@ -157,85 +157,81 @@ const Welcome = () => {
             <StyledSpan>для согласования деталей.</StyledSpan>
           </StyledParagraf>
 
-          <StyledModalImg onClick={handleCloseSecondModal} src={Close} alt="" />
+          <StyledModalIcon
+            onClick={handleCloseSecondModal}
+            src={Close}
+            alt=""
+          />
         </StyledSecondModal>
       </MuiModal>
     </StyledContainer>
   );
 };
 
-export default Welcome;
+const StyledContainer = styled('div')(() => ({
+  width: '100%',
+  maxWidth: '1420px',
+  minWidth: '1200px',
+  margin: '20px auto',
+  display: 'flex',
+  justifyContent: 'space-around',
+  padding: '5px 5rem 0 5rem',
+}));
 
-const StyledContainer = styled('div')`
-  width: 100%;
-  max-width: 1420px;
-  min-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-`;
+const StyledContentText = styled('div')(() => ({
+  width: '45%',
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: '100px',
+}));
 
-const StyledContentText = styled('div')`
-  width: 45%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 100px;
-`;
+const StyledH1 = styled('h1')(() => ({
+  fontSize: '3.7rem',
+  lineHeight: '1.1',
+  fontWeight: 'bold',
+  marginBottom: '30px',
+  background: 'linear-gradient(90deg, #30c5cb, #33327e)',
+  backgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  fontFamily: "'Manrope', sans-serif",
+  backgroundSize: '200% 200%',
+  animation: 'gradientAnimation 3s linear infinite',
 
-const StyledH1 = styled('h1')`
-  font-size: 3.7rem;
-  line-height: 1.1;
-  font-weight: bold;
-  margin-bottom: 30px;
-  background: linear-gradient(90deg, #30c5cb, #33327e);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 900;
-  font-family: 'Manrope', sans-serif;
-  background-size: 200% 200%;
-  animation: gradientAnimation 3s linear infinite;
+  '@keyframes gradientAnimation': {
+    '0%': { backgroundPosition: '0% 50%' },
+    '50%': { backgroundPosition: '100% 50%' },
+    '100%': { backgroundPosition: '0% 50%' },
+  },
+}));
 
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-`;
+const StyledText = styled('p')(() => ({
+  width: '90%',
+  color: '#333',
+  marginBottom: '40px',
+  marginTop: '5px',
+  fontSize: '19px',
+  lineHeight: '1.5',
+  fontFamily: "'Manrope', sans-serif",
+}));
 
-const StyledText = styled('p')`
-  width: 90%;
-  color: #333;
-  margin-bottom: 40px;
-  margin-top: 5px;
-  font-size: 19px;
-  line-height: 1.5;
-  font-family: 'Manrope', sans-serif;
-`;
+const StyledModalIcon = styled('img')(() => ({
+  width: '36px',
+  height: '36px',
+  position: 'absolute',
+  top: '10px',
+  right: '10px',
+  cursor: 'pointer',
+}));
 
-const StyledModalImg = styled('img')`
-  width: 36px;
-  height: 36px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-`;
+const StyledH2 = styled('h2')(() => ({
+  marginTop: '40px',
+  fontFamily: "'Manrope', sans-serif",
+  fontWeight: 500,
+}));
 
-const StyledH2 = styled('h1')`
-  margin-top: 40px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
-`;
-
-const StyledImg = styled('img')`
-  margin-left: 30px;
-`;
+const StyledImg = styled('img')(() => ({
+  marginLeft: '30px',
+}));
 
 const StyledButton = styled(Button)(() => ({
   '&.MuiButtonBase-root': {
@@ -271,88 +267,89 @@ const ButtonClass = styled(Button)(() => ({
   },
 }));
 
-const StyledP = styled('div')`
-  width: 25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  margin-bottom: 2rem;
-`;
+const StyledP = styled('div')(() => ({
+  width: '25rem',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: '20px',
+  marginBottom: '2rem',
+}));
 
-const StyledSpan = styled('span')`
-  display: block;
-  text-align: center;
-  margin-bottom: 5px;
-  font-size: 16px;
-  font-family: 'Manrope', sans-serif;
-`;
+const StyledSpan = styled('span')(() => ({
+  display: 'block',
+  textAlign: 'center',
+  marginBottom: '5px',
+  fontSize: '16px',
+  fontFamily: "'Manrope', sans-serif",
+}));
 
-const ModalContent = styled(Box)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 659px;
-  height: 468px;
-  background-color: #ebf2fc;
-  display: flex;
-  justify-content: start;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 20px;
-  padding: 16px;
-`;
+const ModalContent = styled(Box)(() => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '659px',
+  height: '468px',
+  backgroundColor: '#ebf2fc',
+  display: 'flex',
+  justifyContent: 'start',
+  flexDirection: 'column',
+  alignItems: 'center',
+  borderRadius: '20px',
+  padding: '16px',
+}));
 
-const StyledFormContainer = styled(Box)`
-  display: flex;
-  gap: 30px;
-  flex-direction: column;
-`;
+const StyledFormContainer = styled(Box)(() => ({
+  display: 'flex',
+  gap: '30px',
+  flexDirection: 'column',
+}));
 
-const StyledInputContent = styled(Box)`
-  display: flex;
-  gap: 10px;
-`;
+const StyledInputContent = styled(Box)(() => ({
+  display: 'flex',
+  gap: '10px',
+  width: '100%',
+}));
 
-const StyledSecondModal = styled(Box)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 659px;
-  height: 468px;
-  background-color: #ebf2fc;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 20px;
-  padding: 16px;
+const StyledSecondModal = styled(Box)(() => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '659px',
+  height: '468px',
+  backgroundColor: '#ebf2fc',
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  borderRadius: '20px',
+  padding: '16px',
 
-  h2 {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 500;
-    width: 380px;
-    height: 50px;
-    font-size: 27px;
-    margin-bottom: 50px;
-  }
+  h2: {
+    fontFamily: "'Manrope', sans-serif",
+    fontWeight: 500,
+    width: '380px',
+    height: '50px',
+    fontSize: '27px',
+    marginBottom: '50px',
+  },
 
-  p {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 400;
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-`;
+  p: {
+    fontFamily: "'Manrope', sans-serif",
+    fontWeight: 400,
+    fontSize: '18px',
+    marginBottom: '10px',
+  },
+}));
 
-const StyledParagraf = styled('div')`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: -30px;
-  margin-bottom: 2rem;
-`;
+const StyledParagraf = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: '-30px',
+  marginBottom: '2rem',
+}));
