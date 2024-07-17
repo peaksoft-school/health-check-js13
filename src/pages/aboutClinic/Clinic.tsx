@@ -94,7 +94,7 @@ const HealthBox = styled('div')(() => ({
 const TextContent = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  marginTop: '40px',
+  marginTop: '45px',
 }));
 
 const CardLorem = styled('div')(() => ({
@@ -112,7 +112,6 @@ const SignedContent = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  marginTop: '25px',
   marginLeft: '440px',
 }));
 
@@ -124,7 +123,7 @@ const DoctorsCards = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
-  marginTop: '134px',
+  marginTop: '124px',
   position: 'relative',
   zIndex: 2,
 }));
@@ -178,7 +177,7 @@ const FonImg = styled('img')(() => ({
   position: 'absolute',
   width: '551px',
   height: '385.84px',
-  top: '160px',
+  top: '149px',
   left: '-45px',
   zIndex: 1,
 }));
