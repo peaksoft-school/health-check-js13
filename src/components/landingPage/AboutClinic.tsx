@@ -1,4 +1,4 @@
-import Restangle from '../../assets/images/Rectangle.png';
+import Clinic from '../../assets/images/Clinic.png';
 import Restangle1 from '../../assets/images/Rectangle1.png';
 import Restangle3 from '../../assets/images/Rectangle3.png';
 import Restangle2 from '../../assets/images/Rectangle2.png';
@@ -42,7 +42,7 @@ const AboutClinic = () => (
 
     <StyledBox>
       <StyledImageContainer>
-        <img src={Restangle} alt="Restangle" />
+        <img src={Clinic} alt="Restangle" />
       </StyledImageContainer>
       <StyledContainerImage>
         <img src={Restangle1} alt="Restangle" />
@@ -83,7 +83,7 @@ const StyledContainer = styled(Box)`
   max-width: 90rem;
   min-width: 76.25rem;
   margin: 1.25rem auto;
-  padding: 2%;
+  padding: 2% 7rem 0 7rem;
 `;
 
 const StyledText = styled(Typography)`
@@ -101,7 +101,6 @@ const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
   margin-top: 5.8rem;
-  
 `;
 
 const StyledTextHealt = styled(Typography)`
