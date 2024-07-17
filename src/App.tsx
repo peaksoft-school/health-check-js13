@@ -1,17 +1,19 @@
 import { FC } from 'react';
-import OurService from './components/landingPage/OurService';
+import AboutClinic from './components/landingPage/AboutClinic';
 import Header from './layout/user/Header';
 import AboutPart from './components/landingPage/AboutPart';
-import Doctors from './components/landingPage/Doctors';
 import Aplication from './components/landingPage/Aplication';
+import Doctors from './components/landingPage/Doctors';
+import OurService from './components/landingPage/OurService';
 
 const App: FC = () => (
   <div>
     <Header />
+    <AboutClinic />
     <AboutPart />
-    <OurService />
-    <Doctors />
     <Aplication />
+    <Doctors />
+    <OurService />
   </div>
 );
 

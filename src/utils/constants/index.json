@@ -2,112 +2,112 @@
   {
     "name": "Аллергология",
     "id": 1,
-    "img": "src/assets/service-icons/HandIcon.svg"
+    "img": "src/assets/icons/service-icons/HandIcon.svg"
   },
   {
     "name": "Вакцинация",
     "id": 2,
-    "img": "src/assets/service-icons/InjectionIcon.svg"
+    "img": "src/assets/icons/service-icons/InjectionIcon.svg"
   },
   {
     "name": "Гинекология",
     "id": 3,
-    "img": "src/assets/service-icons/UterusIcon.svg"
+    "img": "src/assets/icons/service-icons/UterusIcon.svg"
   },
   {
     "name": "Кардиология",
     "id": 4,
-    "img": "src/assets/service-icons/HeartIcon.svg"
+    "img": "src/assets/icons/service-icons/HeartIcon.svg"
   },
   {
     "name": "Нейрохирургия",
     "id": 5,
-    "img": "src/assets/service-icons/NeyroIcon.svg"
+    "img": "src/assets/icons/service-icons/NeyroIcon.svg"
   },
   {
     "name": "Ортопедия",
     "id": 6,
-    "img": "src/assets/service-icons/OrtopediaIcon.svg"
+    "img": "src/assets/icons/service-icons/OrtopediaIcon.svg"
   },
   {
     "name": "Флебология",
     "id": 7,
-    "img": "src/assets/service-icons/LegIcon.svg"
+    "img": "src/assets/icons/service-icons/LegIcon.svg"
   },
   {
     "name": "Офтальмология",
     "id": 8,
-    "img": "src/assets/service-icons/AculistIcon.svg"
+    "img": "src/assets/icons/service-icons/AculistIcon.svg"
   },
   {
     "name": "Психтерапия",
     "id": 9,
-    "img": "src/assets/service-icons/Psikhoterapiya.svg"
+    "img": "src/assets/icons/service-icons/Psikhoterapiya.svg"
   },
   {
     "name": "Ревмотология",
     "id": 10,
-    "img": "src/assets/service-icons/RevmatologiyaIcon.svg"
+    "img": "src/assets/icons/service-icons/RevmatologiyaIcon.svg"
   },
   {
     "name": "Урология",
     "id": 11,
-    "img": "src/assets/service-icons/UrologiyaIcon.svg"
+    "img": "src/assets/icons/service-icons/UrologiyaIcon.svg"
   },
 
   {
     "name": "Эндокринология",
     "id": 12,
-    "img": "src/assets/service-icons/EndokrinalogiaIcon.svg"
+    "img": "src/assets/icons/service-icons/EndokrinalogiaIcon.svg"
   },
   {
     "name": "Физиотерапия",
     "id": 13,
-    "img": "src/assets/service-icons/FizioterapiyaIcon.svg"
+    "img": "src/assets/icons/service-icons/FizioterapiyaIcon.svg"
   },
   {
     "name": "Терапия",
     "id": 15,
-    "img": "src/assets/service-icons/Terapiya.svg"
+    "img": "src/assets/icons/service-icons/Terapiya.svg"
   },
   {
     "name": "Пульмонология",
     "id": 16,
-    "img": "src/assets/service-icons/PulmanalogiaIcon.svg"
+    "img": "src/assets/icons/service-icons/PulmanalogiaIcon.svg"
   },
   {
     "name": "Проктология",
     "id": 17,
-    "img": "src/assets/service-icons/Proctologia.svg"
+    "img": "src/assets/icons/service-icons/Proctologia.svg"
   },
   {
     "name": "Носология",
     "id": 18,
-    "img": "src/assets/service-icons/NoseIcon.svg"
+    "img": "src/assets/icons/service-icons/NoseIcon.svg"
   },
   {
     "name": "Онкология",
     "id": 19,
-    "img": "src/assets/service-icons/OnkologiyaIcon.svg"
+    "img": "src/assets/icons/service-icons/OnkologiyaIcon.svg"
   },
   {
     "name": "Неврология",
     "id": 20,
-    "img": "src/assets/service-icons/BrainIcon.svg"
+    "img": "src/assets/icons/service-icons/BrainIcon.svg"
   },
   {
     "name": "Дерматология",
     "id": 21,
-    "img": "src/assets/service-icons/LeatherIcon.svg"
+    "img": "src/assets/icons/service-icons/LeatherIcon.svg"
   },
   {
     "name": "Гастроэнтерология",
     "id": 22,
-    "img": "src/assets/service-icons/IntestinesIcon.svg"
+    "img": "src/assets/icons/service-icons/IntestinesIcon.svg"
   },
   {
     "name": "Анестезиология",
     "id": 23,
-    "img": "src/assets/service-icons/AntisepticsIcon.svg"
+    "img": "src/assets/icons/service-icons/AntisepticsIcon.svg"
   }
 ]

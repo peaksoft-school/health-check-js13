@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from '@mui/material';
-import Button from '../../components/UI/Button';
+import Button from '../UI/Button';
 import index from '../../utils/constants/index.json';
 
 const OurService = () => (
