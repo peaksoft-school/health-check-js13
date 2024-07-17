@@ -90,6 +90,7 @@ export default Header;
 
 const HeaderClass = styled('header')(() => ({
   padding: '10px',
+  fontFamily: '"Poppins", sans-serif',
 }));
 
 const ALink = styled('a')({
