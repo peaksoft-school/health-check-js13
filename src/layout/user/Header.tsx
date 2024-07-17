@@ -262,6 +262,7 @@ const HealthCheck = styled('img')(() => ({
   width: '16.25rem',
   height: '4.5625rem',
   flexWrap: 'wrap',
+  cursor: 'pointer',
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
