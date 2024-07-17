@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { doctors } from '../../utils/constants/doctorsCards';
 import { Box, styled } from '@mui/material';
-import Button from '../UI/CustomUI/Button';
+import Button from '../UI/Button';
 
 const Doctors: FC = () => {
   return (

@@ -30,39 +30,40 @@
     "img": "src/assets/service-icons/OrtopediaIcon.svg"
   },
   {
-    "name": "Офтальмология",
+    "name": "Флебология",
     "id": 7,
+    "img": "src/assets/service-icons/LegIcon.svg"
+  },
+  {
+    "name": "Офтальмология",
+    "id": 8,
     "img": "src/assets/service-icons/AculistIcon.svg"
   },
   {
     "name": "Психтерапия",
-    "id": 8,
+    "id": 9,
     "img": "src/assets/service-icons/Psikhoterapiya.svg"
   },
   {
     "name": "Ревмотология",
-    "id": 9,
+    "id": 10,
     "img": "src/assets/service-icons/RevmatologiyaIcon.svg"
   },
   {
     "name": "Урология",
-    "id": 10,
+    "id": 11,
     "img": "src/assets/service-icons/UrologiyaIcon.svg"
   },
+
   {
     "name": "Эндокринология",
-    "id": 11,
+    "id": 12,
     "img": "src/assets/service-icons/EndokrinalogiaIcon.svg"
   },
   {
     "name": "Физиотерапия",
     "id": 13,
     "img": "src/assets/service-icons/FizioterapiyaIcon.svg"
-  },
-  {
-    "name": "Флебология",
-    "id": 14,
-    "img": "src/assets/service-icons/LegIcon.svg"
   },
   {
     "name": "Терапия",
