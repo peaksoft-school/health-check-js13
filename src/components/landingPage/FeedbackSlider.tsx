@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Rating, styled } from '@mui/material';
 import Slider from 'react-slick';
-import NextSvg from '../../assets/icons/nextImg.svg';
-import PreviousSvg from '../../assets/icons/previousImg.svg';
-import PaginationDot from '../../assets/icons/PaginationDot';
 import { InfoSlide } from '../../utils/constants/slider';
+import PaginationDot from '../../assets/icons/PaginationDot';
+import NextIcon from '../../assets/icons/NextIcon';
+import PreviousIcon from '../../assets/icons/PreviousIcon';
 
 const customDots = (dots: React.ReactNode) => <div>{dots}</div>;
 const customPaging = () => <PaginationDot />;
@@ -19,12 +19,12 @@ const FeedbackSlider: FC = () => {
     slidesToScroll: 1,
     appendDots: (dots: React.ReactNode) => customDots(dots),
     customPaging: () => customPaging(),
-    nextArrow: <img src={NextSvg} />,
-    prevArrow: <img src={PreviousSvg} />,
+    nextArrow: <NextIcon />,
+    prevArrow: <PreviousIcon />,
   };
 
   return (
-    <>
+    <StyledContainer>
       <StyledInfo>
         Отзывы наших <span> пациентов</span>
       </StyledInfo>
@@ -44,11 +44,16 @@ const FeedbackSlider: FC = () => {
           ))}
         </StyledSlider>
       </MainContainer>
-    </>
+    </StyledContainer>
   );
 };
 
 export default FeedbackSlider;
+
+const StyledContainer = styled('div')({
+  margin: '0 auto',
+  maxWidth: '90rem',
+});
 
 const MainContainer = styled('div')({
   display: 'flex',
@@ -110,12 +115,20 @@ const StyledSlider = styled(Slider)({
   },
   '& .slick-list': {
     width: '782px',
+    
   },
   '& .slick-slide': {
     backgroundColor: '#F3F1F1',
     borderRadius: '20px',
   },
-  '& .next-arrow': {},
+  '& .next-arrow': {
+    position: 'absolute',
+    top: '388px',
+    right: '40px',
+    '&:hover':{
+      fill: '#048741',
+    }
+  },
 
   '& .slick-dots': {
     listStyle: 'none',
