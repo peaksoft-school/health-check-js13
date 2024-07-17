@@ -98,6 +98,7 @@ const HeaderClass = styled('header')(() => ({
   zIndex: 999,
   backgroundColor: '#fff',
   padding: '5px 1px 3px 0',
+  fontFamily: '"Poppins", sans-serif',
 }));
 
 const ALink = styled('a')({

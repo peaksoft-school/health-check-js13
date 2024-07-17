@@ -124,7 +124,7 @@ const AplicationBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  gap: '30px',
+  gap: '20px',
 
   '.h1text': {
     textAlign: 'center',
