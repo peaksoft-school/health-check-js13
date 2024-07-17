@@ -7,7 +7,7 @@ import TheMap from '../../assets/icons/JpsIcon.svg';
 import Hour from '../../assets/icons/TimeIcon.svg';
 import Medcheck from '../../assets/images/HEALTHCHECK.png';
 import Search from '../../assets/icons/SearchIcon.svg';
-import Button from '../../components/UI/CustomUI/Button';
+import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 
