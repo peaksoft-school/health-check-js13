@@ -54,67 +54,66 @@ const AboutClinic = () => (
 );
 
 export default AboutClinic;
+const StyledImageContainer = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexDirection: 'column',
+}));
 
-const StyledImageContainer = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-`;
+const StyledImageContainerText = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'flex-start',
+  flexDirection: 'column',
+}));
 
-const StyledImageContainerText = styled(Box)`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-`;
+const StyledContainerImage = styled(Box)(() => ({
+  display: 'flex',
+  marginTop: '1rem',
+  gap: '1.5rem',
+  img: {
+    width: '70%',
+  },
+}));
 
-const StyledContainerImage = styled(Box)`
-  display: flex;
-  margin-top: 1rem;
-  gap: 1.5rem;
-  img {
-    width: 70%;
-  }
-`;
+const StyledContainer = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+  maxWidth: '90rem',
+  minWidth: '76.25rem',
+  margin: '1.25rem auto',
+  padding: '2% 7rem 0 7rem',
+}));
 
-const StyledContainer = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 90rem;
-  min-width: 76.25rem;
-  margin: 1.25rem auto;
-  padding: 2%;
-`;
+const StyledText = styled(Typography)(() => ({
+  width: '80%',
+  height: '80%',
+  fontFamily: "'Manrope', sans-serif",
+  marginTop: '2.4rem',
+  fontSize: '1rem',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+}));
 
-const StyledText = styled(Typography)`
-  width: 80%;
-  height: 80%;
-  font-family: 'Manrope', sans-serif;
-  margin-top: 2.4rem;
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
+const StyledBox = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: '5.8rem',
+}));
 
-const StyledBox = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  margin-top: 5.8rem;
-  
-`;
+const StyledTextHealt = styled(Typography)(() => ({
+  fontSize: '2.25rem',
+  span: {
+    color: 'green',
+  },
+}));
 
-const StyledTextHealt = styled(Typography)`
-  font-size: 2.25rem;
-  span {
-    color: green;
-  }
-`;
+const StyledTextIcon = styled(Typography)(() => ({
+  fontSize: '1.125rem',
+  marginTop: '3rem',
+  fontFamily: "'Manrope', sans-serif",
+  color: '#10aa10',
+  cursor: 'pointer',
+}));
 
-const StyledTextIcon = styled(Typography)`
-  font-size: 1.125rem;
-  margin-top: 3rem;
-  font-family: 'Manrope', sans-serif;
-  color: #10aa10;
-  cursor: pointer;
-`;
