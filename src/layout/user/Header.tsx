@@ -23,12 +23,14 @@ const Header = () => (
                 <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
               </ContainerNom>
             </ALink>
+
             <ContainerNom>
               <SentryImg src={Hour} alt="hour" />
               <GreenP>пн-сб</GreenP>
               <MaxNumber>08:00 до 18:00</MaxNumber>
             </ContainerNom>
           </ContentNom>
+
           <ContentInput>
             <Input
               fullWidth
@@ -44,6 +46,7 @@ const Header = () => (
               placeholder="Поиск по сайту"
             />
           </ContentInput>
+
           <ContainerCards>
             <IconContainer>
               <a href="https://www.instagram.com/_i.a.n.05_/">
@@ -65,8 +68,10 @@ const Header = () => (
             </ContentNumber>
             <AuthDropdown />
           </ContainerCards>
+
           <HR />
         </ContentCards>
+
         <ContentCards1>
           <BoxContent>
             <HealthCheck src={Medcheck} alt="medcheck" />
@@ -75,6 +80,7 @@ const Header = () => (
                 <Title>{item.title}</Title>
               </Box>
             ))}
+
             <ContentButton>
               <ButtonClass variant="outlined">получить результаты</ButtonClass>
               <Button1>запись онлайн</Button1>
@@ -128,6 +134,7 @@ const ContentNom = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   marginRight: '5rem',
+
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
@@ -169,6 +176,7 @@ const ContentInput = styled('div')(() => ({
   marginLeft: '1.25rem',
   width: '367px',
   flex: '1',
+
   '@media (max-width: 767px)': {
     marginLeft: '0',
     width: '100%',

@@ -12,11 +12,10 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function AuthDropdown() {
   const [open, setOpen] = useState(false);
+
   const anchorRef = useRef<HTMLButtonElement>(null);
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
-  };
+  const handleToggle = () => setOpen(prevOpen => !prevOpen);
 
   const handleClose = (event: Event | React.SyntheticEvent) => {
     if (
@@ -39,6 +38,7 @@ export default function AuthDropdown() {
   }
 
   const prevOpen = useRef(open);
+
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current!.focus();
@@ -59,6 +59,7 @@ export default function AuthDropdown() {
           onClick={handleToggle}>
           <ImgUser src={Users} alt="user" />
         </Button>
+
         <Popper
           open={open}
           anchorEl={anchorRef.current}
