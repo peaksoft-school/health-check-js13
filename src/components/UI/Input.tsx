@@ -7,7 +7,7 @@ import {
   styled,
 } from '@mui/material';
 import eye from '../../assets/icons/eye.svg';
-import eyenot from '../../assets/icons/noteye.svg';
+import noteye from '../../assets/icons/noteye.svg';
 
 interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   type?: 'text' | 'password' | 'email' | 'number';
@@ -70,7 +70,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               <InputAdornment position="end">
                 <img
                   onClick={handleClickEye}
-                  src={showPassword ? eye : eyenot}
+                  src={showPassword ? eye : noteye}
                   alt={showPassword ? 'eye' : 'eyenot'}
                   style={{ cursor: 'pointer' }}
                 />
@@ -81,23 +81,25 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 {icon === '' ? '' : <img src={icon} alt="icon" />}
               </InputAdornment>
             ),
-            }}
-            {...rest}
-         />
+          }}
+          {...rest}
+        />
       </LabelDiv>
     );
   }
 );
+export default Input;
 
 const StyledInput = styled(TextField)(({ theme, error }) => ({
   width: '100%',
-  height: '42px',
+  height: '40px',
   borderRadius: '10px',
   caretColor: theme.palette.primary.darkGreen,
-
+  backgroundColor: '#fff',
   '& .MuiOutlinedInput-input': {
     borderRadius: '8px',
     color: theme.palette.secondary.lightBlack,
+    backgroundColor: '#fff',
   },
   '& .MuiFormLabel-root': {
     '&.Mui-focused ': {
@@ -136,5 +138,3 @@ const LabelDiv = styled('div')({
   display: 'flex',
   flexDirection: 'column',
 });
-
-export default Input;

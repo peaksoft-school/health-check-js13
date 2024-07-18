@@ -11,85 +11,94 @@ import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 
-const Header = () => (
-  <HeaderClass>
-    <Box className="container">
-      <Content>
-        <ContentCards>
-          <ContentNom>
-            <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+const Header = () => {
+  return (
+    <HeaderClass>
+      <Box className="container">
+        <Content>
+          <ContentCards>
+            <ContentNom>
+              <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+                <ContainerNom>
+                  <SentryImg src={TheMap} alt="theMap" />
+                  <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
+                </ContainerNom>
+              </ALink>
               <ContainerNom>
-                <SentryImg src={TheMap} alt="theMap" />
-                <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
+                <SentryImg src={Hour} alt="hour" />
+                <GreenP>пн-сб</GreenP>
+                <MaxNumber>08:00 до 18:00</MaxNumber>
               </ContainerNom>
-            </ALink>
-            <ContainerNom>
-              <SentryImg src={Hour} alt="hour" />
-              <GreenP>пн-сб</GreenP>
-              <MaxNumber>08:00 до 18:00</MaxNumber>
-            </ContainerNom>
-          </ContentNom>
-          <ContentInput>
-            <Input
-              fullWidth
-              size="small"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <SearchImg src={Search} alt="search" />
-                  </InputAdornment>
-                ),
-              }}
-              type="text"
-              placeholder="Поиск по сайту"
-            />
-          </ContentInput>
-          <ContainerCards>
-            <IconContainer>
-              <a href="https://www.instagram.com/_i.a.n.05_/">
-                <ImgNetworks src={Instagram} alt="instagram" />
-              </a>
-              <a href="https://t.me/+996500344433">
-                <ImgNetworks src={Telegram} alt="telegram" />
-              </a>
-              <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
-                <ImgNetworks src={WhatsApp} alt="whatsApp" />
-              </a>
-            </IconContainer>
-            <ContentNumber>
-              <NumberCards>
-                <img src={Telephone} alt="telephone" />
-                <span>+996(800) 000 000</span>
-              </NumberCards>
-              <Span>+996(505) 000 000</Span>
-            </ContentNumber>
-            <AuthDropdown />
-          </ContainerCards>
-        </ContentCards>
-        <HR />
-        <ContentCards>
-          <BoxContent>
-            <HealthCheck src={Medcheck} alt="medcheck" />
-            {Text.map((item, index) => (
-              <Box key={index}>
-                <Title>{item.title}</Title>
-              </Box>
-            ))}
-            <ContentButton>
-              <ButtonClass variant="outlined">получить результаты</ButtonClass>
-              <Button1>запись онлайн</Button1>
-            </ContentButton>
-          </BoxContent>
-        </ContentCards>
-      </Content>
-    </Box>
-  </HeaderClass>
-);
+            </ContentNom>
+            <ContentInput>
+              <Input
+                fullWidth
+                size="small"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <SearchImg src={Search} alt="search" />
+                    </InputAdornment>
+                  ),
+                }}
+                type="text"
+                placeholder="Поиск по сайту"
+              />
+            </ContentInput>
+            <ContainerCards>
+              <IconContainer>
+                <a href="https://www.instagram.com/_i.a.n.05_/">
+                  <ImgNetworks src={Instagram} alt="instagram" />
+                </a>
+                <a href="https://t.me/+996500344433">
+                  <ImgNetworks src={Telegram} alt="telegram" />
+                </a>
+                <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
+                  <ImgNetworks src={WhatsApp} alt="whatsApp" />
+                </a>
+              </IconContainer>
+              <ContentNumber>
+                <NumberCards>
+                  <img src={Telephone} alt="telephone" />
+                  <span>+996(800) 000 000</span>
+                </NumberCards>
+                <Span>+996(505) 000 000</Span>
+              </ContentNumber>
+              <AuthDropdown />
+            </ContainerCards>
+            <HR />
+          </ContentCards>
+          <ContentCards1>
+            <BoxContent>
+              <HealthCheck src={Medcheck} alt="medcheck" />
+              {Text.map((item, index) => (
+                <Box key={index}>
+                  <Title>{item.title}</Title>
+                </Box>
+              ))}
+              <ContentButton>
+                <ButtonClass variant="outlined">
+                  получить результаты
+                </ButtonClass>
+                <Button1>запись онлайн</Button1>
+              </ContentButton>
+            </BoxContent>
+          </ContentCards1>
+        </Content>
+      </Box>
+    </HeaderClass>
+  );
+};
 
 export default Header;
 
 const HeaderClass = styled('header')(() => ({
-  padding: '10px',
+  position: 'sticky',
+  top: 0,
+  zIndex: 999,
+  backgroundColor: '#fff',
+  padding: '5px 1px 3px 0',
+  fontFamily: '"Poppins", sans-serif',
 }));
 
 const ALink = styled('a')({
@@ -104,6 +113,15 @@ const Content = styled('div')(() => ({
 }));
 
 const ContentCards = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  paddingTop: 5,
+  transition: 'background-color 0.3s ease',
+}));
+
+const ContentCards1 = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -174,7 +192,7 @@ const ContainerCards = styled('div')(() => ({
 }));
 
 const HR = styled('hr')(() => ({
-  width: '1200px',
+  width: '100%',
   marginTop: '0.8125rem',
   border: '1px solid #D9D9D9',
 }));
@@ -202,6 +220,7 @@ const SearchImg = styled('img')(() => ({
   cursor: 'pointer',
   marginRight: '20px',
 }));
+
 const ContentNumber = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -219,10 +238,21 @@ const NumberCards = styled('div')(() => ({
 
 const BoxContent = styled('div')(() => ({
   display: 'flex',
-  gap: '3.125rem',
+  gap: '2.8125rem',
   alignItems: 'center',
   marginTop: '0.875rem',
   flexWrap: 'wrap',
+  transition: 'opacity 0.15s , transform 60ms',
+  '&.hide': {
+    opacity: '0',
+    transform: 'translateY(-20px)',
+    pointerEvents: 'none',
+  },
+  '&.show': {
+    opacity: '1',
+    transform: 'translateY(0)',
+    pointerEvents: 'all',
+  },
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
@@ -233,6 +263,7 @@ const HealthCheck = styled('img')(() => ({
   width: '16.25rem',
   height: '4.5625rem',
   flexWrap: 'wrap',
+  cursor: 'pointer',
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
@@ -268,6 +299,7 @@ const ButtonClass = styled(Button)(() => ({
     },
   },
 }));
+
 const Button1 = styled(Button)(() => ({
   '&.MuiButtonBase-root': {
     width: '158px',
