@@ -1,32 +1,30 @@
 import { FC } from 'react';
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { date } from '../../utils/constants/aboutCards';
 
-const AboutPart: FC = () => {
-  return (
-    <div>
-      <div className="container">
-        <Content>
-          <ContentGlab>
-            <span style={{ fontSize: '36px' }}>Почему</span>
-            <SpanGreen>нас выбирают?</SpanGreen>
-          </ContentGlab>
-          <CardsContainer>
-            <CardsContent>
-              {date.map(item => (
-                <Cards key={item.id}>
-                  <Span>{item.number}</Span>
-                  <Title>{item.title}</Title>
-                  <Text>{item.text}</Text>
-                </Cards>
-              ))}
-            </CardsContent>
-          </CardsContainer>
-        </Content>
-      </div>
-    </div>
-  );
-};
+const AboutPart: FC = () => (
+  <Box>
+    <Box className="container">
+      <Content>
+        <ContentGlab>
+          <span style={{ fontSize: '36px' }}>Почему</span>
+          <SpanGreen>нас выбирают?</SpanGreen>
+        </ContentGlab>
+        <CardsContainer>
+          <CardsContent>
+            {date.map(item => (
+              <Cards key={item.id}>
+                <Span>{item.number}</Span>
+                <Title>{item.title}</Title>
+                <Text>{item.text}</Text>
+              </Cards>
+            ))}
+          </CardsContent>
+        </CardsContainer>
+      </Content>
+    </Box>
+  </Box>
+);
 
 export default AboutPart;
 

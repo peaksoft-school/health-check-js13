@@ -34,7 +34,7 @@ const OurService = () => (
 
 export default OurService;
 
-const Container = styled(Box)(({}) => ({
+const Container = styled(Box)(() => ({
   width: '100%',
   padding: '20px',
   margin: '20px auto',
