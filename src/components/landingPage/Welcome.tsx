@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled, Modal as MuiModal, Box } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../UI/Input';
@@ -21,22 +21,23 @@ export const Welcome = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
   } = useForm<IFormTypes>({ mode: 'onSubmit' });
+
+  useEffect(() => {
+    setValue('phone', '+996'); // Set default value of 'phone' input to '996'
+  }, [setValue]);
 
   const handleOpen = () => setIsOpen(true);
 
-  const handleCloseSecondModal = () => {
-    setIsOpenSecondModal(false);
-  };
+  const handleCloseSecondModal = () => setIsOpenSecondModal(false);
 
   const handleOpenSecondModal = () => {
     setIsOpenSecondModal(true);
     handleClose();
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  const handleClose = () => setIsOpen(false);
 
   const submitHandler: SubmitHandler<IFormTypes> = data => {
     if (isValid) {
