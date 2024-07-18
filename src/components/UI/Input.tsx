@@ -88,6 +88,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
+export default Input;
 
 const StyledInput = styled(TextField)(({ theme, error }) => ({
   width: '100%',
@@ -137,5 +138,3 @@ const LabelDiv = styled('div')({
   display: 'flex',
   flexDirection: 'column',
 });
-
-export default Input;
