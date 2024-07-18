@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { styled, Modal as MuiModal, Box } from '@mui/material';
+import { styled, Modal as MuiModal, Box, Typography } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../UI/Input';
 import Image from '../../assets/images/DoctorMakc.png';
@@ -25,7 +25,7 @@ export const Welcome = () => {
   } = useForm<IFormTypes>({ mode: 'onSubmit' });
 
   useEffect(() => {
-    setValue('phone', '+996'); // Set default value of 'phone' input to '996'
+    setValue('phone', '+996');
   }, [setValue]);
 
   const handleOpen = () => setIsOpen(true);
@@ -141,14 +141,18 @@ export const Welcome = () => {
               <StyledImg src={Arrow} alt="" />
             </StyledButton>
 
-            <StyledModalIcon onClick={handleClose} src={Close} alt="" />
+            <StyledModalIcon
+              onClick={handleClose}
+              src={Close}
+              alt="close-icon"
+            />
           </StyledFormContainer>
         </ModalContent>
       </MuiModal>
 
       <MuiModal open={isOpenSecondModal} onClose={handleCloseSecondModal}>
         <StyledSecondModal>
-          <h2> Заявка успешно отправлена!</h2>
+          <Typography variant="h2"> Заявка успешно отправлена!</Typography>
 
           <StyledParagraf>
             <StyledSpan>
@@ -187,21 +191,30 @@ const StyledContentText = styled('div')(() => ({
 }));
 
 const StyledH1 = styled('h1')(() => ({
-  fontSize: '3.7rem',
-  lineHeight: '1.1',
-  fontWeight: 'bold',
-  marginBottom: '30px',
-  background: 'linear-gradient(90deg, #30c5cb, #33327e)',
-  backgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
   fontFamily: "'Manrope', sans-serif",
-  backgroundSize: '200% 200%',
-  animation: 'gradientAnimation 3s linear infinite',
+  fontSize: '3rem',
+  fontWeight: '900',
+  lineHeight: '140%',
+  backgroundClip: 'text',
+  color: 'transparent',
+  width: '36.563rem',
+  marginBottom: '1.625rem',
+  backgroundImage: 'linear-gradient(90deg, #330867 0%, #30CFD0)',
+  backgroundSize: '300% 300%',
+  animation: 'moveGradient 3.2s infinite',
 
-  '@keyframes gradientAnimation': {
-    '0%': { backgroundPosition: '0% 50%' },
-    '50%': { backgroundPosition: '100% 50%' },
-    '100%': { backgroundPosition: '0% 50%' },
+  '@keyframes moveGradient': {
+    '0%': {
+      backgroundPosition: '0% 50%',
+    },
+
+    '50%': {
+      backgroundPosition: '100% 50%',
+    },
+
+    '100%': {
+      backgroundPosition: '0% 50%',
+    },
   },
 }));
 
@@ -260,6 +273,7 @@ const ButtonClass = styled(Button)(() => ({
     fontSize: '14px',
     color: '#048741',
     transition: '0.7s',
+
     '&:hover': {
       backgroundColor: '#0CBB6B',
       color: '#FFFFFF',
