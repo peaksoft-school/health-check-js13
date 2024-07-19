@@ -41,19 +41,22 @@ const Footer = () => {
               <h1>Контактная информация</h1>
               <StyledIconNumberContaier>
                 <StyledIconsContent>
+                <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
                   <StyledIconsLocation src={Location} alt="Icon2" />
+                </ALink>
+
                   <StyledIconsLocation src={Time} alt="Icon3" />
                   <StyledIconsLocation src={Callican} alt="Icon4" />
-                  <StyledIconsLocation
+                  <StyledMessageIcon
                     src={Message}
                     alt="Icon5"
-                    style={{ marginTop: '33px' }}
+                    
                   />
                 </StyledIconsContent>
                 <StyledNumberContent>
-                  <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+                  <p>
                     106452, г. Бишкек, Гражданская 119
-                  </ALink>
+                  </p>
                   <p>пн-сб 08:00 до 18:00</p>
                   <p>+996(800) 000 000</p>
                   <p>+996(505) 000 000</p>
@@ -64,12 +67,12 @@ const Footer = () => {
             <StyledBox>
               <h2>Мы в социальных сетях:</h2>
               <StyledIconsThre>
-               
+              
                 <a href="https://www.instagram.com/_i.a.n.05_/">
                   <img src={Instagram} alt="instagram" />
                 </a>
                 <a href="https://t.me/+996500344433">
-                  <img src={Telegram} alt="telegram" />
+                  <StyledImgSocial src={Telegram} alt="telegram" />
                 </a>
                 <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
                   <img src={WhatsApp} alt="whatsApp" />
@@ -96,175 +99,202 @@ const Footer = () => {
 };
 
 export default Footer;
-const MainContainer = styled('div')`
-  width: 100%;
-  background: #212529;
-  height: 564px;
-`;
-const StyledContainer = styled(Box)`
-  width: 100%;
-  max-width: 1440px;
-  min-width: 1200px;
-  height: 564px;
-  margin: 20px auto;
-  display: flex;
-  background: #212529;
-  padding: 5px 10px 5px 10px;
-  align-items: center;
-  justify-content: center;
-`;
+const MainContainer = styled('div')(() => ({
+  width: '100%',
+  background: '#212529',
+  height: '564px',
+}));
 
-const StyledContent = styled(Box)`
-  padding: 5px 10px 5px 10px;
-`;
+const StyledContainer = styled(Box)(() => ({
+  width: '100%',
+  maxWidth: '1440px',
+  minWidth: '1200px',
+  height: '564px',
+  margin: '20px auto',
+  display: 'flex',
+  background: '#212529',
+  padding: '5px 10px',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
 
-const StyledTextContainer = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  width: 78em;
-  margin: 40px auto;
-`;
+const StyledContent = styled(Box)(() => ({
+  padding: '5px 10px',
+}));
 
-const StyledHealthTextContent = styled(Box)`
-  display: flex;
-  width: 17.5rem;
-`;
+const StyledTextContainer = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '78em',
+  margin: '40px auto',
+}));
 
-const ALink = styled('a')({
-  color: '#ffffff',
+const StyledHealthTextContent = styled(Box)(() => ({
+  display: 'flex',
+  width: '17.5rem',
+}));
+
+const ALink = styled('a')(() => ({
+  color: '#c0bebe',
   textDecoration: 'none',
-});
+  fontSize: '1rem',
+}));
 
-const StyledHealthText = styled(Typography)`
-  display: flex;
-  gap: 2px;
-  margin-top: 1.5rem;
-  margin-left: 1rem;
-  color: aliceblue;
-  font-size: 1.45rem;
-`;
+const StyledHealthText = styled(Typography)(() => ({
+  display: 'flex',
+  gap: '2px',
+  marginTop: '1.5rem',
+  marginLeft: '1rem',
+  color: 'aliceblue',
+  fontSize: '1.45rem',
+  cursor: 'pointer',
+}));
 
-const StyledSpan = styled('span')`
-  color: #058541;
-  font-size: 1.45rem;
-  font-family: 'Manrope', sans-serif;
-`;
+const StyledSpan = styled('span')(() => ({
+  color: '#058541',
+  fontSize: '1.45rem',
+  fontFamily: 'Manrope, sans-serif',
+}));
 
-const StyledImg = styled('img')`
-  width: 4.5rem;
-  height: 5rem;
-  cursor: pointer;
-`;
+const StyledImg = styled('img')(() => ({
+  width: '4.5rem',
+  height: '5rem',
+  cursor: 'pointer',
+}));
 
-const StyledTextContaier = styled(Box)`
-  color: aliceblue;
-  margin-top: 3.5rem;
-`;
+const StyledTextContaier = styled(Box)(() => ({
+  color: 'aliceblue',
+  marginTop: '3.5rem',
+}));
 
-const StyledH1 = styled(Typography)`
-  font-size: 19px;
-  margin-bottom: 1rem;
-  font-family: 'Manrope', sans-serif;
-`;
+const StyledH1 = styled(Typography)(() => ({
+  fontSize: '16px',
+  marginBottom: '1rem',
+  fontFamily: 'Manrope, sans-serif',
+}));
 
-const StyledIcons = styled(Typography)`
-  width: 420px;
-  font-family: 'Manrope', sans-serif;
-`;
+const StyledIcons = styled(Typography)(() => ({
+  width: '420px',
+  fontFamily: 'Manrope, sans-serif',
+  color: '#cfcccc',
+}));
 
-const StyledIconsContainer = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  color: white;
-  gap: 30px;
-  h1 {
-    font-size: 1.5rem;
-    font-weight: 300;
-    font-family: 'Manrope', sans-serif;
-  }
-`;
+const StyledIconsContainer = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  color: 'white',
+  gap: '30px',
+  h1: {
+    fontSize: '1rem',
+    fontWeight: '600',
+    fontFamily: 'Manrope, sans-serif',
+  },
+}));
 
-const StyledIconNumberContaier = styled(Box)`
-  display: flex;
-  gap: 20px;
-`;
+const StyledIconNumberContaier = styled(Box)(() => ({
+  display: 'flex',
+  gap: '20px',
+}));
 
-const StyledIconsContent = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  width: 20px;
-  color: white;
-`;
+const StyledIconsContent = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '9px',
+  width: '20px',
+  color: 'white',
+}));
 
-const StyledIconsLocation = styled('img')`
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  margin-left: 9px;
-`;
+const StyledIconsLocation = styled('img')(() => ({
+  width: '22px',
+  height: '22px',
+  cursor: 'pointer',
+  marginLeft: '9px',
+}));
 
-const StyledNumberContent = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-family: 'Manrope', sans-serif;
-`;
+const StyledMessageIcon = styled('img')(() => ({
+  width: '22px',
+  height: '22px',
+  cursor: 'pointer',
+  marginLeft: '9px',
+  marginTop: '1.9rem',
+}));
 
-const StyledBox = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  color: white;
-  h2 {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 300;
-  }
-`;
+const StyledNumberContent = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+  fontFamily: 'Manrope, sans-serif',
+  p: {
+    fontSize: '1rem',
+    color: '#cfcccc',
+  },
+}));
 
-const StyledIconsThre = styled(Box)`
-  display: flex;
-  gap: 20px;
-  margin-top: 5px;
-  cursor: pointer;
-`;
+const StyledBox = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '5px',
+  color: 'white',
+  h2: {
+    fontFamily: 'Manrope, sans-serif',
+    fontWeight: '300',
+    fontSize: '1rem',
+  },
+}));
 
-const StyledContactContainer = styled(Box)`
-  display: flex;
-  gap: 20px;
-  color: aliceblue;
-  width: 100%;
-`;
+const StyledIconsThre = styled(Box)(() => ({
+  display: 'flex',
+  gap: '20px',
+  marginTop: '5px',
+  cursor: 'pointer',
+}));
 
-const StyledContactContent = styled(Box)`
-  display: flex;
-  gap: 30px;
-  color: aliceblue;
-  justify-content: center;
-  width: 100%;
-  margin-top: 48px;
-  p {
-    font-family: 'Manrope', sans-serif;
-    cursor: pointer;
-  }
-`;
+const StyledImgSocial = styled('img')(() => ({
+  marginTop: '-1px',
+  width: '1.7rem',
+  height: '1.7rem',
+  cursor: 'pointer',
+}));
 
-const StyledHr = styled('hr')`
-  width: 100%;
-  border: none;
-  border-top: 1px solid #868e96;
-  margin-top: 48px;
-`;
+const StyledContactContainer = styled(Box)(() => ({
+  display: 'flex',
+  gap: '20px',
+  color: 'aliceblue',
+  width: '100%',
+}));
 
-const StyledFoodContent = styled(Box)`
-  display: flex;
-  gap: 20px;
-  color: white;
-  justify-content: center;
-  margin-top: 28px;
-  font-weight: 100;
-  font-size: 14px;
-  p {
-    font-family: 'Manrope', sans-serif;
-  }
-`;
+const StyledContactContent = styled(Box)(() => ({
+  display: 'flex',
+  gap: '30px',
+  color: '#cfcccc',
+  justifyContent: 'center',
+  width: '100%',
+  marginTop: '48px',
+  p: {
+    fontFamily: 'Manrope, sans-serif',
+    cursor: 'pointer',
+  },
+}));
+
+const StyledHr = styled('hr')(() => ({
+  width: '100%',
+  border: 'none',
+  borderTop: '1px solid #868e96',
+  marginTop: '48px',
+}));
+
+const StyledFoodContent = styled(Box)(() => ({
+  display: 'flex',
+  gap: '20px',
+  color: 'white',
+  justifyContent: 'center',
+  marginTop: '28px',
+  fontWeight: '100',
+  fontSize: '14px',
+  p: {
+    fontFamily: 'Manrope, sans-serif',
+    color: '#b6b1b1',
+    width: '370px',
+    fontSize: '14px',
+  },
+}));
