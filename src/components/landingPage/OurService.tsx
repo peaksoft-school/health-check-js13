@@ -1,42 +1,41 @@
 import { Box, Typography, styled } from '@mui/material';
-import Button from '../../components/UI/CustomUI/Button';
+import Button from '../UI/Button';
 import index from '../../utils/constants/index.json';
 
-const OurService = () => {
-  return (
-    <Container>
-      <div className="box">
-        <div className="textBox">
-          <Typography variant="h3">
-            Наши <span className="service">услуги</span>
-          </Typography>
-          <p>За все время работы клиника приняла более 1 млн. пациентов.</p>
-        </div>
-        <div className="serviceBox">
-          {index.splice(0, 9).map(item => (
-            <div key={item.id}>
-              <div className="content">
-                <img className="img" src={item.img} alt="img" />
-              </div>
-              <Typography className="text" variant="body1">
-                {item.name}
-              </Typography>
-            </div>
-          ))}
-        </div>
-        <div className="float">
-          <Button variant="outlined">Смотреть все</Button>
-        </div>
-      </div>
-    </Container>
-  );
-};
+const OurService = () => (
+  <Container>
+    <Box className="box">
+      <Box className="textBox">
+        <Typography variant="h3">
+          Наши <span className="service">услуги</span>
+        </Typography>
+        <Typography>
+          За все время работы клиника приняла более 1 млн. пациентов.
+        </Typography>
+      </Box>
+      <Box className="serviceBox">
+        {index.splice(0, 9).map(({ img, id, name }) => (
+          <Box key={id}>
+            <Box className="content">
+              <img className="img" src={img} alt="img" />
+            </Box>
+            <Typography className="text" variant="body1">
+              {name}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+      <Box className="float">
+        <Button variant="outlined">Смотреть все</Button>
+      </Box>
+    </Box>
+  </Container>
+);
 
 export default OurService;
 
-const Container = styled(Box)({
+const Container = styled(Box)(({}) => ({
   width: '100%',
-  border: '1px solid black',
   padding: '20px',
   margin: '20px auto',
   minWidth: '1200px',
@@ -101,4 +100,4 @@ const Container = styled(Box)({
     fontSize: '12px',
     textAlign: 'center',
   },
-});
+}));

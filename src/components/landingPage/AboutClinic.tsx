@@ -1,15 +1,15 @@
-import Restangle from '../assets/images/Rectangle.png';
-import Restangle1 from '../assets/images/Rectangle1.png';
-import Restangle3 from '../assets/images/Rectangle3.png';
-import Restangle2 from '../assets/images/Rectangle2.png';
-import Podrovnee from '../assets/icons/Podrovnee.svg';
+import Clinic from '../../assets/images/Clinic.png';
+import Restangle1 from '../../assets/images/Rectangle1.png';
+import Restangle3 from '../../assets/images/Rectangle3.png';
+import Restangle2 from '../../assets/images/Rectangle2.png';
+import Podrovnee from '../../assets/icons/Podrovnee.svg';
 import { styled, Typography, Box } from '@mui/material';
 
-const AboutClinic = () => {
+const AboutClinic = () => (
   <StyledContainer>
     <StyledImageContainerText>
       <StyledTextHealt>
-        О нашей клинике <span style={{ color: '#048741' }}>“HealthCheck”</span>
+        О нашей клинике <span>“HealthCheck”</span>
       </StyledTextHealt>
       <StyledText>
         <p>
@@ -42,16 +42,16 @@ const AboutClinic = () => {
 
     <StyledBox>
       <StyledImageContainer>
-        <img src={Restangle} alt="Restangle" />
+        <img src={Clinic} alt="Restangle" />
       </StyledImageContainer>
       <StyledContainerImage>
-        <StyledImg src={Restangle1} alt="Restangle" />
-        <StyledImg src={Restangle3} alt="Restangle" />
-        <StyledImg src={Restangle2} alt="Restangle" />
+        <img src={Restangle1} alt="Restangle" />
+        <img src={Restangle3} alt="Restangle" />
+        <img src={Restangle2} alt="Restangle" />
       </StyledContainerImage>
     </StyledBox>
-  </StyledContainer>;
-};
+  </StyledContainer>
+);
 
 export default AboutClinic;
 
@@ -69,28 +69,29 @@ const StyledImageContainerText = styled(Box)`
 
 const StyledContainerImage = styled(Box)`
   display: flex;
-  margin-top: 16px;
-  gap: 30px;
-`;
-const StyledImg = styled('img')`
-  width: 200px;
+  margin-top: 1rem;
+  gap: 1.5rem;
+  img {
+    width: 70%;
+  }
 `;
 
 const StyledContainer = styled(Box)`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  min-width: 1200px;
-  max-width: 1440px;
-  margin: 20px auto;
+  max-width: 90rem;
+  min-width: 76.25rem;
+  margin: 1.25rem auto;
+  padding: 2% 7rem 0 7rem;
 `;
 
 const StyledText = styled(Typography)`
-  width: 629px;
-  height: 524px;
+  width: 80%;
+  height: 80%;
   font-family: 'Manrope', sans-serif;
-  margin-top: 50px;
-  font-size: 16.9px;
+  margin-top: 2.4rem;
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -99,16 +100,19 @@ const StyledText = styled(Typography)`
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-top: 105px;
+  margin-top: 5.8rem;
 `;
 
 const StyledTextHealt = styled(Typography)`
-  font-size: 36px;
+  font-size: 2.25rem;
+  span {
+    color: green;
+  }
 `;
 
 const StyledTextIcon = styled(Typography)`
-  font-size: 18;
-  margin-top: 48px;
+  font-size: 1.125rem;
+  margin-top: 3rem;
   font-family: 'Manrope', sans-serif;
   color: #10aa10;
   cursor: pointer;
