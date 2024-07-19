@@ -1,3 +1,9 @@
-const App = () => <h1>Health check</h1>;
+import FeedbackSlider from './components/landingPage/FeedbackSlider';
+
+const App = () => (
+  <>
+    <FeedbackSlider />
+  </>
+);
 
 export default App;

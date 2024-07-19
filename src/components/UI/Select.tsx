@@ -42,7 +42,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 
 export default Select;
 
-const StyledDiv = styled('div')(({}) => ({
+const StyledDiv = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
 }));

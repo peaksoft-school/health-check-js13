@@ -1,12 +1,12 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { Rating, styled } from '@mui/material';
 import Slider from 'react-slick';
 import { InfoSlide } from '../../utils/constants/slider';
-import PaginationDot from '../../assets/icons/PaginationDot';
-import NextIcon from '../../assets/icons/NextIcon';
-import PreviousIcon from '../../assets/icons/PreviousIcon';
+import PaginationDot from '../../assets/icons/PaginationDot.svg?react';
+import NextIcon from '../../assets/icons/next-review.svg?react';
+import PreviousIcon from '../../assets/icons/previous-review.svg?react';
 
-const customDots = (dots: React.ReactNode) => <div>{dots}</div>;
+const customDots = (dots: ReactNode) => <div>{dots}</div>;
 const customPaging = () => <PaginationDot />;
 
 const FeedbackSlider: FC = () => {
@@ -17,7 +17,7 @@ const FeedbackSlider: FC = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    appendDots: (dots: React.ReactNode) => customDots(dots),
+    appendDots: (dots: ReactNode) => customDots(dots),
     customPaging: () => customPaging(),
     nextArrow: <NextIcon />,
     prevArrow: <PreviousIcon />,
@@ -115,32 +115,22 @@ const StyledSlider = styled(Slider)({
   },
   '& .slick-list': {
     width: '782px',
-    
   },
   '& .slick-slide': {
     backgroundColor: '#F3F1F1',
     borderRadius: '20px',
-  },
-  '& .next-arrow': {
-    position: 'absolute',
-    top: '388px',
-    right: '40px',
-    '&:hover':{
-      fill: '#048741',
-    }
   },
 
   '& .slick-dots': {
     listStyle: 'none',
     display: 'flex',
     justifyContent: 'center',
-    gap: '14px',
-    marginTop: '-5px',
+    gap: '19px',
+    marginTop: '-10px',
     paddingTop: '54px',
     paddingBottom: '42px',
     '& .slick-active': {
       background: 'none',
-      fill: 'red',
       ellipse: {
         fill: '#048741',
       },
@@ -159,13 +149,13 @@ const StyledSlider = styled(Slider)({
   },
   '& .slick-next': {
     position: 'absolute',
-    top: '388px',
+    top: '378px',
     zIndex: '8',
     left: '470px',
   },
   '& .slick-prev': {
     position: 'absolute',
-    top: '388px',
+    top: '378px',
     zIndex: '8',
     left: '273px',
   },
