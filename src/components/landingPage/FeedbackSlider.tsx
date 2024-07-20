@@ -2,16 +2,16 @@ import { FC, ReactNode } from 'react';
 import { Rating, styled } from '@mui/material';
 import Slider from 'react-slick';
 import { InfoSlide } from '../../utils/constants/slider';
-import PaginationDot from '../../assets/icons/PaginationDot.svg?react';
-import NextIcon from '../../assets/icons/next-review.svg?react';
-import PreviousIcon from '../../assets/icons/previous-review.svg?react';
+import PaginationDot from '../../assets/icons/PaginationDot.svg';
+import NextIcon from '../../assets/icons/next-review.svg';
+import PreviousIcon from '../../assets/icons/previous-review.svg';
 
 const customDots = (dots: ReactNode) => <div>{dots}</div>;
 const customPaging = () => <PaginationDot />;
 
 const FeedbackSlider: FC = () => {
   const settings = {
-    autoplay: true,
+    autoplay: true, 
     dots: true,
     infinite: true,
     speed: 500,
@@ -19,8 +19,8 @@ const FeedbackSlider: FC = () => {
     slidesToScroll: 1,
     appendDots: (dots: ReactNode) => customDots(dots),
     customPaging: () => customPaging(),
-    nextArrow: <NextIcon />,
-    prevArrow: <PreviousIcon />,
+    nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow />,
   };
 
   return (
@@ -45,6 +45,27 @@ const FeedbackSlider: FC = () => {
         </StyledSlider>
       </MainContainer>
     </StyledContainer>
+  );
+};
+
+interface ArrowProps {
+  className?: string;
+  onClick?: () => void;
+}
+
+const CustomNextArrow: FC<ArrowProps> = ({ className, onClick }) => {
+  return (
+    <div className={className} onClick={onClick}>
+      <NextIcon />
+    </div>
+  );
+};
+
+const CustomPrevArrow: FC<ArrowProps> = ({ className, onClick }) => {
+  return (
+    <div className={className} onClick={onClick}>
+      <PreviousIcon />
+    </div>
   );
 };
 
