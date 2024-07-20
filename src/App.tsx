@@ -1,9 +1,3 @@
-import FeedbackSlider from './components/landingPage/FeedbackSlider';
-
-const App = () => (
-  <>
-    <FeedbackSlider />
-  </>
-);
+const App = () => <h1>Ernest</h1>;
 
 export default App;
