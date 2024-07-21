@@ -39,8 +39,9 @@ const Content = styled('div')(() => ({
 
 const ContentGlab = styled('div')(() => ({
   display: 'flex',
-  gap: '5px',
-  marginRight: '800px',
+  gap: '7px',
+  marginRight: '759px',
+  fontFamily: 'Manrope, sans-serif',
 }));
 
 const SpanGreen = styled('span')(() => ({
@@ -52,16 +53,16 @@ const CardsContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  marginTop: '45px',
+  marginTop: '60px',
 }));
 
 const CardsContent = styled('div')(() => ({
   display: 'flex',
-  gap: '15px',
+  gap: '13px',
 }));
 
 const Cards = styled('div')(() => ({
-  width: '389px',
+  width: '377px',
   height: '280px',
   backgroundColor: '#DBEBFF',
   padding: '25px 65px 35px 35px',
@@ -71,13 +72,17 @@ const Cards = styled('div')(() => ({
 const Span = styled('span')(() => ({
   color: '#048741',
   fontSize: '48px',
+  fontFamily: 'Manrope, sans-serif',
 }));
 
 const Title = styled('p')(() => ({
-  fontSize: '20px',
+  fontSize: '1.3269rem',
+  fontFamily: 'Manrope, sans-serif',
+  marginTop: '5px',
 }));
 
 const Text = styled('p')(() => ({
   fontSize: '16px',
-  marginTop: '10px',
+  marginTop: '18px',
+  fontFamily: 'Manrope, sans-serif',
 }));
