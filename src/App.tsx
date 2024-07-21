@@ -1,13 +1,5 @@
-import Aplication from './components/landingPage/Aplication';
-import Header from './layout/user/Header';
-import ServiceClinic from './pages/user/serviceClinic/ServiceClinic';
+import { FC } from 'react';
 
-const App = () => (
-  <div>
-    <Header />
-    <ServiceClinic />
-    <Aplication />
-  </div>
-);
+const App: FC = () => <h1>Health Check</h1>;
 
 export default App;
