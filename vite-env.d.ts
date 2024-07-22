@@ -8,4 +8,3 @@ declare module '*.svg' {
   export default ReactComponent;
 }
 
-/// <reference types="vite-plugin-svgr/client" />

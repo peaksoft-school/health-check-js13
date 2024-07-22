@@ -1,3 +1,3 @@
-const App = () => <h1>Ernest</h1>;
+const App = () => <h1>Health check</h1>;
 
 export default App;

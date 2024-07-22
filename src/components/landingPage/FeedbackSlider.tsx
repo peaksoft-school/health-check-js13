@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Rating, styled } from '@mui/material';
+import { Box, Rating, styled, Typography } from '@mui/material';
 import Slider from 'react-slick';
 import { InfoSlide } from '../../utils/constants/slider';
 import PaginationDot from '../../assets/icons/PaginationDot.svg';
@@ -11,7 +11,7 @@ const customPaging = () => <PaginationDot />;
 
 const FeedbackSlider: FC = () => {
   const settings = {
-    autoplay: true, 
+    autoplay: true,
     dots: true,
     infinite: true,
     speed: 500,
@@ -31,16 +31,16 @@ const FeedbackSlider: FC = () => {
       <MainContainer>
         <StyledSlider {...settings}>
           {InfoSlide.map(item => (
-            <Container key={item.id}>
-              <Div>
-                <img src={item.img} alt={item.name} />
+            <StyledMapContainer key={item.id}>
+              <StyledMapContent>
+                <img className='image' src={item.img} alt="image" />
                 <Wrapper>
                   <Username>{item.name}</Username>
                   <Rating value={item.rating} readOnly />
                 </Wrapper>
-              </Div>
+              </StyledMapContent>
               <TitleStyled>{item.review}</TitleStyled>
-            </Container>
+            </StyledMapContainer>
           ))}
         </StyledSlider>
       </MainContainer>
@@ -53,37 +53,33 @@ interface ArrowProps {
   onClick?: () => void;
 }
 
-const CustomNextArrow: FC<ArrowProps> = ({ className, onClick }) => {
-  return (
-    <div className={className} onClick={onClick}>
-      <NextIcon />
-    </div>
-  );
-};
+const CustomNextArrow: FC<ArrowProps> = ({ className, onClick }) => (
+  <Box className={className} onClick={onClick}>
+    <NextIcon />
+  </Box>
+);
 
-const CustomPrevArrow: FC<ArrowProps> = ({ className, onClick }) => {
-  return (
-    <div className={className} onClick={onClick}>
-      <PreviousIcon />
-    </div>
-  );
-};
+const CustomPrevArrow: FC<ArrowProps> = ({ className, onClick }) => (
+  <Box className={className} onClick={onClick}>
+    <PreviousIcon />
+  </Box>
+);
 
 export default FeedbackSlider;
 
-const StyledContainer = styled('div')({
+const StyledContainer = styled(Box)(() => ({
   margin: '0 auto',
   maxWidth: '90rem',
-});
+}));
 
-const MainContainer = styled('div')({
+const MainContainer = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   overflow: 'hidden',
   fontFamily: 'Manrope',
-});
+}));
 
-const StyledInfo = styled('h2')({
+const StyledInfo = styled('h2')(() => ({
   fontFamily: 'Manrope',
   fontWeight: 600,
   fontSize: '36px',
@@ -95,38 +91,44 @@ const StyledInfo = styled('h2')({
   span: {
     color: '#048741',
   },
-});
+}));
 
-const Container = styled('div')({
+const StyledMapContainer = styled(Box)(() => ({
   boxSizing: 'border-box',
   textAlign: 'left',
   padding: '40px',
   width: '782px',
-});
+}));
 
-const Wrapper = styled('div')({
+const Wrapper = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   padding: 0,
-});
+}));
 
-const Username = styled('h3')({
+const Username = styled('h3')(() => ({
   margin: 0,
-});
+}));
 
-const Div = styled('div')({
+const StyledMapContent = styled(Box)(() => ({
   display: 'flex',
   gap: '14px',
   paddingBottom: '20px',
-});
+  '& .image': {
+    width: '50px',
+    height: '50px',
+    borderRadius: '50%',
+  },
+  
+}));
 
-const TitleStyled = styled('p')({
+const TitleStyled = styled(Typography)(() => ({
   fontWeight: 300,
   fontSize: '16px',
   lineHeight: '21.86px',
-});
+}));
 
-const StyledSlider = styled(Slider)({
+const StyledSlider = styled(Slider)(() => ({
   position: 'relative',
 
   '& .slick-track': {
@@ -150,8 +152,10 @@ const StyledSlider = styled(Slider)({
     marginTop: '-10px',
     paddingTop: '54px',
     paddingBottom: '42px',
+    cursor: 'pointer',
     '& .slick-active': {
       background: 'none',
+
       ellipse: {
         fill: '#048741',
       },
@@ -170,13 +174,13 @@ const StyledSlider = styled(Slider)({
   },
   '& .slick-next': {
     position: 'absolute',
-    top: '378px',
+    top: '443px',
     zIndex: '8',
     left: '470px',
   },
   '& .slick-prev': {
     position: 'absolute',
-    top: '378px',
+    top: '443px',
     zIndex: '8',
     left: '273px',
   },
@@ -188,4 +192,4 @@ const StyledSlider = styled(Slider)({
       fill: '#fff',
     },
   },
-});
+}));
