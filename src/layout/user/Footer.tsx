@@ -9,94 +9,84 @@ import Telegram from '../../assets/icons/FooterTelegram.svg';
 import WhatsApp from '../../assets/icons/FooterWhatsApp.svg';
 import { Text } from '../../utils/constants/landingPageConstants';
 
-const Footer = () => {
-  return (
-    <MainContainer>
-      <StyledContainer>
-        <StyledContent>
-          <StyledTextContainer>
-            <div>
-              <StyledHealthTextContent>
-                <StyledImg src={HealtcCheck} alt="Icon1" />
-                <StyledHealthText>
-                  <StyledSpan>HEALTH</StyledSpan>CHECK
-                </StyledHealthText>
-              </StyledHealthTextContent>
-              <StyledTextContaier>
-                <div>
-                  <StyledH1>Медицинская клиника «HealthCheck»</StyledH1>
-                </div>
-                <div>
-                  <StyledIcons>
-                    Международная Медицинская клиника <br /> «HealthCheck» — это
-                    клиника, в которой применяются <br /> новейшие
-                    диагностические и лечебные технологии и <br /> ведут прием
-                    лучшие специалисты.
-                  </StyledIcons>
-                </div>
-              </StyledTextContaier>
-            </div>
+const Footer = () => (
+  <MainContainer>
+    <StyledContainer>
+      <StyledContent>
+        <StyledTextContainer>
+          <Box>
+            <StyledHealthTextContent>
+              <StyledImg src={HealtcCheck} alt="Icon1" />
+              <StyledHealthText>
+                <StyledSpan>HEALTH</StyledSpan>CHECK
+              </StyledHealthText>
+            </StyledHealthTextContent>
+            <StyledTextContaier>
+              <Box>
+                <StyledH1>Медицинская клиника «HealthCheck»</StyledH1>
+              </Box>
+              <Box>
+                <StyledIcons>
+                  Международная Медицинская клиника <br /> «HealthCheck» — это
+                  клиника, в которой применяются <br /> новейшие диагностические
+                  и лечебные технологии и <br /> ведут прием лучшие специалисты.
+                </StyledIcons>
+              </Box>
+            </StyledTextContaier>
+          </Box>
 
-            <StyledIconsContainer>
-              <h1>Контактная информация</h1>
-              <StyledIconNumberContaier>
-                <StyledIconsContent>
+          <StyledIconsContainer>
+            <h1>Контактная информация</h1>
+            <StyledIconNumberContaier>
+              <StyledIconsContent>
                 <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
-                  <StyledIconsLocation src={Location} alt="Icon2" />
+                  <StyledIconsLocation src={Location} alt="location" />
                 </ALink>
 
-                  <StyledIconsLocation src={Time} alt="Icon3" />
-                  <StyledIconsLocation src={Callican} alt="Icon4" />
-                  <StyledMessageIcon
-                    src={Message}
-                    alt="Icon5"
-                    
-                  />
-                </StyledIconsContent>
-                <StyledNumberContent>
-                  <p>
-                    106452, г. Бишкек, Гражданская 119
-                  </p>
-                  <p>пн-сб 08:00 до 18:00</p>
-                  <p>+996(800) 000 000</p>
-                  <p>+996(505) 000 000</p>
-                  <p>healthchek.</p>
-                </StyledNumberContent>
-              </StyledIconNumberContaier>
-            </StyledIconsContainer>
-            <StyledBox>
-              <h2>Мы в социальных сетях:</h2>
-              <StyledIconsThre>
-              
-                <a href="https://www.instagram.com/_i.a.n.05_/">
-                  <img src={Instagram} alt="instagram" />
-                </a>
-                <a href="https://t.me/+996500344433">
-                  <StyledImgSocial src={Telegram} alt="telegram" />
-                </a>
-                <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
-                  <img src={WhatsApp} alt="whatsApp" />
-                </a>
-              </StyledIconsThre>
-            </StyledBox>
-          </StyledTextContainer>
+                <StyledIconsLocation src={Time} alt="Time" />
+                <StyledIconsLocation src={Callican} alt="telefon" />
+                <StyledMessageIcon src={Message} alt="Massage" />
+              </StyledIconsContent>
+              <StyledNumberContent>
+                <Typography>106452, г. Бишкек, Гражданская 119</Typography>
+                <Typography>пн-сб 08:00 до 18:00</Typography>
+                <Typography>+996(800) 000 000</Typography>
+                <Typography>+996(505) 000 000</Typography>
+                <Typography>healthchek.</Typography>
+              </StyledNumberContent>
+            </StyledIconNumberContaier>
+          </StyledIconsContainer>
+          <StyledBox>
+            <Typography>Мы в социальных сетях:</Typography>
+            <StyledIconsThre>
+              <a href="https://www.instagram.com/_i.a.n.05_/">
+                <img src={Instagram} alt="instagram" />
+              </a>
+              <a href="https://t.me/+996500344433">
+                <StyledImgSocial src={Telegram} alt="telegram" />
+              </a>
+              <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
+                <img src={WhatsApp} alt="whatsApp" />
+              </a>
+            </StyledIconsThre>
+          </StyledBox>
+        </StyledTextContainer>
 
-          <StyledContactContainer>
-            <StyledContactContent>
-              {Text?.map(item => (
-                <p>{item.title}</p>
-              ))}
-            </StyledContactContent>
-          </StyledContactContainer>
-          <StyledHr />
-          <StyledFoodContent>
-            <p>© Peaksoft House 2023 | MedCheck | Все права защищены</p>
-          </StyledFoodContent>
-        </StyledContent>
-      </StyledContainer>
-    </MainContainer>
-  );
-};
+        <StyledContactContainer>
+          <StyledContactContent>
+            {Text?.map(item => (
+              <Typography>{item.title}</Typography>
+            ))}
+          </StyledContactContent>
+        </StyledContactContainer>
+        <StyledHr />
+        <StyledFoodContent>
+          <Typography>© Peaksoft House 2023 | MedCheck | Все права защищены</Typography>
+        </StyledFoodContent>
+      </StyledContent>
+    </StyledContainer>
+  </MainContainer>
+);
 
 export default Footer;
 const MainContainer = styled('div')(() => ({
@@ -200,7 +190,7 @@ const StyledIconsContent = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '9px',
-  width: '20px',
+  width: '22px',
   color: 'white',
 }));
 
@@ -208,14 +198,12 @@ const StyledIconsLocation = styled('img')(() => ({
   width: '22px',
   height: '22px',
   cursor: 'pointer',
-  marginLeft: '9px',
 }));
 
 const StyledMessageIcon = styled('img')(() => ({
   width: '22px',
   height: '22px',
   cursor: 'pointer',
-  marginLeft: '9px',
   marginTop: '1.9rem',
 }));
 
@@ -224,6 +212,8 @@ const StyledNumberContent = styled(Box)(() => ({
   flexDirection: 'column',
   gap: '10px',
   fontFamily: 'Manrope, sans-serif',
+  position: 'relative',
+  right: '8px',
   p: {
     fontSize: '1rem',
     color: '#cfcccc',
@@ -283,6 +273,7 @@ const StyledHr = styled('hr')(() => ({
   marginTop: '48px',
 }));
 
+
 const StyledFoodContent = styled(Box)(() => ({
   display: 'flex',
   gap: '20px',
@@ -294,7 +285,7 @@ const StyledFoodContent = styled(Box)(() => ({
   p: {
     fontFamily: 'Manrope, sans-serif',
     color: '#b6b1b1',
-    width: '370px',
+    width: '400px',
     fontSize: '14px',
   },
 }));
