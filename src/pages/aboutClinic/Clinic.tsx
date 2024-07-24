@@ -3,60 +3,66 @@ import { Box, styled } from '@mui/material';
 import ImageDoctors from '../../assets/images/Doctors.png';
 import Signed from '../../assets/icons/Signed.svg';
 import Fon from '../../assets/images/Fon.png';
+import CustomBreadcrumbs from '../../components/UI/BreadCrumbs';
 
-const Clinic: FC = () => (
-  <ClinicClass>
-    <Content>
-      <ContentClass>
-        <Box>
-          <RouterContent>
-            <MainTitle>Главная</MainTitle>
-            <ClinicTitle>О клинике</ClinicTitle>
-          </RouterContent>
-          <HealthBox>
-            <HealthSpan>Здоровье — самое</HealthSpan>
-            <SpanGreen>ценное в жизни</SpanGreen>
-          </HealthBox>
-          <TextContent>
-            <CardLorem>
-              <Text>
-                Добро пожаловать в нашу клинику! Мы предлагаем
-                высококачественные медицинские услуги, ориентированные на ваше
-                благополучие и заботу о вашем здоровье. Наша команда
-                специалистов состоит из опытных врачей, медицинских сестер и
-                персонала, готового обеспечить вас индивидуальным и
-                профессиональным уходом. Мы стремимся создать доверительные
-                отношения с каждым пациентом, предоставляя медицинское
-                обслуживание на самом высоком уровне.
-              </Text>
-            </CardLorem>
-            <CardLorems>
-              <Text>
-                Мы уделяем особое внимание вашему комфорту и безопасности,
-                обеспечивая современное оборудование и следуя высоким стандартам
-                качества. Наша цель - помочь вам достичь оптимального здоровья и
-                благополучия. Мы готовы ответить на ваши вопросы, предоставить
-                необходимую поддержку и обеспечить вас лучшими медицинскими
-                решениями. (edited)
-              </Text>
-            </CardLorems>
-          </TextContent>
-          <SignedContent>
-            <img src={Signed} alt="signed" />
-          </SignedContent>
-        </Box>
-        <FonBox>
-          <FonImg src={Fon} alt="fon" />
-          <DoctorsCards>
-            <ImgDoctors src={ImageDoctors} alt="imageDoctors" />
-            <NameClinic>Руководитель клиники Medical Clinic</NameClinic>
-            <Name>Аниса Михаилова</Name>
-          </DoctorsCards>
-        </FonBox>
-      </ContentClass>
-    </Content>
-  </ClinicClass>
-);
+const Clinic: FC = () => {
+  const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О клинике' }];
+
+  return (
+    <ClinicClass>
+      <Content>
+        <ContentClass>
+          <Box>
+            <RouterContent>
+              <Box>
+                <CustomBreadcrumbs items={breadcrumbs} />
+              </Box>
+            </RouterContent>
+            <HealthBox>
+              <HealthSpan>Здоровье — самое</HealthSpan>
+              <SpanGreen>ценное в жизни</SpanGreen>
+            </HealthBox>
+            <TextContent>
+              <CardLorem>
+                <Text>
+                  Добро пожаловать в нашу клинику! Мы предлагаем
+                  высококачественные медицинские услуги, ориентированные на ваше
+                  благополучие и заботу о вашем здоровье. Наша команда
+                  специалистов состоит из опытных врачей, медицинских сестер и
+                  персонала, готового обеспечить вас индивидуальным и
+                  профессиональным уходом. Мы стремимся создать доверительные
+                  отношения с каждым пациентом, предоставляя медицинское
+                  обслуживание на самом высоком уровне.
+                </Text>
+              </CardLorem>
+              <CardLorems>
+                <Text>
+                  Мы уделяем особое внимание вашему комфорту и безопасности,
+                  обеспечивая современное оборудование и следуя высоким
+                  стандартам качества. Наша цель - помочь вам достичь
+                  оптимального здоровья и благополучия. Мы готовы ответить на
+                  ваши вопросы, предоставить необходимую поддержку и обеспечить
+                  вас лучшими медицинскими решениями.
+                </Text>
+              </CardLorems>
+            </TextContent>
+            <SignedContent>
+              <img src={Signed} alt="signed" />
+            </SignedContent>
+          </Box>
+          <FonBox>
+            <FonImg src={Fon} alt="fon" />
+            <DoctorsCards>
+              <ImgDoctors src={ImageDoctors} alt="imageDoctors" />
+              <NameClinic>Руководитель клиники Medical Clinic</NameClinic>
+              <Name>Аниса Михаилова</Name>
+            </DoctorsCards>
+          </FonBox>
+        </ContentClass>
+      </Content>
+    </ClinicClass>
+  );
+};
 
 export default Clinic;
 
@@ -144,16 +150,6 @@ const NameClinic = styled('p')(() => ({
 const Name = styled('p')(() => ({
   marginTop: '4px',
   fontSize: '22px',
-}));
-
-const MainTitle = styled('p')(() => ({
-  fontSize: '14px',
-  cursor: 'pointer',
-}));
-
-const ClinicTitle = styled('p')(() => ({
-  fontSize: '14px',
-  color: '#048741',
 }));
 
 const HealthSpan = styled('span')(() => ({
