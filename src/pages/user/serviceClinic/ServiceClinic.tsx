@@ -71,6 +71,7 @@ const StyledBoxAccaredon = styled(Box)(() => ({
   ' .good': {
     margin: '5px 0 20px 0',
     fontFamily: '"Manrope", sans-serif',
+    fontSize: '15px',
   },
 }));
 
@@ -81,6 +82,7 @@ const Ul = styled('ul')(() => ({
     listStyle: 'none',
     paddingLeft: '10px',
     fontFamily: '"Manrope", sans-serif',
+    fontSize: '14px',
   },
   '& li::before': {
     content: '"•"',
