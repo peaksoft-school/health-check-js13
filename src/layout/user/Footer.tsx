@@ -36,12 +36,12 @@ const Footer = () => (
           </Box>
 
           <StyledIconsContainer>
-            <h1>Контактная информация</h1>
+            <Typography>Контактная информация</Typography>
             <StyledIconNumberContaier>
               <StyledIconsContent>
-                <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+                <StyledALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
                   <StyledIconsLocation src={Location} alt="location" />
-                </ALink>
+                </StyledALink>
 
                 <StyledIconsLocation src={Time} alt="Time" />
                 <StyledIconsLocation src={Callican} alt="telefon" />
@@ -100,7 +100,7 @@ const StyledContainer = styled(Box)(() => ({
   maxWidth: '1440px',
   minWidth: '1200px',
   height: '564px',
-  margin: '20px auto',
+  margin: '0 auto',
   display: 'flex',
   background: '#212529',
   padding: '5px 10px',
@@ -124,7 +124,7 @@ const StyledHealthTextContent = styled(Box)(() => ({
   width: '17.5rem',
 }));
 
-const ALink = styled('a')(() => ({
+const StyledALink = styled('a')(() => ({
   color: '#c0bebe',
   textDecoration: 'none',
   fontSize: '1rem',
