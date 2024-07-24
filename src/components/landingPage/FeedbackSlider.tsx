@@ -28,22 +28,22 @@ const FeedbackSlider: FC = () => {
       <StyledInfo>
         Отзывы наших <span> пациентов</span>
       </StyledInfo>
-      <MainContainer>
+      <StyledMainContainer>
         <StyledSlider {...settings}>
-          {InfoSlide.map(item => (
+          {InfoSlide.map((item) => (
             <StyledMapContainer key={item.id}>
               <StyledMapContent>
                 <img className='image' src={item.img} alt="image" />
-                <Wrapper>
-                  <Username>{item.name}</Username>
+                <StyledWrapper>
+                  <StyledUsername>{item.name}</StyledUsername>
                   <Rating value={item.rating} readOnly />
-                </Wrapper>
+                </StyledWrapper>
               </StyledMapContent>
-              <TitleStyled>{item.review}</TitleStyled>
+              <StyledTitle>{item.review}</StyledTitle>
             </StyledMapContainer>
           ))}
         </StyledSlider>
-      </MainContainer>
+      </StyledMainContainer>
     </StyledContainer>
   );
 };
@@ -72,7 +72,7 @@ const StyledContainer = styled(Box)(() => ({
   maxWidth: '90rem',
 }));
 
-const MainContainer = styled(Box)(() => ({
+const StyledMainContainer = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   overflow: 'hidden',
@@ -100,13 +100,13 @@ const StyledMapContainer = styled(Box)(() => ({
   width: '782px',
 }));
 
-const Wrapper = styled(Box)(() => ({
+const StyledWrapper = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   padding: 0,
 }));
 
-const Username = styled('h3')(() => ({
+const StyledUsername = styled('h3')(() => ({
   margin: 0,
 }));
 
@@ -122,7 +122,7 @@ const StyledMapContent = styled(Box)(() => ({
   
 }));
 
-const TitleStyled = styled(Typography)(() => ({
+const StyledTitle = styled(Typography)(() => ({
   fontWeight: 300,
   fontSize: '16px',
   lineHeight: '21.86px',
