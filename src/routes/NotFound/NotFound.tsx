@@ -1,8 +1,8 @@
-export const NotFaund = () => {
+export const NotFound = () => {
   return (
     <div>
       <h1>404</h1>
-      <h2>NotFaund</h2>
+      <h2>NotFound</h2>
     </div>
   );
 };

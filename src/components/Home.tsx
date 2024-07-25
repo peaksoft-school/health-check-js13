@@ -5,9 +5,8 @@ import Doctors from './landingPage/Doctors';
 import OurService from './landingPage/OurService';
 
 const Home: FC = () => {
-
   return (
-    <div>
+    <>
       <main>
         <AboutClinic />
         <AboutPart />
@@ -15,7 +14,7 @@ const Home: FC = () => {
         <OurService />
       </main>
       <footer></footer>
-    </div>
+    </>
   );
 };
 
