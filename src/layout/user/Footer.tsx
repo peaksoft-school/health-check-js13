@@ -10,7 +10,7 @@ import WhatsApp from '../../assets/icons/FooterWhatsApp.svg';
 import { Text } from '../../utils/constants/landingPageConstants';
 
 const Footer = () => (
-  <MainContainer>
+  <StyledMainContainer>
     <StyledContainer>
       <StyledContent>
         <StyledTextContainer>
@@ -85,11 +85,11 @@ const Footer = () => (
         </StyledFoodContent>
       </StyledContent>
     </StyledContainer>
-  </MainContainer>
+  </StyledMainContainer>
 );
 
 export default Footer;
-const MainContainer = styled('div')(() => ({
+const StyledMainContainer = styled('div')(() => ({
   width: '100%',
   background: '#212529',
   height: '564px',
@@ -204,7 +204,7 @@ const StyledMessageIcon = styled('img')(() => ({
   width: '22px',
   height: '22px',
   cursor: 'pointer',
-  marginTop: '1.9rem',
+  marginTop: '2.5rem',
 }));
 
 const StyledNumberContent = styled(Box)(() => ({

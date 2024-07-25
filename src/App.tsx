@@ -1,5 +1,3 @@
-import Footer from "./layout/user/Footer";
-
-const App = () => <Footer/>;
+const App = () => <h1>Health check</h1>;
 
 export default App;
