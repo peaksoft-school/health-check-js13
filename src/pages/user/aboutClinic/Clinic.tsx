@@ -3,7 +3,7 @@ import { Box, styled } from '@mui/material';
 import ImageDoctors from '../../assets/images/Doctors.png';
 import Signed from '../../assets/icons/Signed.svg';
 import Fon from '../../assets/images/Fon.png';
-import CustomBreadcrumbs from '../../components/UI/BreadCrumbs';
+import CustomBreadcrumbs from '../../../components/UI/BreadCrumbs';
 
 const Clinic: FC = () => {
   const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О клинике' }];
