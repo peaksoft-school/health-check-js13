@@ -30,16 +30,16 @@ const FeedbackSlider: FC = () => {
       </StyledInfo>
       <StyledMainContainer>
         <StyledSlider {...settings}>
-          {InfoSlide.map((item) => (
-            <StyledMapContainer key={item.id}>
+          {InfoSlide.map(({ id, img, rating, name, review }) => (
+            <StyledMapContainer key={id}>
               <StyledMapContent>
-                <img className='image' src={item.img} alt="image" />
+                <img className="image" src={img} alt="image" />
                 <StyledWrapper>
-                  <StyledUsername>{item.name}</StyledUsername>
-                  <Rating value={item.rating} readOnly />
+                  <StyledUsername>{name}</StyledUsername>
+                  <Rating value={rating} readOnly />
                 </StyledWrapper>
               </StyledMapContent>
-              <StyledTitle>{item.review}</StyledTitle>
+              <StyledTitle>{review}</StyledTitle>
             </StyledMapContainer>
           ))}
         </StyledSlider>
@@ -119,7 +119,6 @@ const StyledMapContent = styled(Box)(() => ({
     height: '50px',
     borderRadius: '50%',
   },
-  
 }));
 
 const StyledTitle = styled(Typography)(() => ({
