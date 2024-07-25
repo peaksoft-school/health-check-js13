@@ -52,7 +52,7 @@ const Footer = () => (
                 <Typography>пн-сб 08:00 до 18:00</Typography>
                 <Typography>+996(800) 000 000</Typography>
                 <Typography>+996(505) 000 000</Typography>
-                <Typography>healthchek.</Typography>
+                <Typography>healthchek.kg</Typography>
               </StyledNumberContent>
             </StyledIconNumberContaier>
           </StyledIconsContainer>
@@ -89,7 +89,7 @@ const Footer = () => (
 );
 
 export default Footer;
-const StyledMainContainer = styled('div')(() => ({
+const StyledMainContainer = styled(Box)(() => ({
   width: '100%',
   background: '#212529',
   height: '564px',
