@@ -69,7 +69,7 @@ export default FeedbackSlider;
 
 const StyledContainer = styled(Box)(() => ({
   margin: '0 auto',
-  maxWidth: '90rem',
+  maxWidth: '100rem',
 }));
 
 const StyledMainContainer = styled(Box)(() => ({
