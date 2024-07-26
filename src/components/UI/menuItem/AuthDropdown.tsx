@@ -57,7 +57,7 @@ export default function AuthDropdown() {
           aria-expanded={open ? 'true' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}>
-          <ImgUser src={Users} alt="user" />
+          <Users />
         </Button>
         <Popper
           open={open}
@@ -94,10 +94,7 @@ export default function AuthDropdown() {
   );
 }
 
-const ImgUser = styled('img')(() => ({
-  width: '28px',
-  height: '28px',
-}));
+
 
 const ButtonMui = styled(MenuItem)(() => ({
   '&:hover': {
