@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { styled, Typography } from '@mui/material';
-// import Accordeon from '../../../components/UI/Accardeon';
+import Accordeon from '../../../components/UI/Accardeon';
 import { Cards } from '../../../utils/constants/price';
 
 const Price: FC = () => {
@@ -23,7 +23,7 @@ const Price: FC = () => {
           <StyledContent className="ButtonContent">
             <AccordeonsContent>
               {Cards?.map(item => (
-                // <Accordeon key={item.id} title={item.name}>
+                <Accordeon key={item.id} title={item.name}>
                   <CardsContent>
                     <BoxContent>
                       <Box>
@@ -48,7 +48,7 @@ const Price: FC = () => {
                       ))}
                     </MapContainer>
                   </CardsContent>
-                // </Accordeon>
+                </Accordeon>
               ))}
             </AccordeonsContent>
           </StyledContent>
