@@ -33,32 +33,30 @@ const InnerService = () => {
         <StyledBox>
           <BreadCrumbs items={breadcrumbs} />
           <StyledContent>
-            {Dermatology.map(item => (
-              <StyledMapContainer key={item.id}>
-                <StyledDoctor>{item.doctor}</StyledDoctor>
-                <StyledName>{item.name}</StyledName>
-                <StyledTitle>{item.title}</StyledTitle>
-                <StyledSubTitle>{item.subTitle}</StyledSubTitle>
+            {Dermatology.map(({ id, doctor, name, title, subTitle }) => (
+              <StyledMapContainer key={id}>
+                <StyledDoctor>{doctor}</StyledDoctor>
+                <StyledName>{name}</StyledName>
+                <StyledTitle>{title}</StyledTitle>
+                <StyledSubTitle>{subTitle}</StyledSubTitle>
               </StyledMapContainer>
             ))}
 
-            {DermatologyLi.map(item => (
-              <ul key={item.id}>
-                <StyledLi>{item.titleLiText}</StyledLi>
-              </ul>
-            ))}
+            <ul>
+              {DermatologyLi.map(({ id, titleLiText }) => (
+                <StyledLi key={id}>{titleLiText}</StyledLi>
+              ))}
+            </ul>
 
-            {DermatologyText.map(item => (
+            {DermatologyText.map(({ titleText, textText }) => (
               <>
-                <StyledNameText>{item.titleText}</StyledNameText>
-                <StyledTexttext>{item.textText}</StyledTexttext>
+                <StyledNameText>{titleText}</StyledNameText>
+                <StyledTexttext>{textText}</StyledTexttext>
               </>
             ))}
 
-            {DermatologyTextLi.map(item => (
-              <>
-                <StyledList>{item.title}</StyledList>
-              </>
+            {DermatologyTextLi.map(({ title }) => (
+              <StyledList>{title}</StyledList>
             ))}
 
             <StyledText>
