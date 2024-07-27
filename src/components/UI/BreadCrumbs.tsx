@@ -28,7 +28,7 @@ const BreadCrumbs: FC<Types> = ({ items }) => {
 export default BreadCrumbs;
 
 const StyledBreadCrumbs = styled(Breadcrumbs)(() => ({
-  // marginBottom: '30px',
+  marginTop: '30px',
 }));
 
 const StyledLink = styled(Link)<{ islast: string }>(({ islast }) => ({

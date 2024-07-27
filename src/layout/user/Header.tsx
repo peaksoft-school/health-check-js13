@@ -161,8 +161,6 @@ const GreenP = styled('p')(() => ({
   color: '#009344',
 }));
 
-
-
 const ContentInput = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
@@ -212,8 +210,6 @@ const Input = styled(TextField)(() => ({
     outline: 'none',
   },
 }));
-
-
 
 const ContentNumber = styled('div')(() => ({
   display: 'flex',
@@ -313,8 +309,6 @@ const IconContainer = styled('div')(() => ({
     height: 'auto',
   },
 }));
-
-
 
 const Title = styled('p')(() => ({
   cursor: 'pointer',
