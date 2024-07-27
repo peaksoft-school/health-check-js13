@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent, useState } from 'react';
+import { forwardRef, ChangeEvent, useState, ReactNode } from 'react';
 import {
   InputAdornment,
   TextField,
@@ -17,7 +17,7 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   error?: boolean;
   value?: string | number;
   disabled?: boolean;
-  icon?: string;
+  Icon?: string | ReactNode;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       type = 'text',
       label,
-      icon,
+      Icon,
       placeholder,
       onChange,
       error,
@@ -48,6 +48,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         return showPassword ? 'text' : 'password';
       }
       return type;
+    };
+
+    const IconImg = () => {
+      if (Icon === '') {
+        return null;
+      }
+      if (typeof Icon === 'string') {
+        return <img src={Icon} alt="icon" />;
+      }
+      return Icon;
     };
 
     return (
@@ -76,9 +86,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 />
               </InputAdornment>
             ),
-            startAdornment: icon && (
+            startAdornment: Icon && (
               <InputAdornment position="start">
-                {icon === '' ? '' : <img src={icon} alt="icon" />}
+                {Icon === '' ? '' : <IconImg />}
               </InputAdornment>
             ),
           }}

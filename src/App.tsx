@@ -1,3 +1,11 @@
-const App = () => <h1>Health Check</h1>;
+import Aplication from './components/landingPage/Aplication';
+import Header from './layout/user/Header';
+
+const App = () => (
+  <div>
+    <Header />
+    <Aplication />
+  </div>
+);
 
 export default App;
