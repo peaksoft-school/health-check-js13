@@ -6,13 +6,15 @@ import {
   DermatologyText,
   DermatologyTextLi,
 } from '../../utils/constants/Dermatology';
-import doctors from '../../utils/constants/doctors.json';
 import Button from '../../components/UI/Button';
 import FeedbackSlider from '../../components/landingPage/FeedbackSlider';
 import Accordionst from '../../components/UI/Accardionst';
 import Aplication from '../../components/landingPage/Aplication';
 import Footer from '../../layout/user/Footer';
 import BreadCrumbs from '../../components/UI/BreadCrumbs';
+import DoctorTenImg from '../../assets/images/DoctorTenImg.png';
+import DoctorSeven from '../../assets/images/DoctorSevenImg.png';
+import DoctorFive from '../../assets/images/DoctorFiveImg.png';
 
 const breadcrumbs = [
   { label: 'Главная', href: '/' },
@@ -79,12 +81,25 @@ const InnerService = () => {
                 </Accordionst>
                 <Accordionst
                   title="Первичный прием врача-дерматолога"
-                  price="1500 сом"
-                />
+                  price="1500 сом">
+                  <Box>
+                    <p style={{ fontSize: '16px' }}>
+                      Следуйте рекомендациям врача и соблюдайте назначенное
+                      лечение.
+                    </p>
+                  </Box>
+                </Accordionst>
                 <Accordionst
                   title="Повторный прием врача-дерматолога"
-                  price="1000 сом"
-                />
+                  price="1000 сом">
+                  {' '}
+                  <Box>
+                    <p style={{ fontSize: '16px' }}>
+                      Запланируйте последующие визиты, если это необходимо для
+                      контроля состояния.
+                    </p>
+                  </Box>
+                </Accordionst>
               </StyledPrice>
             </StyledText>
           </StyledContent>
@@ -97,15 +112,33 @@ const InnerService = () => {
         <StyledBox>
           <StyledContent>
             <StyledContainerDoctors>
-              {doctors.slice(0, 9).map(({ id, img, name, doctor }) => (
-                <Box key={id}>
-                  <StyledImg src={img} alt={name} />
-                  <h3>{name}</h3>
-                  <Typography>{doctor}</Typography>
-                  <br />
-                  <Button variant="outlined">Записаться на прием</Button>
-                </Box>
-              ))}
+              <div className="imgContent">
+                <StyledImg src={DoctorTenImg} alt="name" />
+                <StyledImg src={DoctorSeven} alt="name" />
+                <StyledImg src={DoctorFive} alt="name" />
+              </div>
+<div className='imgContents'>
+  <div>
+
+  <p>Манак Елена</p>
+  <p>Врач-дерматолог</p>
+  </div>
+  <div>
+
+  <p>Манак Елена</p>
+  <p>Врач-дерматолог</p>
+  </div>
+  <div>
+
+  <p>Манак Елена</p>
+  <p>Врач-дерматолог</p>
+  </div>
+</div>
+              <div className="imgContentst">
+                <Button variant="outlined">Записаться на прием</Button>
+                <Button variant="outlined">Записаться на прием</Button>
+                <Button variant="outlined">Записаться на прием</Button>
+              </div>
             </StyledContainerDoctors>
           </StyledContent>
           <Aplication updateFunc={applicationUpdateFunc} />
@@ -133,10 +166,26 @@ const StyledContent = styled(Box)(() => ({
 const StyledContainerDoctors = styled(Box)(() => ({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: '30px',
+  gap: '10px',
   margin: '0 auto',
   marginTop: '120px',
   fontFamily: 'Manrope, sans-serif',
+
+  '& .imgContent': {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '30px',
+  },
+  '& .imgContents': {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '220px',
+  },
+  '& .imgContentst': {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '120px',
+  },
 }));
 
 const StyledContainer = styled(Box)(() => ({
