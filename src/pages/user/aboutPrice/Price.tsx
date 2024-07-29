@@ -1,47 +1,47 @@
 import { FC } from 'react';
-import { styled, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import Accordeon from '../../../components/UI/Accardeon';
 import { Cards } from '../../../utils/constants/price';
 
-const Price: FC = () => {
-  return (
-    <PriceContainer>
-      <div className="container">
-        <div className="content">
-          <div className="Cards">
-            <div className="contentPrice">
-              <span>Наш</span>
-              <span style={{ color: '#048741' }}>прайс</span>
-            </div>
-            <p style={{ marginTop: '34px' }}>
-              Цены на услуги формируются в соответствии с действующими
-              Прейскурантами. Общая стоимость зависит от объема услуг,
-              оказываемых в рамках приёма. Объём оказываемых услуг определяется
-              врачом, исходя из показаний для обследования и пожеланий клиента.
-            </p>
-          </div>
-          <StyledContent className="ButtonContent">
-            <AccordeonsContent>
-              {Cards?.map(item => (
-                <Accordeon key={item.id} title={item.name}>
+const Price: FC = () => (
+  <PriceContainer>
+    <Box className="container">
+      <Box className="content">
+        <Box className="cards">
+          <Box className="contentPrice">
+            <span>Наш</span>
+            <span style={{ color: '#048741' }}>прайс</span>
+          </Box>
+          <p style={{ marginTop: '34px' }}>
+            Цены на услуги формируются в соответствии с действующими
+            Прейскурантами. Общая стоимость зависит от объема услуг, оказываемых
+            в рамках приёма. Объём оказываемых услуг определяется врачом, исходя
+            из показаний для обследования и пожеланий клиента.
+          </p>
+        </Box>
+        <StyledContent>
+          <AccordeonsContent>
+            {Cards?.map(
+              ({ id, name, goodName, goodNumber, good, goodText, inside }) => (
+                <Accordeon key={id} title={name}>
                   <CardsContent>
                     <BoxContent>
-                      <Box>
-                        <StyledTypography>{item.goodName}</StyledTypography>
-                        <PriceNumber>{item.goodNumber}</PriceNumber>
-                      </Box>
+                      <Boxs>
+                        <StyledTypography>{goodName}</StyledTypography>
+                        <PriceNumber>{goodNumber}</PriceNumber>
+                      </Boxs>
                       <MapContent>
-                        <Text>{item.good}</Text>
-                        <Text>{item.goodText}</Text>
+                        <Text>{good}</Text>
+                        <Text>{goodText}</Text>
                       </MapContent>
                     </BoxContent>
                     <MapContainer>
                       <HrClass />
-                      {item.inside.map(subItem => (
-                        <NumberCont key={subItem.id}>
+                      {inside.map(({ id, text, textNumber }) => (
+                        <NumberCont key={id}>
                           <CardsText>
-                            <StyledTypography>{subItem.text}</StyledTypography>
-                            <PriceNumber>{subItem.textNumber}</PriceNumber>
+                            <StyledTypography>{text}</StyledTypography>
+                            <PriceNumber>{textNumber}</PriceNumber>
                           </CardsText>
                           <Hr />
                         </NumberCont>
@@ -49,16 +49,14 @@ const Price: FC = () => {
                     </MapContainer>
                   </CardsContent>
                 </Accordeon>
-              ))}
-            </AccordeonsContent>
-          </StyledContent>
-        </div>
-      </div>
-    </PriceContainer>
-  );
-};
-
-export default Price;
+              )
+            )}
+          </AccordeonsContent>
+        </StyledContent>
+      </Box>
+    </Box>
+  </PriceContainer>
+);
 
 const PriceContainer = styled('div')(() => ({
   width: '100%',
@@ -69,7 +67,7 @@ const PriceContainer = styled('div')(() => ({
   '.content': {
     display: 'flex',
     flexDirection: 'column',
-    '.Cards': {
+    '.cards': {
       width: '691px',
       height: '183px',
       marginLeft: '100px',
@@ -102,7 +100,7 @@ const CardsContent = styled('div')(() => ({
   paddingTop: '26px',
 }));
 
-const Box = styled('div')(() => ({
+const Boxs = styled('div')(() => ({
   display: 'flex',
   gap: '160px',
 }));
@@ -115,7 +113,7 @@ const BoxContent = styled('div')(() => ({
 const StyledTypography = styled(Typography)(() => ({
   fontSize: '18px',
   fontFamily: '"Manrope", sans-serif',
-  fontWeight: 'bold',
+  // fontWeight: 'bold',
 }));
 
 const AccordeonsContent = styled('div')(() => ({
@@ -129,7 +127,7 @@ const AccordeonsContent = styled('div')(() => ({
 const PriceNumber = styled('p')(() => ({
   fontSize: '18px',
   fontFamily: '"Manrope", sans-serif',
-  fontWeight: 'bold',
+  // fontWeight: 'bold',
 }));
 
 const MapContent = styled('div')(() => ({
@@ -172,3 +170,5 @@ const HrClass = styled('hr')(() => ({
   marginTop: '15px',
   marginLeft: '-10px',
 }));
+
+export default Price;
