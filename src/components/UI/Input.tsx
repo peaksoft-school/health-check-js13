@@ -88,7 +88,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ),
             startAdornment: Icon && (
               <InputAdornment position="start">
+<<<<<<< HEAD
                 {Icon === '' ? '' : <IconImg />}
+=======
+                {icon === '' ? '' : <img src={icon} />}
+>>>>>>> development
               </InputAdornment>
             ),
           }}
