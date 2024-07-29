@@ -16,7 +16,7 @@ const Footer = () => (
         <StyledTextContainer>
           <Box>
             <StyledHealthTextContent>
-              <StyledImg src={HealtcCheck} alt="Icon1" />
+              <HealtcCheck />
               <StyledHealthText>
                 <StyledSpan>HEALTH</StyledSpan>CHECK
               </StyledHealthText>
@@ -40,12 +40,12 @@ const Footer = () => (
             <StyledIconNumberContaier>
               <StyledIconsContent>
                 <StyledALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
-                  <StyledIconsLocation src={Location} alt="location" />
+                  <Location />
                 </StyledALink>
 
-                <StyledIconsLocation src={Time} alt="Time" />
-                <StyledIconsLocation src={Callican} alt="telefon" />
-                <StyledMessageIcon src={Message} alt="Massage" />
+                <Time />
+                <Callican />
+                <Message />
               </StyledIconsContent>
               <StyledNumberContent>
                 <Typography>106452, г. Бишкек, Гражданская 119</Typography>
@@ -60,13 +60,13 @@ const Footer = () => (
             <Typography>Мы в социальных сетях:</Typography>
             <StyledIconsThre>
               <a href="https://www.instagram.com/_i.a.n.05_/">
-                <img src={Instagram} alt="instagram" />
+                <Instagram/>
               </a>
               <a href="https://t.me/+996500344433">
-                <StyledImgSocial src={Telegram} alt="telegram" />
+                <Telegram />
               </a>
               <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
-                <img src={WhatsApp} alt="whatsApp" />
+                <WhatsApp />
               </a>
             </StyledIconsThre>
           </StyledBox>
@@ -81,7 +81,9 @@ const Footer = () => (
         </StyledContactContainer>
         <StyledHr />
         <StyledFoodContent>
-          <Typography>© Peaksoft House 2023 | MedCheck | Все права защищены</Typography>
+          <Typography>
+            © Peaksoft House 2023 | MedCheck | Все права защищены
+          </Typography>
         </StyledFoodContent>
       </StyledContent>
     </StyledContainer>
@@ -97,8 +99,8 @@ const StyledMainContainer = styled(Box)(() => ({
 
 const StyledContainer = styled(Box)(() => ({
   width: '100%',
-  maxWidth: '1440px',
-  minWidth: '1200px',
+  maxWidth: '1940px',
+  // minWidth: '1200px',
   height: '564px',
   margin: '0 auto',
   display: 'flex',
@@ -114,7 +116,7 @@ const StyledContent = styled(Box)(() => ({
 
 const StyledTextContainer = styled(Box)(() => ({
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'space-around',
   width: '78em',
   margin: '40px auto',
 }));
@@ -146,11 +148,7 @@ const StyledSpan = styled('span')(() => ({
   fontFamily: 'Manrope, sans-serif',
 }));
 
-const StyledImg = styled('img')(() => ({
-  width: '4.5rem',
-  height: '5rem',
-  cursor: 'pointer',
-}));
+
 
 const StyledTextContaier = styled(Box)(() => ({
   color: 'aliceblue',
@@ -194,18 +192,9 @@ const StyledIconsContent = styled(Box)(() => ({
   color: 'white',
 }));
 
-const StyledIconsLocation = styled('img')(() => ({
-  width: '22px',
-  height: '22px',
-  cursor: 'pointer',
-}));
 
-const StyledMessageIcon = styled('img')(() => ({
-  width: '22px',
-  height: '22px',
-  cursor: 'pointer',
-  marginTop: '2.5rem',
-}));
+
+
 
 const StyledNumberContent = styled(Box)(() => ({
   display: 'flex',
@@ -239,12 +228,7 @@ const StyledIconsThre = styled(Box)(() => ({
   cursor: 'pointer',
 }));
 
-const StyledImgSocial = styled('img')(() => ({
-  marginTop: '-1px',
-  width: '1.7rem',
-  height: '1.7rem',
-  cursor: 'pointer',
-}));
+
 
 const StyledContactContainer = styled(Box)(() => ({
   display: 'flex',
@@ -272,7 +256,6 @@ const StyledHr = styled('hr')(() => ({
   borderTop: '1px solid #868e96',
   marginTop: '48px',
 }));
-
 
 const StyledFoodContent = styled(Box)(() => ({
   display: 'flex',
