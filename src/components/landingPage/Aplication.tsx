@@ -10,11 +10,12 @@ interface IAplicationProps {
   name?: string;
   number?: number;
 }
+
 type AplicationProps = {
   updateFunc: (data: IAplicationProps) => void;
 };
 
-const Aplication = ({ updateFunc }: AplicationProps) => {
+const Application = ({ updateFunc }: AplicationProps) => {
   const {
     register,
     handleSubmit,
@@ -30,9 +31,8 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
           <Typography className="h1text">Оставьте заявку</Typography>
 
           <Typography className="h3text">
-            Оставьте свой номер и наши специалисты свяжутся с Вами
-            <br />
-            в ближайшее время
+            Оставьте свой номер и наши специалисты свяжутся с Вами
+            <br />в ближайшее время
           </Typography>
 
           <BoxForm component={'form'} onSubmit={handleSubmit(onSubmit)}>
@@ -94,7 +94,7 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
   );
 };
 
-export default Aplication;
+export default Application;
 
 const Container = styled(Box)(() => ({
   width: '100%',
