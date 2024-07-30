@@ -44,7 +44,7 @@ const Application = ({ updateFunc }: AplicationProps) => {
                   })}
                   fullWidth
                   size="small"
-                  Icon={MaleFemaleIcon}
+                  Icon={<MaleFemaleIcon />}
                   label="Как к Вам обратиться?"
                   placeholder="Введите имя"
                   error={!!errors.name}
@@ -63,7 +63,7 @@ const Application = ({ updateFunc }: AplicationProps) => {
                   })}
                   fullWidth
                   size="small"
-                  Icon={CallProgressIcon}
+                  Icon={<CallProgressIcon />}
                   label="Номер мобильного телефона"
                   placeholder="+996 (___) __-__-__"
                   error={!!errors.number}
