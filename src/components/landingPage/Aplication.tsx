@@ -117,7 +117,7 @@ const Container = styled(Box)(() => ({
 }));
 
 const AplicationBox = styled(Box)(() => ({
-  width: '40em',
+  width: '39em',
   height: '28.75em',
   backgroundColor: '#DBEBFF',
   borderRadius: '20px',

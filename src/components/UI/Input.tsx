@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent, useState, ReactNode, SVGProps } from 'react';
+import { forwardRef, ChangeEvent, useState, ReactNode } from 'react';
 import {
   InputAdornment,
   TextField,
@@ -50,7 +50,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       return type;
     };
 
-    
     return (
       <LabelDiv>
         <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
@@ -94,13 +93,14 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
   height: '40px',
   borderRadius: '10px',
   caretColor: theme.palette.primary.darkGreen,
-  backgroundColor: '#fff',
+  backgroundColor: "#e8f0fe",
+
   '& .MuiOutlinedInput-input': {
     borderRadius: '8px',
     color: theme.palette.secondary.lightBlack,
-    backgroundColor: '#fff',
   },
   '& .MuiFormLabel-root': {
+    backgroundColor: '#fff',
     '&.Mui-focused ': {
       color: theme.palette.secondary.darkGrey,
     },
@@ -108,6 +108,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
 
   '& .MuiOutlinedInput-root': {
     borderRadius: '8px',
+
     '& fieldset': {
       borderColor: error
         ? theme.palette.error.main
@@ -115,6 +116,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
     },
 
     '&:hover fieldset': {
+      
       borderColor: error
         ? theme.palette.error.main
         : theme.palette.secondary.darkGrey,
