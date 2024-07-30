@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box, styled, Typography } from '@mui/material';
 import Accordeon from '../../../components/UI/Accardeon';
-import { Cards } from '../../../utils/constants/price';
+import { Cards } from '../../../utils/constants/prices';
 
 const Price: FC = () => (
   <PriceContainer>
