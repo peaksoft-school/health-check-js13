@@ -50,14 +50,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       return type;
     };
 
-    // Компонент IconImg
-    const IconImg = () => {
-      if (typeof Icon === 'string') {
-        return <img src={Icon} alt="icon" />;
-      }
-      return Icon;
-    };
-
+    
     return (
       <LabelDiv>
         <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
