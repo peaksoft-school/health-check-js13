@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TAuthTypes } from '../../../types/authSliceTypes';
 
-const initialState = {
-  auth: false,
+const initialState: TAuthTypes = {
+  isAuth: false,
   token: '',
   role: '',
   isLoading: false,
