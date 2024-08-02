@@ -1,17 +1,18 @@
 import { Navigate } from 'react-router-dom';
-import { TPrivateTypes } from '../types/privateRouterTypes';
+import { TIsAuthProps } from '../types/authSliceTypes';
 
-const PrivatRout = ({
-  Component,
+const PrivateRoutes = ({
+  component,
   isAuth,
   role,
   fallbackPath,
   isAllowed,
-}: TPrivateTypes) => {
-  if (isAuth && isAllowed?.includes(role)) {
-    return Component;
+}: TIsAuthProps) => {
+  if (isAuth && isAllowed.includes(role)) {
+    return component;
   }
+
   return <Navigate to={fallbackPath} />;
 };
 
-export default PrivatRout;
+export default PrivateRoutes;

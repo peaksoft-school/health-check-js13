@@ -1,11 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { NotFound } from './NotFound';
+import UserLayout from '../layout/user/UserLayout';
 
 const AppRoutes = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <h1>Home</h1>,
+      element: <UserLayout />,
+      children:
     },
     {
       path: '/admin',

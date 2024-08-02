@@ -1,7 +1,7 @@
-export type TAuthTypes = {
+export type TIsAuthProps = {
+  component: React.ReactNode;
   isAuth: boolean;
-  token: string | null;
   role: string;
-  isLoading: boolean;
-  error: string | null;
+  fallbackPath: string;
+  isAllowed: string[];
 };
