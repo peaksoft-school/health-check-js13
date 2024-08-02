@@ -69,7 +69,8 @@ export default FeedbackSlider;
 
 const StyledContainer = styled(Box)(() => ({
   margin: '0 auto',
-  maxWidth: '100rem',
+  marginTop: '120px',
+  maxWidth: '120rem',
 }));
 
 const StyledMainContainer = styled(Box)(() => ({
@@ -81,12 +82,13 @@ const StyledMainContainer = styled(Box)(() => ({
 
 const StyledInfo = styled('h2')(() => ({
   fontFamily: 'Manrope',
+  margin: '0 auto',
+  marginLeft: '160px',
   fontWeight: 600,
   fontSize: '36px',
   lineHeight: '49px',
   color: '#222222',
   zIndex: 6,
-  paddingLeft: '7rem',
   textAlign: 'start',
   span: {
     color: '#048741',

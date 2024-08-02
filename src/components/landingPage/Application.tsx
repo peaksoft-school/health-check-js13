@@ -99,7 +99,8 @@ export default Application;
 const Container = styled(Box)(() => ({
   width: '100%',
   minHeight: '500px',
-  margin: '20px auto',
+  marginTop: '120px',
+  marginBottom: '120px',
   display: 'flex',
   alignItems: 'end',
   justifyContent: 'center',
