@@ -39,9 +39,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleClickEye = () => {
-      setShowPassword(prev => !prev);
-    };
+    const handleClickEye = () => setShowPassword(prev => !prev);
 
     const getType = () => {
       if (type === 'password') {
@@ -76,6 +74,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 />
               </InputAdornment>
             ),
+
             startAdornment: icon && (
               <InputAdornment position="start">
                 {icon === '' ? '' : <img src={icon} alt="icon" />}
@@ -134,6 +133,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
     },
   },
 }));
+
 const LabelDiv = styled('div')({
   display: 'flex',
   flexDirection: 'column',

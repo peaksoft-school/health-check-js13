@@ -1,7 +1,7 @@
 import Clinic from '../../assets/images/Clinic.png';
-import Restangle1 from '../../assets/images/Rectangle1.png';
-import Restangle3 from '../../assets/images/Rectangle3.png';
-import Restangle2 from '../../assets/images/Rectangle2.png';
+import DoctorsLesson from '../../assets/images/DoctorsLesson.png';
+import GeneralPhotoDoctors from '../../assets/images/GeneralPhotoDoctors.png';
+import MeetingTeam from '../../assets/images/MeetingTeam.png';
 import Podrovnee from '../../assets/icons/Podrovnee.svg';
 import { styled, Typography, Box } from '@mui/material';
 
@@ -12,28 +12,29 @@ const AboutClinic = () => (
         О нашей клинике <span>“HealthCheck”</span>
       </StyledTextHealt>
       <StyledText>
-        <p>
+        <Typography>
           Вся наша команда готова обеспечить вам медицинский уход и заботу на
-          самом высоком уровне. Наша главная задача — оказать Вам теплый прием и
-          обеспечить самый лучший медицинский уход. У нас Вы в хороших руках! В
-          нашей клинике используются только качественные материалы и проверенные
-          технологии. Для каждого клиента специалисты нашей клиники разработают
+          самом вы соком уровне. Наша главная задача — оказать Вам теплый прием
+          и обеспечить самый лучший медицинский уход. У нас Вы в хороших руках!
+          В нашей клинике используются только качественные материалы и
+          проверенные технологии. Для каждого клиента специалисты нашей клиники
+          разработают
           <br />
-          индивидуальный план лечения, подробно рассказывая о каждом <br />{' '}
+          индивидуальный план лечения, подробно рассказывая о каждом <br />
           этапе.
-        </p>
-        <p>
+        </Typography>
+        <Typography>
           Доброжелательность и уважительное отношение к пациентам, не только
           материальная, но и моральная ответственность за результаты лечения —
           все это взято за основу политики Medical Clinic. Профессионализм и
           высокое качество оказываемых услуг помогают нам привлечь пациентов
           которые рекомендуют нас своим родным и близким.
-        </p>
-        <p>
+        </Typography>
+        <Typography>
           Уже 20 лет мы работаем на уровне лучших мировых стандартов, внедряя и
           развивая передовые методы лечения для сохранения здоровья наших
           пациентов.
-        </p>
+        </Typography>
       </StyledText>
       <StyledTextIcon>
         Читать подробнее о клинике <img src={Podrovnee} alt="" />
@@ -45,9 +46,9 @@ const AboutClinic = () => (
         <img src={Clinic} alt="Restangle" />
       </StyledImageContainer>
       <StyledContainerImage>
-        <img src={Restangle1} alt="Restangle" />
-        <img src={Restangle3} alt="Restangle" />
-        <img src={Restangle2} alt="Restangle" />
+        <img src={DoctorsLesson} alt="Restangle" />
+        <img src={GeneralPhotoDoctors} alt="Restangle" />
+        <img src={MeetingTeam} alt="Restangle" />
       </StyledContainerImage>
     </StyledBox>
   </StyledContainer>

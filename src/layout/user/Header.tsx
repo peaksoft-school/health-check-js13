@@ -132,6 +132,7 @@ const ContentNom = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   marginRight: '5rem',
+
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
@@ -168,6 +169,7 @@ const ContentInput = styled('div')(() => ({
   marginLeft: '1.25rem',
   width: '367px',
   flex: '1',
+
   '@media (max-width: 767px)': {
     marginLeft: '0',
     width: '100%',
