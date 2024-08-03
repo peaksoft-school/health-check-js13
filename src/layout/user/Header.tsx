@@ -11,86 +11,84 @@ import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 
-const Header = () => (
-  <HeaderClass>
-    <Box className="container">
-      <Content>
-        <ContentCards>
-          <ContentNom>
-            <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+const Header = () => {
+  return (
+    <HeaderClass>
+      <Box className="container">
+        <Content>
+          <ContentCards>
+            <ContentNom>
+              <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+                <ContainerNom>
+                  <TheMap />
+                  <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
+                </ContainerNom>
+              </ALink>
               <ContainerNom>
-                <SentryImg src={TheMap} alt="theMap" />
-                <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
+                <Hour />
+                <GreenP>пн-сб</GreenP>
+                <MaxNumber>08:00 до 18:00</MaxNumber>
               </ContainerNom>
-            </ALink>
-
-            <ContainerNom>
-              <SentryImg src={Hour} alt="hour" />
-              <GreenP>пн-сб</GreenP>
-              <MaxNumber>08:00 до 18:00</MaxNumber>
-            </ContainerNom>
-          </ContentNom>
-
-          <ContentInput>
-            <Input
-              fullWidth
-              size="small"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <SearchImg src={Search} alt="search" />
-                  </InputAdornment>
-                ),
-              }}
-              type="text"
-              placeholder="Поиск по сайту"
-            />
-          </ContentInput>
-
-          <ContainerCards>
-            <IconContainer>
-              <a href="https://www.instagram.com/_i.a.n.05_/">
-                <ImgNetworks src={Instagram} alt="instagram" />
-              </a>
-              <a href="https://t.me/+996500344433">
-                <ImgNetworks src={Telegram} alt="telegram" />
-              </a>
-              <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
-                <ImgNetworks src={WhatsApp} alt="whatsApp" />
-              </a>
-            </IconContainer>
-            <ContentNumber>
-              <NumberCards>
-                <img src={Telephone} alt="telephone" />
-                <span>+996(800) 000 000</span>
-              </NumberCards>
-              <Span>+996(505) 000 000</Span>
-            </ContentNumber>
-            <AuthDropdown />
-          </ContainerCards>
-
-          <HR />
-        </ContentCards>
-
-        <ContentCards1>
-          <BoxContent>
-            <HealthCheck src={Medcheck} alt="medcheck" />
-            {Text.map((item, index) => (
-              <Box key={index}>
-                <Title>{item.title}</Title>
-              </Box>
-            ))}
-
-            <ContentButton>
-              <ButtonClass variant="outlined">получить результаты</ButtonClass>
-              <Button1>запись онлайн</Button1>
-            </ContentButton>
-          </BoxContent>
-        </ContentCards1>
-      </Content>
-    </Box>
-  </HeaderClass>
-);
+            </ContentNom>
+            <ContentInput>
+              <Input
+                fullWidth
+                size="small"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Search />
+                    </InputAdornment>
+                  ),
+                }}
+                type="text"
+                placeholder="Поиск по сайту"
+              />
+            </ContentInput>
+            <ContainerCards>
+              <IconContainer>
+                <a href="https://www.instagram.com/_i.a.n.05_/">
+                  <Instagram />
+                </a>
+                <a href="https://t.me/+996500344433">
+                  <Telegram />
+                </a>
+                <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
+                  <WhatsApp />
+                </a>
+              </IconContainer>
+              <ContentNumber>
+                <NumberCards>
+                  <Telephone />
+                  <span>+996(800) 000 000</span>
+                </NumberCards>
+                <Span>+996(505) 000 000</Span>
+              </ContentNumber>
+              <AuthDropdown />
+            </ContainerCards>
+            <HR />
+          </ContentCards>
+          <ContentCards1>
+            <BoxContent>
+              <HealthCheck src={Medcheck} alt="medcheck" />
+              {Text.map((item, index) => (
+                <Box key={index}>
+                  <Title>{item.title}</Title>
+                </Box>
+              ))}
+              <ContentButton>
+                <ButtonClass variant="outlined">
+                  получить результаты
+                </ButtonClass>
+                <Button1>запись онлайн</Button1>
+              </ContentButton>
+            </BoxContent>
+          </ContentCards1>
+        </Content>
+      </Box>
+    </HeaderClass>
+  );
+};
 
 export default Header;
 
@@ -164,11 +162,6 @@ const GreenP = styled('p')(() => ({
   color: '#009344',
 }));
 
-const SentryImg = styled('img')(() => ({
-  width: '1.25rem',
-  height: '1.25rem',
-}));
-
 const ContentInput = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
@@ -218,11 +211,6 @@ const Input = styled(TextField)(() => ({
     border: 'none',
     outline: 'none',
   },
-}));
-
-const SearchImg = styled('img')(() => ({
-  cursor: 'pointer',
-  marginRight: '20px',
 }));
 
 const ContentNumber = styled('div')(() => ({
@@ -322,12 +310,6 @@ const IconContainer = styled('div')(() => ({
     width: '100%',
     height: 'auto',
   },
-}));
-
-const ImgNetworks = styled('img')(() => ({
-  width: '2rem',
-  height: '2rem',
-  cursor: 'pointer',
 }));
 
 const Title = styled('p')(() => ({

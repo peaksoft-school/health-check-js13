@@ -1,11 +1,3 @@
-import AboutClinic from './components/landingPage/AboutClinic';
-import Header from './layout/user/Header';
-
-const App = () => (
-  <div>
-    <Header />
-    <AboutClinic />
-  </div>
-);
+const App = () => <h1>Health Check</h1>;
 
 export default App;
