@@ -1,13 +1,17 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { NotFound } from './NotFound';
 import UserLayout from '../layout/user/UserLayout';
+import { USER_ROUTES } from './user/UserRout';
+import PrivateRoutes from './PrivatRout';
 
 const AppRoutes = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <UserLayout />,
-      children:
+      element: (
+        <PrivateRoutes role={}/>
+      ),
+      children: USER_ROUTES,
     },
     {
       path: '/admin',
