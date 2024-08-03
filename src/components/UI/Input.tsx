@@ -39,9 +39,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleClickEye = () => {
-      setShowPassword(prev => !prev);
-    };
+    const handleClickEye = () => setShowPassword(prev => !prev);
 
     const getType = () => {
       if (type === 'password') {
@@ -93,7 +91,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
   height: '40px',
   borderRadius: '10px',
   caretColor: theme.palette.primary.darkGreen,
-  backgroundColor: "#e8f0fe",
+  backgroundColor: '#e8f0fe',
 
   '& .MuiOutlinedInput-input': {
     borderRadius: '8px',
@@ -116,7 +114,6 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
     },
 
     '&:hover fieldset': {
-      
       borderColor: error
         ? theme.palette.error.main
         : theme.palette.secondary.darkGrey,
@@ -135,6 +132,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
     },
   },
 }));
+
 const LabelDiv = styled('div')({
   display: 'flex',
   flexDirection: 'column',

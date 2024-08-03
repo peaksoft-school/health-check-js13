@@ -35,6 +35,7 @@ const Table = <T,>({ columns, data }: TypesPropsTable<T>) => {
             </tr>
           ))}
         </thead>
+
         <tbody>
           {table.getRowModel().rows.map(row => (
             <tr key={row.id}>
