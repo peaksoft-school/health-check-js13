@@ -10,11 +10,12 @@ interface IAplicationProps {
   name?: string;
   number?: number;
 }
+
 type AplicationProps = {
   updateFunc: (data: IAplicationProps) => void;
 };
 
-const Aplication = ({ updateFunc }: AplicationProps) => {
+const Application = ({ updateFunc }: AplicationProps) => {
   const {
     register,
     handleSubmit,
@@ -43,7 +44,7 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
                   })}
                   fullWidth
                   size="small"
-                  icon={MaleFemaleIcon}
+                  Icon={<MaleFemaleIcon />}
                   label="Как к Вам обратиться?"
                   placeholder="Введите имя"
                   error={!!errors.name}
@@ -62,7 +63,7 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
                   })}
                   fullWidth
                   size="small"
-                  icon={CallProgressIcon}
+                  Icon={<CallProgressIcon />}
                   label="Номер мобильного телефона"
                   placeholder="+996 (___) __-__-__"
                   error={!!errors.number}
@@ -93,7 +94,7 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
   );
 };
 
-export default Aplication;
+export default Application;
 
 const Container = styled(Box)(() => ({
   width: '100%',
@@ -117,7 +118,7 @@ const Container = styled(Box)(() => ({
 }));
 
 const AplicationBox = styled(Box)(() => ({
-  width: '40em',
+  width: '39em',
   height: '28.75em',
   backgroundColor: '#DBEBFF',
   borderRadius: '20px',
