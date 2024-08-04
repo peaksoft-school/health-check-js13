@@ -1,7 +1,7 @@
 export type TIsAuthProps = {
   component: React.ReactNode;
   isAuth: boolean;
-  role: string;
+  role: string[];
   fallbackPath: string;
   isAllowed: string[];
 };

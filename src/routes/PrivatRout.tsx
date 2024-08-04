@@ -8,7 +8,7 @@ const PrivateRoutes = ({
   fallbackPath,
   isAllowed,
 }: TIsAuthProps) => {
-  if (isAuth && isAllowed.includes(role)) {
+  if (isAuth && role.some(r => isAllowed.includes(r))) {
     return component;
   }
 

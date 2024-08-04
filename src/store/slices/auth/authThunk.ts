@@ -1,14 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../../configs/axiosInstance';
+import { AxiosError } from 'axios';
 
-export const getUsers = createAsyncThunk<any, void, { rejectValue: any }>(
-  'auth/getUser',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.get('/dom');
-      return response.data;
-    } catch (error) {
+interface User {
+  id: number;
+  name: string;
+  age: number;
+}
+
+export const getUser = createAsyncThunk<
+  User,
+  void,
+  { rejectValue: AxiosError }
+>('auth/getUser', async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.get<User>('/sign');
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
       return rejectWithValue(error);
     }
+    throw error;
   }
-);
+});
