@@ -25,6 +25,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
         {label}
       </Typography>
+
       <StyledMySelect
         value={value}
         onChange={onChange}
@@ -42,7 +43,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 
 export default Select;
 
-const StyledDiv = styled('div')(({}) => ({
+const StyledDiv = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
 }));
@@ -54,16 +55,20 @@ const StyledMySelect = styled(MySelect)(({ theme }) => ({
   borderColor: theme.palette.secondary.lightGrey,
   backgroundColor: theme.palette.secondary.daisy,
   transition: 'all 0.3s',
+
   '&:hover': {
     borderColor: theme.palette.secondary.darkGrey,
   },
+
   '&.Mui-focused': {
     borderColor: theme.palette.primary.darkGreen,
     boxShadow: `0 0 0 1px ${theme.palette.primary.darkGreen}`,
   },
+
   '&.Mui-disabled': {
     backgroundColor: theme.palette.action.disabledBackground,
     color: theme.palette.text.disabled,
+
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: theme.palette.action.disabled,
     },

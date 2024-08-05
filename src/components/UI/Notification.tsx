@@ -1,9 +1,9 @@
-import React from 'react';
+import { FC } from 'react';
 import { styled } from '@mui/material';
 import { ToastContainer, ToastContainerProps } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Notification: React.FC = () => <StyledToastContainer icon={false} />;
+const Notification: FC = () => <StyledToastContainer icon={false} />;
 
 export default Notification;
 

@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent, useState } from 'react';
+import { forwardRef, ChangeEvent, useState, ReactNode } from 'react';
 import {
   InputAdornment,
   TextField,
@@ -17,7 +17,7 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   error?: boolean;
   value?: string | number;
   disabled?: boolean;
-  icon?: string;
+  Icon?: ReactNode;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       type = 'text',
       label,
-      icon,
+      Icon,
       placeholder,
       onChange,
       error,
@@ -39,9 +39,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleClickEye = () => {
-      setShowPassword(prev => !prev);
-    };
+    const handleClickEye = () => setShowPassword(prev => !prev);
 
     const getType = () => {
       if (type === 'password') {
@@ -76,10 +74,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 />
               </InputAdornment>
             ),
-            startAdornment: icon && (
-              <InputAdornment position="start">
-                {icon === '' ? '' : <img src={icon} alt="icon" />}
-              </InputAdornment>
+            startAdornment: Icon && (
+              <InputAdornment position="start">{Icon}</InputAdornment>
             ),
           }}
           {...rest}
@@ -95,13 +91,14 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
   height: '40px',
   borderRadius: '10px',
   caretColor: theme.palette.primary.darkGreen,
-  backgroundColor: '#fff',
+  backgroundColor: '#e8f0fe',
+
   '& .MuiOutlinedInput-input': {
     borderRadius: '8px',
     color: theme.palette.secondary.lightBlack,
-    backgroundColor: '#fff',
   },
   '& .MuiFormLabel-root': {
+    backgroundColor: '#fff',
     '&.Mui-focused ': {
       color: theme.palette.secondary.darkGrey,
     },
@@ -109,6 +106,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
 
   '& .MuiOutlinedInput-root': {
     borderRadius: '8px',
+
     '& fieldset': {
       borderColor: error
         ? theme.palette.error.main
@@ -134,6 +132,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
     },
   },
 }));
+
 const LabelDiv = styled('div')({
   display: 'flex',
   flexDirection: 'column',
