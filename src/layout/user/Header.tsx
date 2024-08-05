@@ -20,12 +20,12 @@ const Header = () => {
             <ContentNom>
               <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
                 <ContainerNom>
-                  <SentryImg src={TheMap} alt="theMap" />
+                  <TheMap />
                   <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
                 </ContainerNom>
               </ALink>
               <ContainerNom>
-                <SentryImg src={Hour} alt="hour" />
+                <Hour />
                 <GreenP>пн-сб</GreenP>
                 <MaxNumber>08:00 до 18:00</MaxNumber>
               </ContainerNom>
@@ -37,7 +37,7 @@ const Header = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <SearchImg src={Search} alt="search" />
+                      <Search />
                     </InputAdornment>
                   ),
                 }}
@@ -48,18 +48,18 @@ const Header = () => {
             <ContainerCards>
               <IconContainer>
                 <a href="https://www.instagram.com/_i.a.n.05_/">
-                  <ImgNetworks src={Instagram} alt="instagram" />
+                  <Instagram />
                 </a>
                 <a href="https://t.me/+996500344433">
-                  <ImgNetworks src={Telegram} alt="telegram" />
+                  <Telegram />
                 </a>
                 <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
-                  <ImgNetworks src={WhatsApp} alt="whatsApp" />
+                  <WhatsApp />
                 </a>
               </IconContainer>
               <ContentNumber>
                 <NumberCards>
-                  <img src={Telephone} alt="telephone" />
+                  <Telephone />
                   <span>+996(800) 000 000</span>
                 </NumberCards>
                 <Span>+996(505) 000 000</Span>
@@ -132,6 +132,7 @@ const ContentNom = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   marginRight: '5rem',
+
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
@@ -161,11 +162,6 @@ const GreenP = styled('p')(() => ({
   color: '#009344',
 }));
 
-const SentryImg = styled('img')(() => ({
-  width: '1.25rem',
-  height: '1.25rem',
-}));
-
 const ContentInput = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
@@ -173,6 +169,7 @@ const ContentInput = styled('div')(() => ({
   marginLeft: '1.25rem',
   width: '367px',
   flex: '1',
+
   '@media (max-width: 767px)': {
     marginLeft: '0',
     width: '100%',
@@ -214,11 +211,6 @@ const Input = styled(TextField)(() => ({
     border: 'none',
     outline: 'none',
   },
-}));
-
-const SearchImg = styled('img')(() => ({
-  cursor: 'pointer',
-  marginRight: '20px',
 }));
 
 const ContentNumber = styled('div')(() => ({
@@ -318,12 +310,6 @@ const IconContainer = styled('div')(() => ({
     width: '100%',
     height: 'auto',
   },
-}));
-
-const ImgNetworks = styled('img')(() => ({
-  width: '2rem',
-  height: '2rem',
-  cursor: 'pointer',
 }));
 
 const Title = styled('p')(() => ({

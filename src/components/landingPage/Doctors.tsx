@@ -3,39 +3,37 @@ import { doctors } from '../../utils/constants/doctorsCards';
 import { Box, styled } from '@mui/material';
 import Button from '../UI/Button';
 
-const Doctors: FC = () => {
-  return (
-    <Box>
-      <Box className="container">
-        <Box>
-          <TextContent>
-            <DoctorsText>
-              <Span>Лучшие</Span>
-              <TextGreen>врачи</TextGreen>
-            </DoctorsText>
-            <P>Попасть в команду медицинской клиники «MedCheck» могут</P>
-            <Text>
-              только лучшие специалисты с многолетней практикой и доказанным
-              опытом.
-            </Text>
-          </TextContent>
-          <Cards>
-            {doctors.map(item => (
-              <CardsMap key={item.id}>
-                <Image src={item.image} alt="doctor" />
-                <SpanClass>{item.name}</SpanClass>
-                <Title>{item.title}</Title>
-              </CardsMap>
-            ))}
-          </Cards>
-          <ContentButton>
-            <ButtonClass variant="outlined">Все врачи клиники</ButtonClass>
-          </ContentButton>
-        </Box>
+const Doctors: FC = () => (
+  <Box>
+    <Box className="container">
+      <Box>
+        <TextContent>
+          <DoctorsText>
+            <Span>Лучшие</Span>
+            <TextGreen>врачи</TextGreen>
+          </DoctorsText>
+          <P>Попасть в команду медицинской клиники «MedCheck» могут</P>
+          <Text>
+            только лучшие специалисты с многолетней практикой и доказанным
+            опытом.
+          </Text>
+        </TextContent>
+        <Cards>
+          {doctors.map(({ id, image, name, title }) => (
+            <CardsMap key={id}>
+              <Image src={image} alt="doctor" />
+              <SpanClass>{name}</SpanClass>
+              <Title>{title}</Title>
+            </CardsMap>
+          ))}
+        </Cards>
+        <ContentButton>
+          <ButtonClass variant="outlined">Все врачи клиники</ButtonClass>
+        </ContentButton>
       </Box>
     </Box>
-  );
-};
+  </Box>
+);
 
 export default Doctors;
 

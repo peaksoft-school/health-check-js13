@@ -37,7 +37,7 @@ const CustomDatePicker = forwardRef<HTMLInputElement, CustomDatePickerProps>(
 
 export default CustomDatePicker;
 
-const DatePickerStyled = styled(DatePicker)(({}) => ({
+const DatePickerStyled = styled(DatePicker)(() => ({
   '& .MuiInputBase-input': {
     padding: '8px 18px',
     borderRadius: '4px',
@@ -51,7 +51,7 @@ const DatePickerStyled = styled(DatePicker)(({}) => ({
   },
 }));
 
-const LabelDiv = styled('div')(({}) => ({
+const LabelDiv = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
 }));

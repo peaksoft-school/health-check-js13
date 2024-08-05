@@ -271,8 +271,6 @@ export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
   },
 ];
 
-const Column = () => {
-  return <Table columns={pacientHeader} data={pacient} />;
-};
+const Column = () => <Table columns={pacientHeader} data={pacient} />;
 
 export default Column;
