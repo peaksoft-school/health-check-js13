@@ -143,7 +143,7 @@ const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
   zIndex: 999,
-  marginTop: '10px',
+  marginTop: '1px',
   fontFamily: '"Poppins", sans-serif',
 }));
 
