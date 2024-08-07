@@ -39,6 +39,7 @@ export default Doctors;
 
 const TextContent = styled('div')(() => ({
   marginLeft: '90px',
+  fontFamily: '"Poppins", sans-serif',
 }));
 
 const DoctorsText = styled('div')(() => ({
@@ -91,10 +92,12 @@ const Image = styled('img')(() => ({
 const SpanClass = styled('span')(() => ({
   marginTop: '17px',
   fontSize: '16px',
+  fontFamily: '"Poppins", sans-serif',
 }));
 
 const Title = styled('p')(() => ({
   fontSize: '14px',
+  fontFamily: '"Poppins", sans-serif',
   marginTop: '4px',
   color: '#959595',
 }));
