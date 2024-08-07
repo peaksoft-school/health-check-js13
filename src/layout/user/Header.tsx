@@ -5,91 +5,146 @@ import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
 import Telephone from '../../assets/icons/CallIcon.svg';
 import TheMap from '../../assets/icons/JpsIcon.svg';
 import Hour from '../../assets/icons/TimeIcon.svg';
-import Medcheck from '../../assets/images/HEALTHCHECK.png';
+import Healthcheck from '../../assets/images/HEALTHCHECK.png';
 import Search from '../../assets/icons/SearchIcon.svg';
 import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
+import { useState, useEffect } from 'react';
 
-const Header = () => (
-  <HeaderClass>
-    <Box className="container">
-      <Content>
-        <ContentCards>
-          <ContentNom>
-            <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
-              <ContainerNom>
-                <SentryImg src={TheMap} alt="theMap" />
-                <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
-              </ContainerNom>
-            </ALink>
-            <ContainerNom>
-              <SentryImg src={Hour} alt="hour" />
-              <GreenP>пн-сб</GreenP>
-              <MaxNumber>08:00 до 18:00</MaxNumber>
-            </ContainerNom>
-          </ContentNom>
-          <ContentInput>
-            <Input
-              fullWidth
-              size="small"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <SearchImg src={Search} alt="search" />
-                  </InputAdornment>
-                ),
-              }}
-              type="text"
-              placeholder="Поиск по сайту"
-            />
-          </ContentInput>
-          <ContainerCards>
-            <IconContainer>
-              <a href="https://www.instagram.com/_i.a.n.05_/">
-                <ImgNetworks src={Instagram} alt="instagram" />
-              </a>
-              <a href="https://t.me/+996500344433">
-                <ImgNetworks src={Telegram} alt="telegram" />
-              </a>
-              <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
-                <ImgNetworks src={WhatsApp} alt="whatsApp" />
-              </a>
-            </IconContainer>
-            <ContentNumber>
-              <NumberCards>
-                <img src={Telephone} alt="telephone" />
-                <span>+996(800) 000 000</span>
-              </NumberCards>
-              <Span>+996(505) 000 000</Span>
-            </ContentNumber>
-            <AuthDropdown />
-          </ContainerCards>
-        </ContentCards>
-        <HR />
-        <ContentCards>
-          <BoxContent>
-            <HealthCheck src={Medcheck} alt="medcheck" />
-            {Text.map((item, index) => (
-              <Box key={index}>
-                <Title>{item.title}</Title>
-              </Box>
-            ))}
-            <ContentButton>
-              <ButtonClass variant="outlined">получить результаты</ButtonClass>
-              <Button1>запись онлайн</Button1>
-            </ContentButton>
-          </BoxContent>
-        </ContentCards>
-      </Content>
-    </Box>
-  </HeaderClass>
-);
+const Header = () => {
+  const [showBoxContent, setShowBoxContent] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+
+  const handleScroll = () => {
+    const scrollTop = pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      setShowBoxContent(false);
+    } else {
+      setShowBoxContent(true);
+    }
+
+    setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
+  };
+
+  useEffect(() => {
+    addEventListener('scroll', handleScroll);
+
+    return () => {
+      removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollTop]);
+
+  useEffect(() => {
+    const handleScrolled = () => {
+      if (scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    addEventListener('scroll', handleScrolled);
+
+    return () => {
+      removeEventListener('scroll', handleScrolled);
+    };
+  }, []);
+
+  return (
+    <HeaderClass>
+      <Box className="container">
+        <Content>
+          <ContentCardsFunc>
+            <ContentCards className={scrolled ? 'scrolled' : ''}>
+              <ContentNom>
+                <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+                  <ContainerNom>
+                    <TheMap />
+                    <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
+                  </ContainerNom>
+                </ALink>
+                <ContainerNom>
+                  <Hour />
+                  <GreenP>пн-сб</GreenP>
+                  <MaxNumber>08:00 до 18:00</MaxNumber>
+                </ContainerNom>
+              </ContentNom>
+              <ContentInput>
+                <Input
+                  fullWidth
+                  size="small"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <SearchContent>
+                          <Search />
+                        </SearchContent>
+                      </InputAdornment>
+                    ),
+                  }}
+                  type="text"
+                  placeholder="Поиск по сайту"
+                />
+              </ContentInput>
+              <ContainerCards>
+                <IconContainer>
+                  <a href="https://www.instagram.com/_i.a.n.05_/">
+                    <Instagram />
+                  </a>
+                  <a href="https://t.me/+996500344433">
+                    <Telegram />
+                  </a>
+                  <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
+                    <WhatsApp />
+                  </a>
+                </IconContainer>
+                <ContentNumber>
+                  <NumberCards>
+                    <Telephone />
+                    <span>+996(800) 000 000</span>
+                  </NumberCards>
+                  <Span>+996(505) 000 000</Span>
+                </ContentNumber>
+                <AuthDropdown />
+              </ContainerCards>
+              <HR />
+            </ContentCards>
+          </ContentCardsFunc>
+          <ContentCards1>
+            <BoxContentFunc className={showBoxContent ? 'show' : 'hide'}>
+              <BoxContent>
+                <HealthCheck src={Healthcheck} alt="medcheck" />
+                {Text.map(item => (
+                  <Box key={item.id}>
+                    <Title>{item.title}</Title>
+                  </Box>
+                ))}
+                <ContentButton>
+                  <ButtonClass variant="outlined">
+                    получить результаты
+                  </ButtonClass>
+                  <Button1>запись онлайн</Button1>
+                </ContentButton>
+              </BoxContent>
+            </BoxContentFunc>
+          </ContentCards1>
+        </Content>
+      </Box>
+    </HeaderClass>
+  );
+};
 
 export default Header;
 
 const HeaderClass = styled('header')(() => ({
-  padding: '10px',
+  position: 'sticky',
+  top: 0,
+  zIndex: 999,
+  marginTop: '1px',
+  fontFamily: '"Poppins", sans-serif',
 }));
 
 const ALink = styled('a')({
@@ -103,7 +158,25 @@ const Content = styled('div')(() => ({
   alignItems: 'center',
 }));
 
+const ContentCardsFunc = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  backgroundColor: '#fff',
+}));
+
 const ContentCards = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  paddingTop: 5,
+  transition: 'background-color 0.3s ease',
+  width: '1217px',
+}));
+
+const ContentCards1 = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -114,6 +187,7 @@ const ContentNom = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   marginRight: '5rem',
+
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
@@ -143,11 +217,6 @@ const GreenP = styled('p')(() => ({
   color: '#009344',
 }));
 
-const SentryImg = styled('img')(() => ({
-  width: '1.25rem',
-  height: '1.25rem',
-}));
-
 const ContentInput = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
@@ -155,6 +224,7 @@ const ContentInput = styled('div')(() => ({
   marginLeft: '1.25rem',
   width: '367px',
   flex: '1',
+
   '@media (max-width: 767px)': {
     marginLeft: '0',
     width: '100%',
@@ -173,8 +243,42 @@ const ContainerCards = styled('div')(() => ({
   },
 }));
 
+const BoxContent = styled('div')(() => ({
+  display: 'flex',
+  gap: '48px',
+  alignItems: 'center',
+  marginTop: '0.875rem',
+  flexWrap: 'wrap',
+  position: 'relative',
+  '@media (max-width: 767px)': {
+    width: '100%',
+    height: 'auto',
+    padding: '0 0.5rem',
+  },
+}));
+
+const BoxContentFunc = styled('div')(() => ({
+  zIndex: 1,
+  maxWidth: '100%',
+  padding: '0 1rem',
+  transition: 'opacity 0.15s, transform 0.3s ease',
+  backgroundColor: '#fff',
+  width: '100%',
+  '&.hide': {
+    opacity: 0,
+    transform: 'translateY(-20px)',
+    pointerEvents: 'none',
+  },
+  '&.show': {
+    opacity: 1,
+    transform: 'translateY(0)',
+    padding: '0 1rem',
+    pointerEvents: 'all',
+  },
+}));
+
 const HR = styled('hr')(() => ({
-  width: '1200px',
+  width: '100%',
   marginTop: '0.8125rem',
   border: '1px solid #D9D9D9',
 }));
@@ -185,7 +289,7 @@ const Input = styled(TextField)(() => ({
     width: '100%',
     height: '2.5rem',
     backgroundColor: '#F3F1F1',
-    padding: '0 0 0 0.3125rem',
+    padding: '0 20px 0 5px',
     '@media (max-width: 767px)': {
       width: '100%',
       height: 'auto',
@@ -198,10 +302,12 @@ const Input = styled(TextField)(() => ({
   },
 }));
 
-const SearchImg = styled('img')(() => ({
+const SearchContent = styled('div')(() => ({
   cursor: 'pointer',
-  marginRight: '20px',
+  width: '16.93px',
+  height: '16.93px',
 }));
+
 const ContentNumber = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -217,38 +323,25 @@ const NumberCards = styled('div')(() => ({
   alignItems: 'center',
 }));
 
-const BoxContent = styled('div')(() => ({
-  display: 'flex',
-  gap: '3.125rem',
-  alignItems: 'center',
-  marginTop: '0.875rem',
-  flexWrap: 'wrap',
-  '@media (max-width: 767px)': {
-    width: '100%',
-    height: 'auto',
-  },
-}));
-
 const HealthCheck = styled('img')(() => ({
   width: '16.25rem',
   height: '4.5625rem',
   flexWrap: 'wrap',
+  cursor: 'pointer',
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
   },
 }));
 
+const Title = styled('p')(() => ({
+  cursor: 'pointer',
+}));
+
 const ContentButton = styled('div')(() => ({
   display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '1rem',
-  flex: '1',
-  '@media (max-width: 767px)': {
-    marginLeft: '0',
-    width: '100%',
-    marginTop: '10px',
-  },
+  alignItems: 'center',
+  gap: '0.625rem',
 }));
 
 const ButtonClass = styled(Button)(() => ({
@@ -268,6 +361,7 @@ const ButtonClass = styled(Button)(() => ({
     },
   },
 }));
+
 const Button1 = styled(Button)(() => ({
   '&.MuiButtonBase-root': {
     width: '158px',
@@ -284,16 +378,7 @@ const IconContainer = styled('div')(() => ({
   marginLeft: '2.1875rem',
   '@media (max-width: 767px)': {
     width: '100%',
-    height: 'auto',
+    justifyContent: 'center',
+    marginLeft: '0',
   },
-}));
-
-const ImgNetworks = styled('img')(() => ({
-  width: '2rem',
-  height: '2rem',
-  cursor: 'pointer',
-}));
-
-const Title = styled('p')(() => ({
-  cursor: 'pointer',
 }));
