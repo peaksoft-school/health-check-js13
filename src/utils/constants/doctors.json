@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "img": "src/assets/images/DoctorTenImg.png",
+    "name": "Гаталуский Артур",
+    "doctor": "Врач-дерматолог"
+  },
+  {
+    "id": 2,
+    "img": "src/assets/images/DoctorSevenImg.png",
+    "name": "Манак Елена",
+    "doctor": "Врач-дерматолог"
+  },
+  {
+    "id": 3,
+    "img": "src/assets/images/DoctorFiveImg.png",
+    "name": "Мисник Елена",
+    "doctor": "Врач-дерматолог"
+  }
+]

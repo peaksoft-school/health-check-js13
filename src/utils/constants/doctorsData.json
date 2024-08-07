@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "title": "Хирургия",
+    "options": [
+      {
+        "id": 1,
+        "name": "Гаталуский Артур",
+        "specialist": "Врач-хирург",
+        "description": [],
+        "img": "src/assets/images/DoctorTenImg.png"
+      },
+      {
+        "id": 2,
+        "name": "Манак Елена",
+        "specialist": "Врач-хирург",
+        "description": [],
+        "img": "src/assets/images/DoctorFiveImg.png"
+      },
+      {
+        "id": 3,
+        "name": "Мисник Елена",
+        "specialist": "Врач-хирург",
+        "description": [],
+        "img": "src/assets/images/DoctorSevenImg.png"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Кардиологи",
+    "options": [
+      {
+        "id": 4,
+        "name": "Гаталуский Артур",
+        "specialist": "Врач-кардиолог",
+        "description": [],
+        "img": "src/assets/images/DoctorTenImg.png",
+        "title": "Кардиологи"
+      },
+      {
+        "id": 5,
+        "name": "Манак Елена",
+        "specialist": "Врач-кардиолог",
+        "description": [],
+        "img": "src/assets/images/DoctorFiveImg.png"
+      },
+      {
+        "id": 6,
+        "name": "Мисник Елена",
+        "specialist": "Врач-кардиолог",
+        "description": [],
+        "img": "src/assets/images/DoctorSevenImg.png"
+      },
+      {
+        "id": 7,
+        "name": "Гаталуский Артур",
+        "specialist": "Врач-кардиолог",
+        "description": [],
+        "img": "src/assets/images/DoctorTenImg.png"
+      },
+      {
+        "id": 8,
+        "name": "Ким Сергей",
+        "specialist": "Врач-кардиолог",
+        "description": [],
+        "img": "src/assets/images/DoctorThreeteenImg.png"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Онкология",
+    "options": [
+      {
+        "id": 10,
+        "name": "Амантур",
+        "specialist": "Врач-онколог",
+        "description": [],
+        "img": "src/assets/images/DoctorTenImg.png"
+      },
+      {
+        "id": 11,
+        "name": "Cыймык",
+        "specialist": "Врач-онколог",
+        "description": [],
+        "img": "src/assets/images/DoctorSixImg.png"
+      },
+      {
+        "id": 9,
+        "name": "Ернист",
+        "specialist": "Врач-онколог",
+        "description": [],
+        "img": "src/assets/images/DoctorOneImg.png"
+      }
+    ]
+  }
+]
