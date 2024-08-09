@@ -102,7 +102,7 @@ export const Welcome = () => {
                   })}
                   helperText={errors.name?.message}
                   error={!!errors.name}
-                  icon={MaleFemale}
+                  Icon={<MaleFemale />}
                   placeholder="Введите имя"
                   label="Как к Вам обратиться?"
                 />
@@ -126,7 +126,7 @@ export const Welcome = () => {
                       message: ' Минимум 11 символов',
                     },
                   })}
-                  icon={CallProgres}
+                  Icon={<CallProgres />}
                   label="Номер мобильного телефона"
                   placeholder="+996(___) __-__-__"
                   type="text"
@@ -141,11 +141,9 @@ export const Welcome = () => {
               <StyledImg src={Arrow} alt="" />
             </StyledButton>
 
-            <StyledModalIcon
-              onClick={handleClose}
-              src={Close}
-              alt="close-icon"
-            />
+            <StyledModalIcon onClick={handleClose}>
+              <Close />
+            </StyledModalIcon>
           </StyledFormContainer>
         </ModalContent>
       </MuiModal>
@@ -162,11 +160,9 @@ export const Welcome = () => {
             <StyledSpan>для согласования деталей.</StyledSpan>
           </StyledParagraf>
 
-          <StyledModalIcon
-            onClick={handleCloseSecondModal}
-            src={Close}
-            alt=""
-          />
+          <StyledModalIcon onClick={handleCloseSecondModal}>
+            <Close />
+          </StyledModalIcon>
         </StyledSecondModal>
       </MuiModal>
     </StyledContainer>
@@ -228,7 +224,7 @@ const StyledText = styled('p')(() => ({
   fontFamily: "'Manrope', sans-serif",
 }));
 
-const StyledModalIcon = styled('img')(() => ({
+const StyledModalIcon = styled('div')(() => ({
   width: '36px',
   height: '36px',
   position: 'absolute',

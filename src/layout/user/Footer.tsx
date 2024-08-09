@@ -14,7 +14,7 @@ const Footer = () => (
     <StyledContainer>
       <StyledContent>
         <StyledTextContainer>
-          <Box>
+          <StyledContainerContent>
             <StyledHealthTextContent>
               <HealtcCheck />
               <StyledHealthText>
@@ -33,7 +33,7 @@ const Footer = () => (
                 </StyledIcons>
               </Box>
             </StyledTextContaier>
-          </Box>
+          </StyledContainerContent>
 
           <StyledIconsContainer>
             <Typography>Контактная информация</Typography>
@@ -74,7 +74,7 @@ const Footer = () => (
 
         <StyledContactContainer>
           <StyledContactContent>
-            {Text?.map(item => (
+            {Text.map(item => (
               <Typography>{item.title}</Typography>
             ))}
           </StyledContactContent>
@@ -95,6 +95,9 @@ const StyledMainContainer = styled(Box)(() => ({
   width: '100%',
   background: '#212529',
   height: '564px',
+}));
+const StyledContainerContent = styled(Box)(() => ({
+marginRight:"3rem",
 }));
 
 const StyledContainer = styled(Box)(() => ({
@@ -170,6 +173,7 @@ const StyledIcons = styled(Typography)(() => ({
 const StyledIconsContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
+  marginRight:"9rem",
   color: 'white',
   gap: '30px',
   h1: {
