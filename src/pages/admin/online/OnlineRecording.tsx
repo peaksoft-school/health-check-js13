@@ -22,10 +22,10 @@ const OnlineRecording: FC = () => {
           <Content>
             <ContentOption>
               <OnlineRecordingSpan>Онлайн-запись</OnlineRecordingSpan>
-              <ButtonClass>
+              <StyledButton>
                 <Icon />
                 Добавить запись
-              </ButtonClass>
+              </StyledButton>
             </ContentOption>
             <Box>
               <ContentOptions>
@@ -106,7 +106,7 @@ const OnlineRecordingSpan = styled('span')({
   fontFamily: '"Poppins", sans-serif',
 });
 
-const ButtonClass = styled(Button)(() => ({
+const StyledButton = styled(Button)(() => ({
   '&.MuiButtonBase-root': {
     width: '209px',
     height: '44px',
