@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import Button from '../../../components/UI/Button';
 import Input from '../../../components/UI/Input';
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
 import Icon from '../../../assets/icons/Pluse.svg';
 import Table from '../../../components/UI/Table';
@@ -16,9 +16,9 @@ const OnlineRecording: FC = () => {
   };
 
   return (
-    <div style={{ background: '#f5f5f5' }}>
+    <BackgroundContainer>
       <OnlineRecordingContainer>
-        <div className="container">
+        <Box className="container">
           <Content>
             <ContentOption>
               <OnlineRecordingSpan>Онлайн-запись</OnlineRecordingSpan>
@@ -27,7 +27,7 @@ const OnlineRecording: FC = () => {
                 Добавить запись
               </ButtonClass>
             </ContentOption>
-            <div>
+            <Box>
               <ContentOptions>
                 <Option
                   isActive={activeOption === 'Онлайн-запись'}
@@ -47,25 +47,29 @@ const OnlineRecording: FC = () => {
                 className="InputAdmin"
                 IconEnd={<SearchIcon />}
               />
-            </div>
-            <div style={{ marginTop: '20px' }}>
+            </Box>
+            <div className="TableContent">
               <Table columns={TableOne} data={tableOne} />
             </div>
           </Content>
-        </div>
+        </Box>
       </OnlineRecordingContainer>
-    </div>
+    </BackgroundContainer>
   );
 };
 
 export default OnlineRecording;
 
+const BackgroundContainer = styled('div')({
+  background: '#f5f5f5',
+});
 
 const OnlineRecordingContainer = styled('div')({
   width: '100%',
   maxWidth: '1440px',
   minWidth: '1200px',
   margin: '0 auto',
+  fontFamily: '"Poppins", sans-serif',
 });
 
 const Content = styled('div')({
@@ -85,6 +89,9 @@ const Content = styled('div')({
     backgroundColor: 'white',
     marginTop: '34px',
   },
+  '.TableContent': {
+    marginTop: '20px',
+  },
 });
 
 const ContentOption = styled('div')({
@@ -97,8 +104,6 @@ const ContentOption = styled('div')({
 const OnlineRecordingSpan = styled('span')({
   fontSize: '22px',
   fontFamily: '"Poppins", sans-serif',
-  // marginLeft: '70px',
-  // margin: '40px 0 0 0',
 });
 
 const ButtonClass = styled(Button)(() => ({
@@ -108,10 +113,8 @@ const ButtonClass = styled(Button)(() => ({
     borderRadius: '10px',
     padding: '0 10px 0 1px',
     fontSize: '14px',
-    // marginRight: '70px',
     display: 'flex',
     gap: '10px',
-    // justifyContent: 'flex-end',
   },
 }));
 
@@ -125,18 +128,6 @@ interface OptionProps {
   isActive: boolean;
 }
 
-// const Option = styled('p')<OptionProps>(({ isActive }) => ({
-//   color: isActive ? '#048741' : '#959595',
-//   fontSize: '12px',
-//   fontFamily: '"Poppins", sans-serif',
-//   cursor: 'pointer',
-//   borderBottom: isActive ? '2px solid #048741' : '2px solid transparent',
-//   transition: 'opacity 0.15s, transform 0.3s ease',
-//   transform: isActive ? 'scale(1.1)' : 'scale(1)',
-//   // opacity: isActive ? 1 : 0.8,
-// }));
-// ?????????
-
 const Option = styled('p')<OptionProps>(({ isActive }) => ({
   color: isActive ? '#048741' : '#959595',
   fontSize: '12px',
@@ -146,5 +137,3 @@ const Option = styled('p')<OptionProps>(({ isActive }) => ({
   transition: 'border-color 0.3s ease, color 0.3s ease',
   opacity: isActive ? 1 : 0.8,
 }));
-
-// !!!!!!!
