@@ -18,6 +18,8 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   value?: string | number;
   disabled?: boolean;
   Icon?: ReactNode;
+  IconEnd?: ReactNode;
+  border: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -33,6 +35,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       size,
       fullWidth,
+      IconEnd,
+      border,
       ...rest
     },
     ref
@@ -63,19 +67,28 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           size={size}
           fullWidth={fullWidth}
+          style={{ border: border }}
           InputProps={{
-            endAdornment: type === 'password' && (
-              <InputAdornment position="end">
-                <img
-                  onClick={handleClickEye}
-                  src={showPassword ? eye : noteye}
-                  alt={showPassword ? 'eye' : 'eyenot'}
-                  style={{ cursor: 'pointer' }}
-                />
-              </InputAdornment>
-            ),
+            endAdornment:
+              type === 'password' ? (
+                <InputAdornment position="end">
+                  <img
+                    onClick={handleClickEye}
+                    src={showPassword ? eye : noteye}
+                    alt={showPassword ? 'eye' : 'eyenot'}
+                    style={{ cursor: 'pointer' }}
+                  />
+                </InputAdornment>
+              ) : (
+                <InputAdornment position="end" style={{ cursor: 'pointer' }}>
+                  {IconEnd}
+                </InputAdornment>
+              ),
+
             startAdornment: Icon && (
-              <InputAdornment position="start">{Icon}</InputAdornment>
+              <InputAdornment position="start" style={{ cursor: 'pointer' }}>
+                {Icon}
+              </InputAdornment>
             ),
           }}
           {...rest}
