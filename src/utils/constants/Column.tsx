@@ -3,10 +3,6 @@ import { Box } from '@mui/material';
 import Korzina from '../../assets/icons/Korzina.svg';
 import Table from '../../components/UI/Table';
 import pacient from '../constants/pacient.json';
-// import tableOne from '../constants/tableOne.json';
-// import statusBody from '../constants/statusBody.json';
-// import applicationBody from '../constants/applicationBody.json';
-
 import Specialist from '../helpers/Specialist';
 import ActionsStatus from '../helpers/Actions';
 import Switcher from '../../components/UI/Switcher';
@@ -61,7 +57,7 @@ export type CombineTypeTables =
 
 export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
   {
-    header: () => (
+    header: ({ table }) => (
       <Box
         sx={{
           display: 'flex',
@@ -69,12 +65,20 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           gap: '5px',
           cursor: 'pointer',
         }}>
-        <Checkbox />
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected()}
+          onChange={table.getToggleAllPageRowsSelectedHandler()}
+        />
         <Korzina />
       </Box>
     ),
-    accessorKey: 'hello',
-    cell: () => <Checkbox />,
+    accessorKey: 'select',
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onChange={row.getToggleSelectedHandler()}
+      />
+    ),
   },
   {
     header: '№',
@@ -108,30 +112,30 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
     header: 'Обработан',
     accessorKey: 'progress',
     cell: () => (
-      <div
-        style={{
+      <Box
+        sx={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
         }}>
-        <Korzina />
-      </div>
+        <Checkbox />
+      </Box>
     ),
   },
   {
     header: 'Action',
     accessorKey: 'and',
     cell: () => (
-      <div
-        style={{
+      <Box
+        sx={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'end',
           cursor: 'pointer',
         }}>
         <Korzina />
-      </div>
+      </Box>
     ),
   },
 ];
