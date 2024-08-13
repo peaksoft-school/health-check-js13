@@ -1,5 +1,4 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Box } from '@mui/material';
 import Korzina from '../../assets/icons/Korzina.svg';
 import Table from '../../components/UI/Table';
 import pacient from '../constants/pacient.json';
@@ -58,8 +57,8 @@ export type CombineTypeTables =
 export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
   {
     header: ({ table }) => (
-      <Box
-        sx={{
+      <div
+        style={{
           display: 'flex',
           alignItems: 'center',
           gap: '5px',
@@ -70,7 +69,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           onChange={table.getToggleAllPageRowsSelectedHandler()}
         />
         <Korzina />
-      </Box>
+      </div>
     ),
     accessorKey: 'select',
     cell: ({ row }) => (
@@ -112,30 +111,30 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
     header: 'Обработан',
     accessorKey: 'progress',
     cell: () => (
-      <Box
-        sx={{
+      <div
+        style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
         }}>
         <Checkbox />
-      </Box>
+      </div>
     ),
   },
   {
     header: 'Action',
     accessorKey: 'and',
     cell: () => (
-      <Box
-        sx={{
+      <div
+        style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'end',
           cursor: 'pointer',
         }}>
         <Korzina />
-      </Box>
+      </div>
     ),
   },
 ];
