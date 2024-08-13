@@ -2,7 +2,7 @@ import Home from '../../pages/home/Home';
 
 export const USER_ROUTES = [
   {
-    path: '/',
+    index: true,
     element: <Home />,
   },
 ];

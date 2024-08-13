@@ -5,47 +5,37 @@ import { USER_ROUTES } from './user/UserRout';
 import PrivateRoutes from './PrivatRout';
 import { ROLES, ROUTES } from './router';
 import AdminLayout from '../layout/admin/AdminLayout';
-let role = 'USER';
-const isAuth = false;
+import { useAppSelector } from '../hooks/customHooks';
+import { ADMIN_CHILDREN } from './admin/AdminRout';
+
 const AppRoutes = () => {
+  const { isAuth, role } = useAppSelector(state => state.auth);
+
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: ROUTES.USER.HOME,
       element: (
         <PrivateRoutes
-          role={[role]}
-          isAuth={true}
-          fallbackPath={ROUTES.USER.SIGNIN}
-          isAllowed={[ROLES.USER, ROLES.GUEST]}
+          roles={[ROLES.GUEST, ROLES.USER]}
+          isAuth={role === ROLES.USER ? isAuth : !isAuth}
+          fallbackPath={ROUTES.USER.HOME}
           component={<UserLayout />}
         />
       ),
       children: USER_ROUTES,
     },
+
     {
-      path: '/admin',
+      path: ROUTES.ADMIN.HOME,
       element: (
         <PrivateRoutes
-          role={[role]}
-          isAllowed={[ROLES.ADMIN]}
-          isAuth={false}
+          roles={[ROLES.ADMIN]}
+          isAuth={isAuth}
           component={<AdminLayout />}
-          fallbackPath={ROUTES.ADMIN.HOME}
+          fallbackPath={ROUTES.USER.HOME}
         />
       ),
-      children: [],
-    },
-    {
-      path: '/user',
-      element: (
-        <PrivateRoutes
-          role={[role]}
-          fallbackPath={ROUTES.USER.SIGNIN}
-          isAuth={false}
-          isAllowed={[ROLES.GUEST, ROLES.USER]}
-          component={<UserLayout />}
-        />
-      ),
+      children: ADMIN_CHILDREN,
     },
     {
       path: '*',

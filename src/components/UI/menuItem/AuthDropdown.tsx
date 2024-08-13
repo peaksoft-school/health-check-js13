@@ -1,4 +1,6 @@
 import Button from '@mui/material/Button';
+import Users from '../../../assets/icons/UserIcon.svg';
+
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
@@ -6,11 +8,18 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
-import Users from '../../../assets/icons/UserIcon.svg';
 import { Box, styled } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 
-export default function AuthDropdown() {
+type TypesProps = {
+  handleToggleSignIn?: () => void;
+  handleToggles?: () => void;
+};
+
+export default function AuthDropdown({
+  handleToggleSignIn,
+  handleToggles,
+}: TypesProps) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
 
@@ -18,13 +27,8 @@ export default function AuthDropdown() {
     setOpen(prevOpen => !prevOpen);
   };
 
-  const handleClose = (event: Event | React.SyntheticEvent) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
-    }
+  const handleClose = () => {
+    // handleToggleSignIn?.();
 
     setOpen(false);
   };
@@ -39,6 +43,7 @@ export default function AuthDropdown() {
   }
 
   const prevOpen = useRef(open);
+
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current!.focus();
@@ -81,8 +86,8 @@ export default function AuthDropdown() {
                     id="composition-menu"
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}>
-                    <ButtonMui onClick={handleClose}>Войти</ButtonMui>
-                    <ButtonMui onClick={handleClose}>Регистрация</ButtonMui>
+                    <ButtonMui onClick={handleToggleSignIn}>Войти</ButtonMui>
+                    <ButtonMui onClick={handleToggles}>Регистрация</ButtonMui>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -93,8 +98,6 @@ export default function AuthDropdown() {
     </Stack>
   );
 }
-
-
 
 const ButtonMui = styled(MenuItem)(() => ({
   '&:hover': {

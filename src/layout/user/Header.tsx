@@ -10,8 +10,26 @@ import Search from '../../assets/icons/SearchIcon.svg';
 import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
+import { useState } from 'react';
+import Modal from '../../components/UI/Modal';
+import SignUp from '../../routes/user/SignUp';
+import SignIn from '../../routes/user/SignIn';
+import { useAppSelector } from '../../hooks/customHooks';
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
+  const { isAuth } = useAppSelector(state => state.auth);
+  console.log(isAuth);
+  const handleToggles = () => {
+    setOpen(prevOpen => !prevOpen);
+  };
+  const handleToggleSignIn = () => {
+    if (!isAuth) {
+      setOpenSignIn(prevOpen => !prevOpen);
+    }
+  };
+
   return (
     <HeaderClass>
       <Box className="container">
@@ -64,7 +82,10 @@ const Header = () => {
                 </NumberCards>
                 <Span>+996(505) 000 000</Span>
               </ContentNumber>
-              <AuthDropdown />
+              <AuthDropdown
+                handleToggles={handleToggles}
+                handleToggleSignIn={handleToggleSignIn}
+              />
             </ContainerCards>
             <HR />
           </ContentCards>
@@ -77,7 +98,7 @@ const Header = () => {
                 </Box>
               ))}
               <ContentButton>
-                <ButtonClass variant="outlined">
+                <ButtonClass onClick={handleToggleSignIn} variant="outlined">
                   получить результаты
                 </ButtonClass>
                 <Button1>запись онлайн</Button1>
@@ -86,6 +107,19 @@ const Header = () => {
           </ContentCards1>
         </Content>
       </Box>
+      {open && (
+        <Modal onClose={handleToggles} open={open}>
+          <SignUp
+            onClose={handleToggles}
+            handleToggleSignIn={handleToggleSignIn}
+          />
+        </Modal>
+      )}
+      {openSignIn && (
+        <Modal open={openSignIn} onClose={handleToggleSignIn}>
+          <SignIn onClose={handleToggleSignIn} handleToggles={handleToggles} />
+        </Modal>
+      )}
     </HeaderClass>
   );
 };
@@ -161,8 +195,6 @@ const GreenP = styled('p')(() => ({
   color: '#009344',
 }));
 
-
-
 const ContentInput = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
@@ -212,8 +244,6 @@ const Input = styled(TextField)(() => ({
     outline: 'none',
   },
 }));
-
-
 
 const ContentNumber = styled('div')(() => ({
   display: 'flex',
@@ -313,8 +343,6 @@ const IconContainer = styled('div')(() => ({
     height: 'auto',
   },
 }));
-
-
 
 const Title = styled('p')(() => ({
   cursor: 'pointer',

@@ -1,8 +1,7 @@
-import { ROUTES } from '../router';
 
 export const ADMIN_CHILDREN = [
   {
-    path: ROUTES.ADMIN.HOME,
-    element: '',
+    index: true,
+    element: <h1>Hello Admin</h1>,
   },
 ];

@@ -1,18 +1,25 @@
 import { Navigate } from 'react-router-dom';
 import { TIsAuthProps } from '../types/authSliceTypes';
+import { useAppSelector } from '../hooks/customHooks';
 
 const PrivateRoutes = ({
   component,
   isAuth,
-  role,
+  roles,
+
   fallbackPath,
-  isAllowed,
 }: TIsAuthProps) => {
-  if (isAuth && role.some(r => isAllowed.includes(r))) {
+  const { role } = useAppSelector(state => state.auth);
+
+  const isAllowed = roles.includes(role);
+
+  console.log(isAuth);
+
+  if (isAuth && isAllowed) {
     return component;
   }
 
-  return <Navigate to={fallbackPath} />;
+  return <Navigate to={fallbackPath} replace />;
 };
 
 export default PrivateRoutes;

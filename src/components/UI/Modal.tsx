@@ -2,9 +2,9 @@ import { Box, Modal as MuiModal, styled } from '@mui/material';
 import { FC, ReactNode } from 'react';
 
 type ModalTypes = {
-  children: ReactNode;
+  children?: ReactNode;
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 const Modal: FC<ModalTypes> = ({ children, open, onClose, ...rest }) => (
@@ -17,12 +17,11 @@ export default Modal;
 
 const ContentModal = styled(Box)(() => ({
   position: 'absolute',
-  top: '50%',
+  top: '48%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   backgroundColor: 'white',
   border: 'none',
   boxShadow: '24px',
-  padding: '15px',
-  borderRadius: '20px',
+  borderRadius: '8px',
 }));
