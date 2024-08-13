@@ -70,7 +70,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           cursor: 'pointer',
         }}>
         <Checkbox />
-        <img src={Korzina} alt="delete" />
+        <Korzina />
       </Box>
     ),
     accessorKey: 'hello',
@@ -115,7 +115,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           justifyContent: 'center',
           cursor: 'pointer',
         }}>
-        <img src={Korzina} />
+        <Korzina />
       </div>
     ),
   },
@@ -130,7 +130,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           justifyContent: 'end',
           cursor: 'pointer',
         }}>
-        <img src={Korzina} alt="delete" />
+        <Korzina />
       </div>
     ),
   },
@@ -182,11 +182,7 @@ export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
           cursor: 'pointer',
         }}>
         <Checkbox />
-        <img
-          style={{ width: '25px', margin: '0 0 3px 0' }}
-          src={Korzina}
-          alt="korzina"
-        />
+        <Korzina />
       </div>
     ),
     accessorKey: 'nello',
@@ -230,7 +226,7 @@ export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
           marginLeft: '26px',
           cursor: 'pointer',
         }}>
-        <img src={Korzina} alt="delete" />
+        <Korzina />
       </div>
     ),
   },
@@ -265,7 +261,7 @@ export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
           marginLeft: '26px',
           cursor: 'pointer',
         }}>
-        <img src={Korzina} alt="delete" />
+        <Korzina />
       </div>
     ),
   },

@@ -30,9 +30,8 @@ const Aplication = ({ updateFunc }: AplicationProps) => {
           <Typography className="h1text">Оставьте заявку</Typography>
 
           <Typography className="h3text">
-            Оставьте свой номер и наши специалисты свяжутся с Вами
-            <br />
-            в ближайшее время
+            Оставьте свой номер и наши специалисты свяжутся с Вами
+            <br />в ближайшее время
           </Typography>
 
           <BoxForm component={'form'} onSubmit={handleSubmit(onSubmit)}>
@@ -99,7 +98,8 @@ export default Aplication;
 const Container = styled(Box)(() => ({
   width: '100%',
   minHeight: '500px',
-  margin: '20px auto',
+  marginTop: '120px',
+  marginBottom: '120px',
   display: 'flex',
   alignItems: 'end',
   justifyContent: 'center',
@@ -117,14 +117,14 @@ const Container = styled(Box)(() => ({
 }));
 
 const AplicationBox = styled(Box)(() => ({
-  width: '42em',
+  width: '40em',
   height: '28.75em',
   backgroundColor: '#DBEBFF',
   borderRadius: '20px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  gap: '30px',
+  gap: '20px',
 
   '.h1text': {
     textAlign: 'center',

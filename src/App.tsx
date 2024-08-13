@@ -1,9 +1,3 @@
-import { FC } from 'react';
-import Table from './components/UI/Table';
-import { applicationHeader } from './utils/constants/Column';
-import applicationBody from './utils/constants/applicationBody.json';
-const App: FC = () => (
-  <Table data={applicationBody} columns={applicationHeader} />
-);
+const App = () => <h1>Health Check</h1>;
 
 export default App;

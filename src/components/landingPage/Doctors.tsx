@@ -20,11 +20,11 @@ const Doctors: FC = () => {
             </Text>
           </TextContent>
           <Cards>
-            {doctors.map(item => (
-              <CardsMap key={item.id}>
-                <Image src={item.image} alt="doctor" />
-                <SpanClass>{item.name}</SpanClass>
-                <Title>{item.title}</Title>
+            {doctors.map(({ id, image, name, title }) => (
+              <CardsMap key={id}>
+                <Image src={image} alt="doctor" />
+                <SpanClass>{name}</SpanClass>
+                <Title>{title}</Title>
               </CardsMap>
             ))}
           </Cards>
