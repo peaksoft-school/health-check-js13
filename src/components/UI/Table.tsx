@@ -60,6 +60,7 @@ const TableContainerStyled = styled(Box)({
   maxWidth: '1440px',
   margin: '0 auto',
   minHeight: '100vh',
+  fontFamily: '"Manrope",sans-serif',
 });
 
 const TableStyled = styled('table')({
