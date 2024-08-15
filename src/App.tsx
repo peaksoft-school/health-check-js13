@@ -1,3 +1,4 @@
-const App = () => <h1>Health Check</h1>;
+
+const App = () => <h1>Healts-Chek</h1>
 
 export default App;
