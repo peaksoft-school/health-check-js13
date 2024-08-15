@@ -1,4 +1,6 @@
+import AdminHeader from './layout/admin/AdminHeader';
+// import Header from './layout/user/Header';
 
-const App = () => <h1>Healts-Chek</h1>
+const App = () => <AdminHeader />;
 
 export default App;
