@@ -66,7 +66,6 @@ const AdminHeader: FC = () => {
           <MenuItem value="Администратор" disabled>
             Администратор
           </MenuItem>
-          <MenuItem value="Профиль">bema</MenuItem>
           <MenuItem value="Выход">Выход</MenuItem>
         </AdminSelect>
       </Box>
