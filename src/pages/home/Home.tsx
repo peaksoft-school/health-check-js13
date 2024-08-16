@@ -1,5 +1,4 @@
 import AboutClinic from '../../components/landingPage/AboutClinic';
-import Aplication from '../../components/landingPage/Aplication';
 import Doctors from '../../components/landingPage/Doctors';
 import FeedbackSlider from '../../components/landingPage/FeedbackSlider';
 import OurService from '../../components/landingPage/OurService';
@@ -40,7 +39,6 @@ const Home = () => {
       <br />
       <br />
       <br />
-      <Aplication updateFunc={() => console.log('')} />
       <br />
       <br />
       <br />

@@ -29,11 +29,10 @@ export default function AuthDropdown({
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
+
   const anchorRef = useRef<HTMLButtonElement>(null);
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
-  };
+  const handleToggle = () => setOpen(prevOpen => !prevOpen);
 
   const handleClose = () => {
     setOpen(false);
@@ -76,6 +75,7 @@ export default function AuthDropdown({
           onClick={handleToggle}>
           <Users />
         </Button>
+
         <Popper
           open={open}
           anchorEl={anchorRef.current}
