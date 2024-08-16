@@ -10,10 +10,7 @@ const PrivateRoutes = ({
   fallbackPath,
 }: TIsAuthProps) => {
   const { role } = useAppSelector(state => state.auth);
-
   const isAllowed = roles.includes(role);
-
-  console.log(isAuth);
 
   if (isAuth && isAllowed) {
     return component;

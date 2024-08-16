@@ -15,19 +15,34 @@ import Modal from '../../components/UI/Modal';
 import SignUp from '../../routes/user/SignUp';
 import SignIn from '../../routes/user/SignIn';
 import { useAppSelector } from '../../hooks/customHooks';
+import { NavLink } from 'react-router-dom';
+import ForgotPassword from '../../routes/user/ForgotPassword';
+import ChangePassowrd from '../../routes/user/ChangePassowrd';
 
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false);
+  const [openForgotPassword, setOpenForgotPassword] = useState(false);
+  const [openChangePassword, setOpenChangePassword] = useState(false);
+
   const { isAuth } = useAppSelector(state => state.auth);
-  console.log(isAuth);
+
   const handleToggles = () => {
     setOpen(prevOpen => !prevOpen);
   };
+
   const handleToggleSignIn = () => {
     if (!isAuth) {
       setOpenSignIn(prevOpen => !prevOpen);
     }
+  };
+
+  const openForgotModal = () => {
+    setOpenForgotPassword(prevOpen => !prevOpen);
+  };
+
+  const openChnageModal = () => {
+    setOpenChangePassword(prevOpen => !prevOpen);
   };
 
   return (
@@ -94,7 +109,9 @@ const Header = () => {
               <HealthCheck src={Medcheck} alt="medcheck" />
               {Text.map((item, index) => (
                 <Box key={index}>
-                  <Title>{item.title}</Title>
+                  <Title>
+                    <StyledNavLink to={item.to}>{item.title}</StyledNavLink>
+                  </Title>
                 </Box>
               ))}
               <ContentButton>
@@ -117,7 +134,21 @@ const Header = () => {
       )}
       {openSignIn && (
         <Modal open={openSignIn} onClose={handleToggleSignIn}>
-          <SignIn onClose={handleToggleSignIn} handleToggles={handleToggles} />
+          <SignIn
+            onClose={handleToggleSignIn}
+            handleToggles={handleToggles}
+            openForgotModal={openForgotModal}
+          />
+        </Modal>
+      )}
+      {openForgotPassword && (
+        <Modal open={openForgotPassword} onClose={openForgotModal}>
+          <ForgotPassword openForgotModal={openForgotModal} openChnageModal={openChnageModal} />
+        </Modal>
+      )}
+      {openChangePassword && (
+        <Modal onClose={openChnageModal} open={openChangePassword}>
+          <ChangePassowrd openChnageModal={openChnageModal} />
         </Modal>
       )}
     </HeaderClass>
@@ -125,6 +156,13 @@ const Header = () => {
 };
 
 export default Header;
+
+const StyledNavLink = styled(NavLink)(() => ({
+  color: 'black',
+  textDecoration: 'none',
+  padding: '4px 10px',
+  borderRadius: '4px',
+}));
 
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',

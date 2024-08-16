@@ -3,28 +3,83 @@ import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
 import Gogle from '../../assets/icons/gogle.svg';
 import CloseIcon from '@mui/icons-material/Close';
+import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../hooks/customHooks';
+import { signIn } from '../../store/slices/auth/authThunk';
+
 type TypesProps = {
   onClose?: () => void;
   handleToggles?: () => void;
+  openForgotModal?: () => void;
 };
-const SignIn = ({ onClose, handleToggles }: TypesProps) => {
+
+type InputTypes = {
+  email: string;
+  password: string;
+};
+
+const SignIn = ({ onClose, handleToggles, openForgotModal }: TypesProps) => {
+  const dispatch = useAppDispatch();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<InputTypes>({ mode: 'onSubmit' });
+
+  const onSubmit = (data: InputTypes) => {
+    dispatch(signIn(data));
+    reset();
+    onClose?.();
+  };
   const openis = () => {
     onClose?.();
     handleToggles?.();
   };
+
+  const openForgotPasswordFn = () => {
+    openForgotModal?.();
+    onClose?.();
+  };
+
   return (
     <Container>
       <BoxStyled>
         <CloseIcon onClick={onClose} />
       </BoxStyled>
       <h2>ВОЙТИ</h2>
-      <ContainerForm>
-        <Input size="small" />
-        <Input type="password" size="small" />
-        <Button>Войти</Button>
+      <ContainerForm onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          {...register('email', {
+            required: 'Обязательное поле',
+            pattern: {
+              value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+              message: 'Введите действительный email',
+            },
+          })}
+          error={!!errors.email}
+          helperText={errors.email?.message || ''}
+          size="small"
+        />
+        <Input
+          {...register('password', {
+            required: 'Обязательное поле',
+            minLength: {
+              value: 8,
+              message: 'Пароль должен быть минимум 8 символов',
+            },
+          })}
+          error={!!errors.password}
+          helperText={errors.password?.message || ''}
+          type="password"
+          size="small"
+        />
+        <Button type="submit">Войти</Button>
       </ContainerForm>
       <BlockTwo>
-        <TypographyStyle>Забыли пароль?</TypographyStyle>
+        <TypographyStyle onClick={openForgotPasswordFn}>
+          Забыли пароль?
+        </TypographyStyle>
         <BoxHr>
           <One>
             <hr />

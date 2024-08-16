@@ -13,12 +13,12 @@ type TProps = {
 };
 
 type TTypesRegistr = {
-  name: string;
+  firstName: string;
   lastName: string;
   phoneNumber: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
 const SignUp = ({ onClose, handleToggleSignIn }: TProps) => {
@@ -31,8 +31,10 @@ const SignUp = ({ onClose, handleToggleSignIn }: TProps) => {
   } = useForm<TTypesRegistr>();
 
   const dispatch = useAppDispatch();
+
   const onSubmit: SubmitHandler<TTypesRegistr> = data => {
-    dispatch(signUp(data));
+    const { confirmPassword, ...restData } = data;
+    dispatch(signUp(restData));
     onClose?.();
     reset();
   };
@@ -48,9 +50,9 @@ const SignUp = ({ onClose, handleToggleSignIn }: TProps) => {
         <Typography className="Typography">Регистрация</Typography>
         <Input
           className="input"
-          {...register('name', { required: 'Обязательное поле' })}
-          error={!!errors.name}
-          helperText={errors.name?.message || ''}
+          {...register('firstName', { required: 'Обязательное поле' })}
+          error={!!errors.firstName}
+          helperText={errors.firstName?.message || ''}
           size="small"
           placeholder="Имя"
         />

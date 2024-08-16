@@ -37,6 +37,7 @@ const AppRoutes = () => {
       ),
       children: ADMIN_CHILDREN,
     },
+    
     {
       path: '*',
       element: <NotFound />,

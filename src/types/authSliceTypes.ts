@@ -11,4 +11,5 @@ export type TAuthTypes = {
   role: string;
   isLoading: boolean;
   error: null | string;
+  email: string;
 };
