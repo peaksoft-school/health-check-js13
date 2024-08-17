@@ -5,17 +5,31 @@ import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
 import Telephone from '../../assets/icons/CallIcon.svg';
 import TheMap from '../../assets/icons/JpsIcon.svg';
 import Hour from '../../assets/icons/TimeIcon.svg';
-import Healthcheck from '../../assets/images/HEALTHCHECK.png';
+import Medcheck from '../../assets/images/HEALTHCHECK.png';
 import Search from '../../assets/icons/SearchIcon.svg';
 import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 import { useState, useEffect } from 'react';
+import Modal from '../../components/UI/Modal';
+import SignUp from '../../routes/user/SignUp';
+import SignIn from '../../routes/user/SignIn';
+import { useAppSelector } from '../../hooks/customHooks';
+import { NavLink } from 'react-router-dom';
+import ForgotPassword from '../../routes/user/ForgotPassword';
+import ChangePassowrd from '../../routes/user/ChangePassowrd';
 
 const Header = () => {
   const [showBoxContent, setShowBoxContent] = useState(true);
+
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
+  const [openForgotPassword, setOpenForgotPassword] = useState(false);
+  const [openChangePassword, setOpenChangePassword] = useState(false);
+
+  const { isAuth } = useAppSelector(state => state.auth);
 
   const handleScroll = () => {
     const scrollTop = pageYOffset || document.documentElement.scrollTop;
@@ -53,6 +67,24 @@ const Header = () => {
     };
   }, []);
 
+  const handleToggles = () => {
+    setOpen(prevOpen => !prevOpen);
+  };
+
+  const handleToggleSignIn = () => {
+    if (!isAuth) {
+      setOpenSignIn(prevOpen => !prevOpen);
+    }
+  };
+
+  const openForgotModal = () => {
+    setOpenForgotPassword(prevOpen => !prevOpen);
+  };
+
+  const openChnageModal = () => {
+    setOpenChangePassword(prevOpen => !prevOpen);
+  };
+
   return (
     <HeaderClass>
       <Box className="container">
@@ -79,9 +111,7 @@ const Header = () => {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <SearchContent>
-                          <Search />
-                        </SearchContent>
+                        <Search />
                       </InputAdornment>
                     ),
                   }}
@@ -108,36 +138,76 @@ const Header = () => {
                   </NumberCards>
                   <Span>+996(505) 000 000</Span>
                 </ContentNumber>
-                <AuthDropdown />
+                <AuthDropdown
+                  handleToggles={handleToggles}
+                  handleToggleSignIn={handleToggleSignIn}
+                />
               </ContainerCards>
               <HR />
             </ContentCards>
           </ContentCardsFunc>
           <ContentCards1>
-            <BoxContentFunc className={showBoxContent ? 'show' : 'hide'}>
-              <BoxContent>
-                <HealthCheck src={Healthcheck} alt="medcheck" />
-                {Text.map(item => (
-                  <Box key={item.id}>
-                    <Title>{item.title}</Title>
-                  </Box>
-                ))}
-                <ContentButton>
-                  <ButtonClass variant="outlined">
-                    получить результаты
-                  </ButtonClass>
-                  <Button1>запись онлайн</Button1>
-                </ContentButton>
-              </BoxContent>
-            </BoxContentFunc>
+            <BoxContent>
+              <HealthCheck src={Medcheck} alt="medcheck" />
+              {Text.map((item, index) => (
+                <Box key={index}>
+                  <Title>
+                    <StyledNavLink to={item.to}>{item.title}</StyledNavLink>
+                  </Title>
+                </Box>
+              ))}
+              <ContentButton>
+                <ButtonClass onClick={handleToggleSignIn} variant="outlined">
+                  получить результаты
+                </ButtonClass>
+                <Button1>запись онлайн</Button1>
+              </ContentButton>
+            </BoxContent>
           </ContentCards1>
         </Content>
       </Box>
+      {open && (
+        <Modal onClose={handleToggles} open={open}>
+          <SignUp
+            onClose={handleToggles}
+            handleToggleSignIn={handleToggleSignIn}
+          />
+        </Modal>
+      )}
+      {openSignIn && (
+        <Modal open={openSignIn} onClose={handleToggleSignIn}>
+          <SignIn
+            onClose={handleToggleSignIn}
+            handleToggles={handleToggles}
+            openForgotModal={openForgotModal}
+          />
+        </Modal>
+      )}
+      {openForgotPassword && (
+        <Modal open={openForgotPassword} onClose={openForgotModal}>
+          <ForgotPassword
+            openForgotModal={openForgotModal}
+            openChnageModal={openChnageModal}
+          />
+        </Modal>
+      )}
+      {openChangePassword && (
+        <Modal onClose={openChnageModal} open={openChangePassword}>
+          <ChangePassowrd openChnageModal={openChnageModal} />
+        </Modal>
+      )}
     </HeaderClass>
   );
 };
 
 export default Header;
+
+const StyledNavLink = styled(NavLink)(() => ({
+  color: 'black',
+  textDecoration: 'none',
+  padding: '4px 10px',
+  borderRadius: '4px',
+}));
 
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',

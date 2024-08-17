@@ -1,4 +1,5 @@
+import AppRoutes from './routes/AppRoutes';
 
-const App = () => <h1>Healts-Chek</h1>
+const App = () => <AppRoutes />;
 
 export default App;

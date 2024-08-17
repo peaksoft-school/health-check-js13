@@ -6,8 +6,8 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import eye from '../../assets/icons/eye.svg';
-import noteye from '../../assets/icons/noteye.svg';
+import Eye from '../../assets/icons/eye.svg';
+import Noteye from '../../assets/icons/noteye.svg';
 
 interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   type?: 'text' | 'password' | 'email' | 'number';
@@ -17,7 +17,9 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   error?: boolean;
   value?: string | number;
   disabled?: boolean;
-  Icon?: ReactNode;
+  icon?: string;
+  helperText?: string;
+  Icon?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -33,6 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       size,
       fullWidth,
+      helperText,
       ...rest
     },
     ref
@@ -62,16 +65,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           ref={ref}
           size={size}
+          helperText={helperText}
           fullWidth={fullWidth}
           InputProps={{
             endAdornment: type === 'password' && (
               <InputAdornment position="end">
-                <img
-                  onClick={handleClickEye}
-                  src={showPassword ? eye : noteye}
-                  alt={showPassword ? 'eye' : 'eyenot'}
-                  style={{ cursor: 'pointer' }}
-                />
+                <div onClick={handleClickEye} style={{ cursor: 'pointer' }}>
+                  {showPassword ? <Eye /> : <Noteye />}
+                </div>
               </InputAdornment>
             ),
             startAdornment: Icon && (
