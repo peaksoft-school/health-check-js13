@@ -2,24 +2,21 @@ import { Box, styled, Typography } from '@mui/material';
 import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
 import Gogle from '../../assets/icons/gogle.svg';
-import CloseIcon from '@mui/icons-material/Close';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/customHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { signIn } from '../../store/slices/auth/authThunk';
-
-type TypesProps = {
-  onClose?: () => void;
-  handleToggles?: () => void;
-  openForgotModal?: () => void;
-};
+import { useNavigate } from 'react-router-dom';
+import UndoIcon from '@mui/icons-material/Undo';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
 
 type InputTypes = {
   email: string;
   password: string;
 };
 
-const SignIn = ({ onClose, handleToggles, openForgotModal }: TypesProps) => {
+const SignIn = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -27,77 +24,85 @@ const SignIn = ({ onClose, handleToggles, openForgotModal }: TypesProps) => {
     reset,
   } = useForm<InputTypes>({ mode: 'onSubmit' });
 
-  const onSubmit = (data: InputTypes) => {
-    dispatch(signIn(data));
-    reset();
-    onClose?.();
-  };
-  const openis = () => {
-    onClose?.();
-    handleToggles?.();
+  const goBackSignUp = () => {
+    navigate('/sign-up');
   };
 
-  const openForgotPasswordFn = () => {
-    openForgotModal?.();
-    onClose?.();
+  const onSubmit = (data: InputTypes) => {
+    dispatch(signIn({ data, navigate }));
+    reset();
+  };
+
+  const goBack = () => {
+    navigate('/');
+  };
+
+  const forgotPassowrd = () => {
+    navigate('/forgot-password');
   };
 
   return (
-    <Container>
-      <BoxStyled>
-        <CloseIcon onClick={onClose} />
-      </BoxStyled>
-      <h2>ВОЙТИ</h2>
-      <ContainerForm onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          {...register('email', {
-            required: 'Обязательное поле',
-            pattern: {
-              value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
-              message: 'Введите действительный email',
-            },
-          })}
-          error={!!errors.email}
-          helperText={errors.email?.message || ''}
-          size="small"
-        />
-        <Input
-          {...register('password', {
-            required: 'Обязательное поле',
-            minLength: {
-              value: 8,
-              message: 'Пароль должен быть минимум 8 символов',
-            },
-          })}
-          error={!!errors.password}
-          helperText={errors.password?.message || ''}
-          type="password"
-          size="small"
-        />
-        <Button type="submit">Войти</Button>
-      </ContainerForm>
-      <BlockTwo>
-        <TypographyStyle onClick={openForgotPasswordFn}>
-          Забыли пароль?
-        </TypographyStyle>
-        <BoxHr>
-          <One>
-            <hr />
-          </One>
-          <Two>или</Two>
-          <Three>
-            <hr />
-          </Three>
-        </BoxHr>
-        <BoxGoogle>
-          <Gogle />
-          Зарегистрироваться с Google
-        </BoxGoogle>
-        <TypographyStyled>
-          Нет аккаунта? <span onClick={openis}>Зарегистрироваться</span>
-        </TypographyStyled>
-      </BlockTwo>
-    </Container>
+    <>
+      {/* {isLoading && <LoadingComponent />} */}
+      <Container>
+        <div className="back" onClick={goBack}>
+          <UndoIcon className="icon" />
+        </div>
+        <h2>ВОЙТИ</h2>
+
+        <ContainerForm onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            className="input"
+            {...register('email', {
+              required: 'Обязательное поле',
+              pattern: {
+                value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+                message: 'Введите действительный email',
+              },
+            })}
+            error={!!errors.email}
+            helperText={errors.email?.message || ''}
+            size="small"
+          />
+          <Input
+            className="input"
+            {...register('password', {
+              required: 'Обязательное поле',
+              minLength: {
+                value: 8,
+                message: 'Пароль должен быть минимум 8 символов',
+              },
+            })}
+            error={!!errors.password}
+            helperText={errors.password?.message || ''}
+            type="password"
+            size="small"
+          />
+          <Button type="submit">Войти</Button>
+        </ContainerForm>
+        <BlockTwo>
+          <TypographyStyle onClick={forgotPassowrd}>
+            Забыли пароль?
+          </TypographyStyle>
+          <BoxHr>
+            <One>
+              <hr />
+            </One>
+            <Two>или</Two>
+            <Three>
+              <hr />
+            </Three>
+          </BoxHr>
+          <BoxGoogle>
+            <Gogle />
+            Зарегистрироваться с Google
+          </BoxGoogle>
+          <TypographyStyled>
+            Нет аккаунта? <span onClick={goBackSignUp}>Зарегистрироваться</span>
+          </TypographyStyled>
+        </BlockTwo>
+      </Container>
+    </>
   );
 };
 
@@ -112,10 +117,17 @@ const Container = styled(Box)(() => ({
   flexDirection: 'column',
   fontFamily: '"Manrope",san-serif',
   padding: '30px',
+  border: '1px solid black',
+  margin: '50px auto',
+  boxShadow: '-7px 9px 13px 0px rgba(189,183,189,1)',
+
   '& h2': {
     margin: '20px 0 10px 0',
     textAlign: 'center',
     fontWeight: '400',
+  },
+  '& .input': {
+    backgroundColor: 'white',
   },
 }));
 
@@ -137,7 +149,6 @@ const TypographyStyle = styled(Typography)(() => ({
 }));
 
 const BlockTwo = styled(Box)(() => ({
-  // border: '1px solid black',
   display: 'flex',
   flexDirection: 'column',
   gap: '5px',
@@ -201,11 +212,4 @@ const TypographyStyled = styled(Typography)(() => ({
     fontWeight: '300',
     marginLeft: '10px',
   },
-}));
-
-const BoxStyled = styled(Box)(() => ({
-  position: 'absolute',
-  top: '6px',
-  right: '6px',
-  cursor: 'pointer',
 }));

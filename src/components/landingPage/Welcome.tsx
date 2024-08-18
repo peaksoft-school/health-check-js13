@@ -173,7 +173,7 @@ const StyledContainer = styled('div')(() => ({
   width: '100%',
   maxWidth: '1420px',
   minWidth: '1200px',
-  margin: '20px auto',
+  margin: '50px auto',
   display: 'flex',
   justifyContent: 'space-around',
   padding: '5px 5rem 0 5rem',

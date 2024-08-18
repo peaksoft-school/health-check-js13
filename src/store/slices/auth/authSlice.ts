@@ -21,6 +21,8 @@ export const authSlice = createSlice({
       state.token = '';
       state.email = '';
       localStorage.removeItem('HEALTH_CHECK');
+      localStorage.removeItem('tokenUp');
+      // localStorage.removeItem('tokenIn');
     },
   },
   extraReducers: builder => {
@@ -31,6 +33,7 @@ export const authSlice = createSlice({
         state.isAuth = false;
       })
       .addCase(signUp.fulfilled, (state, { payload }) => {
+        localStorage.setItem('tokenUp', payload.token);
         state.isLoading = false;
         state.isAuth = true;
         state.token = payload.token;
@@ -46,9 +49,10 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(signIn.fulfilled, (state, { payload }) => {
+        localStorage.setItem('tokenIn', payload.token);
         state.isLoading = false;
         state.isAuth = true;
-        state.token = payload.token;
+        state.token = payload?.token;
         state.role = payload.role;
         state.email = payload.email;
       })

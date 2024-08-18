@@ -2,12 +2,12 @@ export const Text = [
   {
     id: 1,
     title: 'О клинике',
-    to: 'clinick',
+    to: 'about-clinic',
   },
   {
     id: 2,
     title: 'Услуги',
-    to: 'application',
+    to: 'services',
   },
   {
     id: 3,
@@ -22,6 +22,6 @@ export const Text = [
   {
     id: 5,
     title: 'Контакты',
-    to: 'contacts',
+    to: 'contact',
   },
 ];

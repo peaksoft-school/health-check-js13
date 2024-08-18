@@ -4,13 +4,14 @@ import { toastifyMessage } from '../../../utils/helpers/ToastSetting';
 
 export const signUp = createAsyncThunk<any, any, { rejectValue: any }>(
   'auth/signUp',
-  async (value, { rejectWithValue }) => {
+  async ({ restData, goBackSignUp }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post(`/api/auth/signUp`, value);
+      const { data } = await axiosInstance.post(`/api/auth/signUp`, restData);
       toastifyMessage({
         message: 'Регистрация прошло успешно',
         status: 'success',
       });
+      goBackSignUp();
       return data;
     } catch (error) {
       toastifyMessage({
@@ -24,10 +25,11 @@ export const signUp = createAsyncThunk<any, any, { rejectValue: any }>(
 
 export const signIn = createAsyncThunk<any, any, { rejectValue: any }>(
   'auth/signIn',
-  async (value, { rejectWithValue }) => {
+  async ({ data: myData, navigate }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post(`/api/auth/signIn`, value);
+      const { data } = await axiosInstance.post('/api/auth/signIn', myData);
       toastifyMessage({ message: 'Вы успешно вошли', status: 'success' });
+      navigate('/');
       return data;
     } catch (error) {
       toastifyMessage({
@@ -43,33 +45,26 @@ export const forgotPasswordEmail = createAsyncThunk<
   any,
   any,
   { rejectValue: any }
->(
-  'auth/forgotPasswordEmail',
-  async (
-    { openChnageModal, email, link, openForgotModal },
-    { rejectWithValue }
-  ) => {
-    try {
-      const { data } = await axiosInstance.post(
-        `api/auth/forgot-password?email=${email}&link=${link}`
-      );
-      openForgotModal();
-      openChnageModal();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+>('auth/forgotPasswordEmail', async ({ email, link }, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `api/auth/forgot-password?email=${email}&link=${link}`
+    );
+    toastifyMessage({ message: data.message });
+    return data;
+  } catch (error) {
+    return rejectWithValue(error);
   }
-);
+});
 
 export const changePassword = createAsyncThunk<any, any, { rejectValue: any }>(
   'auth/changePassword',
-  async (dataValue, { rejectWithValue }) => {
+  async ({ newPassword, token }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post(
-        '/api/auth/changePassword',
-        dataValue
-      );
+      const { data } = await axiosInstance.post(`/api/auth/reset_password`, {
+        newPassword,
+        token,
+      });
       return data;
     } catch (error) {
       return rejectWithValue(error);
