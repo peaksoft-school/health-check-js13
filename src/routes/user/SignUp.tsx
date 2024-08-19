@@ -4,8 +4,11 @@ import Gogle from '../../assets/icons/gogle.svg';
 import Button from '../../components/UI/Button';
 import Input from '../../components/UI/Input';
 import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
-import { signUp } from '../../store/slices/auth/authThunk';
+import { googleAuthFirbase, signUp } from '../../store/slices/auth/authThunk';
 import { useNavigate } from 'react-router-dom';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../configs/firebase';
 
 type TTypesRegistr = {
   firstName: string;
@@ -24,12 +27,14 @@ const SignUp = () => {
     watch,
     reset,
   } = useForm<TTypesRegistr>();
-  const { isAuth } = useAppSelector(state => state.auth);
+
+  const { isAuth, isLoading } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<TTypesRegistr> = data => {
     const { confirmPassword, ...restData } = data;
+
     dispatch(signUp({ restData, navigate }));
     reset();
   };
@@ -40,11 +45,23 @@ const SignUp = () => {
     if (!isAuth) {
       navigate('/sign-in');
     }
-    console.log('hello ');
   };
+
   const goBack = () => {
     navigate('/');
   };
+
+  const googleAuthFn = () => {
+    signInWithPopup(auth, provider).then(data => {
+      if (data.user) {
+        data.user.getIdToken().then(token => {
+          console.log(token);
+          dispatch(googleAuthFirbase({ tokenId: token }));
+        });
+      }
+    });
+  };
+
   return (
     <>
       <ContainerForm onSubmit={handleSubmit(onSubmit)}>
@@ -129,10 +146,11 @@ const SignUp = () => {
             <hr />
           </Three>
         </BoxHr>
-        <BoxGoogle>
+        <BoxGoogle onClick={googleAuthFn}>
           <Gogle />
           Зарегистрироваться с Google
         </BoxGoogle>
+        {isLoading && <LoadingComponent />}
         <TypographyStyled>
           У вас уже есть аккаунт?
           <span onClick={signInFunc}>Войти</span>
@@ -148,12 +166,11 @@ const ContainerForm = styled('form')(() => ({
   width: '550px',
   minHeight: '650px',
   margin: '50px auto',
-  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   padding: '20px 40px',
   borderRadius: '8px',
-  border: '1px solid black',
+  border: '1px solid #bebeb6',
   boxShadow: '-7px 9px 5px 0px #dbd8db',
 
   '& .input': {

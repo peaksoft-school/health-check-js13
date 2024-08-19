@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TAuthTypes } from '../../../types/authSliceTypes';
-import { signIn, signUp } from './authThunk';
+import {
+  forgotPasswordEmail,
+  googleAuthFirbase,
+  signIn,
+  signUp,
+} from './authThunk';
 
 const initialState: TAuthTypes = {
   isAuth: false,
@@ -20,9 +25,6 @@ export const authSlice = createSlice({
       state.role = 'GUEST';
       state.token = '';
       state.email = '';
-      localStorage.removeItem('HEALTH_CHECK');
-      localStorage.removeItem('tokenUp');
-      // localStorage.removeItem('tokenIn');
     },
   },
   extraReducers: builder => {
@@ -33,7 +35,6 @@ export const authSlice = createSlice({
         state.isAuth = false;
       })
       .addCase(signUp.fulfilled, (state, { payload }) => {
-        localStorage.setItem('tokenUp', payload.token);
         state.isLoading = false;
         state.isAuth = true;
         state.token = payload.token;
@@ -49,7 +50,6 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(signIn.fulfilled, (state, { payload }) => {
-        localStorage.setItem('tokenIn', payload.token);
         state.isLoading = false;
         state.isAuth = true;
         state.token = payload?.token;
@@ -59,6 +59,30 @@ export const authSlice = createSlice({
       .addCase(signIn.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload.message;
+      })
+      .addCase(forgotPasswordEmail.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(forgotPasswordEmail.fulfilled, state => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(forgotPasswordEmail.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload.message;
+      })
+      .addCase(googleAuthFirbase.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(googleAuthFirbase.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        state.isLoading = false;
+      })
+      .addCase(googleAuthFirbase.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload.error;
       });
   },
 });

@@ -4,7 +4,7 @@ import Button from '../../components/UI/Button';
 import { useAppDispatch } from '../../hooks/customHooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { changePassword } from '../../store/slices/auth/authThunk';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type FormTypes = {
   oldPassword?: string;
@@ -12,8 +12,8 @@ type FormTypes = {
 };
 
 const ChangePassowrd = () => {
-  const token = localStorage.getItem('tokenIn');
-  console.log(token);
+  const token = useParams();
+
   const disaptch = useAppDispatch();
   const {
     register,
@@ -27,7 +27,12 @@ const ChangePassowrd = () => {
   const handlerSubmit: SubmitHandler<FormTypes> = data => {
     const { oldPassword, ...newPassword } = data;
 
-    disaptch(changePassword({ newPassword: newPassword.newPassword, token }));
+    disaptch(
+      changePassword({
+        newPassword: newPassword.newPassword,
+        token: token.token,
+      })
+    );
     reset();
   };
   const password = watch('newPassword');

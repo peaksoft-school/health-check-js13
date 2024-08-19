@@ -2,10 +2,11 @@ import { Box, styled } from '@mui/material';
 import Button from '../../components/UI/Button';
 import Input from '../../components/UI/Input';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/customHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { forgotPasswordEmail } from '../../store/slices/auth/authThunk';
 import { useNavigate } from 'react-router-dom';
 import { Button as MyButton } from '@mui/material';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
 
 type FormTypes = {
   email?: string;
@@ -14,7 +15,7 @@ type FormTypes = {
 
 const ForgotPassword = () => {
   const dispatch = useAppDispatch();
-
+  const { isLoading } = useAppSelector(state => state.auth);
   const {
     register,
     handleSubmit,
@@ -22,7 +23,8 @@ const ForgotPassword = () => {
     reset,
   } = useForm<FormTypes>({ mode: 'onSubmit' });
 
-  let link = 'http://localhost:5173/reset_password';
+  let link = 'http://localhost:5174/reset_password';
+
   const navigate = useNavigate();
 
   const submitHandlerOn = (value: FormTypes) => {
@@ -41,6 +43,7 @@ const ForgotPassword = () => {
 
   return (
     <StyledContainer>
+      {isLoading && <LoadingComponent />}
       <Block>
         <h1>ЗАБЫЛИ ПАРОЛЬ?</h1>
       </Block>
@@ -87,7 +90,6 @@ const StyledContainer = styled(Box)(() => ({
   fontFamily: '"Manrope" , san-serif',
   padding: '30px 40px',
   backgroundColor: 'white',
-  position: 'relative',
   borderRadius: '4px',
   '& .box': {
     position: 'absolute',

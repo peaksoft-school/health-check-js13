@@ -15,6 +15,7 @@ type InputTypes = {
 };
 
 const SignIn = () => {
+  const { isLoading } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -43,11 +44,8 @@ const SignIn = () => {
 
   return (
     <>
-      {/* {isLoading && <LoadingComponent />} */}
+      {isLoading && <LoadingComponent />}
       <Container>
-        <div className="back" onClick={goBack}>
-          <UndoIcon className="icon" />
-        </div>
         <h2>ВОЙТИ</h2>
 
         <ContainerForm onSubmit={handleSubmit(onSubmit)}>
@@ -79,6 +77,9 @@ const SignIn = () => {
             size="small"
           />
           <Button type="submit">Войти</Button>
+          <Button type="button" variant="outlined" onClick={goBack}>
+            Назад
+          </Button>
         </ContainerForm>
         <BlockTwo>
           <TypographyStyle onClick={forgotPassowrd}>
