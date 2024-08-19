@@ -7,12 +7,26 @@ import Icon from '../../../assets/icons/Pluse.svg';
 import Table from '../../../components/UI/Table';
 import { TableOne } from '../../../utils/constants/Column';
 import tableOne from '../../../utils/constants/tableOne.json';
+import Modal from '../../../components/UI/Modal';
+import Select from '../../../components/UI/Select';
 
-const OnlineRecording: FC = () => {
+const options = [
+  { id: 1, value: 'option1', label: 'Option 1' },
+  { id: 2, value: 'option2', label: 'Option 2' },
+  { id: 3, value: 'option3', label: 'Option 3' },
+  // Add more options as needed
+];
+
+const OnlineRecording: FC = ({ options, label }) => {
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleOptionClick = (option: string) => {
     setActiveOption(option);
+  };
+
+  const handleModal = () => {
+    setOpen(prev => !prev);
   };
 
   return (
@@ -22,7 +36,7 @@ const OnlineRecording: FC = () => {
           <Content>
             <ContentOption>
               <OnlineRecordingSpan>Онлайн-запись</OnlineRecordingSpan>
-              <StyledButton>
+              <StyledButton onClick={handleModal}>
                 <Icon />
                 Добавить запись
               </StyledButton>
@@ -49,6 +63,38 @@ const OnlineRecording: FC = () => {
               />
             </Box>
             <div className="TableContent">
+              {/* <Modal open={open} onClose={handleModal}>
+                <ModalStyled>
+                  <ModalContent>
+                    <div>
+                      <span>Добавление записей</span>
+                    </div>
+                    <div>
+                      <Select>
+                        {options.map(item => (
+                          <div key={item.value} value={item.value}>
+                            {item.label}
+                          </div>
+                        ))}
+                      </Select>
+                      <Button onClick={handleModal}>Close</Button>
+                    </div>
+                  </ModalContent>
+                </ModalStyled>
+              </Modal> */}
+              <Modal open={open} onClose={handleModal}>
+                <ModalStyled>
+                  <ModalContent>
+                    <div>
+                      <span>Добавление записей</span>
+                    </div>
+                    <div>
+                      <Select key={id} options={options} />
+                      <Button onClick={handleModal}>Close</Button>
+                    </div>
+                  </ModalContent>
+                </ModalStyled>
+              </Modal>
               <Table columns={TableOne} data={tableOne} />
             </div>
           </Content>
@@ -137,3 +183,14 @@ const Option = styled('p')<OptionProps>(({ isActive }) => ({
   transition: 'border-color 0.3s ease, color 0.3s ease',
   opacity: isActive ? 1 : 0.8,
 }));
+
+const ModalStyled = styled('div')({
+  width: '100%',
+  height: '100%',
+});
+
+const ModalContent = styled('div')({
+  width: '570px',
+  height: '658px',
+  margin: '32px 40px 32px 40px',
+});

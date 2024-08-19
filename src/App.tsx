@@ -1,3 +1,5 @@
-const App = () => <h1>Health Check</h1>;
+import AppRoutes from './routes/AppRoutes';
+
+const App = () => <AppRoutes />;
 
 export default App;
