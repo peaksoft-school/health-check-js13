@@ -1,16 +1,14 @@
 import { Box, styled, Typography } from '@mui/material';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import CloseIcon from '@mui/icons-material/Close';
 import Gogle from '../../assets/icons/gogle.svg';
 import Button from '../../components/UI/Button';
 import Input from '../../components/UI/Input';
-import { useAppDispatch } from '../../hooks/customHooks';
-import { signUp } from '../../store/slices/auth/authThunk';
-
-type TProps = {
-  onClose?: () => void;
-  handleToggleSignIn: () => void;
-};
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
+import { googleAuthFirbase, signUp } from '../../store/slices/auth/authThunk';
+import { useNavigate } from 'react-router-dom';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../configs/firebase';
 
 type TTypesRegistr = {
   firstName: string;
@@ -21,7 +19,7 @@ type TTypesRegistr = {
   confirmPassword?: string;
 };
 
-const SignUp = ({ onClose, handleToggleSignIn }: TProps) => {
+const SignUp = () => {
   const {
     register,
     handleSubmit,
@@ -30,23 +28,43 @@ const SignUp = ({ onClose, handleToggleSignIn }: TProps) => {
     reset,
   } = useForm<TTypesRegistr>();
 
+  const { isAuth, isLoading } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<TTypesRegistr> = data => {
     const { confirmPassword, ...restData } = data;
-    dispatch(signUp(restData));
-    onClose?.();
+
+    dispatch(signUp({ restData, navigate }));
     reset();
   };
 
   const password = watch('password');
 
+  const signInFunc = () => {
+    if (!isAuth) {
+      navigate('/sign-in');
+    }
+  };
+
+  const goBack = () => {
+    navigate('/');
+  };
+
+  const googleAuthFn = () => {
+    signInWithPopup(auth, provider).then(data => {
+      if (data.user) {
+        data.user.getIdToken().then(token => {
+          console.log(token);
+          dispatch(googleAuthFirbase({ tokenId: token }));
+        });
+      }
+    });
+  };
+
   return (
     <>
       <ContainerForm onSubmit={handleSubmit(onSubmit)}>
-        <BoxStyled onClick={onClose}>
-          <CloseIcon />
-        </BoxStyled>
         <Typography className="Typography">Регистрация</Typography>
         <Input
           className="input"
@@ -116,6 +134,9 @@ const SignUp = ({ onClose, handleToggleSignIn }: TProps) => {
         <Button className="button" type="submit">
           Создать аккаунт
         </Button>
+        <Button onClick={goBack} sx={{ marginTop: '10px' }} variant="outlined">
+          Назад Домой
+        </Button>
         <BoxHr>
           <One>
             <hr />
@@ -125,19 +146,14 @@ const SignUp = ({ onClose, handleToggleSignIn }: TProps) => {
             <hr />
           </Three>
         </BoxHr>
-        <BoxGoogle>
+        <BoxGoogle onClick={googleAuthFn}>
           <Gogle />
           Зарегистрироваться с Google
         </BoxGoogle>
+        {isLoading && <LoadingComponent />}
         <TypographyStyled>
           У вас уже есть аккаунт?
-          <span
-            onClick={() => {
-              handleToggleSignIn();
-              onClose?.();
-            }}>
-            Войти
-          </span>
+          <span onClick={signInFunc}>Войти</span>
         </TypographyStyled>
       </ContainerForm>
     </>
@@ -149,14 +165,17 @@ export default SignUp;
 const ContainerForm = styled('form')(() => ({
   width: '550px',
   minHeight: '650px',
-  margin: '0 auto',
-  position: 'relative',
+  margin: '50px auto',
   display: 'flex',
   flexDirection: 'column',
   padding: '20px 40px',
   borderRadius: '8px',
+  border: '1px solid #bebeb6',
+  boxShadow: '-7px 9px 5px 0px #dbd8db',
+
   '& .input': {
     marginBottom: '20px',
+    backgroundColor: 'white',
   },
 
   '& > .Typography': {
@@ -169,13 +188,6 @@ const ContainerForm = styled('form')(() => ({
   '& .button': {
     marginTop: '10px',
   },
-}));
-
-const BoxStyled = styled(Box)(() => ({
-  position: 'absolute',
-  top: '5px',
-  right: '5px',
-  cursor: 'pointer',
 }));
 
 const BoxHr = styled(Box)(() => ({

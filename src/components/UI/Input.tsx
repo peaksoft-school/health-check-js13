@@ -19,7 +19,7 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   disabled?: boolean;
   icon?: string;
   helperText?: string;
-  Icon?: string;
+  Icon?: any;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(

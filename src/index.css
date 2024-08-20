@@ -12,5 +12,37 @@
   max-width: 1440px;
   margin-inline: auto;
   padding-inline: 20px;
+  margin: 10px 0 50px 0;
   font-family: 'Manrope' sans-serif;
+}
+
+.back {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 5px;
+
+  &:hover {
+    background-color: rgb(238, 235, 235);
+  }
+
+  .icon {
+    transform: rotateY(200deg);
+    color: rgb(170, 165, 165);
+    font-size: 30px;
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.boxter {
+  max-width: 1440px;
+  min-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }

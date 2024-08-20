@@ -14,15 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import { logout } from '../../../store/slices/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
-type TypesProps = {
-  handleToggleSignIn?: () => void;
-  handleToggles?: () => void;
-};
-
-export default function AuthDropdown({
-  handleToggleSignIn,
-  handleToggles,
-}: TypesProps) {
+export default function AuthDropdown() {
   const { isAuth } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   console.log(isAuth);
@@ -61,6 +53,13 @@ export default function AuthDropdown({
     dispatch(logout());
     navigate('/');
     console.log('logout');
+  };
+
+  const signInFn = () => {
+    navigate('sign-in');
+  };
+  const signUpFn = () => {
+    navigate('sign-up');
   };
 
   return (
@@ -105,12 +104,8 @@ export default function AuthDropdown({
                       </div>
                     ) : (
                       <div>
-                        <ButtonMui onClick={handleToggleSignIn}>
-                          Войти
-                        </ButtonMui>
-                        <ButtonMui onClick={handleToggles}>
-                          Регистрация
-                        </ButtonMui>
+                        <ButtonMui onClick={signInFn}>Войти</ButtonMui>
+                        <ButtonMui onClick={signUpFn}>Регистрация</ButtonMui>
                       </div>
                     )}
                   </MenuList>

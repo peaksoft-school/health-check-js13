@@ -11,25 +11,13 @@ import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 import { useState, useEffect } from 'react';
-import Modal from '../../components/UI/Modal';
-import SignUp from '../../routes/user/SignUp';
-import SignIn from '../../routes/user/SignIn';
-import { useAppSelector } from '../../hooks/customHooks';
 import { NavLink } from 'react-router-dom';
-import ForgotPassword from '../../routes/user/ForgotPassword';
-import ChangePassowrd from '../../routes/user/ChangePassowrd';
 
 const Header = () => {
   const [showBoxContent, setShowBoxContent] = useState(true);
-
+  console.log(showBoxContent);
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
-  const [open, setOpen] = useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
-  const [openForgotPassword, setOpenForgotPassword] = useState(false);
-  const [openChangePassword, setOpenChangePassword] = useState(false);
-
-  const { isAuth } = useAppSelector(state => state.auth);
 
   const handleScroll = () => {
     const scrollTop = pageYOffset || document.documentElement.scrollTop;
@@ -67,136 +55,87 @@ const Header = () => {
     };
   }, []);
 
-  const handleToggles = () => {
-    setOpen(prevOpen => !prevOpen);
-  };
-
-  const handleToggleSignIn = () => {
-    if (!isAuth) {
-      setOpenSignIn(prevOpen => !prevOpen);
-    }
-  };
-
-  const openForgotModal = () => {
-    setOpenForgotPassword(prevOpen => !prevOpen);
-  };
-
-  const openChnageModal = () => {
-    setOpenChangePassword(prevOpen => !prevOpen);
-  };
-
   return (
-    <HeaderClass>
-      <Box className="container">
-        <Content>
-          <ContentCardsFunc>
-            <ContentCards className={scrolled ? 'scrolled' : ''}>
-              <ContentNom>
-                <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+    <div className="boxter">
+      <HeaderClass>
+        <Box className="container">
+          <Content>
+            <ContentCardsFunc>
+              <ContentCards className={scrolled ? 'scrolled' : ''}>
+                <ContentNom>
+                  <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+                    <ContainerNom>
+                      <TheMap />
+                      <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
+                    </ContainerNom>
+                  </ALink>
                   <ContainerNom>
-                    <TheMap />
-                    <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
+                    <Hour />
+                    <GreenP>пн-сб</GreenP>
+                    <MaxNumber>08:00 до 18:00</MaxNumber>
                   </ContainerNom>
-                </ALink>
-                <ContainerNom>
-                  <Hour />
-                  <GreenP>пн-сб</GreenP>
-                  <MaxNumber>08:00 до 18:00</MaxNumber>
-                </ContainerNom>
-              </ContentNom>
-              <ContentInput>
-                <Input
-                  fullWidth
-                  size="small"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Search />
-                      </InputAdornment>
-                    ),
-                  }}
-                  type="text"
-                  placeholder="Поиск по сайту"
-                />
-              </ContentInput>
-              <ContainerCards>
-                <IconContainer>
-                  <a href="https://www.instagram.com/_i.a.n.05_/">
-                    <Instagram />
-                  </a>
-                  <a href="https://t.me/+996500344433">
-                    <Telegram />
-                  </a>
-                  <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
-                    <WhatsApp />
-                  </a>
-                </IconContainer>
-                <ContentNumber>
-                  <NumberCards>
-                    <Telephone />
-                    <span>+996(800) 000 000</span>
-                  </NumberCards>
-                  <Span>+996(505) 000 000</Span>
-                </ContentNumber>
-                <AuthDropdown
-                  handleToggles={handleToggles}
-                  handleToggleSignIn={handleToggleSignIn}
-                />
-              </ContainerCards>
-              <HR />
-            </ContentCards>
-          </ContentCardsFunc>
-          <ContentCards1>
-            <BoxContent>
-              <HealthCheck src={Medcheck} alt="medcheck" />
-              {Text.map((item, index) => (
-                <Box key={index}>
-                  <Title>
-                    <StyledNavLink to={item.to}>{item.title}</StyledNavLink>
-                  </Title>
-                </Box>
-              ))}
-              <ContentButton>
-                <ButtonClass onClick={handleToggleSignIn} variant="outlined">
-                  получить результаты
-                </ButtonClass>
-                <Button1>запись онлайн</Button1>
-              </ContentButton>
-            </BoxContent>
-          </ContentCards1>
-        </Content>
-      </Box>
-      {open && (
-        <Modal onClose={handleToggles} open={open}>
-          <SignUp
-            onClose={handleToggles}
-            handleToggleSignIn={handleToggleSignIn}
-          />
-        </Modal>
-      )}
-      {openSignIn && (
-        <Modal open={openSignIn} onClose={handleToggleSignIn}>
-          <SignIn
-            onClose={handleToggleSignIn}
-            handleToggles={handleToggles}
-            openForgotModal={openForgotModal}
-          />
-        </Modal>
-      )}
-      {openForgotPassword && (
-        <Modal open={openForgotPassword} onClose={openForgotModal}>
-          <ForgotPassword
-            openForgotModal={openForgotModal}
-            openChnageModal={openChnageModal}
-          />
-        </Modal>
-      )}
-      {openChangePassword && (
-        <Modal onClose={openChnageModal} open={openChangePassword}>
-          <ChangePassowrd openChnageModal={openChnageModal} />
-        </Modal>
-      )}
-    </HeaderClass>
+                </ContentNom>
+                <ContentInput>
+                  <Input
+                    fullWidth
+                    size="small"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Search />
+                        </InputAdornment>
+                      ),
+                    }}
+                    type="text"
+                    placeholder="Поиск по сайту"
+                  />
+                </ContentInput>
+                <ContainerCards>
+                  <IconContainer>
+                    <a href="https://www.instagram.com/_i.a.n.05_/">
+                      <Instagram />
+                    </a>
+                    <a href="https://t.me/+996500344433">
+                      <Telegram />
+                    </a>
+                    <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
+                      <WhatsApp />
+                    </a>
+                  </IconContainer>
+                  <ContentNumber>
+                    <NumberCards>
+                      <Telephone />
+                      <span>+996(800) 000 000</span>
+                    </NumberCards>
+                    <Span>+996(505) 000 000</Span>
+                  </ContentNumber>
+                  <AuthDropdown />
+                </ContainerCards>
+                <HR />
+              </ContentCards>
+            </ContentCardsFunc>
+            <ContentCards1>
+              <BoxContent>
+                <HealthCheck src={Medcheck} alt="medcheck" />
+                {Text.map((item, index) => (
+                  <Box key={index}>
+                    <Title>
+                      <StyledNavLink to={item.to}>{item.title}</StyledNavLink>
+                    </Title>
+                  </Box>
+                ))}
+                <ContentButton>
+                  <ButtonClass variant="outlined">
+                    получить результаты
+                  </ButtonClass>
+                  <Button1>запись онлайн</Button1>
+                </ContentButton>
+              </BoxContent>
+            </ContentCards1>
+          </Content>
+        </Box>
+      </HeaderClass>
+    </div>
   );
 };
 
@@ -213,7 +152,6 @@ const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
   zIndex: 999,
-  marginTop: '1px',
   fontFamily: '"Poppins", sans-serif',
 }));
 
@@ -314,36 +252,18 @@ const ContainerCards = styled('div')(() => ({
 }));
 
 const BoxContent = styled('div')(() => ({
+  width: '1220px',
   display: 'flex',
-  gap: '48px',
+  gap: '31px',
   alignItems: 'center',
   marginTop: '0.875rem',
   flexWrap: 'wrap',
   position: 'relative',
+
   '@media (max-width: 767px)': {
     width: '100%',
     height: 'auto',
     padding: '0 0.5rem',
-  },
-}));
-
-const BoxContentFunc = styled('div')(() => ({
-  zIndex: 1,
-  maxWidth: '100%',
-  padding: '0 1rem',
-  transition: 'opacity 0.15s, transform 0.3s ease',
-  backgroundColor: '#fff',
-  width: '100%',
-  '&.hide': {
-    opacity: 0,
-    transform: 'translateY(-20px)',
-    pointerEvents: 'none',
-  },
-  '&.show': {
-    opacity: 1,
-    transform: 'translateY(0)',
-    padding: '0 1rem',
-    pointerEvents: 'all',
   },
 }));
 
@@ -370,12 +290,6 @@ const Input = styled(TextField)(() => ({
     border: 'none',
     outline: 'none',
   },
-}));
-
-const SearchContent = styled('div')(() => ({
-  cursor: 'pointer',
-  width: '16.93px',
-  height: '16.93px',
 }));
 
 const ContentNumber = styled('div')(() => ({

@@ -1,51 +1,86 @@
 import { Box, styled, Typography } from '@mui/material';
 import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
-import CloseIcon from '../../assets/icons/CloseIcon.svg';
 import { useAppDispatch } from '../../hooks/customHooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { changePassword } from '../../store/slices/auth/authThunk';
-import { useParams } from 'react-router-dom';
-
-type PropsTypes = {
-  openChnageModal?: () => void;
-};
+import { useNavigate, useParams } from 'react-router-dom';
 
 type FormTypes = {
   oldPassword?: string;
   newPassword?: string;
 };
 
-const ChangePassowrd = ({ openChnageModal }: PropsTypes) => {
-  const { token } = useParams();
-  console.log(token);
+const ChangePassowrd = () => {
+  const token = useParams();
 
   const disaptch = useAppDispatch();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm<FormTypes>();
+  const navigate = useNavigate();
 
   const handlerSubmit: SubmitHandler<FormTypes> = data => {
-    disaptch(changePassword(data));
+    const { oldPassword, ...newPassword } = data;
+
+    disaptch(
+      changePassword({
+        newPassword: newPassword.newPassword,
+        token: token.token,
+      })
+    );
     reset();
+  };
+  const password = watch('newPassword');
+
+  const goBack = () => {
+    navigate('/');
   };
 
   return (
     <Container onSubmit={handleSubmit(handlerSubmit)}>
-      <div className="box" onClick={openChnageModal}>
-        <CloseIcon />
-      </div>
       <Typography className="two">СМЕНА ПАРОЛЯ</Typography>
       <Typography className="one">
         Вам будет отправлена ссылка для сброса пароля
       </Typography>
       <BoxContainer>
-        <Input placeholder="Введите новый пароль" />
-        <Input placeholder="Повторите пароль" />
-        <Button>Подтвердить</Button>
+        <Input
+          {...register('newPassword', {
+            required: 'Поле Обязательно',
+            minLength: {
+              value: 8,
+              message: 'Пароль должен быть минимум 8 символов',
+            },
+          })}
+          error={!errors.newPassword}
+          helperText={
+            errors.newPassword?.message ? errors.newPassword.message : ''
+          }
+          className="input"
+          placeholder="Введите новый пароль"
+        />
+        <Input
+          {...register('oldPassword', {
+            required: 'Обязательное поле',
+            validate: value => value === password || 'Пароли должны совпадать',
+          })}
+          error={!errors.oldPassword}
+          helperText={
+            errors.oldPassword?.message ? errors.oldPassword.message : ''
+          }
+          className="input"
+          placeholder="Повторите пароль"
+        />
+        <div className="button">
+          <Button type="submit">Подтвердить</Button>
+          <Button onClick={goBack} type="button" variant="outlined">
+            Назад
+          </Button>
+        </div>
       </BoxContainer>
     </Container>
   );
@@ -56,9 +91,13 @@ export default ChangePassowrd;
 const Container = styled('form')(() => ({
   width: '490px',
   minHeight: '340px',
-  margin: '0 auto',
+  margin: '100px auto',
   padding: '30px',
   position: 'relative',
+  border: '1px solid black',
+  borderRadius: '4px',
+  boxShadow: '-7px 9px 13px 0px rgba(189,183,189,1)',
+
   '& > .box': {
     position: 'absolute',
     top: '2px',
@@ -84,4 +123,13 @@ const BoxContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '30px',
+
+  '& .input': {
+    backgroundColor: 'white',
+  },
+  '& .button': {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
 }));
