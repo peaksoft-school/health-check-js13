@@ -22,7 +22,7 @@ const OnlineRecording: FC = () => {
   return (
     <BackgroundContainer>
       <OnlineRecordingContainer>
-        <Box className="">
+        <Box>
           <Content>
             <ContentOption>
               <OnlineRecordingSpan>Онлайн-запись</OnlineRecordingSpan>
@@ -51,8 +51,10 @@ const OnlineRecording: FC = () => {
                 className="InputAdmin"
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment style={{cursor:"pointer"}} position="end">
-                      <SearchIcon  />
+                    <InputAdornment
+                      style={{ cursor: 'pointer' }}
+                      position="end">
+                      <SearchIcon />
                     </InputAdornment>
                   ),
                 }}
