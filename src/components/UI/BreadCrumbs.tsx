@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import { useLocation, Link } from 'react-router-dom';
 
-const Breadcrumbs = () => {
+const BreadCrumbs = () => {
   const { pathname } = useLocation();
   const pathnames = pathname.split('/').filter(x => x);
 
@@ -36,7 +36,7 @@ const Breadcrumbs = () => {
   );
 };
 
-export default Breadcrumbs;
+export default BreadCrumbs;
 
 const BreadcrumbNav = styled('nav')({
   paddingTop: '16px',
