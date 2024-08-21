@@ -12,6 +12,6 @@ export const ROUTES = {
     LOGOUT: '/logout',
   },
   ADMIN: {
-    HOME: '/',
+    HOME: '/admin',
   },
 };

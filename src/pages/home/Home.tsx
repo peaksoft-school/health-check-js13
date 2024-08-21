@@ -1,49 +1,21 @@
 import AboutClinic from '../../components/landingPage/AboutClinic';
+import AboutPart from '../../components/landingPage/AboutPart';
+import Application from '../../components/landingPage/Application';
 import Doctors from '../../components/landingPage/Doctors';
 import FeedbackSlider from '../../components/landingPage/FeedbackSlider';
 import OurService from '../../components/landingPage/OurService';
 import { Welcome } from '../../components/landingPage/Welcome';
-import ChangePassowrd from '../../routes/user/ChangePassowrd';
 
 const Home = () => {
   return (
     <>
       <Welcome />
-      <ChangePassowrd />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <AboutPart />
       <OurService />
       <AboutClinic />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br /> <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <Doctors />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <FeedbackSlider />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <Application updateFunc={() => console.log('')} />
     </>
   );
 };

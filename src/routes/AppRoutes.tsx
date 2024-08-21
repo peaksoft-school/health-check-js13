@@ -7,6 +7,10 @@ import { ROLES, ROUTES } from './router';
 import AdminLayout from '../layout/admin/AdminLayout';
 import { useAppSelector } from '../hooks/customHooks';
 import { ADMIN_CHILDREN } from './admin/AdminRout';
+import SignUp from './user/SignUp';
+import SignIn from './user/SignIn';
+import ChangePassowrd from './user/ChangePassowrd';
+import ForgotPassword from './user/ForgotPassword';
 
 const AppRoutes = () => {
   const { isAuth, role } = useAppSelector(state => state.auth);
@@ -18,7 +22,7 @@ const AppRoutes = () => {
         <PrivateRoutes
           roles={[ROLES.GUEST, ROLES.USER]}
           isAuth={role === ROLES.USER ? isAuth : !isAuth}
-          fallbackPath={ROUTES.USER.HOME}
+          fallbackPath={ROUTES.ADMIN.HOME}
           component={<UserLayout />}
         />
       ),
@@ -37,7 +41,53 @@ const AppRoutes = () => {
       ),
       children: ADMIN_CHILDREN,
     },
-    
+
+    {
+      path: 'sign-up',
+      element: (
+        <PrivateRoutes
+          isAuth={!isAuth}
+          roles={[ROLES.GUEST]}
+          component={<SignUp />}
+          fallbackPath={ROUTES.USER.HOME}
+        />
+      ),
+    },
+
+    {
+      path: 'sign-in',
+      element: (
+        <PrivateRoutes
+          isAuth={!isAuth}
+          fallbackPath={ROUTES.USER.HOME}
+          roles={[ROLES.GUEST]}
+          component={<SignIn />}
+        />
+      ),
+    },
+    {
+      path: 'reset_password/:token',
+      element: (
+        <PrivateRoutes
+          isAuth={!isAuth}
+          roles={[ROLES.GUEST]}
+          fallbackPath={ROUTES.USER.HOME}
+          component={<ChangePassowrd />}
+        />
+      ),
+    },
+    {
+      path: 'forgot-password',
+      element: (
+        <PrivateRoutes
+          isAuth={!isAuth}
+          roles={[ROLES.GUEST]}
+          fallbackPath={ROUTES.USER.HOME}
+          component={<ForgotPassword />}
+        />
+      ),
+    },
+
     {
       path: '*',
       element: <NotFound />,

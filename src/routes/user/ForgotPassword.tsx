@@ -1,58 +1,51 @@
 import { Box, styled } from '@mui/material';
 import Button from '../../components/UI/Button';
 import Input from '../../components/UI/Input';
-import CloseIcon from '../../assets/icons/CloseIcon.svg';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/customHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { forgotPasswordEmail } from '../../store/slices/auth/authThunk';
-import { useSearchParams } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Button as MyButton } from '@mui/material';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
 
-type PropsTypes = {
-  openForgotModal?: () => void;
-  openChnageModal?: () => void;
-};
 type FormTypes = {
   email?: string;
   link?: string;
 };
 
-const ForgotPassword = ({ openForgotModal, openChnageModal }: PropsTypes) => {
+const ForgotPassword = () => {
   const dispatch = useAppDispatch();
-
+  const { isLoading } = useAppSelector(state => state.auth);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<FormTypes>({ mode: 'onSubmit' });
-  const [searchParams] = useSearchParams();
-  console.log(searchParams);
 
-  const query = searchParams.get('query');
-  const page = searchParams.get('page');
+  const linkObj = window.location.origin;
 
-  console.log(query, page);
-  
-  let link = 'http://localhost:5174/reset_password';
+  const link = `${linkObj}/reset_password`;
+
+  const navigate = useNavigate();
 
   const submitHandlerOn = (value: FormTypes) => {
     dispatch(
       forgotPasswordEmail({
         email: value.email,
         link,
-        openChnageModal,
-        openForgotModal,
       })
     );
     reset();
   };
 
+  const goBackFn = () => {
+    navigate('/sign-in');
+  };
+
   return (
     <StyledContainer>
-      <div className="box" onClick={openForgotModal}>
-        <CloseIcon />
-      </div>
+      {isLoading && <LoadingComponent />}
       <Block>
         <h1>ЗАБЫЛИ ПАРОЛЬ?</h1>
       </Block>
@@ -60,6 +53,7 @@ const ForgotPassword = ({ openForgotModal, openChnageModal }: PropsTypes) => {
         <div>
           <h2 className="h2">Вам будет отправлена ссылка для сброса пароля</h2>
           <Input
+            className="input"
             size="small"
             {...register('email', {
               required: 'Заполните поле',
@@ -75,9 +69,9 @@ const ForgotPassword = ({ openForgotModal, openChnageModal }: PropsTypes) => {
         </div>
         <BoxStyled>
           <Button type="submit">ОТПРАВИТЬ</Button>
-          <button type="button" onClick={openForgotModal}>
-            ОТМЕНИТЬ
-          </button>
+          <MyButton onClick={goBackFn} variant="text">
+            Назад
+          </MyButton>
         </BoxStyled>
       </ContainerForm>
     </StyledContainer>
@@ -91,13 +85,13 @@ const StyledContainer = styled(Box)(() => ({
   minHeight: '340px',
   display: 'flex',
   flexDirection: 'column',
-  margin: '0 auto',
+  margin: '100px auto',
   gap: '20px',
+  border: '1px solid black',
   alignItems: 'center',
   fontFamily: '"Manrope" , san-serif',
   padding: '30px 40px',
   backgroundColor: 'white',
-  position: 'relative',
   borderRadius: '4px',
   '& .box': {
     position: 'absolute',
@@ -123,6 +117,9 @@ const ContainerForm = styled('form')(() => ({
   flexDirection: 'column',
   gap: '20px',
 
+  '& .input': {
+    backgroundColor: 'white',
+  },
   '& .h2': {
     fontSize: '14px',
     color: '#959595',

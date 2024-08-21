@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TAuthTypes } from '../../../types/authSliceTypes';
-import { signIn, signUp } from './authThunk';
+import {
+  changePassword,
+  forgotPasswordEmail,
+  googleAuthFirbase,
+  signIn,
+  signUp,
+} from './authThunk';
 
 const initialState: TAuthTypes = {
   isAuth: false,
@@ -20,7 +26,6 @@ export const authSlice = createSlice({
       state.role = 'GUEST';
       state.token = '';
       state.email = '';
-      localStorage.removeItem('HEALTH_CHECK');
     },
   },
   extraReducers: builder => {
@@ -41,6 +46,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = payload.message;
       })
+      //
       .addCase(signIn.pending, state => {
         state.isLoading = true;
         state.error = null;
@@ -48,13 +54,55 @@ export const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isAuth = true;
-        state.token = payload.token;
+        state.token = payload?.token;
         state.role = payload.role;
         state.email = payload.email;
       })
       .addCase(signIn.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload.message;
+      })
+      //
+      .addCase(forgotPasswordEmail.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(forgotPasswordEmail.fulfilled, state => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(forgotPasswordEmail.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload.message;
+      })
+      //
+      .addCase(changePassword.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(changePassword.fulfilled, state => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(changePassword.rejected, (state, { payload }) => {
+        state.error = payload.message;
+        state.isLoading = false;
+      })
+      //
+      .addCase(googleAuthFirbase.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(googleAuthFirbase.fulfilled, (state, { payload }) => {
+        state.email = payload?.email;
+        state.isAuth = true;
+        state.token = payload.token;
+        state.role = payload.role;
+        state.isLoading = false;
+      })
+      .addCase(googleAuthFirbase.rejected, (state, { payload }) => {
+        state.error = payload.message;
+        state.isLoading = false;
       });
   },
 });
