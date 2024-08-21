@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TAuthTypes } from '../../../types/authSliceTypes';
 import {
+  changePassword,
   forgotPasswordEmail,
   googleAuthFirbase,
   signIn,
@@ -45,6 +46,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = payload.message;
       })
+      //
       .addCase(signIn.pending, state => {
         state.isLoading = true;
         state.error = null;
@@ -60,6 +62,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = payload.message;
       })
+      //
       .addCase(forgotPasswordEmail.pending, state => {
         state.isLoading = true;
         state.error = null;
@@ -72,17 +75,34 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = payload.message;
       })
+      //
+      .addCase(changePassword.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(changePassword.fulfilled, state => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(changePassword.rejected, (state, { payload }) => {
+        state.error = payload.message;
+        state.isLoading = false;
+      })
+      //
       .addCase(googleAuthFirbase.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(googleAuthFirbase.fulfilled, (state, { payload }) => {
-        console.log(payload);
+        state.email = payload?.email;
+        state.isAuth = true;
+        state.token = payload.token;
+        state.role = payload.role;
         state.isLoading = false;
       })
       .addCase(googleAuthFirbase.rejected, (state, { payload }) => {
+        state.error = payload.message;
         state.isLoading = false;
-        state.error = payload.error;
       });
   },
 });

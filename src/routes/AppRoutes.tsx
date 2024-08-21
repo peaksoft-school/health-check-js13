@@ -22,7 +22,7 @@ const AppRoutes = () => {
         <PrivateRoutes
           roles={[ROLES.GUEST, ROLES.USER]}
           isAuth={role === ROLES.USER ? isAuth : !isAuth}
-          fallbackPath={ROUTES.USER.HOME}
+          fallbackPath={ROUTES.ADMIN.HOME}
           component={<UserLayout />}
         />
       ),

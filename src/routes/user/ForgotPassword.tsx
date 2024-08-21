@@ -23,7 +23,9 @@ const ForgotPassword = () => {
     reset,
   } = useForm<FormTypes>({ mode: 'onSubmit' });
 
-  let link = 'http://localhost:5174/reset_password';
+  const linkObj = window.location.origin;
+
+  const link = `${linkObj}/reset_password`;
 
   const navigate = useNavigate();
 

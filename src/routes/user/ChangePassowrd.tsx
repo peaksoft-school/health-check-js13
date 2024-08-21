@@ -1,10 +1,11 @@
 import { Box, styled, Typography } from '@mui/material';
 import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
-import { useAppDispatch } from '../../hooks/customHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { changePassword } from '../../store/slices/auth/authThunk';
 import { useNavigate, useParams } from 'react-router-dom';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
 
 type FormTypes = {
   oldPassword?: string;
@@ -13,8 +14,9 @@ type FormTypes = {
 
 const ChangePassowrd = () => {
   const token = useParams();
-
+  const { isLoading } = useAppSelector(state => state.auth);
   const disaptch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -22,6 +24,7 @@ const ChangePassowrd = () => {
     formState: { errors },
     reset,
   } = useForm<FormTypes>();
+
   const navigate = useNavigate();
 
   const handlerSubmit: SubmitHandler<FormTypes> = data => {
@@ -31,6 +34,7 @@ const ChangePassowrd = () => {
       changePassword({
         newPassword: newPassword.newPassword,
         token: token.token,
+        navigate,
       })
     );
     reset();
@@ -42,47 +46,51 @@ const ChangePassowrd = () => {
   };
 
   return (
-    <Container onSubmit={handleSubmit(handlerSubmit)}>
-      <Typography className="two">СМЕНА ПАРОЛЯ</Typography>
-      <Typography className="one">
-        Вам будет отправлена ссылка для сброса пароля
-      </Typography>
-      <BoxContainer>
-        <Input
-          {...register('newPassword', {
-            required: 'Поле Обязательно',
-            minLength: {
-              value: 8,
-              message: 'Пароль должен быть минимум 8 символов',
-            },
-          })}
-          error={!errors.newPassword}
-          helperText={
-            errors.newPassword?.message ? errors.newPassword.message : ''
-          }
-          className="input"
-          placeholder="Введите новый пароль"
-        />
-        <Input
-          {...register('oldPassword', {
-            required: 'Обязательное поле',
-            validate: value => value === password || 'Пароли должны совпадать',
-          })}
-          error={!errors.oldPassword}
-          helperText={
-            errors.oldPassword?.message ? errors.oldPassword.message : ''
-          }
-          className="input"
-          placeholder="Повторите пароль"
-        />
-        <div className="button">
-          <Button type="submit">Подтвердить</Button>
-          <Button onClick={goBack} type="button" variant="outlined">
-            Назад
-          </Button>
-        </div>
-      </BoxContainer>
-    </Container>
+    <>
+      {isLoading && <LoadingComponent />}
+      <Container onSubmit={handleSubmit(handlerSubmit)}>
+        <Typography className="two">СМЕНА ПАРОЛЯ</Typography>
+        <Typography className="one">
+          Вам будет отправлена ссылка для сброса пароля
+        </Typography>
+        <BoxContainer>
+          <Input
+            type="password"
+            {...register('newPassword', {
+              required: 'Поле Обязательно',
+              minLength: {
+                value: 8,
+                message: 'Пароль должен быть минимум 8 символов',
+              },
+            })}
+            helperText={
+              errors.newPassword?.message ? errors.newPassword.message : ''
+            }
+            className="input"
+            placeholder="Введите новый пароль"
+          />
+          <Input
+            type="password"
+            {...register('oldPassword', {
+              required: 'Обязательное поле',
+              validate: value =>
+                value === password || 'Пароли должны совпадать',
+            })}
+            helperText={
+              errors.oldPassword?.message ? errors.oldPassword.message : ''
+            }
+            className="input"
+            placeholder="Повторите пароль"
+          />
+          <div className="button">
+            <Button type="submit">Подтвердить</Button>
+            <Button onClick={goBack} type="button" variant="outlined">
+              Назад
+            </Button>
+          </div>
+        </BoxContainer>
+      </Container>
+    </>
   );
 };
 

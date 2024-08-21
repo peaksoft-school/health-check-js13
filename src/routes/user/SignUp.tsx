@@ -52,14 +52,18 @@ const SignUp = () => {
   };
 
   const googleAuthFn = () => {
-    signInWithPopup(auth, provider).then(data => {
-      if (data.user) {
-        data.user.getIdToken().then(token => {
-          console.log(token);
-          dispatch(googleAuthFirbase({ tokenId: token }));
-        });
-      }
-    });
+    signInWithPopup(auth, provider)
+      .then(data => {
+        if (data.user) {
+          data.user.getIdToken().then(token => {
+            console.log(token);
+            dispatch(googleAuthFirbase({ tokenId: token }));
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при аутентификации через Google:', error);
+      });
   };
 
   return (

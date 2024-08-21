@@ -74,7 +74,6 @@ export const forgotPasswordEmail = createAsyncThunk<
   any,
   { rejectValue: any }
 >('auth/forgotPasswordEmail', async ({ email, link }, { rejectWithValue }) => {
-  console.log(email, link);
   try {
     const { data } = await axiosInstance.post(
       `api/auth/forgot-password?email=${email}&link=${link}`
@@ -105,11 +104,17 @@ export const changePassword = createAsyncThunk<any, any, { rejectValue: any }>(
         newPassword,
         token,
       });
+
       toastifyMessage({
         message: data.message,
         status: 'success',
         duration: 2000,
       });
+
+      setTimeout(() => {
+        window.location.pathname = '/';
+      }, 1500);
+
       return data;
     } catch (error) {
       const err = error as ErrorResponse;
@@ -137,6 +142,7 @@ export const googleAuthFirbase = createAsyncThunk<
       const { data } = await axiosInstance.post(
         `/api/auth/authGoogle?tokenId=${tokenId}`
       );
+
       return data;
     } catch (error) {
       return rejectWithValue(error);
