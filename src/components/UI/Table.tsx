@@ -35,6 +35,7 @@ const Table = <T,>({ columns, data }: TypesPropsTable<T>) => {
             </tr>
           ))}
         </thead>
+
         <tbody>
           {table.getRowModel().rows.map(row => (
             <tr key={row.id}>
@@ -59,6 +60,7 @@ const TableContainerStyled = styled(Box)({
   maxWidth: '1440px',
   margin: '0 auto',
   minHeight: '100vh',
+  fontFamily: '"Manrope",sans-serif',
 });
 
 const TableStyled = styled('table')({

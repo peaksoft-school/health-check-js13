@@ -52,7 +52,7 @@ const StyledContainer = styled(Box)(() => ({
   width: '100%',
   maxWidth: '1440px',
   minWidth: '1200px',
-  margin: '30px  auto',
+  margin: '50px  auto',
 }));
 
 const BoxText = styled(Box)(() => ({

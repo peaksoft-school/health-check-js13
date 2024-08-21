@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Box, styled } from '@mui/material';
-import ImageDoctors from '../../assets/images/Doctors.png';
-import Signed from '../../assets/icons/Signed.svg';
-import Fon from '../../assets/images/Fon.png';
+import Signed from '../../../assets/icons/Signed.svg';
+import Doctors from '../../../assets/images/Doctors.png';
+import Fon from '../../../assets/images/Fon.png';
 import CustomBreadcrumbs from '../../../components/UI/BreadCrumbs';
 
 const Clinic: FC = () => {
@@ -47,13 +47,13 @@ const Clinic: FC = () => {
               </CardLorems>
             </TextContent>
             <SignedContent>
-              <img src={Signed} alt="signed" />
+              <Signed />
             </SignedContent>
           </Box>
           <FonBox>
             <FonImg src={Fon} alt="fon" />
             <DoctorsCards>
-              <ImgDoctors src={ImageDoctors} alt="imageDoctors" />
+              <ImgDoctors src={Doctors} alt="imageDoctors" />
               <NameClinic>Руководитель клиники Medical Clinic</NameClinic>
               <Name>Аниса Михаилова</Name>
             </DoctorsCards>
@@ -70,7 +70,7 @@ const ClinicClass = styled('div')(() => ({
   width: '100%',
   maxWidth: '1440px',
   minWidth: '1200px',
-  margin: '0 auto',
+  margin: '50px auto',
 }));
 
 const Content = styled('div')(() => ({

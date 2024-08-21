@@ -2,7 +2,7 @@ import { Box, styled, Typography } from '@mui/material';
 import doctorsData from '../../utils/constants/doctorsData.json';
 import Button from '../../components/UI/Button';
 
-const Doctors = () => (
+const Doctor = () => (
   <Container>
     <StyledBox>
       <Typography className="title" variant="h3">
@@ -41,7 +41,7 @@ const Doctors = () => (
   </Container>
 );
 
-export default Doctors;
+export default Doctor;
 
 const Container = styled(Box)(() => ({
   width: '100%',

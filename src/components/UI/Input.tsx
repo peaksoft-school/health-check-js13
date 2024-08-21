@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent, useState } from 'react';
+import { forwardRef, ChangeEvent, useState, ReactNode } from 'react';
 import {
   InputAdornment,
   TextField,
@@ -6,8 +6,8 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import eye from '../../assets/icons/eye.svg';
-import noteye from '../../assets/icons/noteye.svg';
+import Eye from '../../assets/icons/eye.svg';
+import Noteye from '../../assets/icons/noteye.svg';
 
 interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   type?: 'text' | 'password' | 'email' | 'number';
@@ -18,6 +18,8 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   value?: string | number;
   disabled?: boolean;
   icon?: string;
+  helperText?: string;
+  Icon?: any;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -25,7 +27,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       type = 'text',
       label,
-      icon,
+      Icon,
       placeholder,
       onChange,
       error,
@@ -33,15 +35,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       size,
       fullWidth,
+      helperText,
       ...rest
     },
     ref
   ) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleClickEye = () => {
-      setShowPassword(prev => !prev);
-    };
+    const handleClickEye = () => setShowPassword(prev => !prev);
 
     const getType = () => {
       if (type === 'password') {
@@ -64,22 +65,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           ref={ref}
           size={size}
+          helperText={helperText}
           fullWidth={fullWidth}
           InputProps={{
             endAdornment: type === 'password' && (
               <InputAdornment position="end">
-                <img
-                  onClick={handleClickEye}
-                  src={showPassword ? eye : noteye}
-                  alt={showPassword ? 'eye' : 'eyenot'}
-                  style={{ cursor: 'pointer' }}
-                />
+                <div onClick={handleClickEye} style={{ cursor: 'pointer' }}>
+                  {showPassword ? <Eye /> : <Noteye />}
+                </div>
               </InputAdornment>
             ),
-            startAdornment: icon && (
-              <InputAdornment position="start">
-                {icon === '' ? '' : <img src={icon} alt="icon" />}
-              </InputAdornment>
+            startAdornment: Icon && (
+              <InputAdornment position="start">{Icon}</InputAdornment>
             ),
           }}
           {...rest}
@@ -95,13 +92,14 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
   height: '40px',
   borderRadius: '10px',
   caretColor: theme.palette.primary.darkGreen,
-  backgroundColor: '#fff',
+  backgroundColor: '#e8f0fe',
+
   '& .MuiOutlinedInput-input': {
     borderRadius: '8px',
     color: theme.palette.secondary.lightBlack,
-    backgroundColor: '#fff',
   },
   '& .MuiFormLabel-root': {
+    backgroundColor: '#fff',
     '&.Mui-focused ': {
       color: theme.palette.secondary.darkGrey,
     },
@@ -109,6 +107,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
 
   '& .MuiOutlinedInput-root': {
     borderRadius: '8px',
+
     '& fieldset': {
       borderColor: error
         ? theme.palette.error.main
@@ -134,6 +133,7 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
     },
   },
 }));
+
 const LabelDiv = styled('div')({
   display: 'flex',
   flexDirection: 'column',

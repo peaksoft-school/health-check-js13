@@ -1,4 +1,6 @@
 import Button from '@mui/material/Button';
+import Users from '../../../assets/icons/UserIcon.svg';
+
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
@@ -6,26 +8,25 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
-import Users from '../../../assets/icons/UserIcon.svg';
 import { Box, styled } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
+import { logout } from '../../../store/slices/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function AuthDropdown() {
+  const { isAuth } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  console.log(isAuth);
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
+
   const anchorRef = useRef<HTMLButtonElement>(null);
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
-  };
+  const handleToggle = () => setOpen(prevOpen => !prevOpen);
 
-  const handleClose = (event: Event | React.SyntheticEvent) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
-    }
-
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -39,6 +40,7 @@ export default function AuthDropdown() {
   }
 
   const prevOpen = useRef(open);
+
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current!.focus();
@@ -46,6 +48,19 @@ export default function AuthDropdown() {
 
     prevOpen.current = open;
   }, [open]);
+
+  const logoutFn = () => {
+    dispatch(logout());
+    navigate('/');
+    console.log('logout');
+  };
+
+  const signInFn = () => {
+    navigate('sign-in');
+  };
+  const signUpFn = () => {
+    navigate('sign-up');
+  };
 
   return (
     <Stack direction="row" spacing={2}>
@@ -57,8 +72,9 @@ export default function AuthDropdown() {
           aria-expanded={open ? 'true' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}>
-          <ImgUser src={Users} alt="user" />
+          <Users />
         </Button>
+
         <Popper
           open={open}
           anchorEl={anchorRef.current}
@@ -81,8 +97,17 @@ export default function AuthDropdown() {
                     id="composition-menu"
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}>
-                    <ButtonMui onClick={handleClose}>Войти</ButtonMui>
-                    <ButtonMui onClick={handleClose}>Регистрация</ButtonMui>
+                    {isAuth ? (
+                      <div>
+                        <ButtonMui>Мой Профиль</ButtonMui>
+                        <ButtonMui onClick={logoutFn}>Выйти</ButtonMui>
+                      </div>
+                    ) : (
+                      <div>
+                        <ButtonMui onClick={signInFn}>Войти</ButtonMui>
+                        <ButtonMui onClick={signUpFn}>Регистрация</ButtonMui>
+                      </div>
+                    )}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -93,11 +118,6 @@ export default function AuthDropdown() {
     </Stack>
   );
 }
-
-const ImgUser = styled('img')(() => ({
-  width: '28px',
-  height: '28px',
-}));
 
 const ButtonMui = styled(MenuItem)(() => ({
   '&:hover': {
