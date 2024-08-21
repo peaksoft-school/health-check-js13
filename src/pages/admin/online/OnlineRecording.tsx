@@ -48,7 +48,7 @@ const OnlineRecording: FC = () => {
                 border="none"
                 size="small"
                 placeholder="Поиск"
-                className="InputAdmin"
+                className="inputAdmin"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment
@@ -82,19 +82,13 @@ const OnlineRecordingContainer = styled('div')({
   minWidth: '1200px',
   margin: '0 auto',
   fontFamily: '"Poppins", sans-serif',
-  // border: '1px solid #000',
 });
 
 const Content = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  // paddingInline: '70px',
   minHeight: '100vh',
-  '.ContentOptions': {
-    display: 'flex',
-    gap: '25px',
-  },
-  '& .InputAdmin': {
+  '& .inputAdmin': {
     width: '600px',
     height: '100%',
     borderRadius: '8px',

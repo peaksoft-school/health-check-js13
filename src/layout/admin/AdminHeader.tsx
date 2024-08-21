@@ -120,8 +120,8 @@ const HeaderButton = styled(Typography)<{ active?: boolean }>(
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
-    color: active ? '#252525' : '#808080', // Черный для активного и серый для неактивного
-    fontWeight: active ? '600' : 'normal', // Можно добавить жирный шрифт для активного элемента
+    color: active ? '#252525' : '#808080',
+    fontWeight: active ? '600' : 'normal',
 
     '&:after': active
       ? {
