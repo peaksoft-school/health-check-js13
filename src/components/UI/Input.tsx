@@ -18,7 +18,6 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   value?: string | number;
   disabled?: boolean;
   Icon?: ReactNode;
-  IconEnd?: ReactNode;
   border: string;
   icon?: string;
   helperText?: string;
@@ -37,7 +36,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       size,
       fullWidth,
-      IconEnd,
       border,
       helperText,
       ...rest
