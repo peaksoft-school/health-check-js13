@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent, useState, ReactNode } from 'react';
+import { forwardRef, ChangeEvent, useState, ReactNode, } from 'react';
 import {
   InputAdornment,
   TextField,
@@ -17,9 +17,10 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   error?: boolean;
   value?: string | number;
   disabled?: boolean;
+  Icon?: ReactNode;
+  border: string;
   icon?: string;
   helperText?: string;
-  Icon?: any;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -35,6 +36,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       size,
       fullWidth,
+      border,
       helperText,
       ...rest
     },
@@ -67,6 +69,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           size={size}
           helperText={helperText}
           fullWidth={fullWidth}
+          style={{ border: border }}
           InputProps={{
             endAdornment: type === 'password' && (
               <InputAdornment position="end">
@@ -76,7 +79,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               </InputAdornment>
             ),
             startAdornment: Icon && (
-              <InputAdornment position="start">{Icon}</InputAdornment>
+              <InputAdornment position="start" style={{ cursor: 'pointer' }}>
+                {Icon}
+              </InputAdornment>
             ),
           }}
           {...rest}

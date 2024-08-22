@@ -1,12 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Box } from '@mui/material';
 import Korzina from '../../assets/icons/Korzina.svg';
 import Table from '../../components/UI/Table';
 import pacient from '../constants/pacient.json';
-// import tableOne from '../constants/tableOne.json';
-// import statusBody from '../constants/statusBody.json';
-// import applicationBody from '../constants/applicationBody.json';
-
 import Specialist from '../helpers/Specialist';
 import ActionsStatus from '../helpers/Actions';
 import Switcher from '../../components/UI/Switcher';
@@ -61,20 +56,28 @@ export type CombineTypeTables =
 
 export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
   {
-    header: () => (
-      <Box
-        sx={{
+    header: ({ table }) => (
+      <div
+        style={{
           display: 'flex',
           alignItems: 'center',
           gap: '5px',
           cursor: 'pointer',
         }}>
-        <Checkbox />
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected()}
+          onChange={table.getToggleAllPageRowsSelectedHandler()}
+        />
         <Korzina />
-      </Box>
+      </div>
     ),
-    accessorKey: 'hello',
-    cell: () => <Checkbox />,
+    accessorKey: 'select',
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onChange={row.getToggleSelectedHandler()}
+      />
+    ),
   },
   {
     header: '№',
@@ -115,7 +118,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           justifyContent: 'center',
           cursor: 'pointer',
         }}>
-        <Korzina />
+        <Checkbox />
       </div>
     ),
   },
