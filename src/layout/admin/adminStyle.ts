@@ -12,6 +12,7 @@ export const StyledContainer = styled(Box)(() => ({
   margin: '5px auto',
   alignItems: 'center',
   padding: '8px 0',
+  position: 'relative',
 }));
 
 export const StyledMapContainer = styled(Box)(() => ({

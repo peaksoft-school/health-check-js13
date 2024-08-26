@@ -4,10 +4,11 @@ import Button from '../../components/UI/Button';
 import Gogle from '../../assets/icons/gogle.svg';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
-import { signIn } from '../../store/slices/auth/authThunk';
+import { googleAuthFirbase, signIn } from '../../store/slices/auth/authThunk';
 import { useNavigate } from 'react-router-dom';
-import UndoIcon from '@mui/icons-material/Undo';
 import LoadingComponent from '../../utils/helpers/LoadingComponents';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../configs/firebase';
 
 type InputTypes = {
   email: string;
@@ -42,6 +43,21 @@ const SignIn = () => {
     navigate('/forgot-password');
   };
 
+  const googleAuthFn = () => {
+    signInWithPopup(auth, provider)
+      .then(data => {
+        if (data.user) {
+          data.user.getIdToken().then(token => {
+            console.log(token);
+            dispatch(googleAuthFirbase({ tokenId: token }));
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при аутентификации через Google:', error);
+      });
+  };
+
   return (
     <>
       {isLoading && <LoadingComponent />}
@@ -62,6 +78,7 @@ const SignIn = () => {
             helperText={errors.email?.message || ''}
             size="small"
           />
+
           <Input
             className="input"
             {...register('password', {
@@ -76,15 +93,18 @@ const SignIn = () => {
             type="password"
             size="small"
           />
+
           <Button type="submit">Войти</Button>
           <Button type="button" variant="outlined" onClick={goBack}>
             Назад
           </Button>
         </ContainerForm>
+
         <BlockTwo>
           <TypographyStyle onClick={forgotPassowrd}>
             Забыли пароль?
           </TypographyStyle>
+
           <BoxHr>
             <One>
               <hr />
@@ -94,10 +114,12 @@ const SignIn = () => {
               <hr />
             </Three>
           </BoxHr>
-          <BoxGoogle>
+
+          <BoxGoogle onClick={googleAuthFn}>
             <Gogle />
             Зарегистрироваться с Google
           </BoxGoogle>
+
           <TypographyStyled>
             Нет аккаунта? <span onClick={goBackSignUp}>Зарегистрироваться</span>
           </TypographyStyled>

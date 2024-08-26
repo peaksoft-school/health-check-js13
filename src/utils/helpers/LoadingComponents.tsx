@@ -3,7 +3,9 @@ import { CircularProgress, Box, styled } from '@mui/material';
 const LoadingComponent = () => {
   return (
     <BoxContent>
-      <CircularProgress sx={{ color: 'green' }} />
+      <Bocses>
+        <CircularProgress sx={{ color: 'green' }} />
+      </Bocses>
     </BoxContent>
   );
 };
@@ -21,4 +23,14 @@ const BoxContent = styled(Box)(() => ({
   backgroundColor: 'rgba(0,0,0,0.45)',
   top: '0',
   left: '0',
+}));
+
+const Bocses = styled(Box)(() => ({
+  width: '350px',
+  height: '250px',
+  backgroundColor: 'white',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius:"10px"
 }));

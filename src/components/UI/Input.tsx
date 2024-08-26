@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent, useState, ReactNode, } from 'react';
+import { forwardRef, ChangeEvent, useState, ReactNode } from 'react';
 import {
   InputAdornment,
   TextField,
@@ -18,7 +18,7 @@ interface InputProps extends Omit<TextFieldProps, 'onChange' | 'onClick'> {
   value?: string | number;
   disabled?: boolean;
   Icon?: ReactNode;
-  border: string;
+  border?: string;
   icon?: string;
   helperText?: string;
 }

@@ -1,16 +1,17 @@
-import MiniLayout from '../../layout/admin/MiniLayout';
+import OnlineRecording from '../../pages/admin/online/OnlineRecording';
+import Schedule from '../../pages/admin/schedule/Schedule';
 import AdminPatients from './AdminPatients';
 import AdminSpecialists from './AdminSpecialists';
 
 export const ADMIN_CHILDREN = [
   {
     index: true,
-    element: <MiniLayout />,
+    element: <OnlineRecording />,
     // children:[]
   },
   {
-    path: 'admin-applications',
-    element: <h1>hello applications</h1>,
+    // path: 'admin-applications',
+    // element: <Schedule />,
   },
   {
     path: 'admin-specialists',
