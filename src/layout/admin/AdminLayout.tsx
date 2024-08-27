@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../user/Header';
+import AdminHeader from './AdminHeader';
 
 const AdminLayout = () => {
   return (
     <>
       <header>
-        <Header />
+        <AdminHeader />
       </header>
       <main>
         <Outlet />

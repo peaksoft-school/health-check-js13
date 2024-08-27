@@ -55,6 +55,7 @@ const ChangePassowrd = () => {
         </Typography>
         <BoxContainer>
           <Input
+            border=""
             type="password"
             {...register('newPassword', {
               required: 'Поле Обязательно',
@@ -70,6 +71,7 @@ const ChangePassowrd = () => {
             placeholder="Введите новый пароль"
           />
           <Input
+            border=""
             type="password"
             {...register('oldPassword', {
               required: 'Обязательное поле',
