@@ -1,12 +1,11 @@
-import { BorderAll } from '@mui/icons-material';
-import { Box, styled, TextField, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 
 const AdminApplication = () => {
   return (
     <Container>
       <Block>
         <Typography>Заявки</Typography>
-        <Input size="small" />
+        <Input />
       </Block>
     </Container>
   );
@@ -29,13 +28,9 @@ const Block = styled(Box)(() => ({
   border: '1px solid black',
 }));
 
-const Input = styled(TextField)(() => ({
+const Input = styled('input')(() => ({
   width: '600px',
   padding: '4px 10px 2px 10px',
-  '& .MuiOutlinedInput-input': {
-    border: '1px solid #f5f5f5',
-  },
-  '& fieldset': {
-    borderRadius: '50px', // Исправлено с "borderRaduis" на "borderRadius"
-  },
+  borderRadius: '50px',
+  height: '40px',
 }));
