@@ -4,34 +4,37 @@ import Button from '../../components/UI/Button';
 import Gogle from '../../assets/icons/gogle.svg';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
-import { signIn } from '../../store/slices/auth/authThunk';
+import { googleAuthFirbase, signIn } from '../../store/slices/auth/authThunk';
 import { useNavigate } from 'react-router-dom';
-import UndoIcon from '@mui/icons-material/Undo';
 import LoadingComponent from '../../utils/helpers/LoadingComponents';
-
-type InputTypes = {
-  email: string;
-  password: string;
-};
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../configs/firebase';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  SigninFormSchema,
+  signInSchema,
+} from '../../utils/validations/signInSchema';
 
 const SignIn = () => {
-  const { isLoading } = useAppSelector(state => state.auth);
+  const { isLoading, error } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
-  } = useForm<InputTypes>({ mode: 'onSubmit' });
+  } = useForm<SigninFormSchema>({
+    mode: 'onSubmit',
+    resolver: zodResolver(signInSchema),
+  });
 
   const goBackSignUp = () => {
     navigate('/sign-up');
   };
 
-  const onSubmit = (data: InputTypes) => {
+  const onSubmit = (data: SigninFormSchema) => {
     dispatch(signIn({ data, navigate }));
-    reset();
   };
 
   const goBack = () => {
@@ -40,6 +43,20 @@ const SignIn = () => {
 
   const forgotPassowrd = () => {
     navigate('/forgot-password');
+  };
+
+  const googleAuthFn = () => {
+    signInWithPopup(auth, provider)
+      .then(data => {
+        if (data.user) {
+          data.user.getIdToken().then(token => {
+            dispatch(googleAuthFirbase({ tokenId: token }));
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при аутентификации через Google:', error);
+      });
   };
 
   return (
@@ -51,6 +68,7 @@ const SignIn = () => {
         <ContainerForm onSubmit={handleSubmit(onSubmit)}>
           <Input
             className="input"
+            placeholder="Почта"
             {...register('email', {
               required: 'Обязательное поле',
               pattern: {
@@ -62,8 +80,10 @@ const SignIn = () => {
             helperText={errors.email?.message || ''}
             size="small"
           />
+
           <Input
             className="input"
+            placeholder="Пароль"
             {...register('password', {
               required: 'Обязательное поле',
               minLength: {
@@ -76,15 +96,20 @@ const SignIn = () => {
             type="password"
             size="small"
           />
+
+          {error ? <ErrorText>{error}</ErrorText> : null}
+
           <Button type="submit">Войти</Button>
           <Button type="button" variant="outlined" onClick={goBack}>
             Назад
           </Button>
         </ContainerForm>
+
         <BlockTwo>
           <TypographyStyle onClick={forgotPassowrd}>
             Забыли пароль?
           </TypographyStyle>
+
           <BoxHr>
             <One>
               <hr />
@@ -94,10 +119,12 @@ const SignIn = () => {
               <hr />
             </Three>
           </BoxHr>
-          <BoxGoogle>
+
+          <BoxGoogle onClick={googleAuthFn}>
             <Gogle />
             Зарегистрироваться с Google
           </BoxGoogle>
+
           <TypographyStyled>
             Нет аккаунта? <span onClick={goBackSignUp}>Зарегистрироваться</span>
           </TypographyStyled>
@@ -135,7 +162,7 @@ const Container = styled(Box)(() => ({
 const ContainerForm = styled('form')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
+  gap: '10px',
 }));
 
 const TypographyStyle = styled(Typography)(() => ({
@@ -213,4 +240,8 @@ const TypographyStyled = styled(Typography)(() => ({
     fontWeight: '300',
     marginLeft: '10px',
   },
+}));
+
+const ErrorText = styled(Typography)(() => ({
+  color: '#f00',
 }));

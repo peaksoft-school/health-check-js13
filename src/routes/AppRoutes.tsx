@@ -9,7 +9,7 @@ import { useAppSelector } from '../hooks/customHooks';
 import { ADMIN_CHILDREN } from './admin/AdminRout';
 import SignUp from './user/SignUp';
 import SignIn from './user/SignIn';
-import ChangePassowrd from './user/ChangePassowrd';
+import ChangePassowrd from './user/ChangePassword';
 import ForgotPassword from './user/ForgotPassword';
 
 const AppRoutes = () => {

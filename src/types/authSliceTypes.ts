@@ -13,3 +13,9 @@ export type TAuthTypes = {
   error: null | string;
   email: string;
 };
+
+export type TAuthResponse = {
+  token: string;
+  role: string;
+  email: string;
+};

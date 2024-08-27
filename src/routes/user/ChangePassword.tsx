@@ -8,13 +8,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import LoadingComponent from '../../utils/helpers/LoadingComponents';
 
 type FormTypes = {
-  oldPassword?: string;
-  newPassword?: string;
+  oldPassword: string;
+  newPassword: string;
 };
 
 const ChangePassowrd = () => {
   const token = useParams();
-  const { isLoading } = useAppSelector(state => state.auth);
+  const { isLoading, error } = useAppSelector(state => state.auth);
   const disaptch = useAppDispatch();
 
   const {
@@ -28,16 +28,19 @@ const ChangePassowrd = () => {
   const navigate = useNavigate();
 
   const handlerSubmit: SubmitHandler<FormTypes> = data => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { oldPassword, ...newPassword } = data;
 
-    disaptch(
-      changePassword({
-        newPassword: newPassword.newPassword,
-        token: token.token,
-        navigate,
-      })
-    );
-    reset();
+    if (token.token) {
+      disaptch(
+        changePassword({
+          newPassword: newPassword.newPassword,
+          token: token.token,
+          navigate,
+        })
+      );
+      reset();
+    }
   };
   const password = watch('newPassword');
 
@@ -50,9 +53,7 @@ const ChangePassowrd = () => {
       {isLoading && <LoadingComponent />}
       <Container onSubmit={handleSubmit(handlerSubmit)}>
         <Typography className="two">СМЕНА ПАРОЛЯ</Typography>
-        <Typography className="one">
-          Вам будет отправлена ссылка для сброса пароля
-        </Typography>
+
         <BoxContainer>
           <Input
             type="password"
@@ -68,6 +69,7 @@ const ChangePassowrd = () => {
             }
             className="input"
             placeholder="Введите новый пароль"
+            error={!!errors.newPassword}
           />
           <Input
             type="password"
@@ -81,7 +83,11 @@ const ChangePassowrd = () => {
             }
             className="input"
             placeholder="Повторите пароль"
+            error={!!errors.oldPassword}
           />
+
+          {error && <ErrorText>{error}</ErrorText>}
+
           <div className="button">
             <Button type="submit">Подтвердить</Button>
             <Button onClick={goBack} type="button" variant="outlined">
@@ -130,7 +136,7 @@ const Container = styled('form')(() => ({
 const BoxContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '30px',
+  gap: '10px',
 
   '& .input': {
     backgroundColor: 'white',
@@ -140,4 +146,8 @@ const BoxContainer = styled(Box)(() => ({
     flexDirection: 'column',
     gap: '10px',
   },
+}));
+
+const ErrorText = styled(Typography)(() => ({
+  color: '#f00',
 }));

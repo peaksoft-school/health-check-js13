@@ -153,7 +153,6 @@ export const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
     header: 'Специалист',
     accessorKey: 'name',
     cell: ({ cell }: any) => {
-      console.log(cell);
       if (cell) {
         return <Specialist {...cell} />;
       }

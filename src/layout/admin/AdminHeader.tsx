@@ -1,27 +1,38 @@
-import { FC, useState } from 'react';
-import {
-  Typography,
-  Select,
-  MenuItem,
-  SvgIcon,
-  Box,
-  SelectChangeEvent,
-  styled,
-} from '@mui/material';
-// import HealtsCheck from '../../assets/icons/Health-CheckIcon.svg';
+import { FC, useState, MouseEvent } from 'react';
+import { MenuItem, Box, Button, Popover, styled } from '@mui/material';
 import Medcheck from '../../assets/images/HEALTHCHECK.png';
+import {
+  StyledContainer,
+  StyledIconsContainer,
+  StyledMapContainer,
+  StyledHealthCheck,
+  HeaderButton,
+  CustomArrowIcon,
+} from './adminStyle';
+import { links } from '../../utils/constants/adminLinks';
+import { NavLink } from 'react-router-dom';
 
 const AdminHeader: FC = () => {
   const [activeButton, setActiveButton] = useState<string>('Заявки');
   const [adminOption, setAdminOption] = useState<string>('Администратор');
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleAdminChange = (event: SelectChangeEvent<unknown>) => {
-    setAdminOption(event.target.value as string);
-    setMenuOpen(prev => !prev);
+  const handleButtonClick = (text: string) => () => setActiveButton(text);
+
+  const handlePopoverOpen = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const toggleMenu = () => setMenuOpen(prev => !prev);
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleAdminOptionClick = (option: string) => {
+    setAdminOption(option);
+    handlePopoverClose();
+  };
+
+  const open = Boolean(anchorEl);
 
   return (
     <StyledContainer>
@@ -29,42 +40,51 @@ const AdminHeader: FC = () => {
         <StyledHealthCheck src={Medcheck} alt="medcheck" />
       </StyledIconsContainer>
       <StyledMapContainer>
-        {['Онлайн-запись', 'Заявки', 'Специалисты', 'Пациенты'].map(text => (
-          <Box key={text}>
+        {links.map(link => (
+          <Box key={link.value}>
             <HeaderButton
-              active={activeButton === text}
-              onClick={() => setActiveButton(text)}>
-              {text}
+              active={activeButton === link.value}
+              onClick={handleButtonClick(link.value)}>
+              <NavLinkStyled to={link.to} active={activeButton === link.value}>
+                {link.value}
+              </NavLinkStyled>
             </HeaderButton>
           </Box>
         ))}
       </StyledMapContainer>
       <Box>
-        <AdminSelect
-          value={adminOption}
-          onChange={handleAdminChange}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Администратор' }}
-          IconComponent={() => (
+        <Button
+          onClick={handlePopoverOpen}
+          endIcon={
             <CustomArrowIcon
-              viewBox="0 0 24 24"
               style={{
-                transform: menuOpen ? 'rotate(270deg)' : 'rotate(90deg)',
-                marginTop: '5px',
-                cursor: 'pointer',
+                transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
               }}>
               <path
                 fill="currentColor"
                 d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"
               />
             </CustomArrowIcon>
-          )}
-          onClick={toggleMenu}>
-          <MenuItem value="Администратор" disabled>
-            Администратор
-          </MenuItem>
-          <MenuItem value="Выход">Выход</MenuItem>
-        </AdminSelect>
+          }>
+          {adminOption}
+        </Button>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}>
+          <Box>
+            <MenuItem onClick={() => handleAdminOptionClick('Администратор')}>
+              Администратор
+            </MenuItem>
+            <MenuItem onClick={() => handleAdminOptionClick('Выход')}>
+              Выход
+            </MenuItem>
+          </Box>
+        </Popover>
       </Box>
     </StyledContainer>
   );
@@ -72,108 +92,28 @@ const AdminHeader: FC = () => {
 
 export default AdminHeader;
 
-const StyledContainer = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  backgroundColor: '#ffffff',
-  boxShadow: 'none',
-  borderBottom: '1px solid #ffffff',
-  width: '100%',
-  maxWidth: '90rem',
-  minWidth: '75rem',
-  margin: '0 auto',
-  alignItems: 'center',
-}));
-
-const StyledMapContainer = styled(Box)(() => ({
-  width: '42rem',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'flex-end',
-  fontFamily: 'Manrope, sans-serif',
-}));
-
-const StyledHealthCheck = styled('img')(() => ({
-  width: '14rem',
-  height: '4rem',
-  flexWrap: 'wrap',
-  cursor: 'pointer',
-  '@media (max-width: 767px)': {
-    width: '100%',
-    height: 'auto',
-  },
-}));
-
-const StyledIconsContainer = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: '1rem',
-}));
-
-const HeaderButton = styled(Typography)<{ active?: boolean }>(
-  ({ theme, active }) => ({
-    margin: theme.spacing(0, 2),
-    padding: theme.spacing(2, 0),
-    backgroundColor: 'transparent',
-    cursor: 'pointer',
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
-    color: active ? '#252525' : '#808080',
-    fontWeight: active ? '600' : 'normal',
-
-    '&:after': active
-      ? {
-          content: '""',
-          position: 'absolute',
-          left: '0',
-          bottom: '0',
-          width: '100%',
-          height: '2px',
-          backgroundColor: '#048741',
-          transition: 'width 0.3s ease, left 0.3s ease',
-        }
-      : {
-          content: '""',
-          position: 'absolute',
-          left: '50%',
-          bottom: '0',
-          width: '0',
-          height: '2px',
-          backgroundColor: '#048741',
-          transition: 'width 0.3s ease, left 0.3s ease',
-        },
-  })
-);
-
-const CustomArrowIcon = styled(SvgIcon)(({ theme }) => ({
-  fontSize: '1.3rem',
-  marginLeft: '-1rem',
+const NavLinkStyled = styled(NavLink)<{ active?: boolean }>(({ active }) => ({
+  textDecoration: 'none',
+  color: active ? '#252525' : '#808080',
+  transition: 'color 0.3s ease, font-weight 0.3s ease',
   position: 'relative',
-  right: '1rem',
-  color: theme.palette.text.primary,
-  transform: 'rotate(270deg)', // Поворот стрелки вниз
-}));
-
-const AdminSelect = styled(Select)(({ theme }) => ({
-  marginLeft: theme.spacing(2),
-  minWidth: 120,
-  color: theme.palette.text.primary,
-  backgroundColor: 'transparent',
-
-  '& .MuiSelect-select': {
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    width: '7.4rem',
-    color: theme.palette.text.primary,
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    border: 'none',
-  },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    border: 'none',
-  },
+  '&:after': active
+    ? {
+        content: '""',
+        position: 'absolute',
+        left: '0',
+        bottom: '-2px',
+        width: '100%',
+        height: '2px',
+        transition: 'width 0.3s ease, left 0.3s ease',
+      }
+    : {
+        content: '""',
+        position: 'absolute',
+        left: '50%',
+        bottom: '-2px',
+        width: '0',
+        height: '2px',
+        transition: 'width 0.3s ease, left 0.3s ease',
+      },
 }));
