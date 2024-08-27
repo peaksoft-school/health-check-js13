@@ -4,7 +4,7 @@ import { Box, styled } from '@mui/material';
 import Button from '../UI/Button';
 
 const Doctors: FC = () => (
-  <Box>
+  <DoctorsContainer>
     <Box className="container">
       <Box>
         <TextContent>
@@ -32,10 +32,18 @@ const Doctors: FC = () => (
         </ContentButton>
       </Box>
     </Box>
-  </Box>
+  </DoctorsContainer>
 );
 
 export default Doctors;
+
+const DoctorsContainer = styled('div')(() => ({
+  width: '100%',
+  minHeight: '400px',
+  minWidth: '1200px',
+  maxWidth: '1440px',
+  margin: '0 auto',
+}));
 
 const TextContent = styled('div')(() => ({
   marginLeft: '90px',

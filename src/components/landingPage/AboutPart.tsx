@@ -3,7 +3,7 @@ import { Box, styled } from '@mui/material';
 import { date } from '../../utils/constants/aboutCards';
 
 const AboutPart: FC = () => (
-  <Box>
+  <AboutPartContainer>
     <Box className="container">
       <Content>
         <ContentGlab>
@@ -23,16 +23,25 @@ const AboutPart: FC = () => (
         </CardsContainer>
       </Content>
     </Box>
-  </Box>
+  </AboutPartContainer>
 );
 
 export default AboutPart;
+
+const AboutPartContainer = styled('div')(() => ({
+  width: '100%',
+  minHeight: '400px',
+  minWidth: '1200px',
+  maxWidth: '1440px',
+  margin: '0 auto',
+}));
 
 const Content = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
+  fontFamily: 'Manrope, sans-serif',
 }));
 
 const ContentGlab = styled('div')(() => ({
