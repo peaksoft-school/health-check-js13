@@ -9,42 +9,31 @@ import { useNavigate } from 'react-router-dom';
 import LoadingComponent from '../../utils/helpers/LoadingComponents';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../configs/firebase';
-
-type TTypesRegistr = {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-  confirmPassword?: string;
-};
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  SignUpFormSchema,
+  signUpSchema,
+} from '../../utils/validations/signUpSchema';
 
 const SignUp = () => {
+  const { isLoading, error: storeError } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
-    reset,
-  } = useForm<TTypesRegistr>();
+  } = useForm<SignUpFormSchema>({
+    resolver: zodResolver(signUpSchema),
+  });
 
-  const { isAuth, isLoading } = useAppSelector(state => state.auth);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<TTypesRegistr> = data => {
-    const { confirmPassword, ...restData } = data;
-
-    dispatch(signUp({ restData, navigate }));
-    reset();
+  const onSubmit: SubmitHandler<SignUpFormSchema> = formData => {
+    dispatch(signUp({ formData, navigate }));
   };
 
-  const password = watch('password');
-
   const signInFunc = () => {
-    if (!isAuth) {
-      navigate('/sign-in');
-    }
+    navigate('/sign-in');
   };
 
   const goBack = () => {
@@ -56,7 +45,6 @@ const SignUp = () => {
       .then(data => {
         if (data.user) {
           data.user.getIdToken().then(token => {
-            console.log(token);
             dispatch(googleAuthFirbase({ tokenId: token }));
           });
         }
@@ -72,7 +60,7 @@ const SignUp = () => {
         <Typography className="Typography">Регистрация</Typography>
         <Input
           className="input"
-          {...register('firstName', { required: 'Обязательное поле' })}
+          {...register('firstName')}
           error={!!errors.firstName}
           helperText={errors.firstName?.message || ''}
           size="small"
@@ -80,7 +68,7 @@ const SignUp = () => {
         />
         <Input
           className="input"
-          {...register('lastName', { required: 'Обязательное поле' })}
+          {...register('lastName')}
           error={!!errors.lastName}
           helperText={errors.lastName?.message || ''}
           size="small"
@@ -88,7 +76,7 @@ const SignUp = () => {
         />
         <Input
           className="input"
-          {...register('phoneNumber', { required: 'Обязательное поле' })}
+          {...register('phoneNumber')}
           error={!!errors.phoneNumber}
           helperText={errors.phoneNumber?.message || ''}
           size="small"
@@ -97,7 +85,6 @@ const SignUp = () => {
         <Input
           className="input"
           {...register('email', {
-            required: 'Обязательное поле',
             pattern: {
               value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
               message: 'Введите действительный email',
@@ -110,13 +97,7 @@ const SignUp = () => {
         />
         <Input
           className="input"
-          {...register('password', {
-            required: 'Обязательное поле',
-            minLength: {
-              value: 8,
-              message: 'Пароль должен быть минимум 8 символов',
-            },
-          })}
+          {...register('password')}
           error={!!errors.password}
           helperText={errors.password?.message || ''}
           size="small"
@@ -125,16 +106,16 @@ const SignUp = () => {
         />
         <Input
           className="input"
-          {...register('confirmPassword', {
-            required: 'Обязательное поле',
-            validate: value => value === password || 'Пароли должны совпадать',
-          })}
+          {...register('confirmPassword')}
           error={!!errors.confirmPassword}
           helperText={errors.confirmPassword?.message || ''}
           size="small"
           type="password"
           placeholder="Повторите пароль"
         />
+
+        {storeError ? <ErrorText>{storeError}</ErrorText> : null}
+
         <Button className="button" type="submit">
           Создать аккаунт
         </Button>
@@ -252,4 +233,8 @@ const TypographyStyled = styled(Typography)(() => ({
     marginLeft: '10px',
     cursor: 'pointer',
   },
+}));
+
+const ErrorText = styled(Typography)(() => ({
+  color: '#f00',
 }));

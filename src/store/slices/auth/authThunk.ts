@@ -1,78 +1,103 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../../configs/axiosInstance';
 import { toastifyMessage } from '../../../utils/helpers/ToastSetting';
+import { SignUpFormSchema } from '../../../utils/validations/signUpSchema';
+import { NavigateFunction } from 'react-router-dom';
+import { SigninFormSchema } from '../../../utils/validations/signInSchema';
+import { TAuthResponse } from '../../../types/authSliceTypes';
 
 interface ErrorResponse {
   response?: {
     data: {
-      message: string;
+      exceptionMessage: string;
     };
   };
   message?: string;
 }
 
-export const signUp = createAsyncThunk<any, any, { rejectValue: any }>(
-  'auth/signUp',
-  async ({ restData, navigate }, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.post(`/api/auth/signUp`, restData);
-      toastifyMessage({
-        message: data.message,
-        status: 'success',
-        duration: 2000,
-      });
-      navigate('/');
-      return data;
-    } catch (error) {
-      const err = error as ErrorResponse;
-      const errorMessage =
-        err?.response?.data?.message || err.message || 'Something went wrong';
-      toastifyMessage({
-        message: errorMessage,
-        status: 'error',
-        duration: 2000,
-      });
-      return rejectWithValue(error);
-    }
+export const signUp = createAsyncThunk<
+  TAuthResponse,
+  {
+    formData: SignUpFormSchema;
+    navigate: NavigateFunction;
+  },
+  { rejectValue: string }
+>('auth/signUp', async ({ formData, navigate }, { rejectWithValue }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { confirmPassword, ...restData } = formData;
+
+  try {
+    const { data } = await axiosInstance.post<TAuthResponse>(
+      `/api/auth/signUp`,
+      restData
+    );
+
+    toastifyMessage({
+      message: 'Успешно',
+      status: 'success',
+      duration: 2000,
+    });
+
+    navigate('/');
+
+    return data;
+  } catch (error) {
+    const err = error as ErrorResponse;
+
+    const errorMessage =
+      err?.response?.data?.exceptionMessage ||
+      err.message ||
+      'Something went wrong';
+
+    toastifyMessage({
+      message: errorMessage,
+      status: 'error',
+      duration: 2000,
+    });
+
+    return rejectWithValue(errorMessage);
   }
-);
+});
 
-export const signIn = createAsyncThunk<any, any, { rejectValue: any }>(
-  'auth/signIn',
-  async ({ data: myData, navigate }, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.post('/api/auth/signIn', myData);
+export const signIn = createAsyncThunk<
+  TAuthResponse,
+  { data: SigninFormSchema; navigate: NavigateFunction },
+  { rejectValue: string }
+>('auth/signIn', async ({ data: myData, navigate }, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.post('/api/auth/signIn', myData);
 
-      toastifyMessage({
-        message: data.message,
-        status: 'success',
-        duration: 2000,
-      });
+    toastifyMessage({
+      message: data.message,
+      status: 'success',
+      duration: 2000,
+    });
 
-      navigate('/');
+    navigate('/');
 
-      return data;
-    } catch (error) {
-      const err = error as ErrorResponse;
+    return data;
+  } catch (error) {
+    const err = error as ErrorResponse;
 
-      const errorMessage =
-        err?.response?.data?.message || err.message || 'Something went wrong';
+    const errorMessage =
+      err?.response?.data?.exceptionMessage ||
+      err.message ||
+      'Something went wrong';
 
-      toastifyMessage({
-        message: errorMessage,
-        status: 'error',
-        duration: 2000,
-      });
+    toastifyMessage({
+      message: errorMessage,
+      status: 'error',
+      duration: 2000,
+    });
 
-      return rejectWithValue(error);
-    }
+    return rejectWithValue(errorMessage);
   }
-);
+});
 
 export const forgotPasswordEmail = createAsyncThunk<
-  any,
-  any,
-  { rejectValue: any }
+  TAuthResponse,
+  { email: string; link: string },
+  { rejectValue: string }
 >('auth/forgotPasswordEmail', async ({ email, link }, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.post(
@@ -86,17 +111,28 @@ export const forgotPasswordEmail = createAsyncThunk<
 
     return data;
   } catch (error) {
+    const err = error as ErrorResponse;
+
+    const errorMessage =
+      err?.response?.data?.exceptionMessage ||
+      err.message ||
+      'Something went wrong';
+
     toastifyMessage({
-      message: 'Something went wrong',
+      message: errorMessage,
       status: 'error',
       duration: 2000,
     });
 
-    return rejectWithValue(error);
+    return rejectWithValue(errorMessage);
   }
 });
 
-export const changePassword = createAsyncThunk<any, any, { rejectValue: any }>(
+export const changePassword = createAsyncThunk<
+  TAuthResponse,
+  { newPassword: string; token: string; navigate: NavigateFunction },
+  { rejectValue: string }
+>(
   'auth/changePassword',
   async ({ newPassword, token }, { rejectWithValue }) => {
     try {
@@ -113,39 +149,49 @@ export const changePassword = createAsyncThunk<any, any, { rejectValue: any }>(
 
       setTimeout(() => {
         window.location.pathname = '/';
-      }, 1500);
+      }, 500);
 
       return data;
     } catch (error) {
       const err = error as ErrorResponse;
       const errorMessage =
-        err?.response?.data?.message || err.message || 'Something went wrong';
+        err?.response?.data?.exceptionMessage ||
+        err.message ||
+        'Something went wrong';
 
       toastifyMessage({
         message: errorMessage,
         status: 'error',
         duration: 2000,
       });
-      return rejectWithValue(error);
+      return rejectWithValue(errorMessage);
     }
   }
 );
 
 export const googleAuthFirbase = createAsyncThunk<
-  any,
-  any,
-  { rejectValue: any }
->(
-  'auth/googleAuthFirbase',
-  async ({ tokenId, naviaget }, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.post(
-        `/api/auth/authGoogle?tokenId=${tokenId}`
-      );
+  TAuthResponse,
+  { tokenId: string },
+  { rejectValue: string }
+>('auth/googleAuthFirbase', async ({ tokenId }, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `/api/auth/authGoogle?tokenId=${tokenId}`
+    );
 
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    return data;
+  } catch (error) {
+    const err = error as ErrorResponse;
+    const errorMessage =
+      err?.response?.data?.exceptionMessage ||
+      err.message ||
+      'Something went wrong';
+
+    toastifyMessage({
+      message: errorMessage,
+      status: 'error',
+      duration: 2000,
+    });
+    return rejectWithValue(errorMessage);
   }
-);
+});

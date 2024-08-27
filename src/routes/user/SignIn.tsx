@@ -9,30 +9,32 @@ import { useNavigate } from 'react-router-dom';
 import LoadingComponent from '../../utils/helpers/LoadingComponents';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../configs/firebase';
-
-type InputTypes = {
-  email: string;
-  password: string;
-};
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  SigninFormSchema,
+  signInSchema,
+} from '../../utils/validations/signInSchema';
 
 const SignIn = () => {
-  const { isLoading } = useAppSelector(state => state.auth);
+  const { isLoading, error } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
-  } = useForm<InputTypes>({ mode: 'onSubmit' });
+  } = useForm<SigninFormSchema>({
+    mode: 'onSubmit',
+    resolver: zodResolver(signInSchema),
+  });
 
   const goBackSignUp = () => {
     navigate('/sign-up');
   };
 
-  const onSubmit = (data: InputTypes) => {
+  const onSubmit = (data: SigninFormSchema) => {
     dispatch(signIn({ data, navigate }));
-    reset();
   };
 
   const goBack = () => {
@@ -48,7 +50,6 @@ const SignIn = () => {
       .then(data => {
         if (data.user) {
           data.user.getIdToken().then(token => {
-            console.log(token);
             dispatch(googleAuthFirbase({ tokenId: token }));
           });
         }
@@ -67,6 +68,7 @@ const SignIn = () => {
         <ContainerForm onSubmit={handleSubmit(onSubmit)}>
           <Input
             className="input"
+            placeholder="Почта"
             {...register('email', {
               required: 'Обязательное поле',
               pattern: {
@@ -81,6 +83,7 @@ const SignIn = () => {
 
           <Input
             className="input"
+            placeholder="Пароль"
             {...register('password', {
               required: 'Обязательное поле',
               minLength: {
@@ -93,6 +96,8 @@ const SignIn = () => {
             type="password"
             size="small"
           />
+
+          {error ? <ErrorText>{error}</ErrorText> : null}
 
           <Button type="submit">Войти</Button>
           <Button type="button" variant="outlined" onClick={goBack}>
@@ -157,7 +162,7 @@ const Container = styled(Box)(() => ({
 const ContainerForm = styled('form')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
+  gap: '10px',
 }));
 
 const TypographyStyle = styled(Typography)(() => ({
@@ -235,4 +240,8 @@ const TypographyStyled = styled(Typography)(() => ({
     fontWeight: '300',
     marginLeft: '10px',
   },
+}));
+
+const ErrorText = styled(Typography)(() => ({
+  color: '#f00',
 }));

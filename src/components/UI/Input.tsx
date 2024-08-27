@@ -94,7 +94,6 @@ export default Input;
 
 const StyledInput = styled(TextField)(({ theme, error }) => ({
   width: '100%',
-  height: '40px',
   borderRadius: '10px',
   caretColor: theme.palette.primary.darkGreen,
   backgroundColor: '#e8f0fe',

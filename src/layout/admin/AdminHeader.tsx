@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { MenuItem, Box, SelectChangeEvent, styled } from '@mui/material';
+import { FC, useState, MouseEvent } from 'react';
+import { MenuItem, Box, Button, Popover, styled } from '@mui/material';
 import Medcheck from '../../assets/images/HEALTHCHECK.png';
 import {
   StyledContainer,
@@ -8,7 +8,6 @@ import {
   StyledHealthCheck,
   HeaderButton,
   CustomArrowIcon,
-  AdminSelect,
 } from './adminStyle';
 import { links } from '../../utils/constants/adminLinks';
 import { NavLink } from 'react-router-dom';
@@ -16,12 +15,24 @@ import { NavLink } from 'react-router-dom';
 const AdminHeader: FC = () => {
   const [activeButton, setActiveButton] = useState<string>('Заявки');
   const [adminOption, setAdminOption] = useState<string>('Администратор');
-
-  const handleAdminChange = (event: SelectChangeEvent<unknown>) => {
-    setAdminOption(event.target.value as string);
-  };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleButtonClick = (text: string) => () => setActiveButton(text);
+
+  const handlePopoverOpen = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleAdminOptionClick = (option: string) => {
+    setAdminOption(option);
+    handlePopoverClose();
+  };
+
+  const open = Boolean(anchorEl);
 
   return (
     <StyledContainer>
@@ -42,13 +53,10 @@ const AdminHeader: FC = () => {
         ))}
       </StyledMapContainer>
       <Box>
-        <AdminSelect
-          value={adminOption}
-          onChange={handleAdminChange}
-          displayEmpty
-          IconComponent={({ className, open }) => (
+        <Button
+          onClick={handlePopoverOpen}
+          endIcon={
             <CustomArrowIcon
-              className={className}
               style={{
                 transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
               }}>
@@ -57,17 +65,26 @@ const AdminHeader: FC = () => {
                 d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"
               />
             </CustomArrowIcon>
-          )}
-          MenuProps={{
-            PaperProps: {
-              style: {
-                marginTop: '5px',
-              },
-            },
+          }>
+          {adminOption}
+        </Button>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
           }}>
-          <MenuItem value="Администратор">Администратор</MenuItem>
-          <MenuItem value="Выход">Выход</MenuItem>
-        </AdminSelect>
+          <Box>
+            <MenuItem onClick={() => handleAdminOptionClick('Администратор')}>
+              Администратор
+            </MenuItem>
+            <MenuItem onClick={() => handleAdminOptionClick('Выход')}>
+              Выход
+            </MenuItem>
+          </Box>
+        </Popover>
       </Box>
     </StyledContainer>
   );

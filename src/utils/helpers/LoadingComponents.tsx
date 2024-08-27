@@ -18,7 +18,7 @@ const BoxContent = styled(Box)(() => ({
   alignItems: 'center',
   height: '100vh',
   width: '100%',
-  position: 'absolute',
+  position: 'fixed',
   zIndex: '99999999',
   backgroundColor: 'rgba(0,0,0,0.45)',
   top: '0',
@@ -32,5 +32,5 @@ const Bocses = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  borderRadius:"10px"
+  borderRadius: '10px',
 }));
