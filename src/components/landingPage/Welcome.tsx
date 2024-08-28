@@ -42,7 +42,7 @@ export const Welcome = () => {
 
   const handleClose = () => setIsOpen(false);
 
-  const submitHandler: SubmitHandler<IFormTypes> = () => {
+  const submitHandler: SubmitHandler<IFormTypes> = data => {
     if (isValid) {
       dispatch(postApplication({ data, handleOpenSecondModal }));
     }
