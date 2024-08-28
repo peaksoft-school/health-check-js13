@@ -8,23 +8,24 @@ import {
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
 import Table from '../../../components/UI/Table';
 import { applicationHeader } from '../../../utils/constants/Column';
-import applicationBody from '../../../utils/constants/applicationBody.json';
+// import applicationBody from '../../../utils/constants/applicationBody.json';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import { getAllUser } from '../../../store/slices/adminApplication/adminApplicationThunk';
 
 const AdminApplication = () => {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getAllUser());
   }, []);
-  const { applicationUser } = useAppSelector(state => state.application);
 
+  const { applicationUser } = useAppSelector(state => state.application);
 
   return (
     <Container>
       <Block>
-        <TypographyStyled variant="h4">Заявки</TypographyStyled>
+        <TypographyStyled>Заявки</TypographyStyled>
         <Input
           size="small"
           placeholder="Поиск"
@@ -39,7 +40,7 @@ const AdminApplication = () => {
         />
       </Block>
       <BoxTable>
-        <Table columns={applicationHeader} data={applicationBody} />
+        <Table columns={applicationHeader} data={applicationUser} />
       </BoxTable>
     </Container>
   );
@@ -51,8 +52,9 @@ const Container = styled(Box)(() => ({
   width: '100%',
   maxWidth: '1440px',
   minWidth: '1200px',
-  margin: '20px auto',
+  margin: '0 auto',
   minHeight: '100vh',
+  paddingTop: '38px',
 }));
 
 const Block = styled(Box)(() => ({
@@ -80,8 +82,10 @@ const Input = styled(TextField)(() => ({
   },
 }));
 
-const TypographyStyled = styled(Typography)(() => ({}));
+const TypographyStyled = styled(Typography)(() => ({
+  fontSize: '28px',
+}));
 
 const BoxTable = styled(Box)(() => ({
-  margin: '20px 0',
+  margin: '20px 0 0 0',
 }));

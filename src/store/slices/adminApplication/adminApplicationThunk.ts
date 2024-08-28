@@ -36,3 +36,15 @@ export const getAllUser = createAsyncThunk(
     }
   }
 );
+
+export const deleteApplicationUser = createAsyncThunk(
+  'application/deleteUser',
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.delete(`/api/applications/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
