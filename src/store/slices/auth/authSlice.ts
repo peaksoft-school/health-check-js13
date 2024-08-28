@@ -44,9 +44,12 @@ export const authSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.error = payload.message;
+
+        if (payload) {
+          state.error = payload;
+        }
       })
-      //
+
       .addCase(signIn.pending, state => {
         state.isLoading = true;
         state.error = null;
@@ -54,15 +57,18 @@ export const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isAuth = true;
-        state.token = payload?.token;
+        state.token = payload.token;
         state.role = payload.role;
         state.email = payload.email;
       })
       .addCase(signIn.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.error = payload.message;
+
+        if (payload) {
+          state.error = payload;
+        }
       })
-      //
+
       .addCase(forgotPasswordEmail.pending, state => {
         state.isLoading = true;
         state.error = null;
@@ -73,9 +79,12 @@ export const authSlice = createSlice({
       })
       .addCase(forgotPasswordEmail.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.error = payload.message;
+
+        if (payload) {
+          state.error = payload;
+        }
       })
-      //
+
       .addCase(changePassword.pending, state => {
         state.isLoading = true;
         state.error = null;
@@ -85,10 +94,12 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(changePassword.rejected, (state, { payload }) => {
-        state.error = payload.message;
+        if (payload) {
+          state.error = payload;
+        }
         state.isLoading = false;
       })
-      //
+
       .addCase(googleAuthFirbase.pending, state => {
         state.isLoading = true;
         state.error = null;
@@ -101,7 +112,10 @@ export const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(googleAuthFirbase.rejected, (state, { payload }) => {
-        state.error = payload.message;
+        if (payload) {
+          state.error = payload;
+        }
+
         state.isLoading = false;
       });
   },

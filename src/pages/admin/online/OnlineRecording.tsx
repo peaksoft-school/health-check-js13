@@ -7,10 +7,7 @@ import Icon from '../../../assets/icons/Pluse.svg';
 import Table from '../../../components/UI/Table';
 import { TableOne } from '../../../utils/constants/Column';
 import tableOne from '../../../utils/constants/tableOne.json';
-
-interface OptionProps {
-  isActive: boolean;
-}
+import Schedule from '../schedule/Schedule';
 
 const OnlineRecording: FC = () => {
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
@@ -18,6 +15,8 @@ const OnlineRecording: FC = () => {
   const handleOptionClick = (option: string) => {
     setActiveOption(option);
   };
+
+  const isOnlineRecordingActive = activeOption === 'Онлайн-запись';
 
   return (
     <BackgroundContainer>
@@ -34,12 +33,12 @@ const OnlineRecording: FC = () => {
             <Box>
               <ContentOptions>
                 <Option
-                  isActive={activeOption === 'Онлайн-запись'}
+                  isActive={isOnlineRecordingActive}
                   onClick={() => handleOptionClick('Онлайн-запись')}>
                   Онлайн-запись
                 </Option>
                 <Option
-                  isActive={activeOption === 'Расписание'}
+                  isActive={!isOnlineRecordingActive}
                   onClick={() => handleOptionClick('Расписание')}>
                   Расписание
                 </Option>
@@ -60,9 +59,13 @@ const OnlineRecording: FC = () => {
                 }}
               />
             </Box>
-            <div className="tableContent">
-              <Table columns={TableOne} data={tableOne} />
-            </div>
+            {isOnlineRecordingActive ? (
+              <div className="tableContent">
+                <Table columns={TableOne} data={tableOne} />
+              </div>
+            ) : (
+              <Schedule />
+            )}
           </Content>
         </Box>
       </OnlineRecordingContainer>

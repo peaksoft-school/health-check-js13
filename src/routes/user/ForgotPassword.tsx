@@ -9,8 +9,8 @@ import { Button as MyButton } from '@mui/material';
 import LoadingComponent from '../../utils/helpers/LoadingComponents';
 
 type FormTypes = {
-  email?: string;
-  link?: string;
+  email: string;
+  link: string;
 };
 
 const ForgotPassword = () => {
