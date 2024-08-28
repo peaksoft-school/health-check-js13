@@ -17,7 +17,6 @@ import { useNavigate } from 'react-router-dom';
 export default function AuthDropdown() {
   const { isAuth } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
-  console.log(isAuth);
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -52,7 +51,6 @@ export default function AuthDropdown() {
   const logoutFn = () => {
     dispatch(logout());
     navigate('/');
-    console.log('logout');
   };
 
   const signInFn = () => {

@@ -15,7 +15,6 @@ import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const [showBoxContent, setShowBoxContent] = useState(true);
-  console.log(showBoxContent);
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
 

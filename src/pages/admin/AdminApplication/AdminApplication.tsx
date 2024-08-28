@@ -1,12 +1,46 @@
-import { Box, styled, Typography } from '@mui/material';
+import {
+  Box,
+  InputAdornment,
+  styled,
+  TextField,
+  Typography,
+} from '@mui/material';
+import SearchIcon from '../../../assets/icons/SearchIcon.svg';
+import Table from '../../../components/UI/Table';
+import { applicationHeader } from '../../../utils/constants/Column';
+import applicationBody from '../../../utils/constants/applicationBody.json';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
+import { getAllUser } from '../../../store/slices/adminApplication/adminApplicationThunk';
 
 const AdminApplication = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getAllUser());
+  }, []);
+  const { applicationUser } = useAppSelector(state => state.application);
+
+
   return (
     <Container>
       <Block>
-        <Typography>Заявки</Typography>
-        <Input />
+        <TypographyStyled variant="h4">Заявки</TypographyStyled>
+        <Input
+          size="small"
+          placeholder="Поиск"
+          className="inputAdmin"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment style={{ cursor: 'pointer' }} position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
       </Block>
+      <BoxTable>
+        <Table columns={applicationHeader} data={applicationBody} />
+      </BoxTable>
     </Container>
   );
 };
@@ -19,18 +53,35 @@ const Container = styled(Box)(() => ({
   minWidth: '1200px',
   margin: '20px auto',
   minHeight: '100vh',
-  border: '1px solid black',
 }));
 
 const Block = styled(Box)(() => ({
   width: '100%',
-  height: '100px',
-  border: '1px solid black',
+  height: '120px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 }));
 
-const Input = styled('input')(() => ({
+const Input = styled(TextField)(() => ({
+  backgroundColor: 'white',
   width: '600px',
-  padding: '4px 10px 2px 10px',
   borderRadius: '50px',
-  height: '40px',
+
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '50px',
+    border: '0.5px solid #D3D3D3',
+    '& fieldset': {
+      borderColor: ' #D3D3D3',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: ' #D3D3D3',
+    },
+  },
+}));
+
+const TypographyStyled = styled(Typography)(() => ({}));
+
+const BoxTable = styled(Box)(() => ({
+  margin: '20px 0',
 }));
