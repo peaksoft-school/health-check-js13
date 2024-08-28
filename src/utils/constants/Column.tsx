@@ -6,6 +6,7 @@ import Specialist from '../helpers/Specialist';
 import ActionsStatus from '../helpers/Actions';
 import Switcher from '../../components/UI/Switcher';
 import Checkbox from '../../components/UI/CheckBox';
+import Delete from '../../components/UI/admin/Delete';
 
 type BodyTableOneTypes = {
   id?: number;
@@ -68,7 +69,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           checked={table.getIsAllPageRowsSelected()}
           onChange={table.getToggleAllPageRowsSelectedHandler()}
         />
-        <Korzina />
+        <Delete />
       </div>
     ),
     accessorKey: 'select',
@@ -133,7 +134,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           justifyContent: 'end',
           cursor: 'pointer',
         }}>
-        <Korzina />
+        <Delete />
       </div>
     ),
   },
@@ -184,7 +185,7 @@ export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
           cursor: 'pointer',
         }}>
         <Checkbox />
-        <Korzina />
+        <Delete />
       </div>
     ),
     accessorKey: 'nello',
@@ -192,11 +193,12 @@ export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
   },
   {
     header: '№',
-    accessorKey: 'id',
+    accessorFn: (row, index) => index + 1,
+    id: 'index',
   },
   {
     header: 'Имя',
-    accessorKey: 'first_name',
+    accessorKey: 'name',
   },
   {
     header: 'Дата',
@@ -204,11 +206,11 @@ export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
   },
   {
     header: 'Номер Телефона',
-    accessorKey: 'phone',
+    accessorKey: 'phoneNumber',
   },
   {
     header: 'Обработан',
-    accessorKey: 'processing',
+    accessorKey: 'isProcessed',
     cell: () => (
       <div
         style={{
@@ -228,11 +230,12 @@ export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
           marginLeft: '26px',
           cursor: 'pointer',
         }}>
-        <Korzina />
+        <Delete />
       </div>
     ),
   },
 ];
+
 export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
   {
     header: '№',
@@ -263,7 +266,7 @@ export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
           marginLeft: '26px',
           cursor: 'pointer',
         }}>
-        <Korzina />
+        <Delete />
       </div>
     ),
   },

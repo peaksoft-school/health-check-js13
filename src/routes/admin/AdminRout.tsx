@@ -1,5 +1,5 @@
+import AdminApplication from '../../pages/admin/AdminApplication/AdminApplication';
 import OnlineRecording from '../../pages/admin/online/OnlineRecording';
-import Schedule from '../../pages/admin/schedule/Schedule';
 import AdminPatients from './AdminPatients';
 import AdminSpecialists from './AdminSpecialists';
 
@@ -7,11 +7,10 @@ export const ADMIN_CHILDREN = [
   {
     index: true,
     element: <OnlineRecording />,
-    // children:[]
   },
   {
-    // path: 'admin-applications',
-    // element: <Schedule />,
+    path: 'admin-applications',
+    element: <AdminApplication />,
   },
   {
     path: 'admin-specialists',

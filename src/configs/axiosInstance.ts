@@ -16,7 +16,7 @@ export const injectStore = (_store: any) => {
   store = _store;
 };
 
-axios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
     const state: RootState = store.getState();
@@ -33,7 +33,7 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   function (response) {
     return response;
   },

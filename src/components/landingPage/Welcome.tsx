@@ -8,14 +8,17 @@ import CallProgres from '../../assets/icons/CallProgressIcon.svg';
 import Arrow from '../../assets/icons/ArrowIcon.svg';
 import Close from '../../assets/icons/CloseIcon.svg';
 import Button from '../UI/Button';
+import { useAppDispatch } from '../../hooks/customHooks';
+import { postApplication } from '../../store/slices/adminApplication/adminApplicationThunk';
 
 interface IFormTypes {
   name: string;
-  phone: string;
+  phoneNumber: string;
 }
 
 export const Welcome = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
   const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
   const {
     register,
@@ -25,7 +28,7 @@ export const Welcome = () => {
   } = useForm<IFormTypes>({ mode: 'onSubmit' });
 
   useEffect(() => {
-    setValue('phone', '+996');
+    setValue('phoneNumber', '+996');
   }, [setValue]);
 
   const handleOpen = () => setIsOpen(true);
@@ -39,9 +42,9 @@ export const Welcome = () => {
 
   const handleClose = () => setIsOpen(false);
 
-  const submitHandler: SubmitHandler<IFormTypes> = () => {
+  const submitHandler: SubmitHandler<IFormTypes> = data => {
     if (isValid) {
-      handleOpenSecondModal();
+      dispatch(postApplication({ data, handleOpenSecondModal }));
     }
   };
 
@@ -91,6 +94,7 @@ export const Welcome = () => {
             <StyledInputContent>
               <Box>
                 <Input
+                  border=""
                   size="small"
                   {...register('name', {
                     required: 'Введите имя',
@@ -109,8 +113,9 @@ export const Welcome = () => {
 
               <Box>
                 <Input
+                  border=""
                   size="small"
-                  {...register('phone', {
+                  {...register('phoneNumber', {
                     required: 'Введите номер телефона',
                     pattern: {
                       value: /^\+996\d{9}$/,
@@ -129,8 +134,8 @@ export const Welcome = () => {
                   label="Номер мобильного телефона"
                   placeholder="+996(___) __-__-__"
                   type="text"
-                  error={!!errors.phone}
-                  helperText={errors.phone?.message}
+                  error={!!errors.phoneNumber}
+                  helperText={errors.phoneNumber?.message}
                 />
               </Box>
             </StyledInputContent>

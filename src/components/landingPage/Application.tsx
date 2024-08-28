@@ -39,6 +39,7 @@ const Application = ({ updateFunc }: AplicationProps) => {
             <Box className="inputBox">
               <Box className="inBox">
                 <Input
+                  border=""
                   {...register('name', {
                     required: 'Обязательное поле',
                   })}
@@ -54,6 +55,7 @@ const Application = ({ updateFunc }: AplicationProps) => {
 
               <Box className="inBox">
                 <Input
+                  border=""
                   {...register('number', {
                     required: 'Ведите ваш действительный номер',
                     pattern: {
