@@ -1,3 +1,4 @@
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import {
   Box,
   InputAdornment,
@@ -5,28 +6,155 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { ColumnDef } from '@tanstack/react-table';
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
 import Table from '../../../components/UI/Table';
-import { applicationHeader } from '../../../utils/constants/Column';
-// import applicationBody from '../../../utils/constants/applicationBody.json';
-import { useEffect } from 'react';
+import Delete from '../../../components/UI/admin/Delete';
+import Checkbox from '../../../components/UI/CheckBox';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
-import { getAllUser } from '../../../store/slices/adminApplication/adminApplicationThunk';
+import {
+  changeStatusCheckbox,
+  deleteApplicationUser,
+  getAllUser,
+  searchApplication,
+} from '../../../store/slices/adminApplication/adminApplicationThunk';
+import {
+  selectAllCheck,
+  toggleUserCheck,
+} from '../../../store/slices/adminApplication/adminApplicationSlice';
+import { BodyTableApplicationTypes } from '../../../types/table';
+import LoadingComponent from '../../../utils/helpers/LoadingComponents';
+import DeleteSelected from '../../../components/UI/admin/DeleteSelect';
+import { useDebounce } from 'use-debounce';
 
 const AdminApplication = () => {
+  const [search, setSearch] = useState('');
+  const [debounced] = useDebounce(search, 1000);
+
   const dispatch = useAppDispatch();
+  const { applicationUser, isChecked, isLoading } = useAppSelector(
+    state => state.application
+  );
 
   useEffect(() => {
     dispatch(getAllUser());
-  }, []);
+  }, [dispatch]);
 
-  const { applicationUser } = useAppSelector(state => state.application);
+  const handleSelectAll = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(selectAllCheck(e.target.checked));
+  };
+
+  const handleSelectCheck = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+    dispatch(changeStatusCheckbox({ id, isProceeded: e.target.checked }));
+  };
+
+  useEffect(() => {
+    if (debounced !== undefined) {
+      let name = debounced;
+      dispatch(searchApplication(name));
+    }
+  }, [debounced]);
+
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: number | string
+  ) => {
+    dispatch(toggleUserCheck({ id, isChecked: event.target.checked }));
+  };
+
+  const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
+    {
+      header: () => (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'start',
+            cursor: 'pointer',
+          }}>
+          <Checkbox onChange={handleSelectAll} checked={isChecked} />
+          <DeleteSelected
+            deleteFn={deleteApplicationUser}
+            variant="applications"
+          />
+        </div>
+      ),
+      accessorKey: 'select',
+      cell: ({ row }) => {
+        return (
+          <Checkbox
+            checked={row.original.isChecked}
+            onChange={e => handleCheckboxChange(e, row.original.id)}
+          />
+        );
+      },
+    },
+    {
+      header: '№',
+      accessorFn: (_, index) => index + 1,
+      id: 'id',
+    },
+    {
+      header: 'Имя',
+      accessorKey: 'name',
+    },
+    {
+      header: 'Дата',
+      accessorKey: 'date',
+    },
+    {
+      header: 'Номер Телефона',
+      accessorKey: 'phoneNumber',
+    },
+    {
+      header: 'Обработан',
+      accessorKey: 'isProcessed',
+      cell: ({ row }) => (
+        <div
+          style={{
+            marginLeft: '26px',
+            cursor: 'pointer',
+          }}>
+          <Checkbox
+            checked={row.original.isProcessed}
+            onChange={e => handleSelectCheck(e, String(row.original.id))}
+          />
+        </div>
+      ),
+    },
+    {
+      header: 'Действия',
+      accessorKey: 'actions',
+      cell: ({ row }: any) => (
+        <div
+          style={{
+            marginLeft: '26px',
+            cursor: 'pointer',
+          }}>
+          <Delete
+            id={row.original.id}
+            deleteFn={deleteApplicationUser}
+            name={row.original.name}
+            variant="application"
+          />
+        </div>
+      ),
+    },
+  ];
+
+  const memoizedApplications = useMemo(
+    () => applicationUser,
+    [applicationUser]
+  );
 
   return (
     <Container>
+      {isLoading && <LoadingComponent />}
       <Block>
         <TypographyStyled>Заявки</TypographyStyled>
         <Input
+          onChange={e => setSearch(e.target.value)}
+          value={search}
           size="small"
           placeholder="Поиск"
           className="inputAdmin"
@@ -40,7 +168,7 @@ const AdminApplication = () => {
         />
       </Block>
       <BoxTable>
-        <Table columns={applicationHeader} data={applicationUser} />
+        <Table columns={applicationHeader} data={memoizedApplications} />
       </BoxTable>
     </Container>
   );

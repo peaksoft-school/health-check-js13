@@ -5,24 +5,75 @@ import MaleFemaleIcon from '../../assets/icons/MaleFemaleIcon.svg';
 import CallProgressIcon from '../../assets/icons/CallProgressIcon.svg';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import GirlDoctor from '../../assets/images/GirlDoctor.png';
+import Modal from '../UI/Modal';
+import { useNavigate } from 'react-router-dom';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../configs/firebase';
+import { googleAuthFirbase } from '../../store/slices/auth/authThunk';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
+import { useState } from 'react';
+import Close from '../../assets/icons/CloseIcon.svg';
+import Gogle from '../../assets/icons/gogle.svg';
+import {
+  postApplication,
+  PropspostApplication,
+} from '../../store/slices/adminApplication/adminApplicationThunk';
 
 interface IAplicationProps {
   name?: string;
-  number?: number;
+  phoneNumber?: number;
 }
 
-type AplicationProps = {
-  updateFunc: (data: IAplicationProps) => void;
-};
+const Application = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [isOpenThreeModal, setIsOpenThreeModal] = useState(false);
+  const { role } = useAppSelector(state => state.auth);
 
-const Application = ({ updateFunc }: AplicationProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IAplicationProps>({ mode: 'onSubmit' });
 
-  const onSubmit: SubmitHandler<IAplicationProps> = data => updateFunc(data);
+  const navigateSignUp = () => navigate('sign-up');
+  const navigateSignIn = () => navigate('sign-in');
+
+  const onSubmit: SubmitHandler<IAplicationProps> = data => {
+    if (data.phoneNumber && data.name) {
+      const value = {
+        phoneNumber: data.phoneNumber.toString(),
+        name: data.name,
+      };
+
+      dispatch(postApplication({ value }));
+      reset();
+    } else {
+      console.error('Phone number and name are required.');
+    }
+  };
+
+  const googleAuthFn = () => {
+    signInWithPopup(auth, provider)
+      .then(data => {
+        if (data.user) {
+          data.user.getIdToken().then(token => {
+            dispatch(googleAuthFirbase({ tokenId: token }));
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при аутентификации через Google:', error);
+      });
+  };
+
+  const handleOpen = () => {
+    if (role === 'GUEST') {
+      setIsOpenThreeModal(true);
+    }
+  };
+  const openThreeModal = () => setIsOpenThreeModal(prev => !prev);
 
   return (
     <Container>
@@ -56,7 +107,7 @@ const Application = ({ updateFunc }: AplicationProps) => {
               <Box className="inBox">
                 <Input
                   border=""
-                  {...register('number', {
+                  {...register('phoneNumber', {
                     required: 'Ведите ваш действительный номер',
                     pattern: {
                       value: /^\+996\d{9}$/,
@@ -68,9 +119,11 @@ const Application = ({ updateFunc }: AplicationProps) => {
                   Icon={<CallProgressIcon />}
                   label="Номер мобильного телефона"
                   placeholder="+996 (___) __-__-__"
-                  error={!!errors.number}
+                  error={!!errors.phoneNumber}
                   helperText={
-                    errors.number?.message ? errors.number.message : ''
+                    errors.phoneNumber?.message
+                      ? errors.phoneNumber.message
+                      : ''
                   }
                 />
               </Box>
@@ -78,6 +131,7 @@ const Application = ({ updateFunc }: AplicationProps) => {
 
             <Box className="buttonBox">
               <Button
+                onClick={handleOpen}
                 className="myButton"
                 size="large"
                 type="submit"
@@ -91,6 +145,33 @@ const Application = ({ updateFunc }: AplicationProps) => {
         <BoxMui>
           <img className="imgGirl" src={GirlDoctor} alt="GirlDoctor" />
         </BoxMui>
+
+        <Modal open={isOpenThreeModal}>
+          <StyledSecondModal>
+            <TypographyStyled variant="h6">
+              Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
+              войдите в систему.
+            </TypographyStyled>
+            <BoxStyledButton>
+              <Button onClick={navigateSignUp} variant="contained">
+                Зарегистрироваться
+              </Button>
+              <Button
+                onClick={navigateSignIn}
+                variant="contained"
+                className="buttonSign">
+                Войти
+              </Button>
+              <BoxGoogle onClick={googleAuthFn}>
+                <Gogle />
+                Зарегистрироваться с Google
+              </BoxGoogle>
+            </BoxStyledButton>
+            <StyledModalIcon onClick={openThreeModal}>
+              <Close />
+            </StyledModalIcon>
+          </StyledSecondModal>
+        </Modal>
       </Box>
     </Container>
   );
@@ -116,6 +197,89 @@ const Container = styled(Box)(() => ({
     display: 'flex',
     alignItems: 'end',
     justifyContent: 'center',
+  },
+}));
+
+const TypographyStyled = styled(Typography)(() => ({
+  textAlign: 'center',
+  fontFamily: 'monospace',
+  fontWeight: '100',
+}));
+
+const BoxStyledButton = styled(Box)(() => ({
+  display: 'flex',
+  width: '500px',
+  height: '100px',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  gap: '5px',
+  margin: '20px 0 0 0',
+  '& .buttonSign': {
+    width: '250px',
+    height: '45px',
+  },
+}));
+
+const BoxGoogle = styled(Box)(() => ({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '10px',
+  cursor: 'pointer',
+  fontFamily: '"Manrope", san-serif',
+  fontWeight: '600',
+  background: 'linear-gradient(181deg, #08DF7D 0.95%, #048F50 82.76%)',
+  padding: '13px 10px',
+  borderRadius: '8px',
+  color: 'white',
+  height: '44px',
+
+  '& > img': {
+    width: '20px',
+    height: '20px',
+  },
+}));
+
+const StyledModalIcon = styled('div')(() => ({
+  width: '36px',
+  height: '36px',
+  position: 'absolute',
+  top: '10px',
+  right: '10px',
+  cursor: 'pointer',
+}));
+
+const StyledSecondModal = styled(Box)(() => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '659px',
+  height: '468px',
+  backgroundColor: '#ebf2fc',
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  borderRadius: '20px',
+  padding: '16px',
+  fontFamily: '"Poppins",sans-serif',
+
+  h2: {
+    fontFamily: "'Manrope', sans-serif",
+    fontWeight: 500,
+    width: '380px',
+    height: '50px',
+    fontSize: '27px',
+    marginBottom: '50px',
+  },
+
+  p: {
+    fontFamily: "'Manrope', sans-serif",
+    fontWeight: 400,
+    fontSize: '18px',
+    marginBottom: '10px',
   },
 }));
 

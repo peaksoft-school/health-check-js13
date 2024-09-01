@@ -15,20 +15,22 @@ interface Props extends Omit<CheckboxProps, 'checked' | 'onChange'> {
 }
 
 const Checkbox = forwardRef<HTMLInputElement, Props>(
-  ({ label, checked, onChange, ...rest }, ref) => (
-    <FormControlLabel
-      label={label}
-      control={
-        <MuiCheckbox
-          checked={checked}
-          onChange={onChange}
-          inputRef={ref}
-          {...rest}
-          color="success"
-        />
-      }
-    />
-  )
+  ({ label, checked, onChange, ...rest }, ref) => {
+    return (
+      <FormControlLabel
+        label={label}
+        control={
+          <MuiCheckbox
+            checked={checked}
+            onChange={onChange}
+            inputRef={ref}
+            {...rest}
+            color="success"
+          />
+        }
+      />
+    );
+  }
 );
 
 export default Checkbox;
