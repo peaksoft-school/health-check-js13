@@ -26,19 +26,20 @@ type BodyTableStatusTypes = {
   date: string;
 };
 type BodyTablePacientTypes = {
-  id: number;
-  first_name: string;
-  phone: string;
+  id: number | string;
+  fullName: string;
+  phoneNumber: string;
   email: string;
   date: string;
 };
 
 type BodyTableApplicationTypes = {
-  id: number;
-  first_name: string;
-  phone: string;
+  name: string;
+  phoneNumber: string;
   date: string;
-  processing: boolean;
+  isProcessed: boolean;
+  id: number | string;
+  isChecked?: boolean;
 };
 
 export type CombineTypeTables =

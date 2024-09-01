@@ -4,21 +4,45 @@ import { Box, ButtonBase, Typography, styled } from '@mui/material';
 import Modal from '../Modal';
 import Button from '../Button';
 import Korzina from '../../../assets/icons/Korzina.svg';
+import { AppDispatch, useAppSelector } from '../../../hooks/customHooks';
+import {
+  AnyAction,
+  AsyncThunk,
+  AsyncThunkAction,
+  UnknownAction,
+} from '@reduxjs/toolkit';
 
-const Delete = () => {
+type TProps = {
+  id?: number | undefined;
+  name?: string;
+  disabled?: boolean;
+  deleteFn?: (
+    id: number | string | undefined
+  ) => AsyncThunkAction<any, void, {}> | AnyAction;
+  variant?: string;
+  isProcessed?: boolean;
+};
+
+const Delete = ({ id, deleteFn, variant, name, isProcessed }: TProps) => {
   const [open, setOpen] = useState(false);
-
   const dispatch = useDispatch();
 
-  const toggleModal = () => setOpen(prev => !prev);
+  const toggleModal = () => {
+    setOpen(prev => !prev);
+  };
+
+  const isDisabled = variant === 'patients' ? false : !isProcessed;
 
   const deleteHandler = () => {
+    if (deleteFn) {
+      (dispatch as AppDispatch)(deleteFn(id)); // Cast dispatch to the correct type
+    }
     toggleModal();
   };
 
   return (
     <>
-      <StyledDeleteButton onClick={toggleModal}>
+      <StyledDeleteButton onClick={toggleModal} disabled={isDisabled}>
         <Korzina />
       </StyledDeleteButton>
 
@@ -28,7 +52,7 @@ const Delete = () => {
             Вы уверены, что хотите удалить
           </Typography>
 
-          <Typography className="name"></Typography>
+          <Typography className="name">{name}</Typography>
 
           <Box className="buttons-container">
             <Button className="button" onClick={toggleModal}>
@@ -64,7 +88,7 @@ const StyledModalContent = styled(Box)(() => ({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  margin: '0.63rem 1.38rem',
+  margin: '50px',
 
   '& > .name': {
     fontFamily: 'Manrope',

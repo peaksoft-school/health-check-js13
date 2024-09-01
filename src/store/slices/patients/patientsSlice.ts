@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getPatients } from './patientsThunk';
+import { deletePatinet, getPatients } from './patientsThunk';
 
 export type TPatients = {
   fullName: string;
   email: string;
   phoneNumber: string;
   date: string;
+  id: string;
 };
 
 type TInitialState = {
@@ -26,11 +27,21 @@ export const patinetsSlice = createSlice({
   reducers: {},
 
   extraReducers(builder) {
-    builder.addCase(getPatients.fulfilled, (state, { payload }) => {
-      if (payload) {
-        state.patients = payload;
-      }
-    });
+    builder
+      .addCase(getPatients.fulfilled, (state, { payload }) => {
+        if (payload) {
+          state.patients = payload;
+        }
+      })
+      .addCase(deletePatinet.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(deletePatinet.fulfilled, state => {
+        state.isLoading = false;
+      })
+      .addCase(deletePatinet.rejected, state => {
+        state.isLoading = false;
+      });
   },
 });
 

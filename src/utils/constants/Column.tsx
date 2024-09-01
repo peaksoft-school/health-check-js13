@@ -1,5 +1,4 @@
 import { ColumnDef } from '@tanstack/react-table';
-import Korzina from '../../assets/icons/Korzina.svg';
 import Table from '../../components/UI/Table';
 import pacient from '../constants/pacient.json';
 import Specialist from '../helpers/Specialist';
@@ -43,10 +42,10 @@ type BodyTablePacientTypes = {
 
 type BodyTableApplicationTypes = {
   id?: number;
-  first_name?: string;
-  phone?: string;
+  name?: string;
+  phoneNumber?: string;
   date?: string;
-  processing?: boolean;
+  isProcessing?: boolean;
 };
 
 export type CombineTypeTables =
@@ -174,105 +173,6 @@ export const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
   },
 ];
 
-export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
-  {
-    header: () => (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'start',
-          cursor: 'pointer',
-        }}>
-        <Checkbox />
-        <Delete />
-      </div>
-    ),
-    accessorKey: 'nello',
-    cell: () => <Checkbox />,
-  },
-  {
-    header: '№',
-    accessorFn: (row, index) => index + 1,
-    id: 'index',
-  },
-  {
-    header: 'Имя',
-    accessorKey: 'name',
-  },
-  {
-    header: 'Дата',
-    accessorKey: 'date',
-  },
-  {
-    header: 'Номер Телефона',
-    accessorKey: 'phoneNumber',
-  },
-  {
-    header: 'Обработан',
-    accessorKey: 'isProcessed',
-    cell: () => (
-      <div
-        style={{
-          marginLeft: '26px',
-          cursor: 'pointer',
-        }}>
-        <Checkbox />
-      </div>
-    ),
-  },
-  {
-    header: 'Действия',
-    accessorKey: 'actions',
-    cell: () => (
-      <div
-        style={{
-          marginLeft: '26px',
-          cursor: 'pointer',
-        }}>
-        <Delete />
-      </div>
-    ),
-  },
-];
-
-export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
-  {
-    header: '№',
-    accessorFn: (_, index) => index + 1,
-    accessorKey: 'id',
-  },
-  {
-    header: 'Имя Фамилия',
-    accessorKey: 'fullName',
-  },
-  {
-    header: 'Номер телефона',
-    accessorKey: 'phoneNumber',
-  },
-  {
-    header: 'Почта',
-    accessorKey: 'email',
-  },
-  {
-    header: 'Дата сдачи',
-    accessorKey: 'date',
-  },
-  {
-    header: 'Действия',
-    accessorKey: 'srfds',
-    cell: () => (
-      <div
-        style={{
-          marginLeft: '26px',
-          cursor: 'pointer',
-        }}>
-        <Delete />
-      </div>
-    ),
-  },
-];
-
-const Column = () => <Table columns={pacientHeader} data={pacient} />;
+const Column = () => <h1>Column</h1>;
 
 export default Column;

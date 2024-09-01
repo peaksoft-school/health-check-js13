@@ -8,9 +8,14 @@ import {
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
 import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
-import { getPatients } from '../../../store/slices/patients/patientsThunk';
+import {
+  deletePatinet,
+  getPatients,
+} from '../../../store/slices/patients/patientsThunk';
 import Table from '../../../components/UI/Table';
-import { pacientHeader } from '../../../utils/constants/Column';
+import { ColumnDef } from '@tanstack/react-table';
+import { BodyTablePacientTypes } from '../../../types/table';
+import Delete from '../../../components/UI/admin/Delete';
 
 const AdminPatients = () => {
   const { patients } = useAppSelector(state => state.patients);
@@ -19,7 +24,51 @@ const AdminPatients = () => {
   useEffect(() => {
     dispatch(getPatients());
   }, []);
+
+  const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
+    {
+      header: '№',
+      accessorFn: (_, index) => index + 1,
+      accessorKey: 'id',
+    },
+    {
+      header: 'Имя Фамилия',
+      accessorKey: 'fullName',
+    },
+    {
+      header: 'Номер телефона',
+      accessorKey: 'phoneNumber',
+    },
+    {
+      header: 'Почта',
+      accessorKey: 'email',
+    },
+    {
+      header: 'Дата сдачи',
+      accessorKey: 'date',
+    },
+    {
+      header: 'Действия',
+      accessorKey: 'srfds',
+      cell: ({ row }) => (
+        <div
+          style={{
+            marginLeft: '26px',
+            cursor: 'pointer',
+          }}>
+          <Delete
+            id={Number(row.original.id)}
+            name={row.original.fullName}
+            variant="patients"
+            deleteFn={deletePatinet}
+          />
+        </div>
+      ),
+    },
+  ];
+
   const memoPatients = useMemo(() => patients, [patients]);
+
   return (
     <Container>
       <Block>
