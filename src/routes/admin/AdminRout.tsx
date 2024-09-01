@@ -1,6 +1,6 @@
 import AdminApplication from '../../pages/admin/AdminApplication/AdminApplication';
 import OnlineRecording from '../../pages/admin/online/OnlineRecording';
-import AdminPatients from './AdminPatients';
+import AdminPatients from '../../pages/admin/adminPatients/AdminPatients';
 import AdminSpecialists from './AdminSpecialists';
 
 export const ADMIN_CHILDREN = [

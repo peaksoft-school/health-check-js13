@@ -239,15 +239,16 @@ export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
 export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
   {
     header: '№',
+    accessorFn: (_, index) => index + 1,
     accessorKey: 'id',
   },
   {
     header: 'Имя Фамилия',
-    accessorKey: 'first_name',
+    accessorKey: 'fullName',
   },
   {
     header: 'Номер телефона',
-    accessorKey: 'phone',
+    accessorKey: 'phoneNumber',
   },
   {
     header: 'Почта',

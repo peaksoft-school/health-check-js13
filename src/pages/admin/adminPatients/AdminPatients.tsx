@@ -6,25 +6,24 @@ import {
   Typography,
 } from '@mui/material';
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
-import Table from '../../../components/UI/Table';
-import { applicationHeader } from '../../../utils/constants/Column';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
-import { getAllUser } from '../../../store/slices/adminApplication/adminApplicationThunk';
+import { getPatients } from '../../../store/slices/patients/patientsThunk';
+import Table from '../../../components/UI/Table';
+import { pacientHeader } from '../../../utils/constants/Column';
 
-const AdminApplication = () => {
+const AdminPatients = () => {
+  const { patients } = useAppSelector(state => state.patients);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllUser());
+    dispatch(getPatients());
   }, []);
-
-  const { applicationUser } = useAppSelector(state => state.application);
-
+  const memoPatients = useMemo(() => patients, [patients]);
   return (
     <Container>
       <Block>
-        <TypographyStyled>Заявки</TypographyStyled>
+        <TypographyStyled>Пациенты</TypographyStyled>
         <Input
           size="small"
           placeholder="Поиск"
@@ -39,13 +38,13 @@ const AdminApplication = () => {
         />
       </Block>
       <BoxTable>
-        <Table columns={applicationHeader} data={applicationUser} />
+        <Table columns={pacientHeader} data={memoPatients} />
       </BoxTable>
     </Container>
   );
 };
 
-export default AdminApplication;
+export default AdminPatients;
 
 const Container = styled(Box)(() => ({
   width: '100%',
