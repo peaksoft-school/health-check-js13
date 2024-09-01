@@ -4,13 +4,8 @@ import { Box, ButtonBase, Typography, styled } from '@mui/material';
 import Modal from '../Modal';
 import Button from '../Button';
 import Korzina from '../../../assets/icons/Korzina.svg';
-import { AppDispatch, useAppSelector } from '../../../hooks/customHooks';
-import {
-  AnyAction,
-  AsyncThunk,
-  AsyncThunkAction,
-  UnknownAction,
-} from '@reduxjs/toolkit';
+import { AppDispatch } from '../../../hooks/customHooks';
+import { AnyAction, AsyncThunkAction } from '@reduxjs/toolkit';
 
 type TProps = {
   id?: number | undefined;

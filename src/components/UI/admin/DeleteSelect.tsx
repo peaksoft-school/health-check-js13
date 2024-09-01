@@ -11,10 +11,6 @@ type PropsDelete = {
   variant?: string;
 };
 
-type I = {
-  isDisabled: boolean;
-};
-
 const DeleteSelected = ({ deleteFn, variant }: PropsDelete) => {
   const { isChecked, deleteUser } = useAppSelector(store => store.application);
   const [toggleModal, setToggleModal] = useState(false);

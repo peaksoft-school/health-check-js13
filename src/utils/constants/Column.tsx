@@ -1,6 +1,4 @@
 import { ColumnDef } from '@tanstack/react-table';
-import Table from '../../components/UI/Table';
-import pacient from '../constants/pacient.json';
 import Specialist from '../helpers/Specialist';
 import ActionsStatus from '../helpers/Actions';
 import Switcher from '../../components/UI/Switcher';
