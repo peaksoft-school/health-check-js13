@@ -12,6 +12,8 @@ type TypesPropsTable<T> = {
 };
 
 const Table = <T,>({ columns, data }: TypesPropsTable<T>) => {
+  if (!data) return;
+
   const table = useReactTable({
     data,
     columns,

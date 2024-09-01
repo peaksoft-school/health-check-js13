@@ -7,9 +7,15 @@ import MaleFemale from '../../assets/icons/MaleFemaleIcon.svg';
 import CallProgres from '../../assets/icons/CallProgressIcon.svg';
 import Arrow from '../../assets/icons/ArrowIcon.svg';
 import Close from '../../assets/icons/CloseIcon.svg';
+import Gogle from '../../assets/icons/gogle.svg';
 import Button from '../UI/Button';
-import { useAppDispatch } from '../../hooks/customHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { postApplication } from '../../store/slices/adminApplication/adminApplicationThunk';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../configs/firebase';
+import { googleAuthFirbase } from '../../store/slices/auth/authThunk';
+import { useNavigate } from 'react-router-dom';
 
 interface IFormTypes {
   name: string;
@@ -19,19 +25,34 @@ interface IFormTypes {
 export const Welcome = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const { role } = useAppSelector(state => state.auth);
+  const { isLoading } = useAppSelector(state => state.application);
   const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
+  const [isOpenThreeModal, setIsOpenThreeModal] = useState(false);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     setValue,
+    reset,
   } = useForm<IFormTypes>({ mode: 'onSubmit' });
 
   useEffect(() => {
     setValue('phoneNumber', '+996');
   }, [setValue]);
 
-  const handleOpen = () => setIsOpen(true);
+  const handleOpen = () => {
+    if (role === 'GUEST') {
+      setIsOpenThreeModal(true);
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  const navigateSignUp = () => navigate('sign-up');
+  const navigateSignIn = () => navigate('sign-in');
 
   const handleCloseSecondModal = () => setIsOpenSecondModal(false);
 
@@ -43,23 +64,47 @@ export const Welcome = () => {
   const handleClose = () => setIsOpen(false);
 
   const submitHandler: SubmitHandler<IFormTypes> = data => {
+    const value = data;
     if (isValid) {
-      dispatch(postApplication({ data, handleOpenSecondModal }));
+      dispatch(
+        postApplication({
+          value,
+          handleOpenSecondModal,
+          handleCloseSecondModal,
+        })
+      );
     }
+    reset();
   };
 
+  const googleAuthFn = () => {
+    signInWithPopup(auth, provider)
+      .then(data => {
+        if (data.user) {
+          data.user.getIdToken().then(token => {
+            dispatch(googleAuthFirbase({ tokenId: token }));
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при аутентификации через Google:', error);
+      });
+  };
+
+  const openThreeModal = () => setIsOpenThreeModal(prev => !prev);
   return (
     <StyledContainer>
       <StyledContentText>
+        {isLoading && <LoadingComponent />}
         <Box>
           <StyledH1>Добро пожаловать в клинику HealthCheck</StyledH1>
         </Box>
 
         <Box>
           <StyledText>
-            Медицинская клиника «HealthCheck— это клиника, в которой применяются
-            новейшие диагностические и лечебные технологии и ведут прием лучшие
-            специалисты.
+            Медицинская клиника «HealthCheck» — это клиника, в которой
+            применяются новейшие диагностические и лечебные технологии и ведут
+            прием лучшие специалисты.
           </StyledText>
         </Box>
 
@@ -127,7 +172,7 @@ export const Welcome = () => {
                     },
                     minLength: {
                       value: 11,
-                      message: ' Минимум 11 символов',
+                      message: 'Минимум 11 символов',
                     },
                   })}
                   Icon={<CallProgres />}
@@ -154,7 +199,7 @@ export const Welcome = () => {
 
       <MuiModal open={isOpenSecondModal} onClose={handleCloseSecondModal}>
         <StyledSecondModal>
-          <Typography variant="h2"> Заявка успешно отправлена!</Typography>
+          <Typography variant="h2">Заявка успешно отправлена!</Typography>
 
           <StyledParagraf>
             <StyledSpan>
@@ -165,6 +210,33 @@ export const Welcome = () => {
           </StyledParagraf>
 
           <StyledModalIcon onClick={handleCloseSecondModal}>
+            <Close />
+          </StyledModalIcon>
+        </StyledSecondModal>
+      </MuiModal>
+
+      <MuiModal open={isOpenThreeModal} onClose={openThreeModal}>
+        <StyledSecondModal>
+          <TypographyStyled variant="h6">
+            Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
+            войдите в систему.
+          </TypographyStyled>
+          <BoxStyledButton>
+            <Button onClick={navigateSignUp} variant="contained">
+              Зарегистрироваться
+            </Button>
+            <Button
+              onClick={navigateSignIn}
+              variant="contained"
+              className="buttonSign">
+              Войти
+            </Button>
+            <BoxGoogle onClick={googleAuthFn}>
+              <Gogle />
+              Зарегистрироваться с Google
+            </BoxGoogle>
+          </BoxStyledButton>
+          <StyledModalIcon onClick={openThreeModal}>
             <Close />
           </StyledModalIcon>
         </StyledSecondModal>
@@ -183,11 +255,85 @@ const StyledContainer = styled('div')(() => ({
   padding: '5px 5rem 0 5rem',
 }));
 
+const TypographyStyled = styled(Typography)(() => ({
+  textAlign: 'center',
+  fontFamily: 'monospace',
+  fontWeight: '100',
+}));
+
+const BoxGoogle = styled(Box)(() => ({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '10px',
+  cursor: 'pointer',
+  fontFamily: '"Manrope", san-serif',
+  fontWeight: '600',
+  background: 'linear-gradient(181deg, #08DF7D 0.95%, #048F50 82.76%)',
+  padding: '13px 10px',
+  borderRadius: '8px',
+  color: 'white',
+  height: '44px',
+
+  '& > img': {
+    width: '20px',
+    height: '20px',
+  },
+}));
+
 const StyledContentText = styled('div')(() => ({
   width: '45%',
   display: 'flex',
   flexDirection: 'column',
   marginTop: '100px',
+}));
+
+const BoxStyledButton = styled(Box)(() => ({
+  display: 'flex',
+  width: '500px',
+  height: '100px',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  gap: '5px',
+  margin: '20px 0 0 0',
+  '& .buttonSign': {
+    width: '250px',
+    height: '45px',
+  },
+}));
+
+const StyledSecondModal = styled(Box)(() => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '659px',
+  height: '468px',
+  backgroundColor: '#ebf2fc',
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  borderRadius: '20px',
+  padding: '16px',
+  fontFamily: '"Poppins",sans-serif',
+
+  h2: {
+    fontFamily: "'Manrope', sans-serif",
+    fontWeight: 500,
+    width: '380px',
+    height: '50px',
+    fontSize: '27px',
+    marginBottom: '50px',
+  },
+
+  p: {
+    fontFamily: "'Manrope', sans-serif",
+    fontWeight: 400,
+    fontSize: '18px',
+    marginBottom: '10px',
+  },
 }));
 
 const StyledH1 = styled('h1')(() => ({
@@ -326,38 +472,6 @@ const StyledInputContent = styled(Box)(() => ({
   display: 'flex',
   gap: '10px',
   width: '100%',
-}));
-
-const StyledSecondModal = styled(Box)(() => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '659px',
-  height: '468px',
-  backgroundColor: '#ebf2fc',
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  alignItems: 'center',
-  borderRadius: '20px',
-  padding: '16px',
-
-  h2: {
-    fontFamily: "'Manrope', sans-serif",
-    fontWeight: 500,
-    width: '380px',
-    height: '50px',
-    fontSize: '27px',
-    marginBottom: '50px',
-  },
-
-  p: {
-    fontFamily: "'Manrope', sans-serif",
-    fontWeight: 400,
-    fontSize: '18px',
-    marginBottom: '10px',
-  },
 }));
 
 const StyledParagraf = styled(Box)(() => ({

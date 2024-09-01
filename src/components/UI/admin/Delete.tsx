@@ -4,21 +4,49 @@ import { Box, ButtonBase, Typography, styled } from '@mui/material';
 import Modal from '../Modal';
 import Button from '../Button';
 import Korzina from '../../../assets/icons/Korzina.svg';
+import { useAppSelector } from '../../../hooks/customHooks';
+import { UnknownAction } from '@reduxjs/toolkit';
 
-const Delete = () => {
+type TProps = {
+  id?: number | undefined;
+  name?: string;
+  disabled?: boolean;
+  deleteFn: (id: number | string | undefined) => UnknownAction;
+  variant?: string;
+};
+
+const Delete = ({ id, deleteFn, variant, name }: TProps) => {
   const [open, setOpen] = useState(false);
+  const { applicationUser } = useAppSelector(state => state.application);
 
   const dispatch = useDispatch();
 
-  const toggleModal = () => setOpen(prev => !prev);
+  let isDisabled;
+
+  if (variant === 'application') {
+    isDisabled = applicationUser.find(item => +item.id === id);
+  } else if (variant === 'patient') {
+    // isDisabled = patient.find(item => +item.id === id);
+  } else if (variant === 'online-record') {
+    // isDisabled = onlineRecord.find(item => +item.id === id);
+  } else {
+    // isDisabled = specialist.find(item => +item.id === id);
+  }
+
+  const dis = isDisabled?.isProcessed;
+
+  const toggleModal = () => {
+    setOpen(prev => !prev);
+  };
 
   const deleteHandler = () => {
+    dispatch(deleteFn(id));
     toggleModal();
   };
 
   return (
     <>
-      <StyledDeleteButton onClick={toggleModal}>
+      <StyledDeleteButton onClick={toggleModal} disabled={!dis}>
         <Korzina />
       </StyledDeleteButton>
 
@@ -28,7 +56,7 @@ const Delete = () => {
             Вы уверены, что хотите удалить
           </Typography>
 
-          <Typography className="name"></Typography>
+          <Typography className="name">{name}</Typography>
 
           <Box className="buttons-container">
             <Button className="button" onClick={toggleModal}>
@@ -64,7 +92,7 @@ const StyledModalContent = styled(Box)(() => ({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  margin: '0.63rem 1.38rem',
+  margin: '50px',
 
   '& > .name': {
     fontFamily: 'Manrope',
