@@ -1,4 +1,5 @@
 import { toastifyMessage } from '../../../utils/helpers/ToastSetting';
+import { store } from '../../store';
 import { axiosInstance } from './../../../configs/axiosInstance';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -113,36 +114,40 @@ export const getAllUser = createAsyncThunk<
   }
 });
 
-export const deleteApplicationUser = createAsyncThunk(
-  'application/deleteUser',
+interface ChangeStatusPayload {
+  id: string;
+  isProceeded: boolean;
+  searchedValue: string;
+}
 
-  async (id, { rejectWithValue, dispatch }) => {
+export type TypesSearch = {
+  map(arg0: (item: any) => any): import('immer').WritableDraft<TypesSearch>[];
+  id?: number;
+  name?: string;
+  date?: string;
+  phoneNumber?: string;
+  isProcessed?: boolean;
+  isChecked?: boolean;
+};
+
+export const searchApplication = createAsyncThunk<
+  TypesSearch,
+  string,
+  { rejectValue: unknown }
+>(
+  'application/searchApplication',
+  async (name, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await axiosInstance.delete(`/api/applications?id=${id}`);
-
-      toastifyMessage({
-        message: 'Успешно удалено',
-        status: 'success',
-        duration: 1500,
-      });
-      await dispatch(getAllUser());
+      const { data } = await axiosInstance.get(
+        `/api/applications/name?name=${name}`
+      );
+      dispatch(getAllUser());
       return data;
     } catch (error) {
-      toastifyMessage({
-        message: 'Что то пошло не так',
-        status: 'error',
-        duration: 2000,
-      });
-
       return rejectWithValue(error);
     }
   }
 );
-
-interface ChangeStatusPayload {
-  id: string;
-  isProceeded: boolean;
-}
 
 export const changeStatusCheckbox = createAsyncThunk<
   { message: string; httpStatus: string },
@@ -150,12 +155,13 @@ export const changeStatusCheckbox = createAsyncThunk<
   { rejectValue: unknown }
 >(
   'application/changeStatusCheckbox',
-  async ({ id, isProceeded }, { rejectWithValue, dispatch }) => {
+  async ({ id, isProceeded, searchedValue }, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axiosInstance.post(
         `/api/applications/${id}?isProceeded=${isProceeded}`
       );
-      await dispatch(getAllUser());
+      // await dispatch(getAllUser());
+      await dispatch(searchApplication(searchedValue));
 
       toastifyMessage({
         message: 'Успешно обработан	',
@@ -176,17 +182,42 @@ export const changeStatusCheckbox = createAsyncThunk<
   }
 );
 
-export const searchApplication = createAsyncThunk<
+export const deleteApplicationUser = createAsyncThunk<
+  { httpStatus: string; message: string },
   any,
-  any,
-  { rejectValue: any }
->('application/searchApplication', async (name, { rejectWithValue }) => {
-  try {
-    const { data } = await axiosInstance.get(
-      `/api/applications/name?name=${name}`
-    );
-    return data;
-  } catch (error) {
-    return rejectWithValue(error);
+  { rejectValue: unknown }
+>(
+  'application/deleteUser',
+
+  async ({ id, value }, { rejectWithValue, dispatch }) => {
+    console.log(value, 'data');
+    console.log(id, 'dataId');
+
+    try {
+      const { data } = await axiosInstance.delete(`/api/applications`, {
+        data: id,
+      });
+
+      toastifyMessage({
+        message: 'Успешно удалено',
+        status: 'success',
+        duration: 1500,
+      });
+
+      await dispatch(getAllUser());
+      if (value) {
+        await dispatch(searchApplication(value));
+      }
+
+      return data;
+    } catch (error) {
+      toastifyMessage({
+        message: 'Что то пошло не так проверьте и по пробуйте еще раз',
+        status: 'error',
+        duration: 2000,
+      });
+
+      return rejectWithValue(error);
+    }
   }
-});
+);

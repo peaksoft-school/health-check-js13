@@ -7,23 +7,35 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 
 type PropsDelete = {
-  deleteFn?: (id: number[]) => AsyncThunkAction<any, void, {}>;
+  deleteFn?: (params: {
+    deleteUser: string[];
+    value: string;
+  }) => AsyncThunkAction<any, void, {}>;
   variant?: string;
+  disabled?: boolean;
+  value: string;
 };
 
-const DeleteSelected = ({ deleteFn, variant }: PropsDelete) => {
-  const { isChecked, deleteUser } = useAppSelector(store => store.application);
+const DeleteSelected = ({ deleteFn, variant, value }: PropsDelete) => {
+  const { deleteUser, isChecked } = useAppSelector(store => store.application);
   const [toggleModal, setToggleModal] = useState(false);
-
   const dispatch = useAppDispatch();
+  console.log(value, 'value  ');
+  console.log(deleteUser, 'deleteUser');
+  const getIds = () => {
+    if (variant === 'applications') {
+      return { deleteUser, value };
+    }
 
+    return { deleteUser: [], value: '' };
+  };
   const toggleModalHandler = () => setToggleModal(prev => !prev);
 
   const deleteHandler = () => {
-    if (variant === 'applications') {
-      if (deleteFn) {
-        dispatch(deleteFn(deleteUser));
-      }
+    if (variant === 'applications' && deleteUser.length) {
+      deleteFn && dispatch(deleteFn({ deleteUser, value }));
+    } else {
+      deleteFn && dispatch(deleteFn(getIds()));
     }
     toggleModalHandler();
   };

@@ -6,18 +6,19 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ColumnDef } from '@tanstack/react-table';
-import SearchIcon from '../../../assets/icons/SearchIcon.svg';
-import Table from '../../../components/UI/Table';
-import Delete from '../../../components/UI/admin/Delete';
-import Checkbox from '../../../components/UI/CheckBox';
-import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import {
   changeStatusCheckbox,
   deleteApplicationUser,
   getAllUser,
   searchApplication,
 } from '../../../store/slices/adminApplication/adminApplicationThunk';
+import { ColumnDef } from '@tanstack/react-table';
+import SearchIcon from '../../../assets/icons/SearchIcon.svg';
+import Table from '../../../components/UI/Table';
+import Delete from '../../../components/UI/admin/Delete';
+import Checkbox from '../../../components/UI/CheckBox';
+import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
+
 import {
   selectAllCheck,
   toggleUserCheck,
@@ -28,11 +29,11 @@ import DeleteSelected from '../../../components/UI/admin/DeleteSelect';
 import { useDebounce } from 'use-debounce';
 
 const AdminApplication = () => {
-  const [search, setSearch] = useState('');
-  const [debounced] = useDebounce(search, 1000);
+  const [searches, setSearch] = useState('');
+  const [debounced] = useDebounce(searches, 1000);
 
   const dispatch = useAppDispatch();
-  const { applicationUser, isChecked, isLoading } = useAppSelector(
+  const { isChecked, isLoading, search } = useAppSelector(
     state => state.application
   );
 
@@ -41,16 +42,24 @@ const AdminApplication = () => {
   }, [dispatch]);
 
   const handleSelectAll = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(selectAllCheck(e.target.checked));
+    const newChecked = e.target.checked;
+    dispatch(selectAllCheck(newChecked));
   };
 
   const handleSelectCheck = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-    dispatch(changeStatusCheckbox({ id, isProceeded: e.target.checked }));
+    dispatch(
+      changeStatusCheckbox({
+        id,
+        isProceeded: e.target.checked,
+        searchedValue: searches,
+      })
+    );
   };
 
   useEffect(() => {
     if (debounced !== undefined) {
       let name = debounced;
+
       dispatch(searchApplication(name));
     }
   }, [debounced]);
@@ -59,7 +68,16 @@ const AdminApplication = () => {
     event: React.ChangeEvent<HTMLInputElement>,
     id: number | string
   ) => {
-    dispatch(toggleUserCheck({ id, isChecked: event.target.checked }));
+    const user = search.find(user => user.id === id);
+
+    if (user && user.isProcessed) {
+      dispatch(
+        toggleUserCheck({
+          id,
+          isChecked: event.target.checked,
+        })
+      );
+    }
   };
 
   const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
@@ -74,7 +92,8 @@ const AdminApplication = () => {
           }}>
           <Checkbox onChange={handleSelectAll} checked={isChecked} />
           <DeleteSelected
-            // deleteFn={deleteApplicationUser}
+            value={searches}
+            deleteFn={deleteApplicationUser}
             variant="applications"
           />
         </div>
@@ -142,11 +161,7 @@ const AdminApplication = () => {
       ),
     },
   ];
-
-  const memoizedApplications = useMemo(
-    () => applicationUser,
-    [applicationUser]
-  );
+  const memoizedApplications = useMemo(() => search, [search]);
 
   return (
     <Container>
@@ -155,7 +170,7 @@ const AdminApplication = () => {
         <TypographyStyled>Заявки</TypographyStyled>
         <Input
           onChange={e => setSearch(e.target.value)}
-          value={search}
+          value={searches}
           size="small"
           placeholder="Поиск"
           className="inputAdmin"

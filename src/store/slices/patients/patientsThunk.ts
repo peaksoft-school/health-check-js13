@@ -20,16 +20,18 @@ export const getPatients = createAsyncThunk<
 
 export const deletePatinet = createAsyncThunk(
   'patinets/deletePatinet',
-  async (id, { rejectWithValue }) => {
+  async (id, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await axiosInstance.delete(`/api/users/${id}`);
+      const { data } = await axiosInstance.delete(`/api/applications`, {
+        data: id,
+      });
 
       toastifyMessage({
         message: data.message,
         status: 'success',
         duration: 1500,
       });
-
+      dispatch(getPatients());
       return data;
     } catch (error) {
       toastifyMessage({

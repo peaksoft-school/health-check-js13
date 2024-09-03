@@ -43,7 +43,8 @@ type BodyTableApplicationTypes = {
   name?: string;
   phoneNumber?: string;
   date?: string;
-  isProcessing?: boolean;
+  // isProcessing?: boolean;
+  isProceeded?: boolean;
 };
 
 export type CombineTypeTables =

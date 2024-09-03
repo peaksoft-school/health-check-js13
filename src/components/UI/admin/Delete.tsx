@@ -30,7 +30,7 @@ const Delete = ({ id, deleteFn, variant, name, isProcessed }: TProps) => {
 
   const deleteHandler = () => {
     if (deleteFn) {
-      (dispatch as AppDispatch)(deleteFn(id)); // Cast dispatch to the correct type
+      (dispatch as AppDispatch)(deleteFn(id));
     }
     toggleModal();
   };
