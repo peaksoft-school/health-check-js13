@@ -20,6 +20,8 @@ const SignIn = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  console.log(isLoading);
+
   const {
     register,
     formState: { errors },

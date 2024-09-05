@@ -56,6 +56,7 @@ const ChangePassowrd = () => {
 
         <BoxContainer>
           <Input
+            border=""
             type="password"
             {...register('newPassword', {
               required: 'Поле Обязательно',
@@ -72,6 +73,7 @@ const ChangePassowrd = () => {
             error={!!errors.newPassword}
           />
           <Input
+            border=""
             type="password"
             {...register('oldPassword', {
               required: 'Обязательное поле',

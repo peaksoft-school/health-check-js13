@@ -445,7 +445,7 @@ const ContentOptions = styled('div')({
   margin: '34px 0 0 0',
 });
 
-const Option = styled('p')<OptionProps>(({ isActive }) => ({
+const Option = styled('p')<any>(({ isActive }) => ({
   color: isActive ? '#048741' : '#959595',
   fontSize: '12px',
   fontFamily: '"Poppins", sans-serif',

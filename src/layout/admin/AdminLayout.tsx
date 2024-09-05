@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
-import { Box, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import LoadingComponent from '../../utils/helpers/LoadingComponents';
 import { useAppSelector } from '../../hooks/customHooks';
 

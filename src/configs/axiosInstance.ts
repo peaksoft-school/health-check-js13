@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { RootState } from '../hooks/customHooks';
+import { Action, Store } from '@reduxjs/toolkit';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -10,13 +11,13 @@ export const axiosInstance = axios.create({
   },
 });
 
-let store: any;
+let store: Store<RootState, Action>;
 
-export const injectStore = (_store: any) => {
+export const injectStore = (_store: Store<RootState, Action>) => {
   store = _store;
 };
 
-axios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
     const state: RootState = store.getState();
@@ -33,7 +34,7 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   function (response) {
     return response;
   },

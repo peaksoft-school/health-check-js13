@@ -1,11 +1,18 @@
 import { ColumnDef } from '@tanstack/react-table';
-import Korzina from '../../assets/icons/Korzina.svg';
 import Table from '../../components/UI/Table';
 import pacient from '../constants/pacient.json';
 import Specialist from '../helpers/Specialist';
 import ActionsStatus from '../helpers/Actions';
 import Switcher from '../../components/UI/Switcher';
 import Checkbox from '../../components/UI/CheckBox';
+import Delete from '../../components/UI/admin/Delete';
+import { THUNK } from '../../store/slices/adminApplication/adminApplicationThunk';
+import { store } from '../../store/store';
+import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks/customHooks';
+import { selectAllByLocal } from '../../store/slices/adminApplication/adminApplicationSlice';
+import { useRef } from 'react';
+import { current } from '@reduxjs/toolkit';
 
 type BodyTableOneTypes = {
   id?: number;
@@ -42,10 +49,10 @@ type BodyTablePacientTypes = {
 
 type BodyTableApplicationTypes = {
   id?: number;
-  first_name?: string;
-  phone?: string;
+  name?: string;
+  phoneNumber?: string;
   date?: string;
-  processing?: boolean;
+  isProcessing?: boolean;
 };
 
 export type CombineTypeTables =
@@ -68,7 +75,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           checked={table.getIsAllPageRowsSelected()}
           onChange={table.getToggleAllPageRowsSelectedHandler()}
         />
-        <Korzina />
+        <Delete />
       </div>
     ),
     accessorKey: 'select',
@@ -133,7 +140,7 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
           justifyContent: 'end',
           cursor: 'pointer',
         }}>
-        <Korzina />
+        <Delete />
       </div>
     ),
   },
@@ -173,66 +180,8 @@ export const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
   },
 ];
 
-export const applicationHeader: ColumnDef<BodyTableApplicationTypes>[] = [
-  {
-    header: () => (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'start',
-          cursor: 'pointer',
-        }}>
-        <Checkbox />
-        <Korzina />
-      </div>
-    ),
-    accessorKey: 'nello',
-    cell: () => <Checkbox />,
-  },
-  {
-    header: '№',
-    accessorKey: 'id',
-  },
-  {
-    header: 'Имя',
-    accessorKey: 'first_name',
-  },
-  {
-    header: 'Дата',
-    accessorKey: 'date',
-  },
-  {
-    header: 'Номер Телефона',
-    accessorKey: 'phone',
-  },
-  {
-    header: 'Обработан',
-    accessorKey: 'processing',
-    cell: () => (
-      <div
-        style={{
-          marginLeft: '26px',
-          cursor: 'pointer',
-        }}>
-        <Checkbox />
-      </div>
-    ),
-  },
-  {
-    header: 'Действия',
-    accessorKey: 'actions',
-    cell: () => (
-      <div
-        style={{
-          marginLeft: '26px',
-          cursor: 'pointer',
-        }}>
-        <Korzina />
-      </div>
-    ),
-  },
-];
+
+
 export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
   {
     header: '№',
@@ -263,7 +212,7 @@ export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
           marginLeft: '26px',
           cursor: 'pointer',
         }}>
-        <Korzina />
+        <Delete />
       </div>
     ),
   },
