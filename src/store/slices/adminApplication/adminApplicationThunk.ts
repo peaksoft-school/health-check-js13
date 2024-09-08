@@ -123,11 +123,14 @@ interface ChangeStatusPayload {
 export type TypesSearch = {
   map(arg0: (item: any) => any): import('immer').WritableDraft<TypesSearch>[];
   id?: number;
-  name?: string;
+  name?: any;
   date?: string;
   phoneNumber?: string;
   isProcessed?: boolean;
   isChecked?: boolean;
+  original: {
+    id: number;
+  };
 };
 
 export const searchApplication = createAsyncThunk<
@@ -189,13 +192,11 @@ export const deleteApplicationUser = createAsyncThunk<
 >(
   'application/deleteUser',
 
-  async ({ id, value }, { rejectWithValue, dispatch }) => {
-    console.log(value, 'data');
-    console.log(id, 'dataId');
-
+  async ({ deleteUser, value }, { rejectWithValue, dispatch }) => {
+    console.log(deleteUser);
     try {
       const { data } = await axiosInstance.delete(`/api/applications`, {
-        data: id,
+        data: deleteUser,
       });
 
       toastifyMessage({
@@ -204,10 +205,7 @@ export const deleteApplicationUser = createAsyncThunk<
         duration: 1500,
       });
 
-      await dispatch(getAllUser());
-      if (value) {
-        await dispatch(searchApplication(value));
-      }
+      dispatch(searchApplication(value));
 
       return data;
     } catch (error) {

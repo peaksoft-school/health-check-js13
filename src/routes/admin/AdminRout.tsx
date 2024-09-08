@@ -1,7 +1,9 @@
 import AdminApplication from '../../pages/admin/AdminApplication/AdminApplication';
 import OnlineRecording from '../../pages/admin/online/OnlineRecording';
 import AdminPatients from '../../pages/admin/adminPatients/AdminPatients';
-import AdminSpecialists from './AdminSpecialists';
+import PatientInfo from '../../pages/admin/adminPatients/PatientInfo';
+import AdminSpecialist from '../../pages/admin/adminSpecialist/AdminSpecialist';
+import AddSpecialist from '../../pages/admin/adminSpecialist/AddSpecialist';
 
 export const ADMIN_CHILDREN = [
   {
@@ -14,10 +16,28 @@ export const ADMIN_CHILDREN = [
   },
   {
     path: 'admin-specialists',
-    element: <AdminSpecialists />,
+    children: [
+      {
+        index: true,
+        element: <AdminSpecialist />,
+      },
+      {
+        path: 'admin-add-spec',
+        element: <AddSpecialist />,
+      },
+    ],
   },
   {
     path: 'admin-patients',
-    element: <AdminPatients />,
+    children: [
+      {
+        index: true,
+        element: <AdminPatients />,
+      },
+      {
+        path: `:id/info`,
+        element: <PatientInfo />,
+      },
+    ],
   },
 ];

@@ -1,7 +1,4 @@
 import { ColumnDef } from '@tanstack/react-table';
-import Specialist from '../helpers/Specialist';
-import ActionsStatus from '../helpers/Actions';
-import Switcher from '../../components/UI/Switcher';
 import Checkbox from '../../components/UI/CheckBox';
 import Delete from '../../components/UI/admin/Delete';
 
@@ -19,15 +16,17 @@ type BodyTableOneTypes = {
 
 type BodyTableStatusTypes = {
   id?: number;
-  status?: string | boolean;
-  name: {
-    img?: string;
+  isActive?: boolean;
+  doctor?: {
+    image?: string;
     name?: string;
-    professi?: string;
+    specialization?: string;
   };
-  deport?: string;
-  date?: string;
-  actions?: string;
+  department?: string;
+  scheduleUntil?: string;
+  original?: {
+    id?: number;
+  };
 };
 
 type BodyTablePacientTypes = {
@@ -40,10 +39,9 @@ type BodyTablePacientTypes = {
 
 type BodyTableApplicationTypes = {
   id?: number;
-  name?: string;
+  name?: any;
   phoneNumber?: string;
   date?: string;
-  // isProcessing?: boolean;
   isProceeded?: boolean;
 };
 
@@ -135,40 +133,6 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
         <Delete />
       </div>
     ),
-  },
-];
-
-export const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
-  {
-    header: '№',
-    accessorKey: 'id',
-  },
-  {
-    header: 'Статус',
-    accessorKey: 'status',
-    cell: () => <Switcher />,
-  },
-  {
-    header: 'Специалист',
-    accessorKey: 'name',
-    cell: ({ cell }: any) => {
-      if (cell) {
-        return <Specialist {...cell} />;
-      }
-    },
-  },
-  {
-    header: 'Отделение',
-    accessorKey: 'deport',
-  },
-  {
-    header: 'Расписание',
-    accessorKey: 'date',
-  },
-  {
-    header: 'Действие',
-    accessorKey: 'actions',
-    cell: () => <ActionsStatus />,
   },
 ];
 

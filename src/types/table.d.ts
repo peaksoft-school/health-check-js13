@@ -13,33 +13,47 @@ type BodyTableOneTypes = {
   date: string;
   addService: string;
   progress: boolean;
-};
-type BodyTableStatusTypes = {
-  id: number;
-  status: string;
-  name: {
-    img: string;
-    name: string;
-    professi: string;
+  original: {
+    id: number;
   };
-  deport: string;
-  date: string;
 };
+
+type BodyTableStatusTypes = {
+  id?: number;
+  isActive?: boolean;
+  doctor?: {
+    image?: string;
+    name?: string;
+    specialization?: string;
+  };
+  department?: string;
+  scheduleUntil?: string;
+  original?: {
+    id?: number;
+  };
+};
+
 type BodyTablePacientTypes = {
   id: number | string;
   fullName: string;
   phoneNumber: string;
   email: string;
   date: string;
+  original: {
+    id: number;
+  };
 };
 
 type BodyTableApplicationTypes = {
-  name: string;
-  phoneNumber: string;
-  date: string;
-  isProcessed: boolean;
-  id: number | string;
+  name?: string;
+  phoneNumber?: string;
+  date?: string;
+  isProcessed?: boolean;
+  id?: number | string;
   isChecked?: boolean;
+  original: {
+    id: number;
+  };
 };
 
 export type CombineTypeTables =

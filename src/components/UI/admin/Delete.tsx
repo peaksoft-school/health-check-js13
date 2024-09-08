@@ -5,32 +5,43 @@ import Modal from '../Modal';
 import Button from '../Button';
 import Korzina from '../../../assets/icons/Korzina.svg';
 import { AppDispatch } from '../../../hooks/customHooks';
-import { AnyAction, AsyncThunkAction } from '@reduxjs/toolkit';
+import { AsyncThunkAction } from '@reduxjs/toolkit';
 
 type TProps = {
-  id?: number | undefined;
+  id: number;
   name?: string;
   disabled?: boolean;
-  deleteFn?: (
-    id: number | string | undefined
-  ) => AsyncThunkAction<any, void, {}> | AnyAction;
+  deleteFn: (params: {
+    deleteUser: number[];
+    value: string;
+  }) => AsyncThunkAction<any, void, {}>;
   variant?: string;
   isProcessed?: boolean;
+  value: string;
 };
 
-const Delete = ({ id, deleteFn, variant, name, isProcessed }: TProps) => {
+const Delete = ({
+  id,
+  deleteFn,
+  variant,
+  name,
+  isProcessed,
+  value,
+}: TProps) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const toggleModal = () => {
+  const toggleModal = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setOpen(prev => !prev);
   };
-
   const isDisabled = variant === 'patients' ? false : !isProcessed;
 
-  const deleteHandler = () => {
+  let deleteUser = [id];
+  const deleteHandler = (e: any) => {
+    e.stopPropagation();
     if (deleteFn) {
-      (dispatch as AppDispatch)(deleteFn(id));
+      (dispatch as AppDispatch)(deleteFn({ deleteUser, value }));
     }
     toggleModal();
   };

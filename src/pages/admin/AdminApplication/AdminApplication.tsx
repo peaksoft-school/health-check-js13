@@ -9,7 +9,6 @@ import {
 import {
   changeStatusCheckbox,
   deleteApplicationUser,
-  getAllUser,
   searchApplication,
 } from '../../../store/slices/adminApplication/adminApplicationThunk';
 import { ColumnDef } from '@tanstack/react-table';
@@ -36,10 +35,6 @@ const AdminApplication = () => {
   const { isChecked, isLoading, search } = useAppSelector(
     state => state.application
   );
-
-  useEffect(() => {
-    dispatch(getAllUser());
-  }, [dispatch]);
 
   const handleSelectAll = (e: ChangeEvent<HTMLInputElement>) => {
     const newChecked = e.target.checked;
@@ -103,7 +98,7 @@ const AdminApplication = () => {
         return (
           <Checkbox
             checked={row.original.isChecked}
-            onChange={e => handleCheckboxChange(e, row.original.id)}
+            onChange={e => handleCheckboxChange(e, String(row.original.id))}
           />
         );
       },
@@ -151,6 +146,7 @@ const AdminApplication = () => {
             cursor: 'pointer',
           }}>
           <Delete
+            value={searches}
             id={row.original.id}
             deleteFn={deleteApplicationUser}
             name={row.original.name}
@@ -167,7 +163,7 @@ const AdminApplication = () => {
     <Container>
       {isLoading && <LoadingComponent />}
       <Block>
-        <TypographyStyled>Заявки</TypographyStyled>
+      <Typography variant="h4">Заявки</Typography>
         <Input
           onChange={e => setSearch(e.target.value)}
           value={searches}
@@ -226,9 +222,7 @@ const Input = styled(TextField)(() => ({
   },
 }));
 
-const TypographyStyled = styled(Typography)(() => ({
-  fontSize: '28px',
-}));
+
 
 const BoxTable = styled(Box)(() => ({
   margin: '20px 0 0 0',

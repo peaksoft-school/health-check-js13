@@ -20,8 +20,7 @@ const DeleteSelected = ({ deleteFn, variant, value }: PropsDelete) => {
   const { deleteUser, isChecked } = useAppSelector(store => store.application);
   const [toggleModal, setToggleModal] = useState(false);
   const dispatch = useAppDispatch();
-  console.log(value, 'value  ');
-  console.log(deleteUser, 'deleteUser');
+
   const getIds = () => {
     if (variant === 'applications') {
       return { deleteUser, value };

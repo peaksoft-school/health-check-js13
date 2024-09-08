@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deletePatinet, getPatients } from './patientsThunk';
+import {
+  deletePatinet,
+  getPatients,
+  getUserInfo,
+  searchRequest,
+} from './patientsThunk';
 
 export type TPatients = {
   fullName: string;
@@ -7,18 +12,33 @@ export type TPatients = {
   phoneNumber: string;
   date: string;
   id: string;
+  original: {
+    id: number;
+  };
+};
+
+type Types = {
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  id: number;
+  firstName: string;
 };
 
 type TInitialState = {
   isLoading: boolean;
   patients: TPatients[];
-  error: null;
+  error: null | {};
+  searches: any[];
+  getUser: Types | null;
 };
 
 const initialState: TInitialState = {
   patients: [],
   isLoading: false,
   error: null,
+  searches: [],
+  getUser: null,
 };
 
 export const patinetsSlice = createSlice({
@@ -40,6 +60,24 @@ export const patinetsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deletePatinet.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(searchRequest.fulfilled, (state, { payload }) => {
+        if (payload) {
+          state.searches = payload;
+        }
+      })
+      .addCase(getUserInfo.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(getUserInfo.fulfilled, (state, { payload }) => {
+        state.getUser = payload;
+        state.isLoading = false;
+      })
+      .addCase(getUserInfo.rejected, (state, { payload }) => {
+        if (payload) {
+          state.error = payload;
+        }
         state.isLoading = false;
       });
   },

@@ -18,24 +18,67 @@ export const getPatients = createAsyncThunk<
   }
 });
 
-export const deletePatinet = createAsyncThunk(
+export const searchRequest = createAsyncThunk<
+  TPatients,
+  string,
+  { rejectValue: unknown }
+>('patinets/searchRequest', async (value, { rejectWithValue }) => {
+  console.log(value);
+  try {
+    const { data } = await axiosInstance.get(
+      `/api/users/searchPatients?name=${value}`
+    );
+
+    return data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+export const deletePatinet = createAsyncThunk<
+  { httpStatus: string; message: string },
+  any,
+  { rejectValue: unknown }
+>(
   'patinets/deletePatinet',
-  async (id, { rejectWithValue, dispatch }) => {
+  async ({ deleteUser, value }, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await axiosInstance.delete(`/api/applications`, {
-        data: id,
-      });
+      const { data } = await axiosInstance.delete(
+        `/api/users/${deleteUser[0]}`
+      );
 
       toastifyMessage({
         message: data.message,
         status: 'success',
         duration: 1500,
       });
-      dispatch(getPatients());
+
+      dispatch(searchRequest(value));
+
       return data;
     } catch (error) {
       toastifyMessage({
-        message: 'Что то пошло не так попробуйте еще раз',
+        message: 'Что-то пошло не так, попробуйте еще раз',
+        status: 'error',
+        duration: 1500,
+      });
+
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getUserInfo = createAsyncThunk<any, any, any>(
+  'patients/getUserInfo',
+  async ({ id, navigate }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/users/getPatientById/${id}`
+      );
+      navigate(`${id}/info`);
+      return data;
+    } catch (error) {
+      toastifyMessage({
+        message: 'Что то пошло не так, попробуйте еще раз',
         status: 'error',
         duration: 1500,
       });
