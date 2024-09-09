@@ -201,6 +201,7 @@ const StyledInput = styled('input')(({ theme }) => ({
   fontSize: '16px',
   border: `1px solid ${theme.palette.grey[400]}`,
   textAlign: 'center',
+  margin: '4px 0 0 0',
   '&:focus': {
     outline: 'none',
     borderColor: theme.palette.primary.main,

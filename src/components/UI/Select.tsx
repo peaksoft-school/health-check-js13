@@ -95,16 +95,18 @@ interface SelectProps {
   value?: string;
   onChange?: (event: React.ChangeEvent<{ value: unknown }>) => void;
   label?: string;
+  placeholder?: string;
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
-  ({ disabled, options, value, onChange, label }, ref) => (
+  ({ disabled, options, value, onChange, label, placeholder }, ref) => (
     <StyledDiv>
       <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
         {label}
       </Typography>
       <StyledMySelect
         value={value}
+        placeholder={placeholder}
         onChange={onChange}
         disabled={disabled}
         inputRef={ref}
