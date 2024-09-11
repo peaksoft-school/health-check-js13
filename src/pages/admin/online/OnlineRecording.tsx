@@ -214,11 +214,16 @@ const OnlineRecording: FC = () => {
                             options={optionsDoctorsChase}
                             label="Интервал часов"
                           /> */}
-                          <MuiSelect
+                          {/* <MuiSelect
                             options={optionsDoctorsChase}
                             value={selectedValue}
                             onChange={handleSelectChange}
                             style={{ marginTop: '20px' }}
+                          /> */}
+                          <SelectStyled
+                            options={optionsDoctorsChase}
+                            value={selectedValue}
+                            onChange={handleSelectChange}
                           />
                         </div>
                         <div className="cardTime">
@@ -432,6 +437,16 @@ const Repetitions = styled('span')({
   fontWeight: '400',
   margin: '0 360px 0 0',
 });
+
+const SelectStyled = styled(Select)({
+  '& .MuiOutlinedInput-notchedOutline': {    
+    // minWidth: '290px',
+    // minHeight: '38px',
+    width: '290px',
+    height: '38px',
+  }
+});
+
 
 const Skin = styled('p')({
   margin: '20px 0 0 0',

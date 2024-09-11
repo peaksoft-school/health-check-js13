@@ -1,7 +1,7 @@
 // import { createSlice } from '@reduxjs/toolkit';
 // import { postOnlineRecording } from './adminOnlineRecordingThunk';
 
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
 
 // interface OnlineRecordingState {
 //   loading: boolean;
@@ -60,13 +60,13 @@ type TypesAppointmentApi = {
   smsCode: string;
 }
 
-type AppointmentTypes = {
-  isLoading: boolean;
-  error: null | any;
-  // applicationUser: TypesAppointmentApi[];
-  isChecked: boolean;
-  deleteUser: [];
-};
+// type AppointmentTypes = {
+//   isLoading: boolean;
+//   error: null | any;
+//   // applicationUser: TypesAppointmentApi[];
+//   isChecked: boolean;
+//   deleteUser: [];
+// };
 
 // const initialState: = {
 
