@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'HEALTH_CHECK',
   storage,
+  blacklist: ['spec'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

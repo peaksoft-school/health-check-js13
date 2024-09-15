@@ -4,6 +4,7 @@ import AdminPatients from '../../pages/admin/adminPatients/AdminPatients';
 import PatientInfo from '../../pages/admin/adminPatients/PatientInfo';
 import AdminSpecialist from '../../pages/admin/adminSpecialist/AdminSpecialist';
 import AddSpecialist from '../../pages/admin/adminSpecialist/AddSpecialist';
+import SpecInfo from '../../pages/admin/adminSpecialist/SpecInfo';
 
 export const ADMIN_CHILDREN = [
   {
@@ -24,6 +25,10 @@ export const ADMIN_CHILDREN = [
       {
         path: 'admin-add-spec',
         element: <AddSpecialist />,
+      },
+      {
+        path: 'specId:/infoSpec',
+        element: <SpecInfo />,
       },
     ],
   },

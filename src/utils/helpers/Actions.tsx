@@ -1,7 +1,12 @@
-import Korzina from '../../assets/icons/Korzina.svg';
+import { useNavigate } from 'react-router-dom';
 import UpdateIcon from '../../assets/icons/UpdateIcon.svg';
+import Delete from '../../components/UI/admin/Delete';
 
 const ActionsStatus = ({ row }: any) => {
+  const navigate = useNavigate();
+  const updateSpec = () => {
+    navigate(`${row.original.id}/infoSpec`);
+  };
   return (
     <div
       style={{
@@ -10,8 +15,10 @@ const ActionsStatus = ({ row }: any) => {
         justifyContent: 'start',
         gap: 20,
       }}>
-      <UpdateIcon />
-      <Korzina />
+      <div onClick={updateSpec}>
+        <UpdateIcon />
+      </div>
+      <Delete />
     </div>
   );
 };

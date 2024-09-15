@@ -4,7 +4,7 @@ import { Action, Store } from '@reduxjs/toolkit';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const axiosInstance = axios.create({
+export const axiosInstanceFile = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -17,7 +17,7 @@ export const fileInjectStore = (_store: Store<RootState, Action>) => {
   store = _store;
 };
 
-axiosInstance.interceptors.request.use(
+axiosInstanceFile.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
     const state: RootState = store.getState();
@@ -34,7 +34,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+axiosInstanceFile.interceptors.response.use(
   function (response) {
     return response;
   },

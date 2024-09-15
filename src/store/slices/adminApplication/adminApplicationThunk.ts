@@ -60,7 +60,7 @@ export const postApplication = createAsyncThunk<
       );
 
       toastifyMessage({
-        message: 'Ваша заявка успешно добавлен',
+        message: data.message,
         status: 'success',
         duration: 1500,
       });
