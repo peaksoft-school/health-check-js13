@@ -20,6 +20,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant={variant}
       type={type}
       ref={ref}
+      fullWidth
       {...rest}>
       {children}
     </StyledButton>
