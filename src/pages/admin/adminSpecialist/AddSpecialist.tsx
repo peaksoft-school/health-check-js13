@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Box, styled, Typography } from '@mui/material';
 import 'react-quill/dist/quill.snow.css';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ import {
 import Select from '../../../components/UI/Select';
 import { department } from '../../../utils/helpers';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
+import { useNavigate } from 'react-router-dom';
 
 export type TFormTypes = {
   imageURL: string | undefined;
@@ -29,11 +30,12 @@ const AddSpecialist = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<TFormTypes>();
   const dispatch = useAppDispatch();
   const { file, isLoading } = useAppSelector(state => state.spec);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [image, setImage] = useState('');
+  const navigate = useNavigate();
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
 
@@ -43,7 +45,6 @@ const AddSpecialist = () => {
         .then(uploadedFile => {
           const { link } = uploadedFile;
           setValue('imageURL', link);
-          setImage(link);
         })
         .catch(error => {
           console.error('Ошибка загрузки файла:', error);
@@ -51,22 +52,24 @@ const AddSpecialist = () => {
     } else {
       console.error('Файл не выбран');
     }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
   const handlerChangeSelectValue = (event: any) => {
     setValue('department', event.target.value);
   };
 
   const handleImageClick = () => {
-    console.log(fileInputRef);
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
-  const handlerSubmitForm = (data: TFormTypes) => {
-    dispatch(addSpec(data));
+  const handlerSubmitForm = (formData: TFormTypes) => {
+    dispatch(addSpec({ formData, navigate }));
+    reset();
   };
-  console.log(image);
   return (
     <>
       {isLoading && <LoadingComponent />}
@@ -94,7 +97,6 @@ const AddSpecialist = () => {
                       ref={fileInputRef}
                       className="file-upload-input"
                       onChange={onFileChange}
-                      style={{ display: 'none' }}
                     />
                   </div>
                 )}

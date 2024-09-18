@@ -6,6 +6,7 @@ const ActionsStatus = ({ row }: any) => {
   const navigate = useNavigate();
   const updateSpec = () => {
     navigate(`${row.original.id}/infoSpec`);
+    console.log(row);
   };
   return (
     <div

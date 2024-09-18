@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addFile, addSpec, getSpecialist } from './adminSpecialistThunk';
+import {
+  addFile,
+  addSpec,
+  getDoctorById,
+  getSpecialist,
+} from './adminSpecialistThunk';
+import { TFormTypes } from '../../../pages/admin/adminSpecialist/AddSpecialist';
 
 type BodyTableStatusTypes = {
   image?: any;
@@ -27,6 +33,7 @@ interface SpecialistState {
   isLoading: boolean;
   error: string | null;
   file: string | undefined;
+  infoSpec: {};
 }
 
 const initialState: SpecialistState = {
@@ -34,6 +41,7 @@ const initialState: SpecialistState = {
   file: '',
   isLoading: false,
   error: null,
+  infoSpec: {},
 };
 
 export const specialistSlice = createSlice({
@@ -44,7 +52,7 @@ export const specialistSlice = createSlice({
     builder
       .addCase(
         getSpecialist.fulfilled,
-        (state, { payload }: PayloadAction<BodyTableStatusTypes[]>) => {
+        (state, { payload }: PayloadAction<any[]>) => {
           state.spec = payload.map((item, index) => {
             return {
               ...item,
@@ -79,6 +87,17 @@ export const specialistSlice = createSlice({
         state.file = '';
       })
       .addCase(addSpec.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(getDoctorById.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(getDoctorById.fulfilled, (state, { payload }) => {
+        state.infoSpec = payload;
+        state.isLoading = false;
+        state.file = payload.image;
+      })
+      .addCase(getDoctorById.rejected, state => {
         state.isLoading = false;
       });
   },

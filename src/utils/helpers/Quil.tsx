@@ -1,15 +1,20 @@
 import { Box, styled, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { TFormTypes } from '../../pages/admin/adminSpecialist/AddSpecialist';
 
 const MyEditor = ({
   setValue,
+  values,
 }: {
   setValue: (name: keyof TFormTypes, value: any) => void;
+  values: string;
 }) => {
-  const [value, setEditorValue] = useState('');
+  const [value, setEditorValue] = useState(values || '');
+  useEffect(() => {
+    setEditorValue(values);
+  }, [values]);
 
   const handleChange = (content: string) => {
     setEditorValue(content);

@@ -1,3 +1,4 @@
+import { NavigateFunction } from 'react-router-dom';
 import { axiosInstanceFile } from '../../../configs/axiosInstanceFile';
 import { TFormTypes } from '../../../pages/admin/adminSpecialist/AddSpecialist';
 import { toastifyMessage } from '../../../utils/helpers/ToastSetting';
@@ -18,15 +19,23 @@ export const getSpecialist = createAsyncThunk(
 
 export const addSpec = createAsyncThunk(
   'spec/addSpec',
-  async (value: TFormTypes, { rejectWithValue }) => {
+  async (
+    {
+      formData,
+      navigate,
+    }: { formData: TFormTypes; navigate: NavigateFunction },
+    { rejectWithValue }
+  ) => {
+    console.log(formData);
     try {
-      const { data } = await axiosInstance.post(`/api/doctors`, value);
+      const responce = await axiosInstance.post(`/api/doctors`, formData);
       toastifyMessage({
         message: 'Успешно',
         status: 'success',
         duration: 1500,
       });
-      return data;
+      navigate(-1);
+      return responce.data;
     } catch (error) {
       toastifyMessage({
         message: 'Что то пошло не так попробуйте еще раз',
@@ -50,6 +59,18 @@ export const addFile = createAsyncThunk(
         '/api/awsS3/upload',
         formData
       );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getDoctorById = createAsyncThunk(
+  'spec/getDoctorById',
+  async (doctorId: number, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(`/api/doctors/${doctorId}`);
       return data;
     } catch (error) {
       return rejectWithValue(error);

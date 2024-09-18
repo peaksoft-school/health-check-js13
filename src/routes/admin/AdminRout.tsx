@@ -27,7 +27,7 @@ export const ADMIN_CHILDREN = [
         element: <AddSpecialist />,
       },
       {
-        path: 'specId:/infoSpec',
+        path: ':id/infoSpec',
         element: <SpecInfo />,
       },
     ],

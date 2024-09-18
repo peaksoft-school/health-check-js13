@@ -29,6 +29,19 @@ const AdminSpecialist = () => {
     dispatch(getSpecialist());
   }, []);
 
+  const translateDepartment = {
+    CARDIOLOGY: 'Кардиология',
+    DERMATOLOGY: 'Дерматология',
+    NEUROLOGY: 'Неврология',
+    ORTHOPEDICS: 'Ортопедия',
+    PEDIATRICS: 'Педиатрия',
+    PSYCHIATRY: 'Психиатрия',
+    UROLOGY: 'Урология',
+    GYNECOLOGY: 'Гинекология',
+    GASTROENTEROLOGY: 'Гастроэнтерология',
+    ONCOLOGY: 'Онкология',
+  };
+
   const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
     {
       header: '№',
@@ -52,9 +65,14 @@ const AdminSpecialist = () => {
     {
       header: 'Отделение',
       accessorKey: 'department',
+      cell: ({ row }: any) => {
+        if (row) {
+          return <p>{translateDepartment[row.original.department]}</p>;
+        }
+      },
     },
     {
-      header: 'Расписание',
+      header: 'Расписание до',
       accessorKey: 'scheduleUntil',
     },
     {
