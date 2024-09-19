@@ -6,7 +6,7 @@ export interface FormValues {
   lastName: string;
   email: string;
   phoneNumber: string;
-  userId: number;
+  id: number;
 }
 
 export interface PasswordData {
@@ -32,10 +32,10 @@ export const putPersonalData = createAsyncThunk(
   'putPersonalData/putPersonalData',
   async (charityData: FormValues, { rejectWithValue }) => {
     try {
-      const { userId, ...newCharityData } = charityData;
-      console.log('putPersonalData', newCharityData, userId);
+      const { id, ...newCharityData } = charityData;
+      console.log('putPersonalData', id);
 
-      await axiosInstance.put(`/api/users/${userId}`, newCharityData);
+      await axiosInstance.put(`/api/users/${id}`, newCharityData);
     } catch (error) {
       return rejectWithValue(error);
     }

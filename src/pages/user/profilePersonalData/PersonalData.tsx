@@ -14,7 +14,7 @@ import {
 import { useEffect } from 'react';
 
 type FormValues = {
-  userId: number;
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -28,7 +28,7 @@ const PersonalData = () => {
   );
   useEffect(() => {
     dispatch(getPersonalData());
-  }, [dispatch]);
+  }, []);
 
   const {
     register,
