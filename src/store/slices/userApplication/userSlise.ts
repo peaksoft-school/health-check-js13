@@ -18,7 +18,7 @@ const initialState: TypeInitialState = {
     lastName: '',
     email: '',
     phoneNumber: '',
-    userId: -'',
+    id: -'',
   },
 };
 
@@ -46,6 +46,7 @@ export const userApplicationSlice = createSlice({
       })
       .addCase(putPersonalData.fulfilled, state => {
         state.isLoading = false;
+        getPersonalData();
       })
       .addCase(putPersonalData.rejected, state => {
         state.isLoading = false;

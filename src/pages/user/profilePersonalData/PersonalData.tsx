@@ -12,6 +12,7 @@ import {
   putPersonalData,
 } from '../../../store/slices/userApplication/userThunk';
 import { useEffect } from 'react';
+import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 
 type FormValues = {
   id: number;
@@ -23,12 +24,9 @@ type FormValues = {
 
 const PersonalData = () => {
   const dispatch = useAppDispatch();
-  const { allPersonalData } = useAppSelector(
+  const { allPersonalData, isLoading } = useAppSelector(
     (state: RootState) => state.userSlice
   );
-  useEffect(() => {
-    dispatch(getPersonalData());
-  }, []);
 
   const {
     register,
@@ -45,12 +43,17 @@ const PersonalData = () => {
 
   const onSubmit: SubmitHandler<FormValues> = charityData => {
     const allData = { ...allPersonalData, ...charityData };
-    console.log('data', allData);
     dispatch(putPersonalData(allData));
+    dispatch(getPersonalData());
   };
+
+  useEffect(() => {
+    dispatch(getPersonalData());
+  }, []);
 
   return (
     <>
+      {isLoading && <LoadingComponent />}
       <StyleH1 variant="h1">Ваши личные данные</StyleH1>
 
       <StyleForm onSubmit={handleSubmit(onSubmit)}>

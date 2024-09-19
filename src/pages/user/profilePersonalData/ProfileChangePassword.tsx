@@ -1,9 +1,14 @@
 import { Box, styled, Typography, Button as MuiButton } from '@mui/material';
 import Button from '../../../components/UI/Button';
 import Input from '../../../components/UI/Input';
-import { useAppDispatch } from '../../../hooks/customHooks';
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../hooks/customHooks';
 import { useForm } from 'react-hook-form';
 import { putChangePersonalPassword } from '../../../store/slices/userApplication/userThunk';
+import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 
 type FormValues = {
   oldPassword: string;
@@ -13,6 +18,7 @@ type FormValues = {
 
 const ProfileChangePassword = () => {
   const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state: RootState) => state.userSlice);
 
   const {
     register,
@@ -27,6 +33,7 @@ const ProfileChangePassword = () => {
 
   return (
     <>
+      {isLoading && <LoadingComponent />}
       <StyleH1 variant="h1">Смена пароля</StyleH1>
 
       <StyleForm onSubmit={handleSubmit(onSubmit)}>
