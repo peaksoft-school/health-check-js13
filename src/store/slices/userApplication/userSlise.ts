@@ -1,21 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   getPersonalData,
-  PersonalData,
+  FormValues,
   putChangePersonalPassword,
   putPersonalData,
 } from './userThunk';
 
 export interface TypeInitialState {
   isLoading: boolean;
-  allPersonalData: PersonalData | object;
-  changePersonalData: PersonalData | undefined | object;
+  allPersonalData: FormValues;
 }
 
 const initialState: TypeInitialState = {
   isLoading: false,
-  allPersonalData: {},
-  changePersonalData: {},
+  allPersonalData: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    userId: -'',
+  },
 };
 
 export const userApplicationSlice = createSlice({
@@ -40,9 +44,8 @@ export const userApplicationSlice = createSlice({
       .addCase(putPersonalData.pending, state => {
         state.isLoading = true;
       })
-      .addCase(putPersonalData.fulfilled, (state, action) => {
+      .addCase(putPersonalData.fulfilled, state => {
         state.isLoading = false;
-        state.changePersonalData = action.payload;
       })
       .addCase(putPersonalData.rejected, state => {
         state.isLoading = false;

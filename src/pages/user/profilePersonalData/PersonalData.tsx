@@ -7,12 +7,16 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../hooks/customHooks';
-import { putPersonalData } from '../../../store/slices/userApplication/userThunk';
+import {
+  getPersonalData,
+  putPersonalData,
+} from '../../../store/slices/userApplication/userThunk';
+import { useEffect } from 'react';
 
 type FormValues = {
-  userId: string;
+  userId: number;
   firstName: string;
-  lastname: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
 };
@@ -22,27 +26,27 @@ const PersonalData = () => {
   const { allPersonalData } = useAppSelector(
     (state: RootState) => state.userSlice
   );
+  useEffect(() => {
+    dispatch(getPersonalData());
+  }, [dispatch]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      firstName: 'Айнура',
-      lastname: 'Талантова',
-      email: 'ainura@gmail.com',
-      phoneNumber: '+996 (700) 01-01-01',
-      // firstName: allPersonalData.firstName
-      // lastname: allPersonalData.lastname,
-      // email: allPersonalData.email,
-      // phoneNumber: allPersonalData.phoneNumber,
+      firstName: allPersonalData.firstName || undefined,
+      lastName: allPersonalData.lastName || undefined,
+      email: allPersonalData.email || undefined,
+      phoneNumber: allPersonalData.phoneNumber || undefined,
     },
   });
 
   const onSubmit: SubmitHandler<FormValues> = charityData => {
-    console.log('data', charityData);
-    console.log('allData', allPersonalData);
-    dispatch(putPersonalData(charityData));
+    const allData = { ...allPersonalData, ...charityData };
+    console.log('data', allData);
+    dispatch(putPersonalData(allData));
   };
 
   return (
@@ -62,14 +66,14 @@ const PersonalData = () => {
           />
         </Box>
         <Box>
-          <label htmlFor="lastname">Фамилия</label> <br />
+          <label htmlFor="lastName">Фамилия</label> <br />
           <StyledTextField
             fullWidth
-            id="lastname"
+            id="lastName"
             variant="outlined"
-            {...register('lastname', { required: 'Фамилия обязательна' })}
-            error={!!errors.lastname}
-            helperText={errors.lastname?.message}
+            {...register('lastName', { required: 'Фамилия обязательна' })}
+            error={!!errors.lastName}
+            helperText={errors.lastName?.message}
           />
         </Box>
         <Box>

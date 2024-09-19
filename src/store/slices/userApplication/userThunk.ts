@@ -1,25 +1,27 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../../configs/axiosInstance';
 
-export interface PersonalData {
-  userId: string;
+export interface FormValues {
   firstName: string;
-  lastname: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
+  userId: number;
 }
 
-interface PasswordData {
+export interface PasswordData {
   oldPassword: string;
   newPassword: string;
 }
 
 export const getPersonalData = createAsyncThunk(
   'personalData/getPersonalData',
-  async (userId, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/api/users/${userId}`);
-      return response.data as PersonalData;
+      const response = await axiosInstance.get(`/api/users`);
+      const currentData = response.data;
+
+      return currentData;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -28,19 +30,12 @@ export const getPersonalData = createAsyncThunk(
 
 export const putPersonalData = createAsyncThunk(
   'putPersonalData/putPersonalData',
-  async (charityData: PersonalData, { rejectWithValue }) => {
+  async (charityData: FormValues, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(
-        `/api/users/${charityData.userId}`
-      );
-      const currentData = response.data;
+      const { userId, ...newCharityData } = charityData;
+      console.log('putPersonalData', newCharityData, userId);
 
-      const updatedData = {
-        ...currentData,
-        ...charityData,
-      };
-
-      await axiosInstance.put(`/api/users/${charityData.userId}`, updatedData);
+      await axiosInstance.put(`/api/users/${userId}`, newCharityData);
     } catch (error) {
       return rejectWithValue(error);
     }

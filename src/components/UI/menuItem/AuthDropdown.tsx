@@ -52,6 +52,9 @@ export default function AuthDropdown() {
     dispatch(logout());
     navigate('/');
   };
+  const toPersone = () => {
+    navigate('profile/pesonalData');
+  };
 
   const signInFn = () => {
     navigate('sign-in');
@@ -97,7 +100,7 @@ export default function AuthDropdown() {
                     onKeyDown={handleListKeyDown}>
                     {isAuth ? (
                       <div>
-                        <ButtonMui>Мой Профиль</ButtonMui>
+                        <ButtonMui onClick={toPersone}>Мой Профиль</ButtonMui>
                         <ButtonMui onClick={logoutFn}>Выйти</ButtonMui>
                       </div>
                     ) : (
