@@ -11,12 +11,13 @@ import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [showBoxContent, setShowBoxContent] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     const scrollTop = pageYOffset || document.documentElement.scrollTop;
@@ -115,7 +116,7 @@ const Header = () => {
             </ContentCardsFunc>
             <ContentCards1>
               <BoxContent>
-                <HealthCheck src={Medcheck} alt="medcheck" />
+                <HealthCheck src={Medcheck} alt="medcheck" onClick={()=>navigate('/')}/>
                 {Text.map((item, index) => (
                   <Box key={index}>
                     <Title>
@@ -124,9 +125,11 @@ const Header = () => {
                   </Box>
                 ))}
                 <ContentButton>
-                  <ButtonClass variant="outlined">
-                    получить результаты
-                  </ButtonClass>
+                  <Link to="results">
+                    <ButtonClass variant="outlined">
+                      получить результаты
+                    </ButtonClass>
+                  </Link>
                   <Button1>запись онлайн</Button1>
                 </ContentButton>
               </BoxContent>
@@ -145,6 +148,13 @@ const StyledNavLink = styled(NavLink)(() => ({
   textDecoration: 'none',
   padding: '4px 10px',
   borderRadius: '4px',
+
+  '&:hover': {
+    color: '#1E90FF',
+  },
+  '&.active': {
+    color: 'blue',
+  },
 }));
 
 const HeaderClass = styled('header')(() => ({

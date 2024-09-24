@@ -4,6 +4,7 @@ import Home from '../../pages/home/Home';
 import Clinic from '../../pages/user/aboutClinic/Clinic';
 import Price from '../../pages/user/aboutPrice/Price';
 import ServiceClinic from '../../pages/user/serviceClinic/ServiceClinic';
+import GetResults from '../user/GetResults';
 
 export const USER_ROUTES = [
   {
@@ -29,5 +30,9 @@ export const USER_ROUTES = [
   {
     path: 'contact',
     element: <Contacts />,
+  },
+  {
+    path: 'results',
+    element: <GetResults />,
   },
 ];
