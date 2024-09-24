@@ -38,6 +38,7 @@ const Delete = ({
   const isDisabled = variant === 'patients' ? false : !isProcessed;
 
   let deleteUser = [id];
+
   const deleteHandler = (e: any) => {
     e.stopPropagation();
     if (deleteFn) {

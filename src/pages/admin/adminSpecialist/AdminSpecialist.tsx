@@ -16,18 +16,30 @@ import Switcher from '../../../components/UI/Switcher';
 import Specialist from '../../../utils/helpers/Specialist';
 import ActionsStatus from '../../../utils/helpers/Actions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
-import { getSpecialist } from '../../../store/slices/adminSpecialist/adminSpecialistThunk';
+import {
+  getSpecialist,
+  searchSpec,
+} from '../../../store/slices/adminSpecialist/adminSpecialistThunk';
 import { useNavigate } from 'react-router-dom';
+import SpecialistSwitcher from './SpecialistSwitcher';
+import { useDebounce } from 'use-debounce';
 
 const AdminSpecialist = () => {
   const [searches, setSearch] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { spec } = useAppSelector(state => state.spec);
+  const [debounced] = useDebounce(searches, 1000);
 
   useEffect(() => {
     dispatch(getSpecialist());
   }, []);
+
+  useEffect(() => {
+    if (debounced !== undefined) {
+      dispatch(searchSpec(debounced));
+    }
+  }, [debounced]);
 
   const translateDepartment = {
     CARDIOLOGY: 'Кардиология',
@@ -51,7 +63,7 @@ const AdminSpecialist = () => {
     {
       header: 'Статус',
       accessorKey: 'status',
-      cell: () => <Switcher />,
+      cell: ({ row }) => <SpecialistSwitcher {...row.original} />,
     },
     {
       header: 'Специалист',
@@ -66,8 +78,13 @@ const AdminSpecialist = () => {
       header: 'Отделение',
       accessorKey: 'department',
       cell: ({ row }: any) => {
-        if (row) {
-          return <p>{translateDepartment[row.original.department]}</p>;
+        const departmentKey = row.original
+          .department as keyof typeof translateDepartment;
+
+        if (departmentKey) {
+          return <p>{translateDepartment[departmentKey]}</p>;
+        } else {
+          return <p>Неизвестно</p>;
         }
       },
     },

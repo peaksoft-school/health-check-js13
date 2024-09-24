@@ -27,6 +27,7 @@ const AdminPatients = () => {
   const [search, setSearch] = useState('');
   const dispatch = useAppDispatch();
   const [debounsed] = useDebounce(search, 1000);
+  
   useEffect(() => {
     dispatch(getPatients());
   }, []);

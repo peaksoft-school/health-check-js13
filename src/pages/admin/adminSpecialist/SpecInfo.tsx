@@ -6,22 +6,38 @@ import Input from '../../../components/UI/Input';
 import MyEditor from '../../../utils/helpers/Quil';
 import Button from '../../../components/UI/Button';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
-import { getDoctorById } from '../../../store/slices/adminSpecialist/adminSpecialistThunk';
+import {
+  addFile,
+  getDoctorById,
+  updateSpec,
+} from '../../../store/slices/adminSpecialist/adminSpecialistThunk';
 import Select from '../../../components/UI/Select';
 import { department } from '../../../utils/helpers';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 import { useNavigate, useParams } from 'react-router-dom';
-import { TFormTypes } from './AddSpecialist';
+import { useDropzone } from 'react-dropzone';
+import AddFileIcon from '../../../assets/icons/AddFileIcon.svg';
 
-export type GetDoctorTypes = {
-  id: number;
-  isActive: boolean;
-  image: string;
+export type UpdateDoctor = {
+  imageURL: string;
   firstName: string;
   lastName: string;
+  departmentName: string;
   position: string;
+  description: string;
+};
+
+export type DoctorUpdate = {
+  id: number;
+  imageUrl: string;
+  firstName: string;
+  lastName: string;
   department: string;
+  position: string;
+  description: string;
   scheduleUntil: string;
+  isActive: boolean;
+  image: string;
 };
 
 const SpecInfo = () => {
@@ -31,23 +47,24 @@ const SpecInfo = () => {
     formState: { errors },
     setValue,
     reset,
-  } = useForm<GetDoctorTypes>({
+    watch,
+  } = useForm<DoctorUpdate>({
     defaultValues: {
-      image: '',
+      imageUrl: '',
       firstName: '',
       lastName: '',
       department: '',
       position: '',
-      scheduleUntil: '',
+      description: '',
     },
   });
 
   const dispatch = useAppDispatch();
   const { file, isLoading, infoSpec } = useAppSelector(state => state.spec);
   const [quillValue, setQuillValue] = useState(infoSpec?.description || '');
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const { id } = useParams();
+
   useEffect(() => {
     if (id) {
       dispatch(getDoctorById(Number(id)));
@@ -57,6 +74,7 @@ const SpecInfo = () => {
   useEffect(() => {
     if (infoSpec) {
       reset(infoSpec);
+
       setQuillValue(infoSpec?.description || '');
     }
   }, [infoSpec, reset]);
@@ -65,15 +83,34 @@ const SpecInfo = () => {
     setValue('department', event.target.value);
   };
 
-  const handleImageClick = () => {
-    if (fileInputRef.current) {
-      console.log('handleImageClick called');
-      fileInputRef.current.click();
+  const handlerQuillChange = (content: string) => {
+    setQuillValue(content);
+    setValue('description', content);
+  };
+
+  const onDrop = (acceptedFiles: any) => {
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+      dispatch(addFile(file))
+        .unwrap()
+        .then(uploadedFile => {
+          const { link } = uploadedFile;
+          setValue('imageUrl', link);
+        })
+        .catch(error => {
+          console.error('Ошибка загрузки файла:', error);
+        });
+    } else {
+      console.error('Файл не выбран');
     }
   };
 
-  const handlerQuillChange = (content: string) => {
-    setValue('description', content);
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  const submitHandlerEvent = (data: DoctorUpdate) => {
+    const { image, scheduleUntil, isActive, ...cleanedData } = data;
+
+    dispatch(updateSpec({ data: cleanedData, navigate }));
   };
 
   return (
@@ -81,44 +118,29 @@ const SpecInfo = () => {
       {isLoading && <LoadingComponent />}
       <Container>
         <HeaderContainer>
-          <Typography variant="h4">{infoSpec.firstName}</Typography>
+          <Typography variant="h4">{infoSpec?.firstName}</Typography>
         </HeaderContainer>
         <Main>
-          <MainBlock>
+          <MainBlock onSubmit={handleSubmit(submitHandlerEvent)}>
             <BlockOne>
               <MiniBlock>
                 {file ? (
-                  <>
-                    <span onClick={handleImageClick}>
-                      <img
-                        className="imga"
-                        src={file}
-                        alt="file"
-                        style={{ cursor: 'pointer' }}
-                      />
-                    </span>
-                  </>
+                  <img className="imga" src={file} alt="file" />
                 ) : (
-                  <div
-                    className="file-upload-container"
-                    onClick={handleImageClick}>
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      className="file-upload-input"
-                      style={{ display: 'none' }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: '14px',
-                        color: '#346EFB',
-                        cursor: 'pointer',
-                        textDecoration: 'underline',
-                      }}>
-                      Загрузить фото
-                    </Typography>
-                  </div>
+                  <img src={infoSpec?.imageURL || AddFileIcon} alt="file" />
                 )}
+                <div {...getRootProps()} style={{ textAlign: 'center' }}>
+                  <input {...getInputProps()} style={{ display: 'none' }} />
+                  <Typography
+                    sx={{
+                      fontSize: '14px',
+                      color: '#346EFB',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                    }}>
+                    Нажмите что бы изменить фото
+                  </Typography>
+                </div>
               </MiniBlock>
             </BlockOne>
             <BlockTwo>
@@ -131,6 +153,10 @@ const SpecInfo = () => {
                     className="inputs one"
                     label="Имя"
                     placeholder="Напишите имя"
+                    error={!!errors.firstName}
+                    helperText={
+                      errors.firstName?.message ? errors.firstName.message : ''
+                    }
                   />
                   <Input
                     {...register('lastName', { required: true })}
@@ -138,6 +164,10 @@ const SpecInfo = () => {
                     className="inputs"
                     label="Фамилия"
                     placeholder="Напишите фамилию"
+                    error={!!errors.lastName}
+                    helperText={
+                      errors.lastName?.message ? errors.lastName.message : ''
+                    }
                   />
                 </div>
                 <div
@@ -156,7 +186,7 @@ const SpecInfo = () => {
                       options={department}
                       value={
                         department.find(
-                          dept => dept.value === infoSpec?.departmentName
+                          dept => dept.value === watch('department')
                         )?.value || ''
                       }
                       style={{ width: '545px', height: '40px' }}
@@ -164,6 +194,10 @@ const SpecInfo = () => {
                   </label>
                   <Input
                     {...register('position', { required: true })}
+                    error={!!errors.position}
+                    helperText={
+                      errors.position?.message ? errors.position.message : ''
+                    }
                     size="small"
                     className="inputs"
                     label="Должность"
@@ -185,10 +219,10 @@ const SpecInfo = () => {
                     type="button"
                     variant="text"
                     style={{ height: '40px' }}>
-                    Добавить
+                    Отмена
                   </Button>
                   <Button fullWidth type="submit" style={{ height: '40px' }}>
-                    Добавить
+                    Сохранить
                   </Button>
                 </div>
               </BlockThree>
@@ -235,7 +269,7 @@ const Main = styled(Box)(() => ({
   flexDirection: 'column',
 }));
 
-const MainBlock = styled(Box)(() => ({
+const MainBlock = styled('form')(() => ({
   display: 'flex',
 }));
 
@@ -246,7 +280,7 @@ const BlockOne = styled(Box)(() => ({
   justifyContent: 'center',
 }));
 
-const BlockTwo = styled('form')(() => ({
+const BlockTwo = styled('div')(() => ({
   width: '80%',
   minHeight: '400px',
   padding: '50px 0 0 0',
@@ -263,14 +297,8 @@ const MiniBlock = styled(Box)(() => ({
 
   '& .imga': {
     width: '100%',
-    borderRadius: '50%',
+    borderRadius: '100%',
     height: '100%',
-  },
-  '& span': {
-    width: '100%',
-    borderRadius: '50%',
-    height: '100%',
-    border: '4px solid black',
   },
 }));
 

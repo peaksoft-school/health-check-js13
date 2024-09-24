@@ -33,7 +33,7 @@ interface SpecialistState {
   isLoading: boolean;
   error: string | null;
   file: string | undefined;
-  infoSpec: {};
+  infoSpec: any;
 }
 
 const initialState: SpecialistState = {

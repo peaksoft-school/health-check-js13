@@ -2,16 +2,16 @@ import { Box, styled, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { TFormTypes } from '../../pages/admin/adminSpecialist/AddSpecialist';
 
 const MyEditor = ({
   setValue,
   values,
 }: {
-  setValue: (name: keyof TFormTypes, value: any) => void;
+  setValue: (name: string, value: any) => void;
   values: string;
 }) => {
-  const [value, setEditorValue] = useState(values || '');
+  const [editorValue, setEditorValue] = useState(values);
+
   useEffect(() => {
     setEditorValue(values);
   }, [values]);
@@ -22,19 +22,17 @@ const MyEditor = ({
   };
 
   const modules = {
-    toolbar: {
-      container: [
-        ['bold', 'italic', 'underline'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-      ],
-    },
+    toolbar: [
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+    ],
   };
 
   return (
     <Block>
       <Typography sx={{ color: '#959595' }}>Описание</Typography>
       <ReactQuill
-        value={value}
+        value={editorValue}
         onChange={handleChange}
         placeholder="Введите описание специалиста"
         theme="snow"

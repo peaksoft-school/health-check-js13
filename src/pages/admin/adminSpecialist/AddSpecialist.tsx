@@ -33,9 +33,12 @@ const AddSpecialist = () => {
     reset,
   } = useForm<TFormTypes>();
   const dispatch = useAppDispatch();
+
   const { file, isLoading } = useAppSelector(state => state.spec);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const navigate = useNavigate();
+
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
 
@@ -52,10 +55,8 @@ const AddSpecialist = () => {
     } else {
       console.error('Файл не выбран');
     }
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
   };
+
   const handlerChangeSelectValue = (event: any) => {
     setValue('department', event.target.value);
   };
