@@ -3,17 +3,20 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { authSlice } from './slices/auth/authSlice';
 import { applicationSlice } from './slices/adminApplication/adminApplicationSlice';
-import resultSlice from './results/resultSlice';
+import patinetsSlice from './slices/patients/patientsSlice';
+import { specialistSlice } from './slices/adminSpecialist/adminSpecialist';
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
   [applicationSlice.name]: applicationSlice.reducer,
-  [resultSlice.name]: resultSlice,
+  [patinetsSlice.name]: patinetsSlice.reducer,
+  [specialistSlice.name]: specialistSlice.reducer,
 });
 
 const persistConfig = {
   key: 'HEALTH_CHECK',
   storage,
+  blacklist: ['spec'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

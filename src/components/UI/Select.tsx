@@ -3,6 +3,7 @@ import {
   Select as MySelect,
   styled,
   Typography,
+  SelectChangeEvent,
 } from '@mui/material';
 import { forwardRef } from 'react';
 
@@ -15,12 +16,29 @@ interface SelectProps {
   disabled?: boolean;
   options: Option[];
   value?: string;
-  onChange?: () => void;
+  onChange?: (event: SelectChangeEvent<unknown>) => void;
   label?: string;
+  fullWidth?: any;
+  rest?: any;
+  style?: any;
+  placeholder?: string;
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
-  ({ disabled, options, value, onChange, label }, ref) => (
+  (
+    {
+      disabled,
+      options,
+      value,
+      onChange,
+      label,
+      fullWidth,
+      style,
+      placeholder,
+      ...rest
+    },
+    ref
+  ) => (
     <StyledDiv>
       <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
         {label}
@@ -28,9 +46,13 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 
       <StyledMySelect
         value={value}
+        fullWidth={fullWidth}
         onChange={onChange}
         disabled={disabled}
-        inputRef={ref}>
+        inputRef={ref}
+        defaultValue={placeholder}
+        style={style}
+        {...rest}>
         {options.map(item => (
           <MenuItem key={item.value} value={item.value}>
             {item.label}

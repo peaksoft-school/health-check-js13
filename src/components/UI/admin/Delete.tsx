@@ -4,49 +4,52 @@ import { Box, ButtonBase, Typography, styled } from '@mui/material';
 import Modal from '../Modal';
 import Button from '../Button';
 import Korzina from '../../../assets/icons/Korzina.svg';
-import { useAppSelector } from '../../../hooks/customHooks';
-import { UnknownAction } from '@reduxjs/toolkit';
+import { AppDispatch } from '../../../hooks/customHooks';
+import { AsyncThunkAction } from '@reduxjs/toolkit';
 
 type TProps = {
-  id?: number | undefined;
+  id: number;
   name?: string;
   disabled?: boolean;
-  deleteFn: (id: number | string | undefined) => UnknownAction;
+  deleteFn: (params: {
+    deleteUser: number[];
+    value: string;
+  }) => AsyncThunkAction<any, void, {}>;
   variant?: string;
+  isProcessed?: boolean;
+  value: string;
 };
 
-const Delete = ({ id, deleteFn, variant, name }: TProps) => {
+const Delete = ({
+  id,
+  deleteFn,
+  variant,
+  name,
+  isProcessed,
+  value,
+}: TProps) => {
   const [open, setOpen] = useState(false);
-  const { applicationUser } = useAppSelector(state => state.application);
-
   const dispatch = useDispatch();
 
-  let isDisabled;
-
-  if (variant === 'application') {
-    isDisabled = applicationUser.find(item => +item.id === id);
-  } else if (variant === 'patient') {
-    // isDisabled = patient.find(item => +item.id === id);
-  } else if (variant === 'online-record') {
-    // isDisabled = onlineRecord.find(item => +item.id === id);
-  } else {
-    // isDisabled = specialist.find(item => +item.id === id);
-  }
-
-  const dis = isDisabled?.isProcessed;
-
-  const toggleModal = () => {
+  const toggleModal = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setOpen(prev => !prev);
   };
+  const isDisabled = variant === 'patients' ? false : !isProcessed;
 
-  const deleteHandler = () => {
-    dispatch(deleteFn(id));
+  let deleteUser = [id];
+
+  const deleteHandler = (e: any) => {
+    e.stopPropagation();
+    if (deleteFn) {
+      (dispatch as AppDispatch)(deleteFn({ deleteUser, value }));
+    }
     toggleModal();
   };
 
   return (
     <>
-      <StyledDeleteButton onClick={toggleModal} disabled={!dis}>
+      <StyledDeleteButton onClick={toggleModal} disabled={isDisabled}>
         <Korzina />
       </StyledDeleteButton>
 
