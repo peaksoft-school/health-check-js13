@@ -60,7 +60,7 @@ const Footer = () => (
             <Typography>Мы в социальных сетях:</Typography>
             <StyledIconsThre>
               <a href="https://www.instagram.com/_i.a.n.05_/">
-                <Instagram/>
+                <Instagram />
               </a>
               <a href="https://t.me/+996500344433">
                 <Telegram />
@@ -75,7 +75,7 @@ const Footer = () => (
         <StyledContactContainer>
           <StyledContactContent>
             {Text.map(item => (
-              <Typography>{item.title}</Typography>
+              <Typography key={item.id}>{item.title}</Typography>
             ))}
           </StyledContactContent>
         </StyledContactContainer>
@@ -97,7 +97,7 @@ const StyledMainContainer = styled(Box)(() => ({
   height: '564px',
 }));
 const StyledContainerContent = styled(Box)(() => ({
-marginRight:"3rem",
+  marginRight: '3rem',
 }));
 
 const StyledContainer = styled(Box)(() => ({
@@ -151,8 +151,6 @@ const StyledSpan = styled('span')(() => ({
   fontFamily: 'Manrope, sans-serif',
 }));
 
-
-
 const StyledTextContaier = styled(Box)(() => ({
   color: 'aliceblue',
   marginTop: '3.5rem',
@@ -173,7 +171,7 @@ const StyledIcons = styled(Typography)(() => ({
 const StyledIconsContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  marginRight:"9rem",
+  marginRight: '9rem',
   color: 'white',
   gap: '30px',
   h1: {
@@ -195,10 +193,6 @@ const StyledIconsContent = styled(Box)(() => ({
   width: '22px',
   color: 'white',
 }));
-
-
-
-
 
 const StyledNumberContent = styled(Box)(() => ({
   display: 'flex',
@@ -231,8 +225,6 @@ const StyledIconsThre = styled(Box)(() => ({
   marginTop: '5px',
   cursor: 'pointer',
 }));
-
-
 
 const StyledContactContainer = styled(Box)(() => ({
   display: 'flex',

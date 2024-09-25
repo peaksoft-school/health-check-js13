@@ -1,39 +1,58 @@
-import { styled, Link, Breadcrumbs } from '@mui/material';
+import { Breadcrumbs as MuiBreadcrumbs, Typography } from '@mui/material';
 import { FC } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-interface BreadcrumbItem {
-  label: string;
-  href?: string;
+interface BreadcrumbsProps {
+  data: { label: string; href: string }[];
 }
 
-interface Types {
-  items: BreadcrumbItem[];
-}
+const Breadcrumbs: FC<BreadcrumbsProps> = ({ data }) => {
+  const location = useLocation();
+  const pathnames = location.pathname.split('/').filter(x => x);
 
-const BreadCrumbs: FC<Types> = ({ items }) => {
+  let breadcrumbsToRender = [];
+
+  if (pathnames.length === 0) {
+    breadcrumbsToRender = [null];
+  } else if (pathnames.length === 1) {
+    breadcrumbsToRender = ['', pathnames[0]];
+  } else {
+    breadcrumbsToRender = ['', ...pathnames.slice(-2)];
+  }
+
+  const findLabel = (href: string) => {
+    const match = data.find(item => item.href === href);
+    return match ? match.label : href;
+  };
+
   return (
-    <StyledBreadCrumbs separator="›" aria-label="breadcrumbs">
-      {items.map(({ label, href }, i) => (
-        <StyledLink
-          key={label}
-          islast={String(i === items.length - 1)}
-          href={href || undefined}>
-          {label}
-        </StyledLink>
-      ))}
-    </StyledBreadCrumbs>
+    <MuiBreadcrumbs aria-label="breadcrumb" separator="›">
+      {breadcrumbsToRender.map((value, index) => {
+        const to = `/${breadcrumbsToRender.slice(0, index + 1).join('/')}`;
+        const isLast = index === breadcrumbsToRender.length - 1;
+
+        return isLast ? (
+          <Typography
+            color="text.primary"
+            key={to}
+            style={{ color: '#048741', fontSize: '16px' }}>
+            {value === '' ? 'Главная' : findLabel(value)}
+          </Typography>
+        ) : (
+          <Link
+            to={to}
+            key={to}
+            style={{
+              textDecoration: 'none',
+              color: 'inherit',
+              fontSize: '16px',
+            }}>
+            {value === '' ? 'Главная' : findLabel(value)}
+          </Link>
+        );
+      })}
+    </MuiBreadcrumbs>
   );
 };
 
-export default BreadCrumbs;
-
-const StyledBreadCrumbs = styled(Breadcrumbs)(() => ({
-  marginTop: '30px',
-}));
-
-const StyledLink = styled(Link)<{ islast: string }>(({ islast }) => ({
-  fontSize: '14px',
-  color: islast === 'true' ? '#048741' : 'inherit',
-  cursor: islast !== 'true' ? 'pointer' : 'default',
-  textDecoration: 'none',
-}));
+export default Breadcrumbs;

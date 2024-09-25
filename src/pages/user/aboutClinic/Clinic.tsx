@@ -3,21 +3,13 @@ import { Box, styled } from '@mui/material';
 import Signed from '../../../assets/icons/Signed.svg';
 import Doctors from '../../../assets/images/Doctors.png';
 import Fon from '../../../assets/images/Fon.png';
-import CustomBreadcrumbs from '../../../components/UI/BreadCrumbs';
 
 const Clinic: FC = () => {
-  const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О клинике' }];
-
   return (
     <ClinicClass>
       <Content>
         <ContentClass>
           <Box>
-            <RouterContent>
-              <Box>
-                <CustomBreadcrumbs items={breadcrumbs} />
-              </Box>
-            </RouterContent>
             <HealthBox>
               <HealthSpan>Здоровье — самое</HealthSpan>
               <SpanGreen>ценное в жизни</SpanGreen>
@@ -85,11 +77,11 @@ const ContentClass = styled('div')(() => ({
   marginRight: '60px',
 }));
 
-const RouterContent = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '7px',
-}));
+// const RouterContent = styled('div')(() => ({
+//   display: 'flex',
+//   alignItems: 'center',
+//   gap: '7px',
+// }));
 
 const HealthBox = styled('div')(() => ({
   marginTop: '20px',

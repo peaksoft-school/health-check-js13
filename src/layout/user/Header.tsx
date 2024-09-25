@@ -12,8 +12,73 @@ import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { searchGlobalThunk } from '../../store/user/searchThunk';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
+import Breadcrumbs from '../../components/UI/BreadCrumbs';
+import { UserBreadCrumbsData } from '../../routes/user/UserRout';
+import SearchNavigationModal from '../../components/landingPage/SearchNavigationModal';
+
+const data = [
+  {
+    id: 4,
+    patientFullName: 'Елена Николаева',
+    phoneNumber: '+(996) 56-78-90',
+    email: 'elena@example.com',
+    position: 'Ортопед',
+    doctorFullName: 'Дмитрий Козлов',
+    dateAndTime: '2024-07-04 14:30',
+    status: 'CONFIRMED',
+  },
+  {
+    id: 5,
+    patientFullName: 'Иван Иванов',
+    phoneNumber: '+(996) 12-34-56',
+    email: 'ivan@example.com',
+    position: 'Хирург',
+    doctorFullName: 'Алексей Петров',
+    dateAndTime: '2024-07-05 10:00',
+    status: 'PENDING',
+  },
+  {
+    id: 6,
+    patientFullName: 'Алексей Иванов',
+    phoneNumber: '+(996) 12-34-56',
+    email: 'ivan@example.com',
+    position: 'Хирург',
+    doctorFullName: 'Иван Петров',
+    dateAndTime: '2024-07-05 10:00',
+    status: 'PENDING',
+  },
+  {
+    id: 7,
+    patientFullName: 'Иван Иванов',
+    phoneNumber: '+(996) 12-34-56',
+    email: 'ivan@example.com',
+    position: 'Хирург',
+    doctorFullName: 'Алексей Петров',
+    dateAndTime: '2024-07-05 10:00',
+    status: 'PENDING',
+  },
+];
 
 const Header = () => {
+  const dispatch = useAppDispatch();
+  const [searchQuery, setSearchQuery] = useState('');
+  const { searchAllData } = useAppSelector(state => state.userSlice);
+
+  console.log(searchQuery);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const word = event.target.value;
+    setSearchQuery(word);
+
+    if (word.trim() === '') {
+      console.log('null');
+    } else {
+      dispatch(searchGlobalThunk(word));
+    }
+  };
+
   const [showBoxContent, setShowBoxContent] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
@@ -76,6 +141,9 @@ const Header = () => {
                 </ContentNom>
                 <ContentInput>
                   <Input
+                    autoComplete="off"
+                    value={searchQuery}
+                    onChange={handleInputChange}
                     fullWidth
                     size="small"
                     InputProps={{
@@ -88,7 +156,14 @@ const Header = () => {
                     type="text"
                     placeholder="Поиск по сайту"
                   />
+
+                  <SearchNavigationModal
+                    dataArr={data}
+                    searchWord={searchQuery}
+                    inputValue={searchQuery}
+                  />
                 </ContentInput>
+
                 <ContainerCards>
                   <IconContainer>
                     <a href="https://www.instagram.com/_i.a.n.05_/">
@@ -102,16 +177,16 @@ const Header = () => {
                     </a>
                   </IconContainer>
                   <ContentNumber>
+                    <Telephone />
                     <NumberCards>
-                      <Telephone />
-                      <span>+996(800) 000 000</span>
+                      <Span>+996(800) 000 000</Span> <br />
+                      <Span>+996(505) 000 000</Span>
                     </NumberCards>
-                    <Span>+996(505) 000 000</Span>
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
-                <HR />
               </ContentCards>
+              <HR />
             </ContentCardsFunc>
             <ContentCards1>
               <BoxContent>
@@ -133,6 +208,9 @@ const Header = () => {
             </ContentCards1>
           </Content>
         </Box>
+        <StyleBredcrumbs>
+          <Breadcrumbs data={UserBreadCrumbsData} />
+        </StyleBredcrumbs>
       </HeaderClass>
     </div>
   );
@@ -150,7 +228,6 @@ const StyledNavLink = styled(NavLink)(() => ({
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
-  zIndex: 999,
   fontFamily: '"Poppins", sans-serif',
 }));
 
@@ -166,21 +243,16 @@ const Content = styled('div')(() => ({
 }));
 
 const ContentCardsFunc = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
+  maxWidth: '1200px',
   backgroundColor: '#fff',
 }));
 
 const ContentCards = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexWrap: 'wrap',
   paddingTop: 5,
   transition: 'background-color 0.3s ease',
-  width: '1217px',
+  width: '1200px',
+  display: 'grid',
+  gridTemplateColumns: '0.7fr 1fr 0.7fr',
 }));
 
 const ContentCards1 = styled('div')(() => ({
@@ -193,7 +265,6 @@ const ContentCards1 = styled('div')(() => ({
 const ContentNom = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  marginRight: '5rem',
 
   '@media (max-width: 767px)': {
     width: '100%',
@@ -213,6 +284,8 @@ const ContainerNom = styled('div')(() => ({
 }));
 
 const MaxNumber = styled('p')(() => ({
+  fontSize: '16px',
+  textWrap: 'nowrap',
   '@media (max-width: 567px)': {
     flexWrap: 'wrap',
     width: '100%',
@@ -229,8 +302,9 @@ const ContentInput = styled('div')(() => ({
   justifyContent: 'center',
   alignItems: 'center',
   marginLeft: '1.25rem',
-  width: '367px',
+  // width: '500px',
   flex: '1',
+  position: 'relative',
 
   '@media (max-width: 767px)': {
     marginLeft: '0',
@@ -242,7 +316,7 @@ const ContentInput = styled('div')(() => ({
 const ContainerCards = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
-  gap: '2.1875rem',
+  gap: '20px',
   '@media (max-width: 767px)': {
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -251,9 +325,9 @@ const ContainerCards = styled('div')(() => ({
 }));
 
 const BoxContent = styled('div')(() => ({
-  width: '1220px',
+  width: '1200px',
   display: 'flex',
-  gap: '31px',
+  gap: '17px',
   alignItems: 'center',
   marginTop: '0.875rem',
   flexWrap: 'wrap',
@@ -293,22 +367,21 @@ const Input = styled(TextField)(() => ({
 
 const ContentNumber = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
+  fontSize: '16px',
 }));
 
 const Span = styled('span')(() => ({
-  marginLeft: '1.375rem',
+  marginLeft: '10px',
+  textWrap: 'nowrap',
 }));
 
 const NumberCards = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
+  display: 'block',
 }));
 
 const HealthCheck = styled('img')(() => ({
-  width: '16.25rem',
-  height: '4.5625rem',
+  width: '260px',
+  height: '73px',
   flexWrap: 'wrap',
   cursor: 'pointer',
   '@media (max-width: 767px)': {
@@ -357,11 +430,16 @@ const Button1 = styled(Button)(() => ({
 
 const IconContainer = styled('div')(() => ({
   display: 'flex',
-  gap: '0.625rem',
-  marginLeft: '2.1875rem',
+  gap: '10px',
+  marginLeft: '2rem',
   '@media (max-width: 767px)': {
     width: '100%',
     justifyContent: 'center',
     marginLeft: '0',
   },
+}));
+
+const StyleBredcrumbs = styled(Box)(() => ({
+  maxWidth: '1200px',
+  margin: '0 auto',
 }));

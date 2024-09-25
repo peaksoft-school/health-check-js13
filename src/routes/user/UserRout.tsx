@@ -7,7 +7,7 @@ import ServiceClinic from '../../pages/user/serviceClinic/ServiceClinic';
 
 export const USER_ROUTES = [
   {
-    index: true,
+    path: '/',
     element: <Home />,
   },
   {
@@ -30,4 +30,13 @@ export const USER_ROUTES = [
     path: 'contact',
     element: <Contacts />,
   },
+];
+
+export const UserBreadCrumbsData = [
+  { label: 'Главная', href: '/' },
+  { label: 'О клинике', href: 'about-clinic' },
+  { label: 'Услуги', href: 'services' },
+  { label: 'Врачи', href: 'doctors' },
+  { label: 'Прайс', href: 'price' },
+  { label: 'Контакты', href: 'contact' },
 ];
