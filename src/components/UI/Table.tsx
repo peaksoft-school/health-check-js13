@@ -5,14 +5,27 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { Paper, Box, styled } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/customHooks';
+import { getUserInfo } from '../../store/slices/patients/patientsThunk';
 
 type TypesPropsTable<T> = {
   columns: ColumnDef<T>[];
   data: T[];
+  variant?: string;
 };
 
-const Table = <T,>({ columns, data }: TypesPropsTable<T>) => {
+const Table = <T,>({ columns, data, variant }: TypesPropsTable<T>) => {
   if (!data) return;
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const patientInfoPage = (id: number) => {
+    if (variant === 'patients') {
+      dispatch(getUserInfo({ id, navigate }));
+    }
+  };
 
   const table = useReactTable({
     data,
@@ -40,7 +53,7 @@ const Table = <T,>({ columns, data }: TypesPropsTable<T>) => {
 
         <tbody>
           {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
+            <tr key={row.id} onClick={() => patientInfoPage(row.original.id)}>
               {row.getVisibleCells().map(cell => (
                 <td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -81,6 +94,7 @@ const TableStyled = styled('table')({
     borderBottom: '1px solid #ddd',
     padding: '17px',
     fontSize: '13px',
+    cursor: 'pointer',
   },
   '& tbody tr:hover': {
     backgroundColor: '#f1f1f1',

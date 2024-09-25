@@ -4,6 +4,8 @@ import {
   deleteApplicationUser,
   getAllUser,
   postApplication,
+  searchApplication,
+  TypesSearch,
 } from './adminApplicationThunk';
 
 type TApplicationTypes = {
@@ -20,7 +22,8 @@ type TTypes = {
   error: null | any;
   applicationUser: TApplicationTypes[];
   isChecked: boolean;
-  deleteUser: [];
+  deleteUser: any[];
+  search: TypesSearch[];
 };
 
 const initialState: TTypes = {
@@ -29,6 +32,7 @@ const initialState: TTypes = {
   applicationUser: [],
   deleteUser: [],
   isChecked: false,
+  search: [],
 };
 
 export const applicationSlice = createSlice({
@@ -36,20 +40,10 @@ export const applicationSlice = createSlice({
   initialState,
 
   reducers: {
-    selectAllCheck(state, { payload }) {
-      state.isChecked = payload;
-      state.applicationUser = state.applicationUser.map(user => ({
-        ...user,
-        isChecked: payload && user.isProcessed,
-      }));
-    },
     toggleUserCheck(state, { payload }) {
-      state.applicationUser = state.applicationUser.map(user => {
+      state.search = state.search.map(user => {
         if (user.id === payload.id) {
-          if (user.isProcessed) {
-            return { ...user, isChecked: !user.isChecked };
-          }
-          return user;
+          return { ...user, isChecked: !user.isChecked };
         }
         return user;
       });
@@ -60,16 +54,16 @@ export const applicationSlice = createSlice({
 
       state.isChecked = allChecked;
     },
-    deleteAllCheckbox(state) {
-      state.deleteUser = state.applicationUser
-        .filter(application => application.isChecked && application.isProcessed)
-        .map(application => application.id);
 
-      state.applicationUser = state.applicationUser.filter(
-        user => !state.deleteUser.includes(user.id)
-      );
-
-      state.isChecked = false;
+    selectAllCheck(state, { payload }) {
+      state.isChecked = payload;
+      state.search = state.search.map(user => ({
+        ...user,
+        isChecked: payload && user.isProcessed,
+      }));
+      state.deleteUser = state.search
+        .filter(user => user.isChecked && user.isProcessed)
+        .map(user => user.id);
     },
   },
 
@@ -87,6 +81,7 @@ export const applicationSlice = createSlice({
       })
       .addCase(deleteApplicationUser.fulfilled, state => {
         state.isLoading = false;
+        state.isChecked = false;
       })
       .addCase(deleteApplicationUser.rejected, (state, { payload }) => {
         if (payload) {
@@ -117,9 +112,16 @@ export const applicationSlice = createSlice({
         if (payload) {
           state.error = payload;
         }
+      })
+      .addCase(searchApplication.fulfilled, (state, { payload }) => {
+        if (payload) {
+          state.search = payload.map((item: any) => ({
+            ...item,
+            isChecked: false,
+          }));
+        }
       });
   },
 });
 
-export const { selectAllCheck, toggleUserCheck, deleteAllCheckbox } =
-  applicationSlice.actions;
+export const { selectAllCheck, toggleUserCheck } = applicationSlice.actions;

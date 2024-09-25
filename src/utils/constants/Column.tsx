@@ -1,18 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
-import Table from '../../components/UI/Table';
-import pacient from '../constants/pacient.json';
-import Specialist from '../helpers/Specialist';
-import ActionsStatus from '../helpers/Actions';
-import Switcher from '../../components/UI/Switcher';
 import Checkbox from '../../components/UI/CheckBox';
 import Delete from '../../components/UI/admin/Delete';
-import { THUNK } from '../../store/slices/adminApplication/adminApplicationThunk';
-import { store } from '../../store/store';
-import { useDispatch } from 'react-redux';
-import { useAppDispatch } from '../../hooks/customHooks';
-import { selectAllByLocal } from '../../store/slices/adminApplication/adminApplicationSlice';
-import { useRef } from 'react';
-import { current } from '@reduxjs/toolkit';
 
 type BodyTableOneTypes = {
   id?: number;
@@ -28,15 +16,17 @@ type BodyTableOneTypes = {
 
 type BodyTableStatusTypes = {
   id?: number;
-  status?: string | boolean;
-  name: {
-    img?: string;
+  isActive?: boolean;
+  doctor?: {
+    image?: string;
     name?: string;
-    professi?: string;
+    specialization?: string;
   };
-  deport?: string;
-  date?: string;
-  actions?: string;
+  department?: string;
+  scheduleUntil?: string;
+  original?: {
+    id?: number;
+  };
 };
 
 type BodyTablePacientTypes = {
@@ -49,10 +39,10 @@ type BodyTablePacientTypes = {
 
 type BodyTableApplicationTypes = {
   id?: number;
-  name?: string;
+  name?: any;
   phoneNumber?: string;
   date?: string;
-  isProcessing?: boolean;
+  isProceeded?: boolean;
 };
 
 export type CombineTypeTables =
@@ -146,78 +136,6 @@ export const TableOne: ColumnDef<BodyTableOneTypes>[] = [
   },
 ];
 
-export const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
-  {
-    header: '№',
-    accessorKey: 'id',
-  },
-  {
-    header: 'Статус',
-    accessorKey: 'status',
-    cell: () => <Switcher />,
-  },
-  {
-    header: 'Специалист',
-    accessorKey: 'name',
-    cell: ({ cell }: any) => {
-      if (cell) {
-        return <Specialist {...cell} />;
-      }
-    },
-  },
-  {
-    header: 'Отделение',
-    accessorKey: 'deport',
-  },
-  {
-    header: 'Расписание',
-    accessorKey: 'date',
-  },
-  {
-    header: 'Действие',
-    accessorKey: 'actions',
-    cell: () => <ActionsStatus />,
-  },
-];
-
-
-
-export const pacientHeader: ColumnDef<BodyTablePacientTypes>[] = [
-  {
-    header: '№',
-    accessorKey: 'id',
-  },
-  {
-    header: 'Имя Фамилия',
-    accessorKey: 'first_name',
-  },
-  {
-    header: 'Номер телефона',
-    accessorKey: 'phone',
-  },
-  {
-    header: 'Почта',
-    accessorKey: 'email',
-  },
-  {
-    header: 'Дата сдачи',
-    accessorKey: 'date',
-  },
-  {
-    header: 'Действия',
-    accessorKey: 'srfds',
-    cell: () => (
-      <div
-        style={{
-          marginLeft: '26px',
-          cursor: 'pointer',
-        }}>
-        <Delete />
-      </div>
-    ),
-  },
-];
-
-const Column = () => <Table columns={pacientHeader} data={pacient} />;
+const Column = () => <h1>Column</h1>;
 
 export default Column;
