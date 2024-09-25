@@ -9,8 +9,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Notification from './components/UI/Notification.tsx';
 import './index.css';
 import { injectStore } from './configs/axiosInstance.ts';
+import { fileInjectStore } from './configs/axiosInstanceFile.ts';
 
 injectStore(store);
+fileInjectStore(store);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
