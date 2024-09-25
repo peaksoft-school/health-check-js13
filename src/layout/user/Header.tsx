@@ -18,55 +18,10 @@ import Breadcrumbs from '../../components/UI/BreadCrumbs';
 import { UserBreadCrumbsData } from '../../routes/user/UserRout';
 import SearchNavigationModal from '../../components/landingPage/SearchNavigationModal';
 
-const data = [
-  {
-    id: 4,
-    patientFullName: 'Елена Николаева',
-    phoneNumber: '+(996) 56-78-90',
-    email: 'elena@example.com',
-    position: 'Ортопед',
-    doctorFullName: 'Дмитрий Козлов',
-    dateAndTime: '2024-07-04 14:30',
-    status: 'CONFIRMED',
-  },
-  {
-    id: 5,
-    patientFullName: 'Иван Иванов',
-    phoneNumber: '+(996) 12-34-56',
-    email: 'ivan@example.com',
-    position: 'Хирург',
-    doctorFullName: 'Алексей Петров',
-    dateAndTime: '2024-07-05 10:00',
-    status: 'PENDING',
-  },
-  {
-    id: 6,
-    patientFullName: 'Алексей Иванов',
-    phoneNumber: '+(996) 12-34-56',
-    email: 'ivan@example.com',
-    position: 'Хирург',
-    doctorFullName: 'Иван Петров',
-    dateAndTime: '2024-07-05 10:00',
-    status: 'PENDING',
-  },
-  {
-    id: 7,
-    patientFullName: 'Иван Иванов',
-    phoneNumber: '+(996) 12-34-56',
-    email: 'ivan@example.com',
-    position: 'Хирург',
-    doctorFullName: 'Алексей Петров',
-    dateAndTime: '2024-07-05 10:00',
-    status: 'PENDING',
-  },
-];
-
 const Header = () => {
   const dispatch = useAppDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const { searchAllData } = useAppSelector(state => state.userSlice);
-
-  console.log(searchQuery);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const word = event.target.value;
@@ -158,7 +113,7 @@ const Header = () => {
                   />
 
                   <SearchNavigationModal
-                    dataArr={data}
+                    dataArr={searchAllData}
                     searchWord={searchQuery}
                     inputValue={searchQuery}
                   />
