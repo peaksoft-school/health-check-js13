@@ -3,6 +3,9 @@ import Doctor from '../../pages/doctors/Doctors';
 import Home from '../../pages/home/Home';
 import Clinic from '../../pages/user/aboutClinic/Clinic';
 import Price from '../../pages/user/aboutPrice/Price';
+import PersonalData from '../../pages/user/profilePersonalData/PersonalData';
+import ProfileChangePassword from '../../pages/user/profilePersonalData/ProfileChangePassword';
+import ProfilePersonalData from '../../pages/user/profilePersonalData/ProfilePersonalData';
 import ServiceClinic from '../../pages/user/serviceClinic/ServiceClinic';
 
 export const USER_ROUTES = [
@@ -29,6 +32,21 @@ export const USER_ROUTES = [
   {
     path: 'contact',
     element: <Contacts />,
+  },
+
+  {
+    path: 'profile',
+    element: <ProfilePersonalData />,
+    children: [
+      {
+        path: 'pesonalData',
+        element: <PersonalData />,
+      },
+      {
+        path: 'profileChangePassword',
+        element: <ProfileChangePassword />,
+      },
+    ],
   },
 ];
 

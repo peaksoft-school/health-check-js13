@@ -6,7 +6,6 @@ const PrivateRoutes = ({
   component,
   isAuth,
   roles,
-
   fallbackPath,
 }: TIsAuthProps) => {
   const { role } = useAppSelector(state => state.auth);
