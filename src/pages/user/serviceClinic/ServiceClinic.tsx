@@ -2,49 +2,63 @@ import { Box, styled, Typography } from '@mui/material';
 import index from '../../../utils/constants/index.json';
 import Accordeon from '../../../components/UI/Accardeon';
 import accardeonData from '../../../utils/constants/accardeonData.json';
+import { useNavigate } from 'react-router-dom';
 
-const ServiceClinic = () => (
-  <StyledContainer>
-    <StyledContainerMain>
-      <StyledTypography>
-        Наши <StyledSpan>услуги</StyledSpan>
-      </StyledTypography>
-      <StyledBoxService>
-        {index?.map(item => (
-          <StyledServiceBlock key={item.id}>
-            <ImgBox>
-              <img className="img" src={item.img} alt="img" />
-            </ImgBox>
-            <TypographyStyled>{item.name}</TypographyStyled>
-          </StyledServiceBlock>
-        ))}
-      </StyledBoxService>
-      <StyledFAQService>
-        <BoxTextStyled>
-          <BoxText>
-            <StyledTypographyFaq>Часто задаваемые вопросы</StyledTypographyFaq>
-            <Typography className="Typography">
-              Специалисты нашей клиники с удовольствием ответят на все ваши
-              вопросы. Ниже представленны наиболее популярные.
-            </Typography>
-          </BoxText>
-          <StyledBoxAccaredon>
-            {accardeonData?.map(({ id, good, name, inside }) => (
-              <Accordeon key={id} title={name}>
-                <Typography className="good">{good}</Typography>
-                <Ul>
-                  {inside.map(todo => (
-                    <li key={todo.id}>{todo.text}</li>
-                  ))}
-                </Ul>
-              </Accordeon>
-            ))}
-          </StyledBoxAccaredon>
-        </BoxTextStyled>
-      </StyledFAQService>
-    </StyledContainerMain>
-  </StyledContainer>
-);
+const ServiceClinic = () => {
+  const navigate = useNavigate();
+
+  const goInnerPage = (id: number) => {
+    navigate(`${id}/service`);
+    console.log(id);
+  };
+
+  return (
+    <StyledContainer>
+      <StyledContainerMain>
+        <StyledTypography>
+          Наши <StyledSpan>услуги</StyledSpan>
+        </StyledTypography>
+        <StyledBoxService>
+          {index?.map(item => (
+            <StyledServiceBlock
+              onClick={() => goInnerPage(item.id)}
+              key={item.id}>
+              <ImgBox>
+                <img className="img" src={item.img} alt="img" />
+              </ImgBox>
+              <TypographyStyled>{item.name}</TypographyStyled>
+            </StyledServiceBlock>
+          ))}
+        </StyledBoxService>
+        <StyledFAQService>
+          <BoxTextStyled>
+            <BoxText>
+              <StyledTypographyFaq>
+                Часто задаваемые вопросы
+              </StyledTypographyFaq>
+              <Typography className="Typography">
+                Специалисты нашей клиники с удовольствием ответят на все ваши
+                вопросы. Ниже представленны наиболее популярные.
+              </Typography>
+            </BoxText>
+            <StyledBoxAccaredon>
+              {accardeonData?.map(({ id, good, name, inside }) => (
+                <Accordeon key={id} title={name}>
+                  <Typography className="good">{good}</Typography>
+                  <Ul>
+                    {inside.map(todo => (
+                      <li key={todo.id}>{todo.text}</li>
+                    ))}
+                  </Ul>
+                </Accordeon>
+              ))}
+            </StyledBoxAccaredon>
+          </BoxTextStyled>
+        </StyledFAQService>
+      </StyledContainerMain>
+    </StyledContainer>
+  );
+};
 
 export default ServiceClinic;
 
