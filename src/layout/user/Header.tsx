@@ -133,9 +133,6 @@ const Header = () => {
 
 export default Header;
 
-// (Стилдер)
-// ...
-
 const StyledNavLink = styled(NavLink)(() => ({
   color: 'black',
   textDecoration: 'none',
