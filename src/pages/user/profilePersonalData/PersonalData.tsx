@@ -25,7 +25,7 @@ type FormValues = {
 const PersonalData = () => {
   const dispatch = useAppDispatch();
   const { allPersonalData, isLoading } = useAppSelector(
-    (state: RootState) => state.userSlice
+    state => state.userSlice
   );
 
   const {
@@ -49,7 +49,7 @@ const PersonalData = () => {
 
   useEffect(() => {
     dispatch(getPersonalData());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
