@@ -1,0 +1,64 @@
+.horizontal-calendar-container {
+  margin: 50px auto;
+  overflow-x: auto;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(50px, 1fr);
+}
+
+.calendar-column {
+  height: 200px;
+  grid-column: span 3;
+  border: 1px solid #e0e2e7;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  padding: 5px;
+}
+button:hover {
+  border-color: #646cff;
+}
+.doctor-name {
+  font-weight: bold;
+}
+.doctor-specialization {
+  font-size: 20px;
+  color: #959595;
+}
+
+.header {
+  height: 50px;
+}
+
+.large-element {
+  grid-column: span 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.day-header {
+  text-align: left;
+  font-size: 14px;
+}
+
+.today {
+  background-color: red;
+}
+
+.tasks {
+  border-left: 5px solid #1f6ed4;
+  background-color: #dbebff;
+  color: #1f6ed4;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+}
