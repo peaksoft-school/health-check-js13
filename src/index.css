@@ -13,7 +13,7 @@
   margin-inline: auto;
   padding-inline: 20px;
   margin: 10px 0 50px 0;
-  font-family: 'Manrope' sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 .back {
@@ -45,4 +45,88 @@
   min-width: 1200px;
   width: 100%;
   margin: 0 auto;
+}
+
+.ql-container {
+  min-height: 300px;
+  border: none;
+}
+
+.ql-editor {
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 10px;
+}
+
+.ql-toolbar {
+  display: flex;
+  padding: 10px;
+}
+
+.ql-toolbar button {
+  width: 40px !important;
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 40px;
+  font-weight: 100;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+.ql-toolbar .ql-bold {
+  color: #4caf50;
+}
+
+.ql-toolbar .ql-italic {
+  color: #ff9800;
+}
+
+.ql-toolbar .ql-underline {
+  color: #2196f3;
+}
+
+.ql-toolbar .ql-active {
+  background-color: #e0e0e0;
+}
+
+.ql-toolbar .ql-picker {
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.ql-toolbar .ql-picker-options {
+  border-radius: 5px;
+  background-color: #fafafa;
+}
+
+/*! /////////////// */
+.file-upload-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  width: 150px;
+  height: 150px;
+  background: url('./assets/images/AddSpec.png') center center / cover no-repeat;
+}
+
+.file-upload-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.file-upload-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
 }
