@@ -133,11 +133,13 @@ export const changeStatus = createAsyncThunk<any, any, any>(
 
 export const searchSpec = createAsyncThunk<any, any, any>(
   'spec/searchSpec',
-  async (name, { rejectWithValue }) => {
+  async (name, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axiosInstance.get(
-        `/api/users/searchPatients?name=${name}`
+        `/api/doctors/search?word=${name}`
       );
+      console.log(data);
+      dispatch(getSpecialist());
       return data;
     } catch (error) {
       return rejectWithValue(error);

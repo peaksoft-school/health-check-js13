@@ -24,9 +24,4 @@ export const Text = [
     title: 'Контакты',
     to: 'contact',
   },
-  {
-    id: 6,
-    title: 'Zapisi',
-    to: 'zapisi',
-  },
 ];

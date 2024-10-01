@@ -71,6 +71,9 @@ const AddSpecialist = () => {
     dispatch(addSpec({ formData, navigate }));
     reset();
   };
+
+  const handleGoBack = () => navigate(-1);
+
   return (
     <>
       {isLoading && <LoadingComponent />}
@@ -190,11 +193,12 @@ const AddSpecialist = () => {
                     float: 'right',
                   }}>
                   <Button
+                    onClick={handleGoBack}
                     fullWidth
                     type="button"
                     variant="text"
                     style={{ height: '40px' }}>
-                    Добавить
+                    Назад
                   </Button>
                   <Button fullWidth type="submit" style={{ height: '40px' }}>
                     Добавить
@@ -274,7 +278,7 @@ const MiniBlock = styled(Box)(() => ({
     width: '100%',
     borderRadius: '50%',
     height: '100%',
-    cursor: 'pointer', // Добавляем курсор-указатель
+    cursor: 'pointer',
   },
 }));
 
@@ -302,7 +306,6 @@ const BlockThree = styled(Box)(() => ({
   height: '250px',
   display: 'flex',
   alignItems: 'end',
-  border: '1px solid black',
   flexDirection: 'column',
   marginTop: '20px',
 }));

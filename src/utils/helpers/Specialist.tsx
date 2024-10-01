@@ -4,15 +4,17 @@ const Specialist = ({ row }: any) => {
       <>
         <div style={{ width: '40px', height: '40px', cursor: 'pointer' }}>
           <img
-            src={row.original.doctor.image}
+            src={row.original.image}
             style={{ width: '100%', height: '100%', borderRadius: '50%' }}
             alt=""
           />
         </div>
         <div>
-          <div>{row.original.doctor.name}</div>
+          <div>
+            {row.original.firstName} {row.original.lastName}{' '}
+          </div>
           <div style={{ fontSize: '13px', color: 'gray' }}>
-            {row.original.doctor.specialization}
+            {row.original.specialization}
           </div>
         </div>
       </>
