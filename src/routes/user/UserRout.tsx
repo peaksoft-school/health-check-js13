@@ -8,6 +8,7 @@ import PersonalData from '../../pages/user/profilePersonalData/PersonalData';
 import ProfileChangePassword from '../../pages/user/profilePersonalData/ProfileChangePassword';
 import ProfilePersonalData from '../../pages/user/profilePersonalData/ProfilePersonalData';
 import ServiceClinic from '../../pages/user/serviceClinic/ServiceClinic';
+import GetResults from './GetResults';
 
 export const USER_ROUTES = [
   {
@@ -33,6 +34,10 @@ export const USER_ROUTES = [
   {
     path: 'contact',
     element: <Contacts />,
+  },
+  {
+    path: 'results',
+    element: <GetResults />,
   },
 
   {
