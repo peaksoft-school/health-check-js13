@@ -40,7 +40,7 @@ const Header = () => {
     };
   }, [lastScrollTop]);
 
-  const toggleDrawer = (open: boolean) => () => {
+  const toggleDrawer = (open: boolean) => {
     setOpen(open);
   };
 
@@ -120,7 +120,9 @@ const Header = () => {
                   <ButtonClass variant="outlined">
                     получить результаты
                   </ButtonClass>
-                  <Button1 onClick={toggleDrawer(true)}>запись онлайн</Button1>
+                  <Button1 onClick={() => toggleDrawer(true)}>
+                    запись онлайн
+                  </Button1>
                 </ContentButton>
               </BoxContent>
             </ContentCards1>
