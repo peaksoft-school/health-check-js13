@@ -23,17 +23,37 @@ const GetResults: FC = () => {
   const [orderNumber, setOrderNumber] = useState<number | null>(null);
   const [showResults, setShowResults] = useState<boolean>(false);
 
-  const handleSearch = () => {
+  // const handleSearch = () => {
+  //   if (orderNumber) {
+  //     dispatch(fetchResult(orderNumber));
+  //     setShowResults(true);
+  //   } else {
+  //     alert('Vvedite nomer');
+  //   }
+  // };
+
+  const handleSearch = async () => {
     if (orderNumber) {
-      dispatch(fetchResult(orderNumber));
-      setShowResults(true);
+      const resultAction = await dispatch(fetchResult(orderNumber));
+
+      if (fetchResult.fulfilled.match(resultAction)) {
+        const fetchedResult = resultAction.payload;
+        if (!fetchedResult) {
+          alert('Результат с таким номером не найден');
+          setShowResults(false);
+        } else {
+          setShowResults(true);
+        }
+      } else {
+        alert('Ошибка при получении результата');
+      }
     } else {
-      alert('Vvedite nomer');
+      alert('Введите номер');
     }
   };
 
   const handleCloseResults = () => {
-    setShowResults(false); // Закрываем результаты
+    setShowResults(false);
   };
 
   const handleDownloadPDF = () => {
@@ -88,7 +108,7 @@ const GetResults: FC = () => {
               </StyledButtonPrint>
             </ButtonContainer>
           )}
-          <StyledTypography>Вы можете:</StyledTypography>
+          <StyledTypographyTitle>Вы можете:</StyledTypographyTitle>
           <StyledList>
             <ListItem>
               <StyledListItemText primary="Просмотреть свои результаты анализов онлайн, введя в поле слева индивидуальный цифровой код, который указан в верхней части Вашей квитанции под штрих-кодом." />
@@ -100,6 +120,25 @@ const GetResults: FC = () => {
               <StyledListItemTextRed primary="При возникновении проблем с отображением результатов, Вы можете оставить заявку на получение результатов по электронной почте, позвонив в Службу поддержки клиентов по номеру 909 090." />
             </ListItem>
           </StyledList>
+
+          {showResults ? (
+            results.length > 0 ? (
+              <List>
+                {results.map((result, index) => (
+                  <ListItem key={index}>
+                    <StyledListItemText
+                      primary={`Отдел: ${result.departmentEnum}, PDF: ${result.urlPDF}`}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV6Dviw9Xl-75lD9ZfQyBguiUtxrTZ7opDNA&s"
+                alt="Результаты не найдены"
+              />
+            )
+          ) : null}
         </BoxC>
       </BoxI>
     </BoxGroup>
@@ -130,6 +169,7 @@ const BoxA = styled(Box)(() => ({
   height: '207px',
   marginTop: '30px',
   marginRight: '15px',
+  borderRadius: '5px',
 }));
 
 const BoxAb = styled(Box)(() => ({
@@ -166,8 +206,8 @@ const ImgHealthcheck = styled('img')(() => ({
 }));
 
 const BoxB = styled(Box)(() => ({
-  backgroundColor: 'blue',
-  width: '10px',
+  backgroundColor: 'rgba(57, 119, 192, 1)',
+  width: '8px',
 }));
 const BoxC = styled(Box)(() => ({
   padding: '20px',
@@ -177,7 +217,12 @@ const BoxC = styled(Box)(() => ({
   marginTop: '30px',
   marginLeft: '15px',
 }));
+
 const StyledTypography = styled(Typography)(() => ({
+  color: 'rgba(52, 110, 251, 1)',
+}));
+const StyledTypographyTitle = styled(Typography)(() => ({
+  margin: '20px 0',
   color: 'rgba(52, 110, 251, 1)',
 }));
 const StyledList = styled(List)(() => ({

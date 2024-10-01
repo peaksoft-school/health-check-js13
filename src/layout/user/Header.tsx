@@ -1,4 +1,9 @@
-import { Box, InputAdornment, styled, TextField } from '@mui/material';
+import {
+  Box,
+  InputAdornment,
+  styled,
+  TextField,
+} from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
@@ -116,7 +121,11 @@ const Header = () => {
             </ContentCardsFunc>
             <ContentCards1>
               <BoxContent>
-                <HealthCheck src={Medcheck} alt="medcheck" onClick={()=>navigate('/')}/>
+                <HealthCheck
+                  src={Medcheck}
+                  alt="medcheck"
+                  onClick={() => navigate('/')}
+                />
                 {Text.map((item, index) => (
                   <Box key={index}>
                     <Title>
