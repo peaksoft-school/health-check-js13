@@ -3,7 +3,13 @@ import Switcher from '../../../components/UI/Switcher';
 import { useAppDispatch } from '../../../hooks/customHooks';
 import { changeStatus } from '../../../store/slices/adminSpecialist/adminSpecialistThunk';
 
-const SpecialistSwitcher = ({ id, isActive }) => {
+const SpecialistSwitcher = ({
+  id,
+  isActive,
+}: {
+  id: any;
+  isActive: boolean;
+}) => {
   const [isChecked, setChecked] = useState(isActive);
   const dispatch = useAppDispatch();
 

@@ -10,19 +10,21 @@ import {
   styled,
   Box,
 } from '@mui/material';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/UI/Button';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../hooks/customHooks';
-// import { fetchAllAppointments } from '../../../store/user/userThunk';
+import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
+import { fetchAllAppointments } from '../../../store/user/userThunk';
 
 const Appointment: FC = () => {
-  const appointments = useSelector(
-    (state: RootState) => state.appointments.appointments
-  );
-  // const dispatch = useDispatch<AppDispatch>()
+  const { appointments } = useAppSelector(state => state.appointments);
+  console.log(appointments);
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(fetchAllAppointments());
+  }, []);
+  
   return (
     <TableContainerOne>
       <Table aria-label="appointments table">

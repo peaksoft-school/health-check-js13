@@ -4,6 +4,7 @@ import {
   addSpec,
   getDoctorById,
   getSpecialist,
+  searchSpec,
 } from './adminSpecialistThunk';
 import { TFormTypes } from '../../../pages/admin/adminSpecialist/AddSpecialist';
 
@@ -34,6 +35,7 @@ interface SpecialistState {
   error: string | null;
   file: string | undefined;
   infoSpec: any;
+  searches: [];
 }
 
 const initialState: SpecialistState = {
@@ -42,6 +44,7 @@ const initialState: SpecialistState = {
   isLoading: false,
   error: null,
   infoSpec: {},
+  searches: [],
 };
 
 export const specialistSlice = createSlice({
@@ -98,6 +101,16 @@ export const specialistSlice = createSlice({
         state.file = payload.image;
       })
       .addCase(getDoctorById.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(searchSpec.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(searchSpec.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.searches = payload;
+      })
+      .addCase(searchSpec.rejected, state => {
         state.isLoading = false;
       });
   },

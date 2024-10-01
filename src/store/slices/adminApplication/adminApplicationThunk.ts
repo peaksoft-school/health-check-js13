@@ -1,5 +1,4 @@
 import { toastifyMessage } from '../../../utils/helpers/ToastSetting';
-import { store } from '../../store';
 import { axiosInstance } from './../../../configs/axiosInstance';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -163,7 +162,6 @@ export const changeStatusCheckbox = createAsyncThunk<
       const { data } = await axiosInstance.post(
         `/api/applications/${id}?isProceeded=${isProceeded}`
       );
-      // await dispatch(getAllUser());
       await dispatch(searchApplication(searchedValue));
 
       toastifyMessage({

@@ -12,7 +12,6 @@ import { useEffect, useMemo, useState } from 'react';
 import Table from '../../../components/UI/Table';
 import { BodyTableStatusTypes } from '../../../types/table';
 import { ColumnDef } from '@tanstack/react-table';
-import Switcher from '../../../components/UI/Switcher';
 import Specialist from '../../../utils/helpers/Specialist';
 import ActionsStatus from '../../../utils/helpers/Actions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
@@ -25,12 +24,13 @@ import SpecialistSwitcher from './SpecialistSwitcher';
 import { useDebounce } from 'use-debounce';
 
 const AdminSpecialist = () => {
-  const [searches, setSearch] = useState('');
+  const [searche, setSearch] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { spec } = useAppSelector(state => state.spec);
-  const [debounced] = useDebounce(searches, 1000);
 
+  const { searches } = useAppSelector(state => state.spec);
+
+  const [debounced] = useDebounce(searche, 1000);
   useEffect(() => {
     dispatch(getSpecialist());
   }, []);
@@ -63,7 +63,7 @@ const AdminSpecialist = () => {
     {
       header: 'Статус',
       accessorKey: 'status',
-      cell: ({ row }) => <SpecialistSwitcher {...row.original} />,
+      cell: ({ row }: any) => <SpecialistSwitcher {...row.original} />,
     },
     {
       header: 'Специалист',
@@ -81,13 +81,15 @@ const AdminSpecialist = () => {
         const departmentKey = row.original
           .department as keyof typeof translateDepartment;
 
-        if (departmentKey) {
+        if (translateDepartment[departmentKey]) {
           return <p>{translateDepartment[departmentKey]}</p>;
         } else {
-          return <p>Неизвестно</p>;
+          // Если ключ на русском, просто отображаем его напрямую
+          return <p>{row.original.department}</p>;
         }
       },
     },
+
     {
       header: 'Расписание до',
       accessorKey: 'scheduleUntil',
@@ -101,13 +103,14 @@ const AdminSpecialist = () => {
     },
   ];
 
-  const memoSpec = useMemo(() => spec, [spec]);
+  const memoSpec = useMemo(() => searches, [searches]);
 
   return (
     <Container>
       <HeaderContainer>
         <Typography variant="h4">Специалисты</Typography>
         <Button
+          style={{ width: '30%' }}
           variant="contained"
           type="button"
           onClick={() => {
@@ -122,7 +125,7 @@ const AdminSpecialist = () => {
       <Block>
         <Input
           onChange={e => setSearch(e.target.value)}
-          value={searches}
+          value={searche}
           size="small"
           placeholder="Поиск"
           className="inputAdmin"
