@@ -1,5 +1,5 @@
-import { FC, useState, MouseEvent } from 'react';
-import { MenuItem, Box, Button, Popover, styled } from '@mui/material';
+import { FC, useState } from 'react';
+import { Box, styled } from '@mui/material';
 import Medcheck from '../../assets/images/HEALTHCHECK.png';
 import {
   StyledContainer,
@@ -7,32 +7,43 @@ import {
   StyledMapContainer,
   StyledHealthCheck,
   HeaderButton,
-  CustomArrowIcon,
 } from './adminStyle';
 import { links } from '../../utils/constants/adminLinks';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import SelectTwo from '../../components/UI/SelectTwo';
+import { useAppDispatch } from '../../hooks/customHooks';
+import { logout } from '../../store/slices/auth/authSlice';
 
 const AdminHeader: FC = () => {
   const [activeButton, setActiveButton] = useState<string>('Заявки');
-  const [adminOption, setAdminOption] = useState<string>('Администратор');
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+  const [adminOption, setAdminOption] = useState<string>('Администратор'); // состояние для Select
   const handleButtonClick = (text: string) => () => setActiveButton(text);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const handlePopoverOpen = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const options = [
+    {
+      label: 'Администратор',
+      value: 'Администратор',
+    },
+    {
+      label: 'Выйти',
+      value: 'Выйти',
+    },
+  ];
+
+  const handlerChangeHome = (event: any) => {
+    const selectedOption = event.target.value;
+    setAdminOption(selectedOption);
+    switch (selectedOption) {
+      case 'Выйти':
+        dispatch(logout({ navigate }));
+        break;
+
+      default:
+        return;
+    }
   };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleAdminOptionClick = (option: string) => {
-    setAdminOption(option);
-    handlePopoverClose();
-  };
-
-  const open = Boolean(anchorEl);
 
   return (
     <StyledContainer>
@@ -53,38 +64,12 @@ const AdminHeader: FC = () => {
         ))}
       </StyledMapContainer>
       <Box>
-        <Button
-          onClick={handlePopoverOpen}
-          endIcon={
-            <CustomArrowIcon
-              style={{
-                transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
-              }}>
-              <path
-                fill="currentColor"
-                d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"
-              />
-            </CustomArrowIcon>
-          }>
-          {adminOption}
-        </Button>
-        <Popover
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handlePopoverClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}>
-          <Box>
-            <MenuItem onClick={() => handleAdminOptionClick('Администратор')}>
-              Администратор
-            </MenuItem>
-            <MenuItem onClick={() => handleAdminOptionClick('Выход')}>
-              Выход
-            </MenuItem>
-          </Box>
-        </Popover>
+        <SelectTwo
+          style={{ width: '180px', border: 'none' }}
+          options={options}
+          onChange={handlerChangeHome}
+          value={adminOption} // Значение, которое будет отображаться
+        />
       </Box>
     </StyledContainer>
   );

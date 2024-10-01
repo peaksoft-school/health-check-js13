@@ -24,7 +24,7 @@ interface SelectProps {
   placeholder?: string;
 }
 
-const Select = forwardRef<HTMLDivElement, SelectProps>(
+const SelectTwo = forwardRef<HTMLDivElement, SelectProps>(
   (
     {
       disabled,
@@ -63,7 +63,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
   )
 );
 
-export default Select;
+export default SelectTwo;
 
 const StyledDiv = styled('div')(() => ({
   display: 'flex',
@@ -74,17 +74,21 @@ const StyledMySelect = styled(MySelect)(({ theme }) => ({
   width: '490px',
   height: '38px',
   borderRadius: '6px',
-  borderColor: theme.palette.secondary.lightGrey,
+  border: 'none',
   backgroundColor: theme.palette.secondary.daisy,
   transition: 'all 0.3s',
 
+  '& .MuiOutlinedInput-notchedOutline': {
+    border: 'none',
+  },
+
   '&:hover': {
-    borderColor: theme.palette.secondary.darkGrey,
+    border: 'none',
   },
 
   '&.Mui-focused': {
-    borderColor: theme.palette.primary.darkGreen,
-    boxShadow: `0 0 0 1px ${theme.palette.primary.darkGreen}`,
+    border: 'none',
+    boxShadow: 'none',
   },
 
   '&.Mui-disabled': {
@@ -92,7 +96,7 @@ const StyledMySelect = styled(MySelect)(({ theme }) => ({
     color: theme.palette.text.disabled,
 
     '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.action.disabled,
+      border: 'none',
     },
   },
 }));

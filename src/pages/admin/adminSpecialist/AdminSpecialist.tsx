@@ -22,13 +22,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import SpecialistSwitcher from './SpecialistSwitcher';
 import { useDebounce } from 'use-debounce';
+import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 
 const AdminSpecialist = () => {
   const [searche, setSearch] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { searches } = useAppSelector(state => state.spec);
+  const { searches, isLoading } = useAppSelector(state => state.spec);
 
   const [debounced] = useDebounce(searche, 1000);
   useEffect(() => {
@@ -84,7 +85,6 @@ const AdminSpecialist = () => {
         if (translateDepartment[departmentKey]) {
           return <p>{translateDepartment[departmentKey]}</p>;
         } else {
-          // Если ключ на русском, просто отображаем его напрямую
           return <p>{row.original.department}</p>;
         }
       },
@@ -107,6 +107,7 @@ const AdminSpecialist = () => {
 
   return (
     <Container>
+      {isLoading && <LoadingComponent />}
       <HeaderContainer>
         <Typography variant="h4">Специалисты</Typography>
         <Button

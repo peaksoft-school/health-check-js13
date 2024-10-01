@@ -62,10 +62,17 @@ export const patinetsSlice = createSlice({
       .addCase(deletePatinet.rejected, state => {
         state.isLoading = false;
       })
+      .addCase(searchRequest.pending, state => {
+        state.isLoading = true;
+      })
       .addCase(searchRequest.fulfilled, (state, { payload }) => {
         if (payload) {
           state.searches = payload;
         }
+        state.isLoading = false;
+      })
+      .addCase(searchRequest.rejected, state => {
+        state.isLoading = false;
       })
       .addCase(getUserInfo.pending, state => {
         state.isLoading = true;

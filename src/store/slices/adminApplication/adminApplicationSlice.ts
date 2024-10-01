@@ -113,12 +113,22 @@ export const applicationSlice = createSlice({
           state.error = payload;
         }
       })
+      .addCase(searchApplication.pending, state => {
+        state.isLoading = true;
+      })
       .addCase(searchApplication.fulfilled, (state, { payload }) => {
         if (payload) {
           state.search = payload.map((item: any) => ({
             ...item,
             isChecked: false,
           }));
+        }
+        state.isLoading = false;
+      })
+      .addCase(searchApplication.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        if (payload) {
+          state.error = payload;
         }
       });
   },
