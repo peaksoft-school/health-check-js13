@@ -1,3 +1,32 @@
+<<<<<<< HEAD
+import { createSlice } from '@reduxjs/toolkit';
+import { searchGlobalThunk } from './searchThunk';
+
+const initialState = {
+  isLoading: false,
+  searchAllData: [],
+};
+
+export const userApplicationSlice = createSlice({
+  name: 'userSlice',
+  initialState,
+  reducers: {},
+
+  extraReducers: builder => {
+    builder
+      .addCase(searchGlobalThunk.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(searchGlobalThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.searchAllData = action.payload;
+      })
+      .addCase(searchGlobalThunk.rejected, state => {
+        state.isLoading = false;
+      });
+  },
+});
+=======
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Appointment, fetchAllAppointments, fetchAppointmentById } from './userThunk';
 
@@ -50,3 +79,4 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer; 
 export type { AppointmentsState }; 
+>>>>>>> 8c63082c58dcdb9246c4dff9b7377b589086777c

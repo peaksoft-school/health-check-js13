@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { authSlice } from './slices/auth/authSlice';
 import { applicationSlice } from './slices/adminApplication/adminApplicationSlice';
+import { userApplicationSlice } from './user/userSlice';
 import patinetsSlice from './slices/patients/patientsSlice';
 import { specialistSlice } from './slices/adminSpecialist/adminSpecialist';
 import { resultSlice } from './results/resultSlice';
@@ -10,6 +11,7 @@ import { resultSlice } from './results/resultSlice';
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
   [applicationSlice.name]: applicationSlice.reducer,
+  [userApplicationSlice.name]: userApplicationSlice.reducer,
   [patinetsSlice.name]: patinetsSlice.reducer,
   [specialistSlice.name]: specialistSlice.reducer,
   [resultSlice.name]: resultSlice.reducer,

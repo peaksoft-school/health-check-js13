@@ -11,7 +11,7 @@ import GetResults from './GetResults';
 
 export const USER_ROUTES = [
   {
-    index: true,
+    path: '/',
     element: <Home />,
   },
   {
@@ -53,4 +53,13 @@ export const USER_ROUTES = [
       },
     ],
   },
+];
+
+export const UserBreadCrumbsData = [
+  { label: 'Главная', href: '/' },
+  { label: 'О клинике', href: 'about-clinic' },
+  { label: 'Услуги', href: 'services' },
+  { label: 'Врачи', href: 'doctors' },
+  { label: 'Прайс', href: 'price' },
+  { label: 'Контакты', href: 'contact' },
 ];
