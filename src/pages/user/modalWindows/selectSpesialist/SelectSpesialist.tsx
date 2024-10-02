@@ -2,7 +2,7 @@ import { IconButton, styled } from '@mui/material';
 import BackArrow from '../../../../assets/icons/chevron-left.svg';
 import ChooseSpecialist from './ChooseSpecialist';
 
-const SelectSpesialist = ({ setActiveComponent }) => {
+const SelectSpesialist = ({ setActiveComponent }: any) => {
   return (
     <MenuContainer>
       <BoxHeaderStyle>

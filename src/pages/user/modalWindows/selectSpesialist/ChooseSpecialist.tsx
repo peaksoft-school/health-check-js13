@@ -1,15 +1,22 @@
 import { styled, Button, Box } from '@mui/material';
 import { FC, useState } from 'react';
 import IconUser from '../../../../assets/icons/GroupPeopleIconsvg.svg';
+// import { format } from 'date-fns';
+// import { ru } from 'date-fns/locale';
+import { useAppDispatch } from '../../../../hooks/customHooks';
+import {
+  setSelectSpesialist,
+  Spesialist,
+} from '../../../../store/slices/siteBarMenu/sitBarMenu';
 
 const Doctors = [
   {
     id: 1,
-    name: 'Манак Елена',
-    ophthalmologist: 'Окулист',
+    name: 'Иван Иванов',
+    ophthalmologist: 'Кардиолог',
     image:
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
-    title: 'Ближайшее время для записи 12 января, среда:',
+    day: '12 января',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
   },
   {
@@ -18,46 +25,56 @@ const Doctors = [
     ophthalmologist: 'Окулист',
     image:
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
-    title: 'Ближайшее время для записи 12 января, среда:',
+    day: '12 января:',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
   },
   {
     id: 3,
-    name: 'Манак Елена',
-    ophthalmologist: 'Окулист',
+    name: 'Петр Петров',
+    ophthalmologist: 'Дерматолог',
     image:
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
-    title: 'Ближайшее время для записи 12 января, среда:',
+    day: '12 января',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
   },
 ];
 
 const ChooseSpecialist: FC = () => {
-  const [selectedTimesByDoctor, setSelectedTimesByDoctor] = useState<{
-    [key: number]: string[];
-  }>({});
+  const dispatch = useAppDispatch();
+
+  // const formatDate = (inputDate: string) => {
+  //   const date = new Date(inputDate);
+
+  //   // Форматируем дату
+  //   return format(date, 'EEEE, d MMMM', { locale: ru });
+  // };
+
+  const [selectedTime, setSelectedTime] = useState<{
+    doctorId: number | null;
+    time: string | null;
+  }>({
+    doctorId: null,
+    time: null,
+  });
 
   const handleTimeClick = (doctorId: number, time: string) => {
-    const doctorTimes = selectedTimesByDoctor[doctorId] || [];
+    setSelectedTime({ doctorId, time });
 
-    if (doctorTimes.includes(time)) {
-      setSelectedTimesByDoctor({
-        ...selectedTimesByDoctor,
-        [doctorId]: doctorTimes.filter(t => t !== time),
-      });
-    } else {
-      setSelectedTimesByDoctor({
-        ...selectedTimesByDoctor,
-        [doctorId]: [...doctorTimes, time],
-      });
-    }
-
-    // Находим данные врача по его ID
     const selectedDoctor = Doctors.find(doctor => doctor.id === doctorId);
-    if (selectedDoctor) {
-      console.log('Выбранное время:', time);
-      console.log('Данные врача:', selectedDoctor);
-    }
+
+    const doctor: Spesialist = {
+      id: selectedDoctor?.id,
+      name: selectedDoctor?.name,
+      position: selectedDoctor?.ophthalmologist,
+      img: selectedDoctor?.image,
+    };
+
+    const data = {
+      time: time,
+      day: selectedDoctor?.day,
+    };
+
+    dispatch(setSelectSpesialist(doctor));
   };
 
   return (
@@ -71,21 +88,38 @@ const ChooseSpecialist: FC = () => {
         </BoxHeaderStyle>
         {Doctors.map(item => (
           <ContentCards key={item.id}>
-            <Box className="cardsMenu">
-              <img src={item.image} alt="image" />
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '20px',
+              }}>
+              <img
+                style={{
+                  width: '56px',
+                  height: '56px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  marginRight: '15px',
+                }}
+                src={item.image}
+                alt="image"
+              />
               <div>
-                <h3 className="name">{item.name}</h3>
-                <p className="ophthalmologist">{item.ophthalmologist}</p>
-                <div className="contentStar">
+                <h3 style={{ margin: 0 }}>{item.name}</h3>
+                <p style={{ margin: 0, color: '#7D7D7D' }}>
+                  {item.ophthalmologist}
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                   <span style={{ color: '#FFD700', marginRight: '5px' }}>
                     ★★★★★
                   </span>
                   <p style={{ margin: 0 }}>166</p>
                 </div>
               </div>
-            </Box>
+            </div>
             <p style={{ fontSize: '14px', marginBottom: '20px' }}>
-              {item.title}
+              Ближайшее время для записи {item.day}, среда:
             </p>
             <TimeButtonContainer>
               {item.times.map(time => (
@@ -93,7 +127,8 @@ const ChooseSpecialist: FC = () => {
                   key={time}
                   onClick={() => handleTimeClick(item.id, time)}
                   selected={
-                    selectedTimesByDoctor[item.id]?.includes(time) || false
+                    selectedTime.doctorId === item.id &&
+                    selectedTime.time === time
                   }>
                   {time}
                 </StyledButton>
@@ -125,33 +160,6 @@ const ContentCards = styled('div')(() => ({
   backgroundColor: '#FFFFFF',
   border: '1px solid #E0E0E0',
   marginBottom: '6px',
-  '.cardsMenu': {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '20px',
-    img: {
-      width: '56px',
-      height: '56px',
-      borderRadius: '50%',
-      objectFit: 'cover',
-      marginRight: '15px',
-    },
-    '.name': {
-      margin: 0,
-      fontSize: '14px',
-      fontWeight: '550',
-    },
-    '.ophthalmologist': {
-      margin: 0,
-      color: '#7D7D7D',
-      fontSize: '13px',
-      fontWeight: '500',
-    },
-    '.contentStar': {
-      display: 'flex',
-      alignItems: 'center',
-    },
-  },
 }));
 
 const TimeButtonContainer = styled('div')(() => ({

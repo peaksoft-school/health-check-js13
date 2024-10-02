@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Icons from '../../../assets/icons/TodoListIcon.svg';
 import IconDate from '../../../assets/icons/CalendarDays.svg';
 import GroupPeopleIcon from '../../../assets/icons/GroupPeopleIconsvg.svg';
+import { useAppSelector } from '../../../hooks/customHooks';
 
 const MainMenu = ({
   handleClose,
@@ -10,6 +11,9 @@ const MainMenu = ({
   handleSelectChange,
   setActiveComponent,
 }) => {
+  const { selectSpesialist } = useAppSelector(state => state.siteBarMenu);
+  console.log(selectSpesialist);
+
   return (
     <MenuContainer>
       <BoxHeaderStyle>
@@ -49,12 +53,22 @@ const MainMenu = ({
         </MySelect>
       </SelectContainer>
 
-      <ButtonContainer onClick={() => setActiveComponent('specialist')}>
-        <IconContainer>
-          <GroupPeopleIcon />
-        </IconContainer>
-        <p>Выбрать специалиста</p>
-      </ButtonContainer>
+      <SpesialistContainer>
+        {!selectSpesialist ? (
+          <div>
+            <img src={selectSpesialist.img} alt="" />
+            <p>{selectSpesialist.name}</p>
+            <p>{selectSpesialist.position}</p>
+          </div>
+        ) : (
+          <ButtonContainer onClick={() => setActiveComponent('specialist')}>
+            <IconContainer>
+              <GroupPeopleIcon />
+            </IconContainer>
+            <p>Выбрать специалиста</p>
+          </ButtonContainer>
+        )}
+      </SpesialistContainer>
 
       <ButtonContainer onClick={() => setActiveComponent('date')}>
         <IconContainer>
@@ -133,4 +147,8 @@ const ButtonContainer = styled('button')(() => ({
     marginLeft: '12px',
     fontSize: '20px',
   },
+}));
+
+const SpesialistContainer = styled('div')(() => ({
+  width: '95%',
 }));
