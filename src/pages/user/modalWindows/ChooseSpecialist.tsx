@@ -1,5 +1,7 @@
-import { styled, Button } from '@mui/material';
+import { styled, Button, Box } from '@mui/material';
 import { FC, useState } from 'react';
+import IconUser from '../../../assets/icons/GroupPeopleIconsvg.svg';
+// import BackArrow from '../../../icons/chevron-left.svg';
 
 const Doctors = [
   {
@@ -66,6 +68,9 @@ const ChooseSpecialist: FC = () => {
           aria-label="back">
           <BackArrow />
         </IconButton> */}
+          <IconContainer>
+            <IconUser />
+          </IconContainer>
           <H2>Любой свободный специалист</H2>
         </BoxHeaderStyle>
         {Doctors.map(item => (
@@ -175,10 +180,20 @@ const BoxHeaderStyle = styled('div')(() => ({
 }));
 
 const H2 = styled('h2')(() => ({
-  fontSize: '18px',
-  fontWeight: '700',
-  color: '#048741',
+  fontSize: '16px',
+  fontWeight: '550',
+  // color: '#048741',
   margin: '0 auto',
   // margin: '0 0 0 30px',
-  paddingRight: '50px',
+  paddingRight: '25px',
+
+}));
+
+const IconContainer = styled(Box)(() => ({
+  backgroundColor: '#f3f1f1',
+  padding: '7px',
+  borderRadius: '50%',
+  width: '40px',
+  height: '40px',
+  marginLeft: '10px',
 }));

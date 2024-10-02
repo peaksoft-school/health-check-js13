@@ -11,7 +11,7 @@ const SelectSpesialist = ({ setActiveComponent }) => {
           aria-label="back">
           <BackArrow />
         </IconButton>
-        <H2>Выбор специалиста</H2>
+        <H2> Выбор специалиста</H2>
       </BoxHeaderStyle>
       <div>
         <ChooseSpecialist />
