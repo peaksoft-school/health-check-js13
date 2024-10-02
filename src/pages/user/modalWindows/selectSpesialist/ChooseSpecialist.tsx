@@ -52,10 +52,12 @@ const ChooseSpecialist: FC = () => {
       });
     }
 
-    console.log('Тандалган убакыттар:', {
-      ...selectedTimesByDoctor,
-      [doctorId]: [...doctorTimes, time],
-    });
+    // Находим данные врача по его ID
+    const selectedDoctor = Doctors.find(doctor => doctor.id === doctorId);
+    if (selectedDoctor) {
+      console.log('Выбранное время:', time);
+      console.log('Данные врача:', selectedDoctor);
+    }
   };
 
   return (
