@@ -75,7 +75,7 @@ const Footer = () => (
         <StyledContactContainer>
           <StyledContactContent>
             {Text.map(item => (
-              <Typography>{item.title}</Typography>
+              <Typography key={item.id}>{item.title}</Typography>
             ))}
           </StyledContactContent>
         </StyledContactContainer>
