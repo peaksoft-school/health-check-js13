@@ -1,6 +1,6 @@
 import { styled, Button, Box } from '@mui/material';
 import { FC, useState } from 'react';
-import IconUser from '../../../assets/icons/GroupPeopleIconsvg.svg';
+import IconUser from '../../../../assets/icons/GroupPeopleIconsvg.svg';
 
 const Doctors = [
   {
