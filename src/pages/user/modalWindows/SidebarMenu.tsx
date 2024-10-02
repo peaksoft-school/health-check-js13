@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, styled, SelectChangeEvent } from '@mui/material';
+import { Drawer, styled } from '@mui/material';
 import MainMenu from './MainMenu';
 import SelectSpesialist from './selectSpesialist/SelectSpesialist';
 import SelectDate from './selectData/SelectDate';
@@ -10,12 +10,7 @@ interface SidebarMenuProps {
 }
 
 const SidebarMenu: React.FC<SidebarMenuProps> = ({ open, toggleDrawer }) => {
-  const [selectedValue, setSelectedValue] = useState<string>('');
   const [activeComponent, setActiveComponent] = useState<string>('main');
-
-  const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    setSelectedValue(event.target.value);
-  };
 
   const handleClose = () => {
     setActiveComponent('main');
@@ -37,8 +32,6 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ open, toggleDrawer }) => {
         return (
           <MainMenu
             handleClose={handleClose}
-            selectedValue={selectedValue}
-            handleSelectChange={handleSelectChange}
             setActiveComponent={setActiveComponent}
           />
         );

@@ -8,7 +8,7 @@ export type Spesialist = {
 };
 
 export interface SpesialistState {
-  selectChoose: string;
+  selectChoose: string | null;
   selectSpesialist: Spesialist | null;
   selectData: object;
 }
@@ -29,8 +29,18 @@ export const siteBarMenu = createSlice({
     clearSelectSpesialist: state => {
       state.selectSpesialist = null;
     },
+    setSelectChoose: (state, action) => {
+      state.selectChoose = action.payload;
+    },
+    clearSelectChoose: state => {
+      state.selectChoose = null;
+    },
   },
 });
 
-export const { setSelectSpesialist, clearSelectSpesialist } =
-  siteBarMenu.actions;
+export const {
+  setSelectSpesialist,
+  clearSelectSpesialist,
+  setSelectChoose,
+  clearSelectChoose,
+} = siteBarMenu.actions;

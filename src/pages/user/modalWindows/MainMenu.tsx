@@ -1,18 +1,45 @@
-import { IconButton, Box, styled, MenuItem, Select } from '@mui/material';
+import {
+  IconButton,
+  Box,
+  styled,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Icons from '../../../assets/icons/TodoListIcon.svg';
 import IconDate from '../../../assets/icons/CalendarDays.svg';
 import GroupPeopleIcon from '../../../assets/icons/GroupPeopleIconsvg.svg';
-import { useAppSelector } from '../../../hooks/customHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
+import {
+  clearSelectChoose,
+  clearSelectSpesialist,
+  setSelectChoose,
+} from '../../../store/slices/siteBarMenu/sitBarMenu';
+import { useState } from 'react';
 
-const MainMenu = ({
-  handleClose,
-  selectedValue,
-  handleSelectChange,
-  setActiveComponent,
-}) => {
-  const { selectSpesialist } = useAppSelector(state => state.siteBarMenu);
-  console.log(selectSpesialist);
+const MainMenu = ({ handleClose, setActiveComponent }) => {
+  const [selectedValue, setSelectedValue] = useState<string>('');
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    setSelectedValue(event.target.value);
+  };
+
+  const { selectSpesialist, selectChoose } = useAppSelector(
+    state => state.siteBarMenu
+  );
+  const dispatch = useAppDispatch();
+
+  const handleDelete = () => {
+    dispatch(clearSelectSpesialist());
+  };
+
+  const handleDeleteChoose = () => {
+    setSelectedValue('');
+    dispatch(clearSelectChoose());
+  };
+
+  dispatch(setSelectChoose(selectedValue));
+  console.log(selectChoose);
 
   return (
     <MenuContainer>
@@ -27,38 +54,47 @@ const MainMenu = ({
         <IconContainer>
           <Icons />
         </IconContainer>
-        <MySelect
-          value={selectedValue}
-          onChange={e => handleSelectChange(e)}
-          displayEmpty
-          fullWidth
-          MenuProps={{
-            PaperProps: {
-              style: {
-                maxHeight: 218,
-                overflowY: 'auto',
+        {selectChoose ? (
+          <div>
+            {' '}
+            add
+            <button onClick={handleDeleteChoose}>delete</button>
+          </div>
+        ) : (
+          <MySelect
+            value={selectedValue}
+            onChange={e => handleSelectChange(e)}
+            displayEmpty
+            fullWidth
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 218,
+                  overflowY: 'auto',
+                },
               },
-            },
-          }}>
-          <MenuItem value="" disabled style={{ display: 'none' }}>
-            Выбрать услуги
-          </MenuItem>
-          <MenuItem value="Анестезиология">Анестезиология</MenuItem>
-          <MenuItem value="Вакцинация">Вакцинация</MenuItem>
-          <MenuItem value="Гинекология">Гинекология</MenuItem>
-          <MenuItem value="Дерматология">Дерматология</MenuItem>
-          <MenuItem value="Кардиология">Кардиология</MenuItem>
-          <MenuItem value="Неврология">Неврология</MenuItem>
-          <MenuItem value="Нейрохирургия">Нейрохирургия</MenuItem>
-        </MySelect>
+            }}>
+            <MenuItem value="" disabled style={{ display: 'none' }}>
+              Выбрать услуги
+            </MenuItem>
+            <MenuItem value="Анестезиология">Анестезиология</MenuItem>
+            <MenuItem value="Вакцинация">Вакцинация</MenuItem>
+            <MenuItem value="Гинекология">Гинекология</MenuItem>
+            <MenuItem value="Дерматология">Дерматология</MenuItem>
+            <MenuItem value="Кардиология">Кардиология</MenuItem>
+            <MenuItem value="Неврология">Неврология</MenuItem>
+            <MenuItem value="Нейрохирургия">Нейрохирургия</MenuItem>
+          </MySelect>
+        )}
       </SelectContainer>
 
       <SpesialistContainer>
-        {!selectSpesialist ? (
+        {selectSpesialist ? (
           <div>
-            <img src={selectSpesialist.img} alt="" />
-            <p>{selectSpesialist.name}</p>
-            <p>{selectSpesialist.position}</p>
+            <img src={selectSpesialist?.img} alt="" />
+            <p>{selectSpesialist?.name}</p>
+            <p>{selectSpesialist?.position}</p>
+            <button onClick={handleDelete}>delete</button>
           </div>
         ) : (
           <ButtonContainer onClick={() => setActiveComponent('specialist')}>
