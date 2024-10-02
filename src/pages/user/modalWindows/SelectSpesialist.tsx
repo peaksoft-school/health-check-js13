@@ -1,5 +1,6 @@
 import { IconButton, styled } from '@mui/material';
 import BackArrow from '../../../assets/icons/chevron-left.svg';
+import ChooseSpecialist from './ChooseSpecialist';
 
 const SelectSpesialist = ({ setActiveComponent }) => {
   return (
@@ -12,7 +13,9 @@ const SelectSpesialist = ({ setActiveComponent }) => {
         </IconButton>
         <H2>Выбор специалиста</H2>
       </BoxHeaderStyle>
-      <div>Здесь будет отображаться контент для выбора специалиста</div>
+      <div>
+        <ChooseSpecialist />
+      </div>
     </MenuContainer>
   );
 };
