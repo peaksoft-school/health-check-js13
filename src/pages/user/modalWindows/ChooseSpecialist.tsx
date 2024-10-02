@@ -73,16 +73,8 @@ const ChooseSpecialist: FC = () => {
               <img src={item.image} alt="image" />
               <div>
                 <h3 className="name">{item.name}</h3>
-                <p
-                  style={{
-                    margin: 0,
-                    color: '#7D7D7D',
-                    fontSize: '13px',
-                    fontWeight: '500',
-                  }}>
-                  {item.ophthalmologist}
-                </p>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <p className="ophthalmologist">{item.ophthalmologist}</p>
+                <div className="contentStar">
                   <span style={{ color: '#FFD700', marginRight: '5px' }}>
                     ★★★★★
                   </span>
@@ -146,6 +138,16 @@ const ContentCards = styled('div')(() => ({
       margin: 0,
       fontSize: '14px',
       fontWeight: '550',
+    },
+    '.ophthalmologist': {
+      margin: 0,
+      color: '#7D7D7D',
+      fontSize: '13px',
+      fontWeight: '500',
+    },
+    '.contentStar': {
+      display: 'flex',
+      alignItems: 'center',
     },
   },
 }));
