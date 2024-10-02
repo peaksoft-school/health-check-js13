@@ -1,9 +1,4 @@
-import {
-  Box,
-  InputAdornment,
-  styled,
-  TextField,
-} from '@mui/material';
+import { Box, InputAdornment, styled, TextField } from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
@@ -169,7 +164,7 @@ const StyledNavLink = styled(NavLink)(() => ({
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
-  zIndex: 999,
+  zIndex: 1999,
   fontFamily: '"Poppins", sans-serif',
 }));
 
@@ -182,13 +177,14 @@ const Content = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  width:"100%",
 }));
 
 const ContentCardsFunc = styled('div')(() => ({
+  width: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100%',
   backgroundColor: '#fff',
 }));
 

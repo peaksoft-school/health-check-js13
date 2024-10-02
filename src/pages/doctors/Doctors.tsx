@@ -1,45 +1,54 @@
 import { Box, styled, Typography } from '@mui/material';
 import doctorsData from '../../utils/constants/doctorsData.json';
 import Button from '../../components/UI/Button';
+import { useNavigate } from 'react-router-dom';
 
-const Doctor = () => (
-  <Container>
-    <StyledBox>
-      <Typography className="title" variant="h3">
-        Наши <span className="span">врачи</span>
-      </Typography>
-      <TypographyStyled>
-        Попасть в команду медицинской клиники «Medical Clinic» <br /> могут
-        только лучшие специалисты с многолетней практикой и доказанным опытом.
-      </TypographyStyled>
-      <TypographyStyled>
-        Мы развиваемся, учимся и оттачиваем мастерство, <br /> стажируемся в
-        ведущих университетах Европы, чтобы еще на шаг стать ближе к
-        совершенству.
-      </TypographyStyled>
-      {doctorsData.map(({ id, title, options }) => (
-        <StyledBlock key={id}>
-          <Typography className="titlebig">{title}</Typography>
-          <Box className="inBlock">
-            {options.map(({ id, img, name, specialist }) => (
-              <StyledInBlock key={id}>
-                <img className="imgOne" src={img} alt={name} />
-                <Typography className="text">{name}</Typography>
-                <Typography className="text">{specialist}</Typography>
-                <Button variant="outlined">Записаться на прием</Button>
-              </StyledInBlock>
-            ))}
-          </Box>
-        </StyledBlock>
-      ))}
-      <Typography className="book">
-        В нашей клинике работают:{' '}
-        <span className="booch">более 30 специалистов</span>
-        <span className="write">Показать больше</span>
-      </Typography>
-    </StyledBox>
-  </Container>
-);
+const Doctor = () => {
+  const navigate = useNavigate();
+  const goInnerPage = (id: number) => {
+    navigate(`${id}/infoDoctor`);
+  };
+  return (
+    <Container>
+      <StyledBox>
+        <Typography className="title" variant="h3">
+          Наши <span className="span">врачи</span>
+        </Typography>
+        <TypographyStyled>
+          Попасть в команду медицинской клиники «Medical Clinic» <br /> могут
+          только лучшие специалисты с многолетней практикой и доказанным опытом.
+        </TypographyStyled>
+        <TypographyStyled>
+          Мы развиваемся, учимся и оттачиваем мастерство, <br /> стажируемся в
+          ведущих университетах Европы, чтобы еще на шаг стать ближе к
+          совершенству.
+        </TypographyStyled>
+        {doctorsData.map(({ id, title, options }) => (
+          <StyledBlock key={id}>
+            <Typography className="titlebig">{title}</Typography>
+            <Box className="inBlock">
+              {options.map(({ id, img, name, specialist }) => (
+                <StyledInBlock key={id}>
+                  <img className="imgOne" src={img} alt={name} />
+                  <Typography className="text">{name}</Typography>
+                  <Typography className="text">{specialist}</Typography>
+                  <Button variant="outlined" onClick={() => goInnerPage(id)}>
+                    Записаться на прием
+                  </Button>
+                </StyledInBlock>
+              ))}
+            </Box>
+          </StyledBlock>
+        ))}
+        <Typography className="book">
+          В нашей клинике работают:{' '}
+          <span className="booch">более 30 специалистов</span>
+          <span className="write">Показать больше</span>
+        </Typography>
+      </StyledBox>
+    </Container>
+  );
+};
 
 export default Doctor;
 
