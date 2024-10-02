@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Drawer, styled, SelectChangeEvent } from '@mui/material';
 import MainMenu from './MainMenu';
-import SelectSpesialist from './SelectSpesialist';
+import SelectSpesialist from './selectSpesialist/SelectSpesialist';
 import SelectDate from './selectData/SelectDate';
 
 interface SidebarMenuProps {
