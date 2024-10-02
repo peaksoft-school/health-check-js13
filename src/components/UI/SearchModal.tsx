@@ -78,9 +78,3 @@ const MyButton = styled.button`
     background-color: #d7e2ea;
   }
 `;
-
-const StatusDisplay = styled.div`
-  margin-top: 10px;
-  font-size: 16px;
-  color: #333;
-`;
