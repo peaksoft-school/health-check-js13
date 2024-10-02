@@ -1,7 +1,6 @@
 import { styled, Button, Box } from '@mui/material';
 import { FC, useState } from 'react';
 import IconUser from '../../../assets/icons/GroupPeopleIconsvg.svg';
-// import BackArrow from '../../../icons/chevron-left.svg';
 
 const Doctors = [
   {
@@ -63,11 +62,6 @@ const ChooseSpecialist: FC = () => {
     <ChooseSpecialistContainer>
       <div>
         <BoxHeaderStyle>
-          {/* <IconButton
-          onClick={() => setActiveComponent('main')}
-          aria-label="back">
-          <BackArrow />
-        </IconButton> */}
           <IconContainer>
             <IconUser />
           </IconContainer>
@@ -146,7 +140,6 @@ const ContentCards = styled('div')(() => ({
   backgroundColor: '#FFFFFF',
   border: '1px solid #E0E0E0',
   marginBottom: '6px',
-  // boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
 }));
 
 const TimeButtonContainer = styled('div')(() => ({
@@ -182,11 +175,8 @@ const BoxHeaderStyle = styled('div')(() => ({
 const H2 = styled('h2')(() => ({
   fontSize: '16px',
   fontWeight: '550',
-  // color: '#048741',
   margin: '0 auto',
-  // margin: '0 0 0 30px',
   paddingRight: '25px',
-
 }));
 
 const IconContainer = styled(Box)(() => ({
