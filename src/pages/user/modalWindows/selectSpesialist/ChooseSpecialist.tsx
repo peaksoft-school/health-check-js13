@@ -1,6 +1,6 @@
 import { styled, Button, Box } from '@mui/material';
 import { FC, useState } from 'react';
-import IconUser from '../../../../assets/icons/GroupPeopleIconsvg.svg';
+import IconUser from '../../../assets/icons/GroupPeopleIconsvg.svg';
 
 const Doctors = [
   {
@@ -71,26 +71,17 @@ const ChooseSpecialist: FC = () => {
         </BoxHeaderStyle>
         {Doctors.map(item => (
           <ContentCards key={item.id}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: '20px',
-              }}>
-              <img
-                style={{
-                  width: '56px',
-                  height: '56px',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  marginRight: '15px',
-                }}
-                src={item.image}
-                alt="image"
-              />
+            <Box className="cardsMenu">
+              <img src={item.image} alt="image" />
               <div>
-                <h3 style={{ margin: 0 }}>{item.name}</h3>
-                <p style={{ margin: 0, color: '#7D7D7D' }}>
+                <h3 className="name">{item.name}</h3>
+                <p
+                  style={{
+                    margin: 0,
+                    color: '#7D7D7D',
+                    fontSize: '13px',
+                    fontWeight: '500',
+                  }}>
                   {item.ophthalmologist}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -100,7 +91,7 @@ const ChooseSpecialist: FC = () => {
                   <p style={{ margin: 0 }}>166</p>
                 </div>
               </div>
-            </div>
+            </Box>
             <p style={{ fontSize: '14px', marginBottom: '20px' }}>
               {item.title}
             </p>
@@ -142,6 +133,23 @@ const ContentCards = styled('div')(() => ({
   backgroundColor: '#FFFFFF',
   border: '1px solid #E0E0E0',
   marginBottom: '6px',
+  '.cardsMenu': {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '20px',
+    img: {
+      width: '56px',
+      height: '56px',
+      borderRadius: '50%',
+      objectFit: 'cover',
+      marginRight: '15px',
+    },
+    '.name': {
+      margin: 0,
+      fontSize: '14px',
+      fontWeight: '550',
+    },
+  },
 }));
 
 const TimeButtonContainer = styled('div')(() => ({
