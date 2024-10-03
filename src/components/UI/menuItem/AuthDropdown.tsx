@@ -49,8 +49,7 @@ export default function AuthDropdown() {
   }, [open]);
 
   const logoutFn = () => {
-    dispatch(logout());
-    navigate('/');
+    dispatch(logout({ navigate }));
   };
   const toPersone = () => {
     navigate('profile/pesonalData');

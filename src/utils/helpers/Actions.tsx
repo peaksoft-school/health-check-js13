@@ -3,7 +3,7 @@ import UpdateIcon from '../../assets/icons/UpdateIcon.svg';
 import Delete from '../../components/UI/admin/Delete';
 import { deleteDoctore } from '../../store/slices/adminSpecialist/adminSpecialistThunk';
 
-const ActionsStatus = ({ row }: any) => {
+const ActionsStatus = ({ row, searche }: any) => {
   const navigate = useNavigate();
 
   const updateSpec = () => {
@@ -22,7 +22,7 @@ const ActionsStatus = ({ row }: any) => {
         <UpdateIcon />
       </div>
       <Delete
-        value=""
+        value={searche}
         name={`${row.original.firstName} ${row.original.lastName}`}
         variant="spec"
         deleteFn={deleteDoctore}

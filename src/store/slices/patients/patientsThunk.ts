@@ -86,3 +86,32 @@ export const getUserInfo = createAsyncThunk<any, any, any>(
     }
   }
 );
+
+export const addResult = createAsyncThunk<any, any, any>(
+  'patients/addResult',
+  async (
+    { data: value, id, openModal, setOpenResultBlock },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await axiosInstance.post(`/api/results/${id}`, value);
+      console.log(data);
+
+      toastifyMessage({
+        message: data.message,
+        status: 'success',
+        duration: 2000,
+      });
+      openModal();
+      setOpenResultBlock(true);
+      return data;
+    } catch (error) {
+      toastifyMessage({
+        message: 'Что то пошло не так, попробуйте еще раз',
+        status: 'error',
+        duration: 1500,
+      });
+      return rejectWithValue(error);
+    }
+  }
+);

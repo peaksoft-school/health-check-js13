@@ -29,12 +29,12 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     {
       disabled,
       options,
-      value,
+      value = '', // Устанавливаем начальное значение по умолчанию
       onChange,
       label,
       fullWidth,
       style,
-      placeholder,
+      placeholder = 'Выберите значение', // Можно передать placeholder как значение по умолчанию
       ...rest
     },
     ref
@@ -45,14 +45,17 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       </Typography>
 
       <StyledMySelect
-        value={value}
+        value={value} // Используем value вместо defaultValue
         fullWidth={fullWidth}
         onChange={onChange}
         disabled={disabled}
         inputRef={ref}
-        defaultValue={placeholder}
+        displayEmpty
         style={style}
         {...rest}>
+        <MenuItem disabled value="">
+          {placeholder}
+        </MenuItem>
         {options.map(item => (
           <MenuItem key={item.value} value={item.value}>
             {item.label}

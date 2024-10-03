@@ -70,20 +70,24 @@ const SpecInfo = () => {
       dispatch(getDoctorById(Number(id)));
     }
   }, [id, dispatch]);
-
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   useEffect(() => {
     if (infoSpec) {
       reset(infoSpec);
 
       setQuillValue(infoSpec?.description || '');
     }
-  }, [infoSpec, reset]);
+  }, [infoSpec, reset, id]);
 
   const handlerChangeSelectValue = (event: any) => {
     setValue('department', event.target.value);
   };
 
   const handlerQuillChange = (content: string) => {
+    console.log(content, 'content');
+
     setQuillValue(content);
     setValue('description', content);
   };
@@ -218,6 +222,7 @@ const SpecInfo = () => {
                     fullWidth
                     type="button"
                     variant="text"
+                    onClick={handleGoBack}
                     style={{ height: '40px' }}>
                     Отмена
                   </Button>

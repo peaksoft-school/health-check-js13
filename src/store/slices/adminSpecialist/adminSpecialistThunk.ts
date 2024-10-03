@@ -4,13 +4,13 @@ import { TFormTypes } from '../../../pages/admin/adminSpecialist/AddSpecialist';
 import { toastifyMessage } from '../../../utils/helpers/ToastSetting';
 import { axiosInstance } from './../../../configs/axiosInstance';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { DoctorUpdate } from '../../../pages/admin/adminSpecialist/SpecInfo';
 
 export const getSpecialist = createAsyncThunk(
   'spec/getSpecialist',
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get('/api/doctors');
+      console.log(data, 'data');
       return data;
     } catch (error) {
       return rejectWithValue(error);
@@ -24,7 +24,8 @@ export const addSpec = createAsyncThunk(
     {
       formData,
       navigate,
-    }: { formData: TFormTypes; navigate: NavigateFunction },
+      reset,
+    }: { formData: TFormTypes; navigate: NavigateFunction; reset: any },
     { rejectWithValue }
   ) => {
     console.log(formData);
@@ -35,6 +36,7 @@ export const addSpec = createAsyncThunk(
         status: 'success',
         duration: 1500,
       });
+      reset();
       navigate(-1);
       return responce.data;
     } catch (error) {
@@ -50,7 +52,7 @@ export const addSpec = createAsyncThunk(
 
 export const addFile = createAsyncThunk(
   'spec/addFile',
-  async (file: File, { rejectWithValue }) => {
+  async (file: any, { rejectWithValue }) => {
     const formData = new FormData();
     if (file) {
       formData.append('file', file);
@@ -83,7 +85,7 @@ export const getDoctorById = createAsyncThunk(
 export const updateSpec = createAsyncThunk<any, any, any>(
   'spec/updateSpec',
   async ({ data, navigate }, { rejectWithValue }) => {
-    console.log(data)
+    console.log(data);
     try {
       const responce = await axiosInstance.put(
         `/api/doctors/${data.id}/update`,
@@ -105,6 +107,21 @@ export const deleteDoctore = createAsyncThunk<any, any, any>(
       const { data } = await axiosInstance.delete(
         `/api/doctors/${deleteUser[0]}`
       );
+      dispatch(searchSpec(value));
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const searchSpec = createAsyncThunk<any, any, any>(
+  'spec/searchSpec',
+  async (name, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/doctors/search?word=${name}`
+      );
+      console.log(data);
       dispatch(getSpecialist());
       return data;
     } catch (error) {
@@ -115,28 +132,12 @@ export const deleteDoctore = createAsyncThunk<any, any, any>(
 
 export const changeStatus = createAsyncThunk<any, any, any>(
   'spec/status',
-  async ({ id, checked }, { rejectWithValue, dispatch }) => {
+  async ({ id, checked, searche }, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axiosInstance.put(
         `/api/doctors/${id}/status?isActive=${checked}`
       );
-      dispatch(getSpecialist());
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
-
-export const searchSpec = createAsyncThunk<any, any, any>(
-  'spec/searchSpec',
-  async (name, { rejectWithValue, dispatch }) => {
-    try {
-      const { data } = await axiosInstance.get(
-        `/api/doctors/search?word=${name}`
-      );
-      console.log(data);
-      dispatch(getSpecialist());
+      dispatch(searchSpec(searche));
       return data;
     } catch (error) {
       return rejectWithValue(error);

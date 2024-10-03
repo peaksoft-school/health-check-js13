@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  addResult,
   deletePatinet,
   getPatients,
   getUserInfo,
   searchRequest,
 } from './patientsThunk';
+import { addFile } from '../adminSpecialist/adminSpecialistThunk';
 
 export type TPatients = {
   fullName: string;
@@ -31,6 +33,7 @@ type TInitialState = {
   error: null | {};
   searches: any[];
   getUser: Types | null;
+  pdfFile: any;
 };
 
 const initialState: TInitialState = {
@@ -39,12 +42,17 @@ const initialState: TInitialState = {
   error: null,
   searches: [],
   getUser: null,
+  pdfFile: [],
 };
 
 export const patinetsSlice = createSlice({
   name: 'patients',
   initialState,
-  reducers: {},
+  reducers: {
+    addPdfFile(state, { payload }) {
+      state.pdfFile = payload;
+    },
+  },
 
   extraReducers(builder) {
     builder
@@ -86,8 +94,26 @@ export const patinetsSlice = createSlice({
           state.error = payload;
         }
         state.isLoading = false;
+      })
+      .addCase(addFile.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(addFile.fulfilled, state => {
+        state.isLoading = false;
+      })
+      .addCase(addFile.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(addResult.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(addResult.fulfilled, state => {
+        state.isLoading = false;
+      })
+      .addCase(addResult.rejected, state => {
+        state.isLoading = false;
       });
   },
 });
-
+export const { addPdfFile } = patinetsSlice.actions;
 export default patinetsSlice;

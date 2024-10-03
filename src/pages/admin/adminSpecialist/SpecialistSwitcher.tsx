@@ -6,17 +6,20 @@ import { changeStatus } from '../../../store/slices/adminSpecialist/adminSpecial
 const SpecialistSwitcher = ({
   id,
   isActive,
+  searche,
 }: {
   id: any;
   isActive: boolean;
+  searche: string;
 }) => {
   const [isChecked, setChecked] = useState(isActive);
   const dispatch = useAppDispatch();
 
   const handleToggle = (checked: any) => {
     setChecked(checked);
-    dispatch(changeStatus({ id, checked }));
+    dispatch(changeStatus({ id, checked, searche }));
   };
+
   useEffect(() => {
     setChecked(isActive);
   }, [isActive]);

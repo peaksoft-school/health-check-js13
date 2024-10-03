@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   addFile,
   addSpec,
+  changeStatus,
   getDoctorById,
   getSpecialist,
   searchSpec,
@@ -111,6 +112,15 @@ export const specialistSlice = createSlice({
       })
       .addCase(searchSpec.rejected, state => {
         state.isLoading = false;
-      });
+      })
+      // .addCase(changeStatus.pending, state => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(changeStatus.fulfilled, state => {
+      //   state.isLoading = false;
+      // })
+      // .addCase(changeStatus.pending, state => {
+      //   state.isLoading = false;
+      // });
   },
 });
