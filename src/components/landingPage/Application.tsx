@@ -14,10 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { useState } from 'react';
 import Close from '../../assets/icons/CloseIcon.svg';
 import Gogle from '../../assets/icons/gogle.svg';
-import {
-  postApplication,
-  PropspostApplication,
-} from '../../store/slices/adminApplication/adminApplicationThunk';
+import { postApplication } from '../../store/slices/adminApplication/adminApplicationThunk';
 
 interface IAplicationProps {
   name?: string;

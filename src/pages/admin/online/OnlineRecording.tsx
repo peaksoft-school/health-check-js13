@@ -19,32 +19,6 @@ import { useForm } from 'react-hook-form';
 import Select from '../../../components/UI/Select';
 import RepeatDaysButtons from '../../../components/UI/RepeatDaysButtons';
 import TimeInput from '../../../components/UI/TimeInput';
-// import SearchInput from '../../../components/UI/SearchInput';
-// import SmallDatePicker from '../../../components/UI/SmallDatePicker';
-// import { MySelect } from '@mui/material';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { RootState } from '../../../store/store';
-// import { postOnlineRecording } from '../../../store/slices/adminApplication/adminOnlineRecordingThunk';
-// import { useDispatch, useSelector } from 'react-redux';
-
-// !!!!!!!
-// const dispatch = useDispatch();
-// const { loading, error, successMessage } = useSelector(
-//   (state: RootState) => state.onlineRecording
-// );
-
-// const handleSubmit = () => {
-//   dispatch(postOnlineRecording());
-// };
-
-// const OnlineRecordingComponent = () => {
-//   const dispatch = useDispatch();
-//   const onlineRecordingData = useSelector((state: RootState) => state.onlineRecording);
-
-//   const handlePost = () => {
-//     dispatch(postOnlineRecording());
-//   }}
-//
 
 const OnlineRecording: FC = () => {
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
@@ -73,12 +47,6 @@ const OnlineRecording: FC = () => {
     setTimeValue(newTime);
     console.log(newTime);
   };
-
-  // const optionss = [
-  //   { value: 'option1', label: 'Option 1' },
-  //   { value: 'option2', label: 'Option 2' },
-  //   { value: 'option3', label: 'Option 3' },
-  // ];
 
   const options = [
     { id: 1, value: 'specialist1', label: 'Анестезиология' },
@@ -210,16 +178,7 @@ const OnlineRecording: FC = () => {
                               onChange={handleTimeChange}
                             />
                           </div>
-                          {/* <Select
-                            options={optionsDoctorsChase}
-                            label="Интервал часов"
-                          /> */}
-                          {/* <MuiSelect
-                            options={optionsDoctorsChase}
-                            value={selectedValue}
-                            onChange={handleSelectChange}
-                            style={{ marginTop: '20px' }}
-                          /> */}
+
                           <SelectStyled
                             options={optionsDoctorsChase}
                             value={selectedValue}
@@ -255,11 +214,6 @@ const OnlineRecording: FC = () => {
                             Отменить
                           </ButtonStyled>
                           <ButtonStyled>опубликовать</ButtonStyled>
-                          {/* <Button onClick={handleSubmit} disabled={loading}>
-                            {loading ? 'Отправка...' : 'Отправить'}
-                          </Button>
-                          {error && <p style={{ color: 'red' }}>{error}</p>}
-                          {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>} */}
                         </div>
                       </CardsContainer>
                     </ModalContent>
@@ -439,14 +393,13 @@ const Repetitions = styled('span')({
 });
 
 const SelectStyled = styled(Select)({
-  '& .MuiOutlinedInput-notchedOutline': {    
+  '& .MuiOutlinedInput-notchedOutline': {
     // minWidth: '290px',
     // minHeight: '38px',
     width: '290px',
     height: '38px',
-  }
+  },
 });
-
 
 const Skin = styled('p')({
   margin: '20px 0 0 0',

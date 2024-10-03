@@ -63,7 +63,7 @@ const SignIn = () => {
 
   return (
     <>
-      {isLoading && <LoadingComponent />}
+      {!isLoading && <LoadingComponent />}
       <Container>
         <h2>ВОЙТИ</h2>
 

@@ -4,27 +4,37 @@ import { Modal as MuiModal } from '@mui/material';
 import Button from '../Button';
 import Korzina from '../../../assets/icons/Korzina.svg';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
+import { AsyncThunkAction } from '@reduxjs/toolkit';
 
 type PropsDelete = {
-  deleteFn?: (ids: string[]) => void;
+  deleteFn?: (params: {
+    deleteUser: string[];
+    value: string;
+  }) => AsyncThunkAction<any, void, {}>;
   variant?: string;
+  disabled?: boolean;
+  value: string;
 };
 
-type I = {
-  isDisabled: boolean;
-};
-
-const DeleteSelected = ({ deleteFn, variant }: PropsDelete) => {
-  const { isChecked, deleteUser } = useAppSelector(store => store.application);
+const DeleteSelected = ({ deleteFn, variant, value }: PropsDelete) => {
+  const { deleteUser, isChecked } = useAppSelector(store => store.application);
   const [toggleModal, setToggleModal] = useState(false);
-
   const dispatch = useAppDispatch();
 
+  const getIds = () => {
+    if (variant === 'applications') {
+      return { deleteUser, value };
+    }
+
+    return { deleteUser: [], value: '' };
+  };
   const toggleModalHandler = () => setToggleModal(prev => !prev);
 
   const deleteHandler = () => {
-    if (variant === 'applications') {
-      dispatch(deleteFn(deleteUser));
+    if (variant === 'applications' && deleteUser.length) {
+      deleteFn && dispatch(deleteFn({ deleteUser, value }));
+    } else {
+      deleteFn && dispatch(deleteFn(getIds()));
     }
     toggleModalHandler();
   };
