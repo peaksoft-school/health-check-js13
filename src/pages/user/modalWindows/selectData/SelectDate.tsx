@@ -1,21 +1,12 @@
 import { useState } from 'react';
 import { styled } from '@mui/material';
-import Entry from './Entry';
+import Entry from '../continue/Entry';
 import CalendarData from './CalendarData';
 
 const SelectDate = ({ setActiveComponent, handleClose }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleContinueClick = ({
-    currentYear,
-    currentMonth,
-    selectedDate,
-    selectedTime,
-  }) => {
-    console.log('Selected Date:', selectedDate);
-    console.log('Selected Month:', currentMonth);
-    console.log('Selected Year:', currentYear);
-    console.log('Selected Time:', selectedTime);
+  const handleContinueClick = () => {
     setIsSubmitted(prev => !prev);
   };
 

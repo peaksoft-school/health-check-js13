@@ -4,13 +4,23 @@ import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import Button from '../../../../components/UI/Button';
 import { useEffect, useState } from 'react';
 import BackArrow from '../../../../assets/icons/chevron-left.svg';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/customHooks';
+import { setSelectData } from '../../../../store/slices/siteBarMenu/sitBarMenu';
 
 const CalendarData = ({ setActiveComponent, handleContinueClick }) => {
+  const dispatch = useAppDispatch();
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
-  const [selectedDate, setSelectedDate] = useState(today.getDate());
+  const [selectedDay, setSelectedDay] = useState(today.getDate());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+
+  const { selectData } = useAppSelector(state => state.siteBarMenu);
+
+  console.log(selectData);
 
   const months = [
     'Январь',
@@ -26,6 +36,7 @@ const CalendarData = ({ setActiveComponent, handleContinueClick }) => {
     'Ноябрь',
     'Декабрь',
   ];
+
   const timeSlots = [
     '9:30',
     '11:10',
@@ -38,9 +49,17 @@ const CalendarData = ({ setActiveComponent, handleContinueClick }) => {
     '16:40',
     '15:20',
   ];
+
   const weekDays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+  const fullWeekDays = [
+    'Воскресенье',
+    'Понедельник',
+    'Вторник',
+    'Среда',
+    'Четверг',
+    'Пятница',
+    'Суббота',
+  ];
 
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
@@ -61,7 +80,7 @@ const CalendarData = ({ setActiveComponent, handleContinueClick }) => {
   };
 
   const handleDayClick = (day: number) => {
-    setSelectedDate(day);
+    setSelectedDay(day);
   };
 
   useEffect(() => {
@@ -69,9 +88,9 @@ const CalendarData = ({ setActiveComponent, handleContinueClick }) => {
       today.getMonth() === currentMonth &&
       today.getFullYear() === currentYear
     ) {
-      setSelectedDate(today.getDate());
+      setSelectedDay(today.getDate());
     } else {
-      setSelectedDate(null);
+      setSelectedDay(null);
     }
   }, [currentMonth, currentYear]);
 
@@ -82,6 +101,20 @@ const CalendarData = ({ setActiveComponent, handleContinueClick }) => {
   const handleTimeClick = (time: string) => {
     setSelectedTime(time);
   };
+
+  const selectedDate = new Date(currentYear, currentMonth, selectedDay);
+  const currentDayOfWeek = fullWeekDays[selectedDate.getDay()];
+
+  useEffect(() => {
+    dispatch(
+      setSelectData({
+        moon: `${months[currentMonth]}`,
+        week: `${currentDayOfWeek}`,
+        day: selectedDay,
+        hours: `${selectedTime}`,
+      })
+    );
+  }, [selectedDay, selectedTime]);
 
   return (
     <>
@@ -129,7 +162,7 @@ const CalendarData = ({ setActiveComponent, handleContinueClick }) => {
           {[...Array(daysInMonth)].map((_, index) => (
             <Grid item xs={1.71} key={index}>
               <DayButton
-                isSelected={selectedDate === index + 1}
+                isSelected={selectedDay === index + 1}
                 onClick={() => handleDayClick(index + 1)}>
                 {index + 1}
               </DayButton>
@@ -154,14 +187,7 @@ const CalendarData = ({ setActiveComponent, handleContinueClick }) => {
 
       <Button
         sx={{ width: '96%', marginTop: '30px' }}
-        onClick={() =>
-          handleContinueClick({
-            currentYear,
-            currentMonth,
-            selectedDate,
-            selectedTime,
-          })
-        }>
+        onClick={() => handleContinueClick()}>
         Продолжить
       </Button>
     </>

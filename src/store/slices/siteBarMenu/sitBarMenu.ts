@@ -1,22 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type Spesialist = {
-  id: number | undefined;
+  id?: number | undefined;
   name: string | undefined;
   position: string | undefined;
-  img: string | undefined;
+  image: string | undefined;
+  reiting: {
+    star: string | undefined;
+    num: number | undefined;
+  };
+  times: string[] | undefined;
+  day: string | undefined;
 };
+
+export interface SelectData {
+  moon: string;
+  week: string;
+  day: number;
+  hours: string;
+}
 
 export interface SpesialistState {
   selectChoose: string | null;
   selectSpesialist: Spesialist | null;
-  selectData: object;
+  selectData: SelectData | null;
 }
 
 const initialState: SpesialistState = {
   selectChoose: '',
   selectSpesialist: null,
-  selectData: {},
+  selectData: null,
 };
 
 export const siteBarMenu = createSlice({
@@ -29,11 +42,19 @@ export const siteBarMenu = createSlice({
     clearSelectSpesialist: state => {
       state.selectSpesialist = null;
     },
-    setSelectChoose: (state, action) => {
+
+    setSelectChoose: (state, action: PayloadAction<string>) => {
       state.selectChoose = action.payload;
     },
     clearSelectChoose: state => {
       state.selectChoose = null;
+    },
+
+    setSelectData: (state, action: PayloadAction<SelectData>) => {
+      state.selectData = action.payload;
+    },
+    clearSelectData: state => {
+      state.selectData = null;
     },
   },
 });
@@ -43,4 +64,8 @@ export const {
   clearSelectSpesialist,
   setSelectChoose,
   clearSelectChoose,
+  setSelectData,
+  clearSelectData,
 } = siteBarMenu.actions;
+
+export default siteBarMenu.reducer;

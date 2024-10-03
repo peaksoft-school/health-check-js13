@@ -1,8 +1,6 @@
 import { styled, Button, Box } from '@mui/material';
 import { FC, useState } from 'react';
 import IconUser from '../../../../assets/icons/GroupPeopleIconsvg.svg';
-// import { format } from 'date-fns';
-// import { ru } from 'date-fns/locale';
 import { useAppDispatch } from '../../../../hooks/customHooks';
 import {
   setSelectSpesialist,
@@ -18,6 +16,10 @@ const Doctors = [
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
     day: '12 января',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
+    reiting: {
+      star: '★★★★★',
+      num: 166,
+    },
   },
   {
     id: 2,
@@ -27,6 +29,10 @@ const Doctors = [
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
     day: '12 января:',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
+    reiting: {
+      star: '★★★★★',
+      num: 166,
+    },
   },
   {
     id: 3,
@@ -36,19 +42,15 @@ const Doctors = [
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
     day: '12 января',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
+    reiting: {
+      star: '★★★★★',
+      num: 166,
+    },
   },
 ];
 
 const ChooseSpecialist: FC = () => {
   const dispatch = useAppDispatch();
-
-  // const formatDate = (inputDate: string) => {
-  //   const date = new Date(inputDate);
-
-  //   // Форматируем дату
-  //   return format(date, 'EEEE, d MMMM', { locale: ru });
-  // };
-
   const [selectedTime, setSelectedTime] = useState<{
     doctorId: number | null;
     time: string | null;
@@ -61,16 +63,21 @@ const ChooseSpecialist: FC = () => {
     setSelectedTime({ doctorId, time });
 
     const selectedDoctor = Doctors.find(doctor => doctor.id === doctorId);
+    // const data = {
+    //   time: time,
+    //   day: selectedDoctor?.day,
+    // };
 
     const doctor: Spesialist = {
       id: selectedDoctor?.id,
       name: selectedDoctor?.name,
       position: selectedDoctor?.ophthalmologist,
-      img: selectedDoctor?.image,
-    };
-
-    const data = {
-      time: time,
+      image: selectedDoctor?.image,
+      reiting: {
+        star: selectedDoctor?.reiting.star,
+        num: selectedDoctor?.reiting.num,
+      },
+      times: selectedDoctor?.times,
       day: selectedDoctor?.day,
     };
 
@@ -112,9 +119,9 @@ const ChooseSpecialist: FC = () => {
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <span style={{ color: '#FFD700', marginRight: '5px' }}>
-                    ★★★★★
+                    {item.reiting?.star}
                   </span>
-                  <p style={{ margin: 0 }}>166</p>
+                  <p style={{ margin: 0 }}>{item.reiting?.num}</p>
                 </div>
               </div>
             </div>

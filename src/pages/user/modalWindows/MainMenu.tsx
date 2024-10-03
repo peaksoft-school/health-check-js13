@@ -10,24 +10,29 @@ import CloseIcon from '@mui/icons-material/Close';
 import Icons from '../../../assets/icons/TodoListIcon.svg';
 import IconDate from '../../../assets/icons/CalendarDays.svg';
 import GroupPeopleIcon from '../../../assets/icons/GroupPeopleIconsvg.svg';
+import CorzinkaIcon from '../../../assets/icons/Korzina.svg';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import {
   clearSelectChoose,
+  clearSelectData,
   clearSelectSpesialist,
   setSelectChoose,
 } from '../../../store/slices/siteBarMenu/sitBarMenu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Button from '../../../components/UI/Button';
 
 const MainMenu = ({ handleClose, setActiveComponent }) => {
+  const dispatch = useAppDispatch();
+  const { selectSpesialist, selectChoose, selectData } = useAppSelector(
+    state => state.siteBarMenu
+  );
+  const displayContinue = selectSpesialist && selectChoose && selectData;
+
   const [selectedValue, setSelectedValue] = useState<string>('');
+
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
     setSelectedValue(event.target.value);
   };
-
-  const { selectSpesialist, selectChoose } = useAppSelector(
-    state => state.siteBarMenu
-  );
-  const dispatch = useAppDispatch();
 
   const handleDelete = () => {
     dispatch(clearSelectSpesialist());
@@ -38,8 +43,13 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
     dispatch(clearSelectChoose());
   };
 
-  dispatch(setSelectChoose(selectedValue));
-  console.log(selectChoose);
+  const handleDeletedata = () => {
+    dispatch(clearSelectData());
+  };
+
+  useEffect(() => {
+    dispatch(setSelectChoose(selectedValue));
+  }, [selectedValue]);
 
   return (
     <MenuContainer>
@@ -55,11 +65,13 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
           <Icons />
         </IconContainer>
         {selectChoose ? (
-          <div>
-            {' '}
-            add
-            <button onClick={handleDeleteChoose}>delete</button>
-          </div>
+          <>
+            <p style={{ fontSize: '18px' }}>{selectChoose}</p>
+
+            <KorzinkaStyle onClick={handleDeleteChoose}>
+              <CorzinkaIcon />
+            </KorzinkaStyle>
+          </>
         ) : (
           <MySelect
             value={selectedValue}
@@ -90,12 +102,32 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
 
       <SpesialistContainer>
         {selectSpesialist ? (
-          <div>
-            <img src={selectSpesialist?.img} alt="" />
-            <p>{selectSpesialist?.name}</p>
-            <p>{selectSpesialist?.position}</p>
-            <button onClick={handleDelete}>delete</button>
-          </div>
+          <>
+            <StyleImg src={selectSpesialist?.image} alt="" />
+
+            <SpesialContainer>
+              <p>{selectSpesialist?.name}</p>
+              <div>{selectSpesialist?.position}</div>
+              <div
+                style={{
+                  fontSize: '14px',
+                }}>
+                <span
+                  style={{
+                    color: '#FFD700',
+                    marginRight: '5px',
+                    fontSize: '18px',
+                  }}>
+                  {selectSpesialist.reiting.star}
+                </span>
+                <span>{selectSpesialist.reiting.num}</span>
+              </div>
+            </SpesialContainer>
+
+            <KorzinkaStyle onClick={handleDelete}>
+              <CorzinkaIcon />
+            </KorzinkaStyle>
+          </>
         ) : (
           <ButtonContainer onClick={() => setActiveComponent('specialist')}>
             <IconContainer>
@@ -106,12 +138,38 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
         )}
       </SpesialistContainer>
 
-      <ButtonContainer onClick={() => setActiveComponent('date')}>
+      <SpesialistContainer>
         <IconContainer>
           <IconDate />
         </IconContainer>
-        <p>Выбрать дату и время</p>
-      </ButtonContainer>
+        {selectData ? (
+          <>
+            <DataContainer>
+              <p>
+                {selectData.week}, {selectData.day} {selectData.moon}
+              </p>
+              <div>{selectData.hours}</div>
+            </DataContainer>
+
+            <KorzinkaStyle onClick={handleDeletedata}>
+              <CorzinkaIcon />
+            </KorzinkaStyle>
+          </>
+        ) : (
+          <ButtonContainer onClick={() => setActiveComponent('date')}>
+            <p>Выбрать дату и время</p>
+          </ButtonContainer>
+        )}
+      </SpesialistContainer>
+
+      <Button
+        sx={{
+          width: '96%',
+          marginTop: '30px',
+          display: !ёdisplayContinue ? 'none' : '',
+        }}>
+        Продолжить
+      </Button>
     </MenuContainer>
   );
 };
@@ -149,9 +207,9 @@ const SelectContainer = styled(Box)(() => ({
   marginTop: '10px',
   backgroundColor: '#FFFFFF',
   height: '72px',
-  padding: '15px',
   width: '95%',
   borderRadius: '15px',
+  fontFamily: 'sans-serif',
 }));
 
 const IconContainer = styled(Box)(() => ({
@@ -160,6 +218,7 @@ const IconContainer = styled(Box)(() => ({
   borderRadius: '50%',
   width: '40px',
   height: '40px',
+  margin: '0 15px',
 }));
 
 const MySelect = styled(Select)(() => ({
@@ -168,16 +227,12 @@ const MySelect = styled(Select)(() => ({
   },
 }));
 
-const ButtonContainer = styled('button')(() => ({
+const ButtonContainer = styled('div')(() => ({
+  height: '72px',
+  width: '95%',
+  border: 'none',
   display: 'flex',
   alignItems: 'center',
-  marginTop: '10px',
-  backgroundColor: '#FFFFFF',
-  height: '72px',
-  padding: '15px',
-  width: '95%',
-  borderRadius: '15px',
-  border: 'none',
 
   '& p': {
     marginLeft: '12px',
@@ -187,4 +242,37 @@ const ButtonContainer = styled('button')(() => ({
 
 const SpesialistContainer = styled('div')(() => ({
   width: '95%',
+  display: 'flex',
+  alignItems: 'center',
+  marginTop: '10px',
+  backgroundColor: '#FFFFFF',
+  borderRadius: '15px',
+  height: '72px',
+  fontFamily: 'sans-serif',
+}));
+
+const StyleImg = styled('img')(() => ({
+  width: '36px',
+  borderRadius: '50%',
+  margin: '0 15px',
+}));
+
+const KorzinkaStyle = styled('button')(() => ({
+  position: 'absolute',
+  border: 'none',
+  backgroundColor: 'white',
+  right: '20px',
+  width: '36px',
+}));
+
+const DataContainer = styled('div')(() => ({
+  '& p ': { whiteSpace: 'nowrap', color: 'gray', fontSize: '14px' },
+  '& div': {
+    fontSize: '18px',
+  },
+}));
+
+const SpesialContainer = styled('div')(() => ({
+  '& p ': { whiteSpace: 'nowrap', fontSize: '16px' },
+  '& div': { whiteSpace: 'nowrap', color: 'gray', fontSize: '13px' },
 }));

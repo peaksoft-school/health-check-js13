@@ -53,6 +53,6 @@ const CustomDrawer = styled(Drawer)(() => ({
     height: '100%',
     position: 'fixed',
     right: 0,
-    backgroundColor: '#f3f1f1',
+    backgroundColor: '#dbe4eb',
   },
 }));
