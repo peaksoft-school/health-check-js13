@@ -166,7 +166,7 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
         sx={{
           width: '96%',
           marginTop: '30px',
-          display: !ёdisplayContinue ? 'none' : '',
+          display: !displayContinue ? 'none' : '',
         }}>
         Продолжить
       </Button>
