@@ -6,7 +6,6 @@ import {
   getSpecialist,
   searchSpec,
 } from './adminSpecialistThunk';
-import { TFormTypes } from '../../../pages/admin/adminSpecialist/AddSpecialist';
 
 type BodyTableStatusTypes = {
   image?: any;

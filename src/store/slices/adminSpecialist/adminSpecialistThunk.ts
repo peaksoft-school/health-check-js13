@@ -80,13 +80,10 @@ export const getDoctorById = createAsyncThunk(
   }
 );
 
-export const updateSpec = createAsyncThunk<DoctorUpdate, any, any>(
+export const updateSpec = createAsyncThunk<any, any, any>(
   'spec/updateSpec',
-  async (
-    { data, navigate }: { data: DoctorUpdate; navigate: any },
-    { rejectWithValue }
-  ) => {
-    console.log(data);
+  async ({ data, navigate }, { rejectWithValue }) => {
+    console.log(data)
     try {
       const responce = await axiosInstance.put(
         `/api/doctors/${data.id}/update`,

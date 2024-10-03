@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Button from '../../../components/UI/Button';
 import Input from '../../../components/UI/Input';
 import { Box, InputAdornment, styled } from '@mui/material';
@@ -8,15 +8,22 @@ import Table from '../../../components/UI/Table';
 import { TableOne } from '../../../utils/constants/Column';
 import tableOne from '../../../utils/constants/tableOne.json';
 import Schedule from '../schedule/Schedule';
+import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
+import { getAppoitments } from '../../../store/slices/adminAppoitments/adminAppoitmentThunk';
 
 const OnlineRecording: FC = () => {
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
-
+  const { appointmentArr } = useAppSelector(state => state.appoitment);
   const handleOptionClick = (option: string) => {
     setActiveOption(option);
   };
-
+  const dispatch = useAppDispatch();
   const isOnlineRecordingActive = activeOption === 'Онлайн-запись';
+
+  console.log(appointmentArr);
+  useEffect(() => {
+    dispatch(getAppoitments());
+  }, [dispatch]);
 
   return (
     <BackgroundContainer>

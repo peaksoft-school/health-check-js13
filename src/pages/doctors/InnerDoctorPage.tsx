@@ -1,11 +1,43 @@
 import { Box, styled, Typography } from '@mui/material';
-import Doctors from '../../assets/images/Doctors.png';
 import Button from '../../components/UI/Button';
 import ArrowIcons from '../../assets/icons/ArrowIcons.svg';
 import FeedbackSlider from '../../components/landingPage/FeedbackSlider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
+import { useEffect } from 'react';
+import { doctorGetId } from '../../store/slices/doctorSlice/doctorThunk';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 const InnerDoctorPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+
+  const { doctorsOne } = useAppSelector(state => state.doctor);
+  console.log(doctorsOne);
+
+  const translateDepartment = {
+    CARDIOLOGY: 'Кардиология',
+    DERMATOLOGY: 'Дерматология',
+    NEUROLOGY: 'Неврология',
+    ORTHOPEDICS: 'Ортопедия',
+    PEDIATRICS: 'Педиатрия',
+    PSYCHIATRY: 'Психиатрия',
+    UROLOGY: 'Урология',
+    GYNECOLOGY: 'Гинекология',
+    GASTROENTEROLOGY: 'Гастроэнтерология',
+    ONCOLOGY: 'Онкология',
+  };
+
+  useEffect(() => {
+    dispatch(doctorGetId(id));
+  }, []);
+
+  const modules = {
+    toolbar: [],
+  };
+  const description = doctorsOne?.description || '';
+
   return (
     <>
       <Block>
@@ -16,7 +48,7 @@ const InnerDoctorPage = () => {
               fontSize={36}
               fontWeight={600}
               margin={'15px 0'}>
-              Гаталуский Артур
+              {doctorsOne.firstName} {doctorsOne.lastName}
             </Typography>
             <Typography
               fontFamily={'Manrope,sans-serif'}
@@ -34,7 +66,7 @@ const InnerDoctorPage = () => {
           </Box>
           <DoctorCard>
             <ImageBlock>
-              <Img src={Doctors} />
+              <Img src={doctorsOne?.image} />
             </ImageBlock>
             <TitleBlock>
               <Typography
@@ -42,19 +74,19 @@ const InnerDoctorPage = () => {
                 color={'#009344'}
                 fontSize={24}
                 fontWeight={500}>
-                Гаталуский Артур
+                {doctorsOne.firstName} {doctorsOne.lastName}
               </Typography>
               <div>
                 <Typography fontSize={18} fontWeight={300}>
                   Отделение:{' '}
                   <span style={{ fontSize: '18px', fontWeight: '500' }}>
-                    Хирургия
+                    {translateDepartment[doctorsOne.departmentName]}
                   </span>
                 </Typography>
                 <Typography fontSize={18} fontWeight={300}>
                   Должность:{' '}
                   <span style={{ fontSize: '18px', fontWeight: '500' }}>
-                    Главный врач
+                    {doctorsOne.position}
                   </span>
                 </Typography>
               </div>
@@ -62,80 +94,14 @@ const InnerDoctorPage = () => {
             </TitleBlock>
           </DoctorCard>
           <DoctorCards>
-            <Typography fontSize={17} fontWeight={600} margin={'10px 0'}>
-              Преимущественно эстетическая хирургия лица:
-            </Typography>
-            <ul>
-              <li>
-                эндоскопический лифтинг лица ( лоб, височные зоны, брови,
-                верхние 2/3 лица )
-              </li>
-              <li>
-                SMAS-лифтинг лица с перемещением комков Биша, боковой или
-                медиальной платизмопластикой
-              </li>
-              <li>
-                блефаропластика ( трансконъюнктивальная; расширенная с
-                перераспределением тканей ,ревизионная )
-              </li>
-              <li>повторные и ревизионные лифтинги лица</li>
-              <li>кантопексия</li>
-              <li>миопексия</li>
-              <li>липофилинг</li>
-              <li>отопластика</li>
-              <li>хейлопластика</li>
-            </ul>
-            <Typography fontSize={17} fontWeight={600} margin={'20px 0 0 0 '}>
-              Специализация доктора:
-            </Typography>
-            <Text>
-              Сложное перелечивание корневых каналов зубов с применением
-              операционного микроскопа. Художественная реставрация зубов с
-              использованием самых современных пломбировочных материалов.
-              Восстановление разрушенных зубов керамическими вкладками,
-              коронками.
-            </Text>
-            <Typography fontSize={17} fontWeight={600} margin={'20px 0 0 0 '}>
-              Основное образование:
-            </Typography>
-            <Text>1988 г.г. Минский государственный медицинский институт</Text>
-            <Text>1988-1989 г.г. интернатура по хирургии</Text>
-            <Typography fontSize={17} fontWeight={600} margin={'20px 0 0 0 '}>
-              Участие в конференциях:
-            </Typography>
-            <Text>
-              Активно принимаю участие в конгрессах, форумах. Например,
-              последние годы:
-            </Text>
-            <Text>
-              2016- « Сочетание PRP и лазерных технологий. Инновационные методы
-              липосакции и фэтграфтинга», международная конференция
-            </Text>
-            <Text>
-              2016-«Инновационные методы отложения лица» . Курс Брайана
-              Мендельсона
-            </Text>
-            <Text>
-              2017- 2-й Международный Интенсивный Обучающий Курс по эстетической
-              пластической хирургии , проф. Оскар М. Рамирез
-            </Text>
-            <Text>
-              2017- «5-й курс «живой» хирургии. Продвинутая эстетическая
-              блефаропластика, хирургия средних зон и контуров лица»
-            </Text>
-            <Text>
-              2017- «Композитный SMAS-лифтинг, подтяжка лица и шеи. Ответы на
-              все вопросы.» Проф. Сэм Хамра
-            </Text>
-            <Text>
-              2018 г.- докладчик на 1- м национальном конгрессе « Пластическая
-              хирургия и косметология» доклад «Параорбитальная зона. Как
-              добиться успеха?»
-            </Text>
-            <Text>
-              2019 г. октябрь - участник 1- го конгресса Европейского общества
-              пластических эстетических хирургов , г. Брюгге, Бельгия.
-            </Text>
+            <div>
+              <StyledQuill
+                modules={modules}
+                theme="snow"
+                value={description}
+                readOnly={true}
+              />
+            </div>
             <div
               style={{
                 display: 'flex',
@@ -167,6 +133,25 @@ const Block = styled(Box)(() => ({
   fontFamily: 'Manrope,sans-serif',
 }));
 
+const StyledQuill = styled(ReactQuill)(() => ({
+  '& .ql-container': {
+    minHeight: '150px',
+    borderRadius: '8px',
+    border: 'none', // убираем все границы
+  },
+  '& .ql-editor': {
+    fontFamily: 'Manrope, sans-serif',
+    fontSize: '16px',
+    color: '#333',
+    padding: '10px',
+    border: 'none', // убираем бордер редактора
+    boxShadow: 'none', // убираем тени, если они есть
+  },
+  '& .ql-toolbar': {
+    display: 'none', // убираем тулбар (если он не нужен)
+  },
+}));
+
 const Main = styled('main')(() => ({
   width: '80%',
   minHeight: '250px',
@@ -185,7 +170,7 @@ const DoctorCard = styled(Box)(() => ({
 
 const DoctorCards = styled(Box)(() => ({
   width: '80%',
-  minHeight: '400px',
+  minHeight: '100px',
   margin: '10px 0',
   fontFamily: 'Manrope,sans-serif',
   '& ul': {

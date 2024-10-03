@@ -1,13 +1,35 @@
 import { Box, styled, Typography } from '@mui/material';
-import doctorsData from '../../utils/constants/doctorsData.json';
 import Button from '../../components/UI/Button';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { doctorGet } from '../../store/slices/doctorSlice/doctorThunk';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 
 const Doctor = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { doctors } = useAppSelector(state => state.doctor);
   const goInnerPage = (id: number) => {
     navigate(`${id}/infoDoctor`);
   };
+  console.log(doctors);
+
+  useEffect(() => {
+    dispatch(doctorGet());
+  }, []);
+  const translateDepartment = {
+    CARDIOLOGY: 'Кардиология',
+    DERMATOLOGY: 'Дерматология',
+    NEUROLOGY: 'Неврология',
+    ORTHOPEDICS: 'Ортопедия',
+    PEDIATRICS: 'Педиатрия',
+    PSYCHIATRY: 'Психиатрия',
+    UROLOGY: 'Урология',
+    GYNECOLOGY: 'Гинекология',
+    GASTROENTEROLOGY: 'Гастроэнтерология',
+    ONCOLOGY: 'Онкология',
+  };
+
   return (
     <Container>
       <StyledBox>
@@ -23,15 +45,25 @@ const Doctor = () => {
           ведущих университетах Европы, чтобы еще на шаг стать ближе к
           совершенству.
         </TypographyStyled>
-        {doctorsData.map(({ id, title, options }) => (
+        {doctors.map(({ id, department, option }) => (
           <StyledBlock key={id}>
-            <Typography className="titlebig">{title}</Typography>
+            <Typography className="titlebig">
+              {translateDepartment[department]}
+            </Typography>
             <Box className="inBlock">
-              {options.map(({ id, img, name, specialist }) => (
+              {option?.map((item: any) => (
                 <StyledInBlock key={id}>
-                  <img className="imgOne" src={img} alt={name} />
-                  <Typography className="text">{name}</Typography>
-                  <Typography className="text">{specialist}</Typography>
+                  <img
+                    className="imgOne"
+                    src={item.image}
+                    alt={item.lastName}
+                  />
+                  <Typography className="text">
+                    {item.firstName} {item.lastName}
+                  </Typography>
+                  <Typography className="text">
+                    Врач-{item.specialization}
+                  </Typography>
                   <Button variant="outlined" onClick={() => goInnerPage(id)}>
                     Записаться на прием
                   </Button>
