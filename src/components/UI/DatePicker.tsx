@@ -39,6 +39,7 @@ export default CustomDatePicker;
 
 const DatePickerStyled = styled(DatePicker)(() => ({
   '& .MuiInputBase-input': {
+    // padding: '8px 18px 10px 8px',
     padding: '8px 18px',
     borderRadius: '4px',
     fontSize: '16px',
@@ -54,4 +55,5 @@ const DatePickerStyled = styled(DatePicker)(() => ({
 const LabelDiv = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
+  // margin: '4px 0 0 0',
 }));

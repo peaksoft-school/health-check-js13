@@ -43,7 +43,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
         {label}
       </Typography>
-
       <StyledMySelect
         value={value}
         fullWidth={fullWidth}
