@@ -18,10 +18,15 @@ import {
   clearSelectSpesialist,
   setSelectChoose,
 } from '../../../store/slices/siteBarMenu/sitBarMenu';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Button from '../../../components/UI/Button';
 
-const MainMenu = ({ handleClose, setActiveComponent }) => {
+interface MainMenuProps {
+  handleClose: () => void;
+  setActiveComponent: (component: string) => void;
+}
+
+const MainMenu: FC<MainMenuProps> = ({ handleClose, setActiveComponent }) => {
   const dispatch = useAppDispatch();
   const { selectSpesialist, selectChoose, selectData } = useAppSelector(
     state => state.siteBarMenu
@@ -32,6 +37,7 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
 
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
     setSelectedValue(event.target.value);
+    dispatch(setSelectChoose(event.target.value));
   };
 
   const handleDelete = () => {
@@ -39,9 +45,14 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
   };
 
   const handleDeleteChoose = () => {
-    setSelectedValue('');
     dispatch(clearSelectChoose());
+    setSelectedValue('');
   };
+  useEffect(() => {
+    if (selectChoose && !selectedValue) {
+      setSelectedValue(selectChoose);
+    }
+  }, [selectChoose, selectedValue]);
 
   const handleDeletedata = () => {
     dispatch(clearSelectData());
@@ -75,7 +86,7 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
         ) : (
           <MySelect
             value={selectedValue}
-            onChange={e => handleSelectChange(e)}
+            onChange={event => handleSelectChange(event)}
             displayEmpty
             fullWidth
             MenuProps={{
@@ -163,6 +174,7 @@ const MainMenu = ({ handleClose, setActiveComponent }) => {
       </SpesialistContainer>
 
       <Button
+        onClick={() => setActiveComponent('continue')}
         sx={{
           width: '96%',
           marginTop: '30px',

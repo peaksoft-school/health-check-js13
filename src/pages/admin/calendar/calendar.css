@@ -1,0 +1,178 @@
+.horizontal-calendar-container {
+  margin: 50px auto;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(50px, 1fr);
+}
+
+.calendar-column {
+  height: 200px;
+  grid-column: span 3;
+  border: 1px solid #e0e2e7;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  padding: 5px;
+}
+button:hover {
+  border-color: #646cff;
+}
+.doctor-name {
+  font-weight: bold;
+}
+.doctor-specialization {
+  font-size: 20px;
+  color: #959595;
+}
+
+.header {
+  height: 50px;
+}
+
+.large-element {
+  grid-column: span 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.day-header {
+  text-align: left;
+  font-size: 14px;
+}
+
+.today {
+  background-color: rgb(149, 229, 109);
+}
+
+.tasks {
+  border-left: 5px solid #1f6ed4;
+  background-color: #dbebff;
+  color: #1f6ed4;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+}
+
+.modal {
+  width: 580px;
+  padding: 40px;
+  border: none;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.grafick {
+  display: flex;
+}
+
+.input {
+  width: 75px;
+  border: 1px solid rgb(173, 173, 173);
+  border-radius: 5px;
+  margin: 0 5px;
+  padding: 7px 10px;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #fff;
+  border: none;
+}
+
+.shablon {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  line-height: 40px;
+}
+
+.name__shablon {
+  text-align: right;
+  margin-right: 10px;
+}
+
+.h2__name {
+  text-align: center;
+  font-size: 26px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.add__button {
+  color: rgb(8, 145, 8);
+  text-align: left;
+  border: none;
+  padding: 15px 0;
+  background-color: white;
+  margin-left: 134px;
+}
+
+.button__container {
+  display: flex;
+  justify-content: space-between;
+  gap: 5%;
+}
+
+.button__modal {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.left {
+  background-color: #fff;
+  border: 1px solid gray;
+  color: gray;
+}
+
+.right {
+  background-color: #069a57;
+  color: white;
+  border: 1px solid #069a57;
+}
+
+.grafick__ocloke {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grafick__ocloke p {
+  margin-left: 45px;
+}
+
+.grafick {
+  display: flex;
+  align-items: center;
+  margin-left: 134px;
+}
+
+.close__red {
+  background-color: white;
+  border: none;
+}
+
+.grafick__name {
+  margin-right: 10px;
+}
+
+.block__times {
+  border: 1px solid gray;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 5px;
+}

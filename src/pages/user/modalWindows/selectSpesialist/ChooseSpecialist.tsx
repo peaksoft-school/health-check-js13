@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import IconUser from '../../../../assets/icons/GroupPeopleIconsvg.svg';
 import { useAppDispatch } from '../../../../hooks/customHooks';
 import {
+  setSelectData,
   setSelectSpesialist,
   Spesialist,
 } from '../../../../store/slices/siteBarMenu/sitBarMenu';
@@ -14,7 +15,7 @@ const Doctors = [
     ophthalmologist: 'Кардиолог',
     image:
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
-    day: '12 января',
+    day: '8 Октябрь',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
     reiting: {
       star: '★★★★★',
@@ -27,7 +28,7 @@ const Doctors = [
     ophthalmologist: 'Окулист',
     image:
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
-    day: '12 января:',
+    day: '8 Октябрь:',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
     reiting: {
       star: '★★★★★',
@@ -40,7 +41,7 @@ const Doctors = [
     ophthalmologist: 'Дерматолог',
     image:
       'https://28.img.avito.st/image/1/1.ZUNZ8La5yaojWQeiH9EqQI5Tz6Dnn8Fk5VPLruVRw6g.73OVhALulwGa7FtZfGvvF-5NDFyggvL9Z2RULe0CEQM',
-    day: '12 января',
+    day: '8 Октябрь',
     times: ['9:30', '10:00', '12:30', '14:30', '15:00', '16:00'],
     reiting: {
       star: '★★★★★',
@@ -63,10 +64,6 @@ const ChooseSpecialist: FC = () => {
     setSelectedTime({ doctorId, time });
 
     const selectedDoctor = Doctors.find(doctor => doctor.id === doctorId);
-    // const data = {
-    //   time: time,
-    //   day: selectedDoctor?.day,
-    // };
 
     const doctor: Spesialist = {
       id: selectedDoctor?.id,
@@ -77,11 +74,19 @@ const ChooseSpecialist: FC = () => {
         star: selectedDoctor?.reiting.star,
         num: selectedDoctor?.reiting.num,
       },
-      times: selectedDoctor?.times,
       day: selectedDoctor?.day,
+      times: time,
+    };
+
+    const date = {
+      moon: 'Октябрь',
+      week: 'Вторник',
+      day: 8,
+      hours: time,
     };
 
     dispatch(setSelectSpesialist(doctor));
+    dispatch(setSelectData(date));
   };
 
   return (

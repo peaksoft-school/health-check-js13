@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { styled } from '@mui/material';
 import Entry from '../continue/Entry';
 import CalendarData from './CalendarData';
 
-const SelectDate = ({ setActiveComponent, handleClose }) => {
+interface MainMenuProps {
+  handleClose: () => void;
+  setActiveComponent: (component: string) => void;
+}
+
+const SelectDate: FC<MainMenuProps> = ({ setActiveComponent, handleClose }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleContinueClick = () => {

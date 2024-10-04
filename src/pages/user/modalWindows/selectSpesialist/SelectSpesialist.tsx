@@ -1,8 +1,13 @@
 import { IconButton, styled } from '@mui/material';
 import BackArrow from '../../../../assets/icons/chevron-left.svg';
 import ChooseSpecialist from './ChooseSpecialist';
+import { FC } from 'react';
 
-const SelectSpesialist = ({ setActiveComponent }: any) => {
+interface MainMenuProps {
+  setActiveComponent: (component: string) => void;
+}
+
+const SelectSpesialist: FC<MainMenuProps> = ({ setActiveComponent }) => {
   return (
     <MenuContainer>
       <BoxHeaderStyle>

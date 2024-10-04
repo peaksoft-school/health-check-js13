@@ -1,20 +1,37 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import { Drawer, styled } from '@mui/material';
 import MainMenu from './MainMenu';
 import SelectSpesialist from './selectSpesialist/SelectSpesialist';
 import SelectDate from './selectData/SelectDate';
+import Entry from './continue/Entry';
+import { useAppDispatch } from '../../../hooks/customHooks';
+import {
+  clearSelectChoose,
+  clearSelectData,
+  clearSelectSpesialist,
+} from '../../../store/slices/siteBarMenu/sitBarMenu';
 
 interface SidebarMenuProps {
   open: boolean;
   toggleDrawer: (open: boolean) => void;
 }
 
-const SidebarMenu: React.FC<SidebarMenuProps> = ({ open, toggleDrawer }) => {
+const SidebarMenu: FC<SidebarMenuProps> = ({ open, toggleDrawer }) => {
+  const dispatch = useAppDispatch();
+
   const [activeComponent, setActiveComponent] = useState<string>('main');
 
   const handleClose = () => {
     setActiveComponent('main');
     toggleDrawer(false);
+
+    dispatch(clearSelectSpesialist());
+    dispatch(clearSelectChoose());
+    dispatch(clearSelectData());
+  };
+
+  const handleContinueClick = () => {
+    setActiveComponent('main');
   };
 
   const renderContent = () => {
@@ -25,6 +42,13 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ open, toggleDrawer }) => {
         return (
           <SelectDate
             setActiveComponent={setActiveComponent}
+            handleClose={handleClose}
+          />
+        );
+      case 'continue':
+        return (
+          <Entry
+            handleContinueClick={handleContinueClick}
             handleClose={handleClose}
           />
         );
