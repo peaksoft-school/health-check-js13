@@ -62,6 +62,9 @@ export default function AuthDropdown() {
   const signUpFn = () => {
     navigate('sign-up');
   };
+  const MyEtries = () => {
+    navigate('zapisi');
+  };
 
   return (
     <Stack direction="row" spacing={2}>
@@ -107,6 +110,7 @@ export default function AuthDropdown() {
                       <div>
                         <ButtonMui onClick={signInFn}>Войти</ButtonMui>
                         <ButtonMui onClick={signUpFn}>Регистрация</ButtonMui>
+                        <ButtonMui onClick={MyEtries}>Мои записи</ButtonMui>
                       </div>
                     )}
                   </MenuList>

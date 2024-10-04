@@ -1,9 +1,4 @@
-import {
-  Box,
-  InputAdornment,
-  styled,
-  TextField,
-} from '@mui/material';
+import { Box, InputAdornment, styled, TextField } from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';

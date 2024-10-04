@@ -39,7 +39,10 @@ export const USER_ROUTES = [
     path: 'results',
     element: <GetResults />,
   },
-
+  {
+    path: 'zapisi',
+    element: <Appointment />,
+  },
   {
     path: 'profile',
     element: <ProfilePersonalData />,
