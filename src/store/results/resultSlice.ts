@@ -52,7 +52,6 @@ export const resultSlice = createSlice({
   },
 });
 
-// Экспортируем редуктор по умолчанию
 export const { name: resultSliceName } = resultSlice; 
 
 
