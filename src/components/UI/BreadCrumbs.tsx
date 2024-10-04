@@ -1,39 +1,74 @@
-import { styled, Link, Breadcrumbs } from '@mui/material';
-import { FC } from 'react';
+import { styled } from '@mui/material';
+import { useLocation, Link } from 'react-router-dom';
 
-interface BreadcrumbItem {
-  label: string;
-  href?: string;
-}
+const BreadCrumbs = () => {
+  const { pathname } = useLocation();
+  const pathnames = pathname.split('/').filter(x => x);
 
-interface Types {
-  items: BreadcrumbItem[];
-}
+  const breadcrumbNameMap: { [key: string]: string } = {
+    '/about': 'О клинике',
+    '/services': 'Услуги',
+    '/doctors': 'Врачи',
+    '/price': 'Прайс',
+    '/contacts': 'Контакты',
+  };
 
-const BreadCrumbs: FC<Types> = ({ items }) => {
   return (
-    <StyledBreadCrumbs separator="›" aria-label="breadcrumbs">
-      {items.map(({ label, href }, i) => (
-        <StyledLink
-          key={label}
-          islast={String(i === items.length - 1)}
-          href={href || undefined}>
-          {label}
-        </StyledLink>
-      ))}
-    </StyledBreadCrumbs>
+    <BreadcrumbNav>
+      <BreadcrumbList>
+        {pathname !== '/' && (
+          <BreadcrumbItem>
+            <BreadcrumbLink to="/">Главная</BreadcrumbLink>
+          </BreadcrumbItem>
+        )}
+        {pathnames.map((value, index) => {
+          const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+          const breadcrumbLabel = breadcrumbNameMap[to] || value;
+
+          return (
+            <BreadcrumbItem key={to}>
+              <BreadcrumbLinkPage to={to}>{breadcrumbLabel}</BreadcrumbLinkPage>
+            </BreadcrumbItem>
+          );
+        })}
+      </BreadcrumbList>
+    </BreadcrumbNav>
   );
 };
 
 export default BreadCrumbs;
 
-const StyledBreadCrumbs = styled(Breadcrumbs)(() => ({
-  marginTop: '30px',
-}));
+const BreadcrumbNav = styled('nav')({
+  paddingTop: '16px',
+});
 
-const StyledLink = styled(Link)<{ islast: string }>(({ islast }) => ({
-  fontSize: '14px',
-  color: islast === 'true' ? '#048741' : 'inherit',
-  cursor: islast !== 'true' ? 'pointer' : 'default',
+const BreadcrumbList = styled('ul')({
+  display: 'flex',
+  listStyle: 'none',
+  padding: 0,
+  margin: 0,
+});
+
+const BreadcrumbItem = styled('li')({
+  marginRight: '6px',
+  fontFamily: '"Poppins", sans-serif',
+  '&:not(:last-child)::after': {
+    content: '">"',
+    marginLeft: '6px',
+    verticalAlign: 'middle',
+    color: '#959595',
+  },
+});
+
+const BreadcrumbLink = styled(Link)({
   textDecoration: 'none',
-}));
+  color: '#959595',
+  fontWeight: 500,
+});
+
+const BreadcrumbLinkPage = styled(Link)({
+  textDecoration: 'none',
+  color: '#048741',
+  fontWeight: 500,
+  fontStyle: '14px',
+});
