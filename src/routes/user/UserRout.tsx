@@ -5,6 +5,7 @@ import Home from '../../pages/home/Home';
 import Clinic from '../../pages/user/aboutClinic/Clinic';
 import Price from '../../pages/user/aboutPrice/Price';
 import Appointment from '../../pages/user/appointment/Appointment';
+import AppointmentDetail from '../../pages/user/appointment/AppointmentDetail';
 import PersonalData from '../../pages/user/profilePersonalData/PersonalData';
 import ProfileChangePassword from '../../pages/user/profilePersonalData/ProfileChangePassword';
 import ProfilePersonalData from '../../pages/user/profilePersonalData/ProfilePersonalData';
@@ -49,6 +50,19 @@ export const USER_ROUTES = [
     path: 'results',
     element: <GetResults />,
   },
+  {
+    path: 'appointment',
+    children: [
+      {
+        index: true,
+        element: <Appointment />,
+      },
+      {
+        path: 'appointmentDatail',
+        element: <AppointmentDetail />,
+      },
+    ],
+  },
 
   {
     path: 'profile',
@@ -63,9 +77,5 @@ export const USER_ROUTES = [
         element: <ProfileChangePassword />,
       },
     ],
-  },
-  {
-    path: 'appointment',
-    element: <Appointment />,
   },
 ];

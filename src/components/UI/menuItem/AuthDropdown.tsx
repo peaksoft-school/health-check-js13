@@ -61,6 +61,9 @@ export default function AuthDropdown() {
   const signUpFn = () => {
     navigate('sign-up');
   };
+  const MyEtries = () => {
+    navigate('appointment');
+  };
 
   return (
     <Stack direction="row" spacing={2}>
@@ -100,6 +103,7 @@ export default function AuthDropdown() {
                     {isAuth ? (
                       <div>
                         <ButtonMui onClick={toPersone}>Мой Профиль</ButtonMui>
+                        <ButtonMui onClick={MyEtries}>Мои записи</ButtonMui>
                         <ButtonMui onClick={logoutFn}>Выйти</ButtonMui>
                       </div>
                     ) : (

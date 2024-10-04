@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../hooks/customHooks';
 import Button from '../../../components/UI/Button';
 import { fetchAppointmentById } from '../../../store/user/userThunk';
+import { NOt } from '../../../assets/images';
 
 const AppointmentDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -69,7 +70,19 @@ const AppointmentDetail: React.FC = () => {
           <Button variant="contained">Изменить запись</Button>
         </BoxDetail>
       ) : (
-        <Typography>Нет данных о записи</Typography>
+        <BoxStyled>
+          <img
+            style={{ width: '300px', height: '300px', borderRadius: '100%' }}
+            src={NOt}
+          />
+          <Typography
+            fontSize={25}
+            fontWeight={900}
+            fontFamily={'Manrope,sans-serif'}
+            textAlign={'center'}>
+            Данные отсутствуют, но скоро появятся!
+          </Typography>
+        </BoxStyled>
       )}
     </Container>
   );
@@ -77,6 +90,16 @@ const AppointmentDetail: React.FC = () => {
 
 const Container = styled(Box)(() => ({
   padding: '20px',
+}));
+
+const BoxStyled = styled(Box)(() => ({
+  width: '50%',
+  height: '50%',
+  margin: '0 auto',
+  display: 'flex',
+  border: '1px solid black',
+  alignItems: 'center',
+  fontFamily: 'Manrope,sans-serif',
 }));
 
 const BoxDetail = styled(Box)(() => ({

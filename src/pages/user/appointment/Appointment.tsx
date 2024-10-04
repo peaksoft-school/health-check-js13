@@ -9,22 +9,22 @@ import {
   Typography,
   styled,
   Box,
+  Button,
 } from '@mui/material';
 import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../../../components/UI/Button';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import { fetchAllAppointments } from '../../../store/user/userThunk';
+import XIcon from '../../../assets/icons/XIcon.svg';
 
 const Appointment: FC = () => {
   const { appointments } = useAppSelector(state => state.appointments);
-  console.log(appointments);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchAllAppointments());
   }, []);
-  
+
   return (
     <TableContainerOne>
       <Table aria-label="appointments table">
@@ -35,45 +35,54 @@ const Appointment: FC = () => {
             <StyledTableCell align="right">Статус</StyledTableCell>
             <StyledTableCell align="right">
               <BoxOrder>
-                <TypographyIcon>X</TypographyIcon>
-                <Button variant="text">Очистить список заказов</Button>
+                <ButtonStyled startIcon={<XIcon />} variant="outlined">
+                  <Typography>Очистить список заказов</Typography>
+                </ButtonStyled>
               </BoxOrder>
             </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointments.map(appointment => (
-            <TableRow key={appointment.id}>
-              <TableCell>
-                <BoxId>
-                  <Box>
-                    <AvatarStyle
-                      src={appointment.doctorImage}
-                      alt={appointment.doctorName}
-                    />
-                  </Box>
-                  <BoxInfo>
-                    <TypographyName
-                      component={Link}
-                      to={`/zapisi/${appointment.id}`}>
-                      {appointment.doctorName}
-                    </TypographyName>
-                    <Typography variant="body2">
-                      {appointment.doctorSpecialization}
-                    </Typography>
-                  </BoxInfo>
-                </BoxId>
+          {Array.isArray(appointments) && appointments.length > 0 ? (
+            appointments.map(appointment => (
+              <TableRow key={appointment.id}>
+                <TableCell>
+                  <BoxId>
+                    <Box>
+                      <AvatarStyle
+                        src={appointment.doctorImage}
+                        alt={appointment.doctorName}
+                      />
+                    </Box>
+                    <BoxInfo>
+                      <TypographyName
+                        component={Link}
+                        to={`${appointment.id}/appointmentDatail`}>
+                        {appointment.doctorName}
+                      </TypographyName>
+                      <Typography variant="body2">
+                        {appointment.doctorSpecialization}
+                      </Typography>
+                    </BoxInfo>
+                  </BoxId>
+                </TableCell>
+                <TableCell align="right">
+                  <BoxDate>
+                    <Typography>{appointment.date}</Typography>
+                    <Typography>{`${appointment.time.hour}:${appointment.time.minute}`}</Typography>
+                  </BoxDate>
+                </TableCell>
+                <TableCell align="right">{appointment.status}</TableCell>
+                <TableCell align="right"></TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                <TypographyStyled>Нет записей для отображения</TypographyStyled>
               </TableCell>
-              <TableCell align="right">
-                <BoxDate>
-                  <Typography>{appointment.date}</Typography>
-                  <Typography>{`${appointment.time.hour}:${appointment.time.minute}`}</Typography>
-                </BoxDate>
-              </TableCell>
-              <TableCell align="right">{appointment.status}</TableCell>
-              <TableCell align="right"></TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </TableContainerOne>
@@ -95,10 +104,27 @@ const BoxOrder = styled(Box)(() => ({
   gap: '3px',
 }));
 
-const TypographyIcon = styled(Typography)(() => ({
-  color: 'red',
-  fontSize: '16px',
-  fontWeight: 600,
+const ButtonStyled = styled(Button)(({ theme }) => ({
+  '&.MuiButtonBase-root': {
+    padding: '14px 32px',
+    borderRadius: '10px',
+    color: 'black',
+    transition: 'all 0.2s ',
+    height: '44px',
+
+    '&:hover': {
+      background: '#d6d6d6',
+    },
+    '&:active': {
+      background: '#b2b0b0',
+    },
+
+    '&.Mui-disabled': {
+      border: 'none',
+      background: theme.palette.secondary.lightGrey,
+      color: theme.palette.primary.main,
+    },
+  },
 }));
 
 const BoxId = styled(Box)(() => ({
@@ -128,6 +154,11 @@ const BoxDate = styled(Box)(() => ({
   flexDirection: 'column',
   alignItems: 'center',
   marginTop: '15px',
+}));
+
+const TypographyStyled = styled(Typography)(() => ({
+  margin: '30px 0',
+  fontSize: '30px',
 }));
 
 export default Appointment;
