@@ -84,7 +84,7 @@ export const getDoctorById = createAsyncThunk(
 
 export const updateSpec = createAsyncThunk<any, any, any>(
   'spec/updateSpec',
-  async ({ data, navigate }, { rejectWithValue }) => {
+  async ({ data, navigate, reset }, { rejectWithValue }) => {
     console.log(data);
     try {
       const responce = await axiosInstance.put(
@@ -92,6 +92,7 @@ export const updateSpec = createAsyncThunk<any, any, any>(
         data
       );
       navigate(-1);
+      reset();
       return responce.data;
     } catch (error) {
       return rejectWithValue(error);

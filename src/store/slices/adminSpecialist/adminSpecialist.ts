@@ -6,6 +6,7 @@ import {
   getDoctorById,
   getSpecialist,
   searchSpec,
+  updateSpec,
 } from './adminSpecialistThunk';
 
 export type BodyTableStatusTypes = {
@@ -113,14 +114,17 @@ export const specialistSlice = createSlice({
       .addCase(searchSpec.rejected, state => {
         state.isLoading = false;
       })
-      // .addCase(changeStatus.pending, state => {
-      //   state.isLoading = true;
-      // })
-      // .addCase(changeStatus.fulfilled, state => {
-      //   state.isLoading = false;
-      // })
-      // .addCase(changeStatus.pending, state => {
-      //   state.isLoading = false;
-      // });
+      .addCase(changeStatus.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(changeStatus.fulfilled, state => {
+        state.isLoading = false;
+      })
+      .addCase(changeStatus.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(updateSpec.fulfilled, state => {
+        state.file = '';
+      });
   },
 });

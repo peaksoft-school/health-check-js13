@@ -24,7 +24,7 @@ export const searchRequest = createAsyncThunk<
   { rejectValue: unknown }
 >('patinets/searchRequest', async (value, { rejectWithValue }) => {
   try {
-    console.log(value)
+    console.log(value);
     const { data } = await axiosInstance.get(
       `/api/users/searchPatients?name=${value}`
     );
@@ -53,6 +53,7 @@ export const deletePatinet = createAsyncThunk<
       });
 
       dispatch(searchRequest(value));
+      dispatch(getPatients());
 
       return data;
     } catch (error) {

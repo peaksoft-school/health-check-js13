@@ -10,7 +10,7 @@ import { useAppDispatch } from '../../hooks/customHooks';
 import { getUserInfo } from '../../store/slices/patients/patientsThunk';
 
 type TypesPropsTable<T> = {
-  columns: ColumnDef<T>[];
+  columns: any[];
   data: T[];
   variant?: string;
 };

@@ -114,7 +114,7 @@ const SpecInfo = () => {
   const submitHandlerEvent = (data: DoctorUpdate) => {
     const { image, scheduleUntil, isActive, ...cleanedData } = data;
 
-    dispatch(updateSpec({ data: cleanedData, navigate }));
+    dispatch(updateSpec({ data: cleanedData, navigate,reset }));
   };
 
   return (
@@ -331,7 +331,6 @@ const BlockThree = styled(Box)(() => ({
   height: '250px',
   display: 'flex',
   alignItems: 'end',
-  border: '1px solid black',
   flexDirection: 'column',
   marginTop: '20px',
 }));
