@@ -6,9 +6,8 @@ import {
   getSpecialist,
   searchSpec,
 } from './adminSpecialistThunk';
-import { TFormTypes } from '../../../pages/admin/adminSpecialist/AddSpecialist';
 
-type BodyTableStatusTypes = {
+export type BodyTableStatusTypes = {
   image?: any;
   specialization?: any;
   firstName?: any;
@@ -29,7 +28,7 @@ type BodyTableStatusTypes = {
   };
 };
 
-interface SpecialistState {
+export interface SpecialistState {
   spec: BodyTableStatusTypes[];
   isLoading: boolean;
   error: string | null;
@@ -38,7 +37,7 @@ interface SpecialistState {
   searches: [];
 }
 
-const initialState: SpecialistState = {
+export const initialState: SpecialistState = {
   spec: [],
   file: '',
   isLoading: false,

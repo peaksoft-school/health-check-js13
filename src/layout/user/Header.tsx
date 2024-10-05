@@ -11,13 +11,14 @@ import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import SidebarMenu from '../../pages/user/modalWindows/SidebarMenu';
 
 const Header = () => {
   const [showBoxContent, setShowBoxContent] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
-  const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleScroll = () => {
     const scrollTop = pageYOffset || document.documentElement.scrollTop;
@@ -32,28 +33,16 @@ const Header = () => {
   };
 
   useEffect(() => {
-    addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [lastScrollTop]);
 
-  useEffect(() => {
-    const handleScrolled = () => {
-      if (scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    addEventListener('scroll', handleScrolled);
-
-    return () => {
-      removeEventListener('scroll', handleScrolled);
-    };
-  }, []);
+  const toggleDrawer = (open: boolean) => {
+    setOpen(open);
+  };
 
   return (
     <div className="boxter">
@@ -111,6 +100,9 @@ const Header = () => {
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
+                <div>
+                  <SidebarMenu open={open} toggleDrawer={toggleDrawer} />
+                </div>
                 <HR />
               </ContentCards>
             </ContentCardsFunc>
@@ -129,12 +121,12 @@ const Header = () => {
                   </Box>
                 ))}
                 <ContentButton>
-                  <Link to="results">
-                    <ButtonClass variant="outlined">
-                      получить результаты
-                    </ButtonClass>
-                  </Link>
-                  <Button1>запись онлайн</Button1>
+                  <ButtonClass variant="outlined">
+                    получить результаты
+                  </ButtonClass>
+                  <Button1 onClick={() => toggleDrawer(true)}>
+                    запись онлайн
+                  </Button1>
                 </ContentButton>
               </BoxContent>
             </ContentCards1>
