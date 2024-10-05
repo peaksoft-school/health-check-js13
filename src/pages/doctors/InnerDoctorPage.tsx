@@ -126,7 +126,7 @@ export default InnerDoctorPage;
 
 const Block = styled(Box)(() => ({
   width: '100%',
-  maxWidth: '1440px',
+  maxWidth: '1200px',
   minWidth: '1200px',
   minHeight: '500px',
   margin: '50px auto',

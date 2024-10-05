@@ -2,49 +2,79 @@ import { Box, styled, Typography } from '@mui/material';
 import index from '../../../utils/constants/index.json';
 import Accordeon from '../../../components/UI/Accardeon';
 import accardeonData from '../../../utils/constants/accardeonData.json';
+import { NavLink, useNavigate } from 'react-router-dom';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-const ServiceClinic = () => (
-  <StyledContainer>
-    <StyledContainerMain>
-      <StyledTypography>
-        Наши <StyledSpan>услуги</StyledSpan>
-      </StyledTypography>
-      <StyledBoxService>
-        {index?.map(item => (
-          <StyledServiceBlock key={item.id}>
-            <ImgBox>
-              <img className="img" src={item.img} alt="img" />
-            </ImgBox>
-            <TypographyStyled>{item.name}</TypographyStyled>
-          </StyledServiceBlock>
-        ))}
-      </StyledBoxService>
-      <StyledFAQService>
-        <BoxTextStyled>
-          <BoxText>
-            <StyledTypographyFaq>Часто задаваемые вопросы</StyledTypographyFaq>
-            <Typography className="Typography">
-              Специалисты нашей клиники с удовольствием ответят на все ваши
-              вопросы. Ниже представленны наиболее популярные.
-            </Typography>
-          </BoxText>
-          <StyledBoxAccaredon>
-            {accardeonData?.map(({ id, good, name, inside }) => (
-              <Accordeon key={id} title={name}>
-                <Typography className="good">{good}</Typography>
-                <Ul>
-                  {inside.map(todo => (
-                    <li key={todo.id}>{todo.text}</li>
-                  ))}
-                </Ul>
-              </Accordeon>
-            ))}
-          </StyledBoxAccaredon>
-        </BoxTextStyled>
-      </StyledFAQService>
-    </StyledContainerMain>
-  </StyledContainer>
-);
+const ServiceClinic = () => {
+  const navigate = useNavigate();
+
+  const goInnerPage = (id: number) => {
+    navigate(`${id}/service`);
+    console.log(id);
+  };
+
+  return (
+    <StyledContainer>
+      <StyledContainerMain>
+        <BreadcrumbsBox>
+          <BreadcrumbLink to="/">
+            Главная
+            <ArrowForwardIosIcon
+              style={{
+                fontSize: 'medium',
+                color: 'green',
+                marginTop: '3px',
+              }}
+            />
+          </BreadcrumbLink>
+          <BreadcrumbLink to="/services">
+            <Typography border={'1px solid black'}>Услуги</Typography>
+          </BreadcrumbLink>
+        </BreadcrumbsBox>
+        <StyledTypography>
+          Наши <StyledSpan>услуги</StyledSpan>
+        </StyledTypography>
+        <StyledBoxService>
+          {index?.map(item => (
+            <StyledServiceBlock
+              onClick={() => goInnerPage(item.id)}
+              key={item.id}>
+              <ImgBox>
+                <img className="img" src={item.img} alt="img" />
+              </ImgBox>
+              <TypographyStyled>{item.name}</TypographyStyled>
+            </StyledServiceBlock>
+          ))}
+        </StyledBoxService>
+        <StyledFAQService>
+          <BoxTextStyled>
+            <BoxText>
+              <StyledTypographyFaq>
+                Часто задаваемые вопросы
+              </StyledTypographyFaq>
+              <Typography className="Typography">
+                Специалисты нашей клиники с удовольствием ответят на все ваши
+                вопросы. Ниже представленны наиболее популярные.
+              </Typography>
+            </BoxText>
+            <StyledBoxAccaredon>
+              {accardeonData?.map(({ id, good, name, inside }) => (
+                <Accordeon key={id} title={name}>
+                  <Typography className="good">{good}</Typography>
+                  <Ul>
+                    {inside.map(todo => (
+                      <li key={todo.id}>{todo.text}</li>
+                    ))}
+                  </Ul>
+                </Accordeon>
+              ))}
+            </StyledBoxAccaredon>
+          </BoxTextStyled>
+        </StyledFAQService>
+      </StyledContainerMain>
+    </StyledContainer>
+  );
+};
 
 export default ServiceClinic;
 
@@ -54,6 +84,34 @@ const StyledContainer = styled(Box)(() => ({
   minWidth: '1200px',
   margin: '50px  auto',
 }));
+
+const BreadcrumbsBox = styled(Box)`
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  margin: 10px 0;
+  border: 1px solid black;
+`;
+
+const BreadcrumbLink = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  color: green;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  gap: 5px;
+  font-family: 'Manrope', sans-serif;
+  padding-top: 5px;
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:last-child {
+    color: grey;
+    pointer-events: none;
+  }
+`;
 
 const BoxText = styled(Box)(() => ({
   margin: '10px 0 40px 0',

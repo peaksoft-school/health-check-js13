@@ -34,6 +34,7 @@ type TInitialState = {
   searches: any[];
   getUser: Types | null;
   pdfFile: any;
+  user: [];
 };
 
 const initialState: TInitialState = {
@@ -43,6 +44,7 @@ const initialState: TInitialState = {
   searches: [],
   getUser: null,
   pdfFile: [],
+  user: [],
 };
 
 export const patinetsSlice = createSlice({
@@ -59,6 +61,7 @@ export const patinetsSlice = createSlice({
       .addCase(getPatients.fulfilled, (state, { payload }) => {
         if (payload) {
           state.patients = payload;
+          state.user = payload;
         }
       })
       .addCase(deletePatinet.pending, state => {
@@ -76,6 +79,7 @@ export const patinetsSlice = createSlice({
       .addCase(searchRequest.fulfilled, (state, { payload }) => {
         if (payload) {
           state.searches = payload;
+          state.user = payload;
         }
         state.isLoading = false;
       })

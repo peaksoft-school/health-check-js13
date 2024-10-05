@@ -23,8 +23,8 @@ export const searchRequest = createAsyncThunk<
   string,
   { rejectValue: unknown }
 >('patinets/searchRequest', async (value, { rejectWithValue }) => {
-  console.log(value);
   try {
+    console.log(value)
     const { data } = await axiosInstance.get(
       `/api/users/searchPatients?name=${value}`
     );

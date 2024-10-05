@@ -71,15 +71,8 @@ export const postApplication = createAsyncThunk<
 
       return data;
     } catch (error) {
-      const err = error as ErrorResponse;
-
-      const errorMessage =
-        err?.response?.data?.exceptionMessage ||
-        err.message ||
-        'Something went wrong';
-
       toastifyMessage({
-        message: errorMessage,
+        message: 'Заявка успешно отправлено',
         status: 'error',
         duration: 2000,
       });

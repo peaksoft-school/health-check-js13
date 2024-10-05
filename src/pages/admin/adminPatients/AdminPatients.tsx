@@ -21,17 +21,14 @@ import { useDebounce } from 'use-debounce';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 
 const AdminPatients = () => {
-  const { searches, isLoading, error } = useAppSelector(
-    state => state.patients
-  );
+  const { isLoading, error, user } = useAppSelector(state => state.patients);
   const [search, setSearch] = useState('');
   const dispatch = useAppDispatch();
   const [debounsed] = useDebounce(search, 1000);
-  
   useEffect(() => {
     dispatch(getPatients());
   }, []);
-
+  console.log(debounsed)
   useEffect(() => {
     if (debounsed !== undefined) {
       dispatch(searchRequest(debounsed));
@@ -91,7 +88,7 @@ const AdminPatients = () => {
     );
   };
 
-  const memoPatients = useMemo(() => searches, [searches]);
+  const memoPatients = useMemo(() => user, [user]);
 
   return (
     <Container>
@@ -114,7 +111,7 @@ const AdminPatients = () => {
         />
       </Block>
       <BoxTable>
-        {memoPatients.length ? (
+        {memoPatients ? (
           <Table
             columns={pacientHeader}
             data={memoPatients}

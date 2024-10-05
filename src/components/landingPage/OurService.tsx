@@ -19,7 +19,7 @@ const OurService = () => {
         <Box className="serviceBox">
           {index.splice(0, 9).map(({ img, id, name }) => (
             <Box key={id}>
-              <Box className="content">
+              <Box className="content" onClick={() => navigate('services')}>
                 <img className="img" src={img} alt="img" />
               </Box>
               <Typography className="text" variant="body1">
@@ -53,6 +53,7 @@ const Container = styled(Box)(() => ({
     margin: '0 auto',
     display: 'flex',
     flexDirection: 'column',
+    alignItems:'center'
   },
   '.textBox': {
     width: '100%',
@@ -63,10 +64,10 @@ const Container = styled(Box)(() => ({
     gap: '20px',
   },
   '.float': {
-    float: 'center',
     display: 'flex',
     justifyContent: 'center',
     marginTop: '20px',
+    width:"20%"
   },
   '.service': {
     color: 'green',

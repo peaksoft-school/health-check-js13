@@ -2,6 +2,7 @@ import Contacts from '../../pages/contacts/Contacts';
 import Doctor from '../../pages/doctors/Doctors';
 import InnerDoctorPage from '../../pages/doctors/InnerDoctorPage';
 import Home from '../../pages/home/Home';
+import InnerService from '../../pages/innerServise/InnerService';
 import Clinic from '../../pages/user/aboutClinic/Clinic';
 import Price from '../../pages/user/aboutPrice/Price';
 import Appointment from '../../pages/user/appointment/Appointment';
@@ -23,8 +24,18 @@ export const USER_ROUTES = [
   },
   {
     path: 'services',
-    element: <ServiceClinic />,
+    children: [
+      {
+        index: true,
+        element: <ServiceClinic />,
+      },
+      {
+        path: ':id/service',
+        element: <InnerService />,
+      },
+    ],
   },
+
   {
     path: 'doctors',
     children: [

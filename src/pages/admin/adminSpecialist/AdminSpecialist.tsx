@@ -30,7 +30,7 @@ const AdminSpecialist = () => {
   const navigate = useNavigate();
 
   const { searches, isLoading } = useAppSelector(state => state.spec);
-
+  console.log(searches)
   const [debounced] = useDebounce(searche, 1000);
   useEffect(() => {
     dispatch(getSpecialist());
@@ -81,12 +81,12 @@ const AdminSpecialist = () => {
       accessorKey: 'department',
       cell: ({ row }: any) => {
         const departmentKey = row.original
-          .department as keyof typeof translateDepartment;
+          .departmentName as keyof typeof translateDepartment;
 
         if (translateDepartment[departmentKey]) {
           return <p>{translateDepartment[departmentKey]}</p>;
         } else {
-          return <p>{row.original.department}</p>;
+          return <p>{row.original.departmentName}</p>;
         }
       },
     },

@@ -17,6 +17,7 @@ const Doctor = () => {
   useEffect(() => {
     dispatch(doctorGet());
   }, []);
+  
   const translateDepartment = {
     CARDIOLOGY: 'Кардиология',
     DERMATOLOGY: 'Дерматология',

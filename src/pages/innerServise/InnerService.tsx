@@ -1,107 +1,105 @@
 import { Box, styled, Typography } from '@mui/material';
-import Header from '../../layout/user/Header';
-import {
-  Dermatology,
-  DermatologyLi,
-  DermatologyText,
-  DermatologyTextLi,
-} from '../../utils/constants/Dermatology';
+
 import Button from '../../components/UI/Button';
 import FeedbackSlider from '../../components/landingPage/FeedbackSlider';
-import Accordionst from '../../components/UI/Accardionst';
-import Aplication from '../../components/landingPage/Aplication';
 import Footer from '../../layout/user/Footer';
-import BreadCrumbs from '../../components/UI/BreadCrumbs';
 import DoctorTenImg from '../../assets/images/DoctorTenImg.png';
 import DoctorSeven from '../../assets/images/DoctorSevenImg.png';
 import DoctorFive from '../../assets/images/DoctorFiveImg.png';
-
-const breadcrumbs = [
-  { label: 'Главная', href: '/' },
-  { label: 'Услуги', href: '/uslugi' },
-  { label: 'Дерматология' },
-];
+import Application from '../../components/landingPage/Application';
+import Accordeon from '../../components/UI/Accardeon';
+import { NavLink, useParams } from 'react-router-dom';
+import index from '../../utils/constants/index.json';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const InnerService = () => {
-  const applicationUpdateFunc = () => {
-    // I don't know why this func , syimyk bro will fix, and also syimyk bro fix buttons collor, mentors will not give comments
-    //i don't do it reausable becouse routes is not available
-  };
+  const { id } = useParams();
+  const innerData = index.find(item => item.id === +id);
 
   return (
     <>
       <StyledContainer>
-        <Header />
         <StyledBox>
-          <BreadCrumbs items={breadcrumbs} />
+          <BreadcrumbsBox>
+            <BreadcrumbLink to="/">
+              Главная
+              <ArrowForwardIosIcon
+                style={{
+                  fontSize: 'medium',
+                  color: 'green',
+                  marginTop: '3px',
+                }}
+              />
+            </BreadcrumbLink>
+            <BreadcrumbLink to="/services">
+              Услуги
+              <ArrowForwardIosIcon
+                style={{
+                  fontSize: 'medium',
+                  color: 'green',
+                  marginTop: '3px',
+                }}
+              />
+            </BreadcrumbLink>
+            <BreadcrumbLink to="/dermatology">{innerData?.name}</BreadcrumbLink>
+          </BreadcrumbsBox>
           <StyledContent>
-            {Dermatology.map(({ id, doctor, name, title, subTitle }) => (
-              <StyledMapContainer key={id}>
-                <StyledDoctor>{doctor}</StyledDoctor>
-                <StyledName>{name}</StyledName>
-                <StyledTitle>{title}</StyledTitle>
-                <StyledSubTitle>{subTitle}</StyledSubTitle>
-              </StyledMapContainer>
-            ))}
+            <StyledMapContainer>
+              <StyledDoctor>{innerData?.name}</StyledDoctor>
+              <StyledName>{innerData?.text}</StyledName>
+              <StyledTitle>{innerData?.title}</StyledTitle>
+              <StyledSubTitle>{innerData?.titleOptions}</StyledSubTitle>
+            </StyledMapContainer>
 
             <ul>
-              {DermatologyLi.map(({ id, titleLiText }) => (
-                <StyledLi key={id}>{titleLiText}</StyledLi>
+              {innerData?.options.map(({ id, proud }) => (
+                <StyledLi key={id}>{proud}</StyledLi>
               ))}
             </ul>
 
-            {DermatologyText.map(({ titleText, textText }) => (
-              <>
-                <StyledNameText>{titleText}</StyledNameText>
-                <StyledTexttext>{textText}</StyledTexttext>
-              </>
+            <StyledNameText>{innerData?.doctor}</StyledNameText>
+            <StyledTexttext>{innerData?.doctorTitle}</StyledTexttext>
+
+            {innerData?.doctorOptions?.map(({ proud }) => (
+              <StyledList>{proud}</StyledList>
             ))}
 
-            {DermatologyTextLi.map(({ title }) => (
-              <StyledList>{title}</StyledList>
-            ))}
-
-            <StyledText>
-              Цены на прием <span>врача-дерматолога</span>
-              <StyledService>
-                <p>Услуга</p>
-                <p>Стоимость</p>
-              </StyledService>
-              <StyledPrice>
-                <Accordionst
-                  title="Первичный прием врача-дерматолога"
-                  price="2300 сом">
-                  <Box>
-                    <p style={{ fontSize: '16px' }}>
-                      Показано при любых формах ишемической болезни и пороках
-                      сердца, повышенном артериальном давлении, кардиомиопатии,
-                      аритмии и других патологиях.
-                    </p>
-                  </Box>
-                </Accordionst>
-                <Accordionst
-                  title="Первичный прием врача-дерматолога"
-                  price="1500 сом">
-                  <Box>
-                    <p style={{ fontSize: '16px' }}>
-                      Следуйте рекомендациям врача и соблюдайте назначенное
-                      лечение.
-                    </p>
-                  </Box>
-                </Accordionst>
-                <Accordionst
-                  title="Повторный прием врача-дерматолога"
-                  price="1000 сом">
-                  {' '}
-                  <Box>
-                    <p style={{ fontSize: '16px' }}>
-                      Запланируйте последующие визиты, если это необходимо для
-                      контроля состояния.
-                    </p>
-                  </Box>
-                </Accordionst>
-              </StyledPrice>
-            </StyledText>
+            <div style={{ width: '71%', margin: '20px 0' }}>
+              <Typography variant="h4" sx={{ margin: '35px 0' }}>
+                Цены на прием
+                <span style={{ color: '#048741', marginLeft: '5px' }}>
+                  врача-{innerData?.name}
+                </span>
+              </Typography>
+              <Accordeon style={{ width: '100%' }} title="Услуга">
+                <Typography
+                  fontFamily={'Manrope,sans-serif'}
+                  fontWeight={700}
+                  fontSize={18}>
+                  Первичный прием врача-дерматолога
+                </Typography>
+                <Typography fontWeight={300}>
+                  Показано при любых формах ишемической болезни и пороках
+                  сердца, повышенном артериальном давлении, кардиомиопатии,
+                  аритмии и других патологиях.
+                </Typography>
+                <Ul>
+                  {[1, 2].map(todo => (
+                    <li
+                      key={todo}
+                      style={{
+                        borderBottom: '1px solid grey',
+                        margin: '10px 0',
+                      }}>
+                      Первичный прием врача-дерматолога{' '}
+                      <span style={{ margin: '0 10px', fontWeight: '700' }}>
+                        1500 сом
+                      </span>
+                    </li>
+                  ))}
+                </Ul>
+              </Accordeon>
+            </div>
           </StyledContent>
         </StyledBox>
       </StyledContainer>
@@ -117,23 +115,20 @@ const InnerService = () => {
                 <StyledImg src={DoctorSeven} alt="name" />
                 <StyledImg src={DoctorFive} alt="name" />
               </div>
-<div className='imgContents'>
-  <div>
-
-  <p>Манак Елена</p>
-  <p>Врач-дерматолог</p>
-  </div>
-  <div>
-
-  <p>Манак Елена</p>
-  <p>Врач-дерматолог</p>
-  </div>
-  <div>
-
-  <p>Манак Елена</p>
-  <p>Врач-дерматолог</p>
-  </div>
-</div>
+              <div className="imgContents">
+                <div>
+                  <p>Манак Елена</p>
+                  <p>Врач-{innerData?.name}</p>
+                </div>
+                <div>
+                  <p>Манак Елена</p>
+                  <p>Врач-{innerData?.name}</p>
+                </div>
+                <div>
+                  <p>Манак Елена</p>
+                  <p>Врач-{innerData?.name}</p>
+                </div>
+              </div>
               <div className="imgContentst">
                 <Button variant="outlined">Записаться на прием</Button>
                 <Button variant="outlined">Записаться на прием</Button>
@@ -141,7 +136,7 @@ const InnerService = () => {
               </div>
             </StyledContainerDoctors>
           </StyledContent>
-          <Aplication updateFunc={applicationUpdateFunc} />
+          <Application />
         </StyledBox>
       </StyledContainer>
 
@@ -155,6 +150,50 @@ export default InnerService;
 const StyledBox = styled(Box)(() => ({
   width: '100%',
   maxWidth: '1200px',
+}));
+
+const BreadcrumbsBox = styled(Box)`
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  margin: 10px 0;
+`;
+
+const BreadcrumbLink = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  color: green;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  gap: 5px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:last-child {
+    color: grey;
+    pointer-events: none;
+  }
+`;
+
+const Ul = styled('ul')(() => ({
+  '& > li': {
+    display: 'flex',
+    alignItems: 'center',
+    listStyle: 'none',
+    paddingLeft: '10px',
+    fontFamily: '"Manrope", sans-serif',
+    fontSize: '14px',
+  },
+  '& li::before': {
+    content: '"•"',
+    color: 'green',
+    fontSize: '30px',
+    fontWeight: '900',
+    marginRight: '10px',
+  },
 }));
 
 const StyledContent = styled(Box)(() => ({
@@ -197,17 +236,6 @@ const StyledContainer = styled(Box)(() => ({
   alignItems: 'center',
   flexDirection: 'column',
   fontFamily: 'Manrope, sans-serif',
-}));
-
-const StyledText = styled('h1')(() => ({
-  fontSize: '2.25rem',
-  fontFamily: 'Manrope, sans-serif',
-  width: '56.4rem',
-  marginTop: '120px',
-  span: {
-    color: 'green',
-    fontWeight: 'bold',
-  },
 }));
 
 const StyledDoctor = styled('h1')(() => ({
@@ -265,27 +293,8 @@ const StyledSubTitle = styled(Typography)(() => ({
   fontFamily: 'Manrope, sans-serif',
 }));
 
-const StyledPrice = styled(Box)(() => ({
-  width: '53.3rem',
-}));
-
-const StyledService = styled(Box)(() => ({
-  display: 'flex',
-  gap: '39rem',
-  alignItems: 'center',
-  backgroundColor: '#dbf0e5',
-  width: '53.3rem',
-  height: '3.7rem',
-  borderRadius: '0.63rem',
-  marginTop: '60px',
-  '& p': {
-    fontSize: '18px',
-    marginLeft: '20px',
-  },
-}));
-
 const StyledLi = styled('li')(() => ({
-  marginLeft: '18px',
+  margin: '15px 0 15px 18px',
   fontFamily: 'Manrope, sans-serif',
 
   '&::marker': {
@@ -296,7 +305,7 @@ const StyledLi = styled('li')(() => ({
 
 const StyledList = styled('li')(() => ({
   fontFamily: 'Manrope, sans-serif',
-
+  margin: '15px 0',
   '&::marker': {
     marginLeft: '5px',
     color: 'green',

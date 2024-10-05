@@ -10,9 +10,10 @@ import { ExpandMore } from '@mui/icons-material';
 interface IProps {
   children?: ReactNode;
   title?: string;
+  style?: any;
 }
 
-const Accordeon = ({ title, children }: IProps) => {
+const Accordeon = ({ title, children, style }: IProps) => {
   const [expanded, setExpanded] = useState<string | boolean>(false);
 
   const handleChange = (panel: string) => (_: any, newExpanded: boolean) => {
@@ -22,7 +23,8 @@ const Accordeon = ({ title, children }: IProps) => {
   return (
     <StyledAccordion
       expanded={expanded === 'panel1'}
-      onChange={handleChange('panel1')}>
+      onChange={handleChange('panel1')}
+      style={style}>
       <StyledAccordionSummary
         aria-controls="panel1d-content"
         id="panel1d-header">
@@ -48,7 +50,6 @@ const StyledAccordion = styled((props: AccordionProps) => (
     display: 'none',
   },
 }));
-
 
 const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
