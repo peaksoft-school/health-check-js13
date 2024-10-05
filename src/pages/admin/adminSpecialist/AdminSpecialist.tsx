@@ -30,7 +30,6 @@ const AdminSpecialist = () => {
   const navigate = useNavigate();
 
   const { searches, isLoading } = useAppSelector(state => state.spec);
-  console.log(searches)
   const [debounced] = useDebounce(searche, 1000);
   useEffect(() => {
     dispatch(getSpecialist());

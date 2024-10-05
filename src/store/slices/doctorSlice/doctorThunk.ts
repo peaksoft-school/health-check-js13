@@ -12,6 +12,7 @@ export const doctorGet = createAsyncThunk(
     }
   }
 );
+
 export const doctorGetId = createAsyncThunk(
   'doctor/doctorGetId',
   async (id, { rejectWithValue }) => {

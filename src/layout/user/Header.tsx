@@ -25,15 +25,18 @@ import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../configs/firebase';
 import { googleAuthFirbase } from '../../store/slices/auth/authThunk';
 import Modal from '../../components/UI/Modal';
+import SidebarMenu from '../../pages/user/modalWindows/SidebarMenu';
 
 const Header = () => {
   const [showBoxContent, setShowBoxContent] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [openModal, setIsOpenThreeModal] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(false); // Исправлено
   const navigate = useNavigate();
   const { role } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
+
   const handleScroll = () => {
     const scrollTop = pageYOffset || document.documentElement.scrollTop;
 
@@ -45,16 +48,18 @@ const Header = () => {
 
     setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
   };
-  console.log(role);
 
   useEffect(() => {
-    addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [lastScrollTop]);
-  const openThreeModal = () => setIsOpenThreeModal(prev => !prev);
+
+  const toggleSidebar = (open: boolean) => {
+    setOpenSidebar(open); // Исправлено
+  };
 
   useEffect(() => {
     const handleScrolled = () => {
@@ -65,12 +70,13 @@ const Header = () => {
       }
     };
 
-    addEventListener('scroll', handleScrolled);
+    window.addEventListener('scroll', handleScrolled);
 
     return () => {
-      removeEventListener('scroll', handleScrolled);
+      window.removeEventListener('scroll', handleScrolled);
     };
   }, []);
+
   const navigateSignUp = () => navigate('sign-up');
   const navigateSignIn = () => navigate('sign-in');
   const googleAuthFn = () => {
@@ -143,6 +149,7 @@ const Header = () => {
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
+                <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
                 <HR />
               </ContentCards>
             </ContentCardsFunc>
@@ -169,20 +176,22 @@ const Header = () => {
                     </Link>
                   ) : (
                     <Box>
-                      <ButtonClass variant="outlined" onClick={openThreeModal}>
+                      <ButtonClass
+                        variant="outlined"
+                        onClick={() => setIsOpenThreeModal(true)}>
                         получить результаты
                       </ButtonClass>
                     </Box>
                   )}
 
-                  <Button1>запись онлайн</Button1>
+                  <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
                 </ContentButton>
               </BoxContent>
             </ContentCards1>
           </Content>
         </Box>
       </HeaderClass>
-      <Modal open={openModal} onClose={openThreeModal}>
+      <Modal open={openModal} onClose={() => setIsOpenThreeModal(false)}>
         <StyledSecondModal>
           <TypographyStyled variant="h6">
             Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
@@ -212,7 +221,7 @@ const Header = () => {
               Зарегистрироваться с Google
             </BoxGoogle>
           </BoxStyledButton>
-          <StyledModalIcon onClick={openThreeModal}>
+          <StyledModalIcon onClick={() => setIsOpenThreeModal(false)}>
             <Close />
           </StyledModalIcon>
         </StyledSecondModal>

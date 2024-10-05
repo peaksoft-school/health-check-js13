@@ -8,7 +8,7 @@ import {
   searchSpec,
 } from './adminSpecialistThunk';
 
-type BodyTableStatusTypes = {
+export type BodyTableStatusTypes = {
   image?: any;
   specialization?: any;
   firstName?: any;
@@ -29,7 +29,7 @@ type BodyTableStatusTypes = {
   };
 };
 
-interface SpecialistState {
+export interface SpecialistState {
   spec: BodyTableStatusTypes[];
   isLoading: boolean;
   error: string | null;
@@ -38,7 +38,7 @@ interface SpecialistState {
   searches: [];
 }
 
-const initialState: SpecialistState = {
+export const initialState: SpecialistState = {
   spec: [],
   file: '',
   isLoading: false,

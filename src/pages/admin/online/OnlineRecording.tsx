@@ -4,12 +4,10 @@ import Input from '../../../components/UI/Input';
 import { Box, InputAdornment, styled } from '@mui/material';
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
 import Icon from '../../../assets/icons/Pluse.svg';
-import Table from '../../../components/UI/Table';
-import { TableOne } from '../../../utils/constants/Column';
-import tableOne from '../../../utils/constants/tableOne.json';
 import Schedule from '../schedule/Schedule';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import { getAppoitments } from '../../../store/slices/adminAppoitments/adminAppoitmentThunk';
+import HorizontalScrollCalendar from '../calendar/Calrndar';
 
 const OnlineRecording: FC = () => {
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
@@ -67,9 +65,7 @@ const OnlineRecording: FC = () => {
               />
             </Box>
             {isOnlineRecordingActive ? (
-              <div className="tableContent">
-                <Table columns={TableOne} data={tableOne} />
-              </div>
+              <HorizontalScrollCalendar />
             ) : (
               <Schedule />
             )}
