@@ -108,7 +108,11 @@ const Header = () => {
             </ContentCardsFunc>
             <ContentCards1>
               <BoxContent>
-                <HealthCheck src={Medcheck} alt="medcheck" />
+                <HealthCheck
+                  src={Medcheck}
+                  alt="medcheck"
+                  onClick={() => navigate('/')}
+                />
                 {Text.map((item, index) => (
                   <Box key={index}>
                     <Title>
@@ -140,6 +144,13 @@ const StyledNavLink = styled(NavLink)(() => ({
   textDecoration: 'none',
   padding: '4px 10px',
   borderRadius: '4px',
+
+  '&:hover': {
+    color: '#1E90FF',
+  },
+  '&.active': {
+    color: 'blue',
+  },
 }));
 
 const HeaderClass = styled('header')(() => ({

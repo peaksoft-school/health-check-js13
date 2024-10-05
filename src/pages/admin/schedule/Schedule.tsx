@@ -1,14 +1,10 @@
 import { Box, styled } from '@mui/material';
-
+import HorizontalScrollCalendar from '../calendar/Calrndar';
 
 const Schedule = () => {
   return (
     <Container>
-      <HeaderStyled></HeaderStyled>
-      <Main>
-        <Aside></Aside>
-        <Section></Section>
-      </Main>
+      <HorizontalScrollCalendar />
     </Container>
   );
 };

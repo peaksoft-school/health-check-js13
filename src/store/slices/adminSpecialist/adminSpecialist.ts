@@ -4,6 +4,7 @@ import {
   addSpec,
   getDoctorById,
   getSpecialist,
+  searchSpec,
 } from './adminSpecialistThunk';
 
 export type BodyTableStatusTypes = {
@@ -33,6 +34,7 @@ export interface SpecialistState {
   error: string | null;
   file: string | undefined;
   infoSpec: any;
+  searches: [];
 }
 
 export const initialState: SpecialistState = {
@@ -41,6 +43,7 @@ export const initialState: SpecialistState = {
   isLoading: false,
   error: null,
   infoSpec: {},
+  searches: [],
 };
 
 export const specialistSlice = createSlice({
@@ -97,6 +100,16 @@ export const specialistSlice = createSlice({
         state.file = payload.image;
       })
       .addCase(getDoctorById.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(searchSpec.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(searchSpec.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.searches = payload;
+      })
+      .addCase(searchSpec.rejected, state => {
         state.isLoading = false;
       });
   },

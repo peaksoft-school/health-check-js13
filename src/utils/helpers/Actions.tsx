@@ -22,11 +22,12 @@ const ActionsStatus = ({ row }: any) => {
         <UpdateIcon />
       </div>
       <Delete
+        value=""
         name={`${row.original.firstName} ${row.original.lastName}`}
         variant="spec"
         deleteFn={deleteDoctore}
         id={row.original.id}
-        isProcessed={!row.original.isActive}
+        isProcessed={row.original.isActive}
       />
     </div>
   );
