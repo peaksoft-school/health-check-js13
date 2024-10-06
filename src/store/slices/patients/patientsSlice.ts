@@ -35,6 +35,7 @@ type TInitialState = {
   getUser: Types | null;
   pdfFile: any;
   user: [];
+  result: [];
 };
 
 const initialState: TInitialState = {
@@ -45,6 +46,7 @@ const initialState: TInitialState = {
   getUser: null,
   pdfFile: [],
   user: [],
+  result: [],
 };
 
 export const patinetsSlice = createSlice({
