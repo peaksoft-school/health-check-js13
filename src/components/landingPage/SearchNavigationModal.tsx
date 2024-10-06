@@ -29,11 +29,7 @@ const SearchNavigationModal = ({
 }: SearchType) => {
   const normalizedQuery = searchWord.toLowerCase();
 
-  const fieldsToSearch: (keyof Data)[] = [
-    'position',
-    //  'patientFullName',
-    'doctorFullName',
-  ];
+  const fieldsToSearch: (keyof Data)[] = ['position', 'doctorFullName'];
 
   const results: SearchResult[] = [];
   const seenValues = new Set<string>();
@@ -46,8 +42,8 @@ const SearchNavigationModal = ({
         value.toLowerCase().includes(normalizedQuery) &&
         !seenValues.has(value)
       ) {
-        seenValues.add(value); // Добавляем значение в Set, чтобы отслеживать уникальные значения
-        results.push({ search: value, status: field }); // Добавляем только уникальные результаты
+        seenValues.add(value);
+        results.push({ search: value, status: field });
       }
     });
   });

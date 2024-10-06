@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { SearchResult } from '../landingPage/SearchNavigationModal';
 import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
 type MeatballsType = {
   data: SearchResult[];
@@ -23,7 +24,6 @@ const ModalSearch = ({ data, inputValue }: MeatballsType) => {
   }, [inputValue, filteredData]);
 
   const handleClick = (status: string) => {
-    console.log(status);
     if (status === 'position') {
       navigate('doctors');
     } else {
@@ -48,33 +48,34 @@ const ModalSearch = ({ data, inputValue }: MeatballsType) => {
 
 export default ModalSearch;
 
-const ModalBackground = styled.div`
-  display: ${props => (props.show ? 'block' : 'none')};
-  position: absolute;
-  z-index: 10;
-  left: 50%;
-  top: 60px;
-  transform: translate(-50%);
-`;
+const ModalBackground = styled('div')<{ show: boolean }>(({ show }) => ({
+  display: show ? 'block' : 'none',
+  position: 'absolute',
+  zIndex: 10,
+  left: '50%',
+  top: '60px',
+  transform: 'translate(-50%)',
+}));
 
-const ModalContent = styled.div`
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
-  width: 300px;
-  text-align: center;
-  padding: 10px 0px;
-`;
+const ModalContent = styled('div')({
+  backgroundColor: '#fff',
+  borderRadius: '10px',
+  boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.4)',
+  width: '300px',
+  textAlign: 'center',
+  padding: '10px 0px',
+});
 
-const MyButton = styled.button`
-  width: 90%;
-  border: none;
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 5px auto;
+const MyButton = styled(Button)({
+  width: '90%',
+  backgroundColor: '#fff',
+  borderRadius: '10px',
+  padding: '5px',
+  margin: '5px auto',
+  color: 'black',
+  textTransform: 'none',
 
-  &:hover {
-    background-color: #d7e2ea;
-  }
-`;
+  '&:hover': {
+    backgroundColor: '#d7e2ea',
+  },
+});

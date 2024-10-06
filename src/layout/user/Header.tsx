@@ -1,4 +1,4 @@
-import { Box, InputAdornment, styled, TextField } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
@@ -6,176 +6,16 @@ import Telephone from '../../assets/icons/CallIcon.svg';
 import TheMap from '../../assets/icons/JpsIcon.svg';
 import Hour from '../../assets/icons/TimeIcon.svg';
 import Medcheck from '../../assets/images/HEALTHCHECK.png';
-import Search from '../../assets/icons/SearchIcon.svg';
 import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
-import { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { searchGlobalThunk } from '../../store/user/searchThunk';
-import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import Breadcrumbs from '../../components/UI/BreadCrumbs';
 import { UserBreadCrumbsData } from '../../routes/user/UserRout';
-import SearchNavigationModal from '../../components/landingPage/SearchNavigationModal';
-const Arr = [
-  {
-    id: 1,
-    patientFullName: 'Петр Петров',
-    phoneNumber: '+(996) 13-45-67',
-    email: 'petr@example.com',
-    position: 'Кардиолог',
-    doctorFullName: 'Иван Иванов',
-    dateAndTime: '2024-07-01 09:00',
-    status: 'CANCELLED',
-  },
-  {
-    id: 2,
-    patientFullName: 'Анна Сидорова',
-    phoneNumber: '+(996) 234-56-78',
-    email: 'anna@example.com',
-    position: 'Дерматолог',
-    doctorFullName: 'Петр Петров',
-    dateAndTime: '2024-07-02 10:30',
-    status: 'CONFIRMED',
-  },
-  {
-    id: 3,
-    patientFullName: 'Дмитрий Козлов',
-    phoneNumber: '+(996) 35-67-89',
-    email: 'dmitry@example.com',
-    position: 'Невролог',
-    doctorFullName: 'Анна Сидорова',
-    dateAndTime: '2024-07-03 12:00',
-    status: 'COMPLETED',
-  },
-  {
-    id: 4,
-    patientFullName: 'Елена Николаева',
-    phoneNumber: '+(996) 56-78-90',
-    email: 'elena@example.com',
-    position: 'Ортопед',
-    doctorFullName: 'Дмитрий Козлов',
-    dateAndTime: '2024-07-04 14:30',
-    status: 'CONFIRMED',
-  },
-  {
-    id: 5,
-    patientFullName: 'Ольга Михайлова',
-    phoneNumber: '+(996) 67-89-01',
-    email: 'olga@example.com',
-    position: 'Педиатр',
-    doctorFullName: 'Елена Николаева',
-    dateAndTime: '2024-07-05 16:00',
-    status: 'COMPLETED',
-  },
-  {
-    id: 6,
-    patientFullName: 'Игорь Васильев',
-    phoneNumber: '+(996) 78-90-12',
-    email: 'igor@example.com',
-    position: 'Психиатр',
-    doctorFullName: 'Ольга Михайлова',
-    dateAndTime: '2024-07-06 09:30',
-    status: 'CONFIRMED',
-  },
-  {
-    id: 7,
-    patientFullName: 'Мария Павлова',
-    phoneNumber: '+(996) 89-01-23',
-    email: 'maria@example.com',
-    position: 'Уролог',
-    doctorFullName: 'Игорь Васильев',
-    dateAndTime: '2024-07-07 11:00',
-    status: 'COMPLETED',
-  },
-  {
-    id: 8,
-    patientFullName: 'Станислав Кузнецов',
-    phoneNumber: '+(996) 90-12-34',
-    email: 'stanislav@example.com',
-    position: 'Гинеколог',
-    doctorFullName: 'Мария Павлова',
-    dateAndTime: '2024-07-08 13:30',
-    status: 'CONFIRMED',
-  },
-  {
-    id: 9,
-    patientFullName: 'Антон Смирнов',
-    phoneNumber: '+(996) 91-23-45',
-    email: 'anton@example.com',
-    position: 'Гастроэнтеролог',
-    doctorFullName: 'Станислав Кузнецов',
-    dateAndTime: '2024-07-09 15:00',
-    status: 'COMPLETED',
-  },
-  {
-    id: 10,
-    patientFullName: 'Сергей Иванов',
-    phoneNumber: '+(996) 12-34-56',
-    email: 'sergey@example.com',
-    position: 'Онколог',
-    doctorFullName: 'Антон Смирнов',
-    dateAndTime: '2024-07-10 16:30',
-    status: 'CANCELLED',
-  },
-];
+import Search from './SearchHeaderNavigate copy';
 
 const Header = () => {
-  const dispatch = useAppDispatch();
-  const [searchQuery, setSearchQuery] = useState('');
-  const { searchAllData } = useAppSelector(state => state.userSlice);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const word = event.target.value;
-    setSearchQuery(word);
-
-    if (word.trim() === '') {
-      console.log('null');
-    } else {
-      dispatch(searchGlobalThunk(word));
-    }
-  };
-
-  const [showBoxContent, setShowBoxContent] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
   const navigate = useNavigate();
-
-  const handleScroll = () => {
-    const scrollTop = pageYOffset || document.documentElement.scrollTop;
-
-    if (scrollTop > lastScrollTop) {
-      setShowBoxContent(false);
-    } else {
-      setShowBoxContent(true);
-    }
-
-    setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
-  };
-
-  useEffect(() => {
-    addEventListener('scroll', handleScroll);
-
-    return () => {
-      removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollTop]);
-
-  useEffect(() => {
-    const handleScrolled = () => {
-      if (scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    addEventListener('scroll', handleScrolled);
-
-    return () => {
-      removeEventListener('scroll', handleScrolled);
-    };
-  }, []);
 
   return (
     <div className="boxter">
@@ -183,7 +23,7 @@ const Header = () => {
         <Box className="container">
           <Content>
             <ContentCardsFunc>
-              <ContentCards className={scrolled ? 'scrolled' : ''}>
+              <ContentCards>
                 <ContentNom>
                   <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
                     <ContainerNom>
@@ -197,30 +37,8 @@ const Header = () => {
                     <MaxNumber>08:00 до 18:00</MaxNumber>
                   </ContainerNom>
                 </ContentNom>
-                <ContentInput>
-                  <Input
-                    autoComplete="off"
-                    value={searchQuery}
-                    onChange={handleInputChange}
-                    fullWidth
-                    size="small"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Search />
-                        </InputAdornment>
-                      ),
-                    }}
-                    type="text"
-                    placeholder="Поиск по сайту"
-                  />
 
-                  <SearchNavigationModal
-                    dataArr={Arr}
-                    searchWord={searchQuery}
-                    inputValue={searchQuery}
-                  />
-                </ContentInput>
+                <Search />
 
                 <ContainerCards>
                   <IconContainer>
@@ -246,6 +64,7 @@ const Header = () => {
               </ContentCards>
               <HR />
             </ContentCardsFunc>
+
             <ContentCards1>
               <BoxContent>
                 <HealthCheck
@@ -326,13 +145,6 @@ const ContentCards = styled('div')(() => ({
   gridTemplateColumns: '0.7fr 1fr 0.7fr',
 }));
 
-const ContentCards1 = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  flexWrap: 'wrap',
-}));
-
 const ContentNom = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -368,22 +180,6 @@ const GreenP = styled('p')(() => ({
   color: '#009344',
 }));
 
-const ContentInput = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginLeft: '1.25rem',
-  // width: '500px',
-  flex: '1',
-  position: 'relative',
-
-  '@media (max-width: 767px)': {
-    marginLeft: '0',
-    width: '100%',
-    marginTop: '10px',
-  },
-}));
-
 const ContainerCards = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
@@ -395,13 +191,20 @@ const ContainerCards = styled('div')(() => ({
   },
 }));
 
+const ContentCards1 = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+}));
+
 const BoxContent = styled('div')(() => ({
   width: '1200px',
   display: 'flex',
   gap: '17px',
   alignItems: 'center',
   marginTop: '0.875rem',
-  flexWrap: 'wrap',
+  flexWrap: 'nowrap',
   position: 'relative',
 
   '@media (max-width: 767px)': {
@@ -415,25 +218,6 @@ const HR = styled('hr')(() => ({
   width: '100%',
   marginTop: '0.8125rem',
   border: '1px solid #D9D9D9',
-}));
-
-const Input = styled(TextField)(() => ({
-  '& .MuiOutlinedInput-root': {
-    borderRadius: '1.5rem',
-    width: '100%',
-    height: '2.5rem',
-    backgroundColor: '#F3F1F1',
-    padding: '0 20px 0 5px',
-    '@media (max-width: 767px)': {
-      width: '100%',
-      height: 'auto',
-    },
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderRadius: '1.5rem',
-    border: 'none',
-    outline: 'none',
-  },
 }));
 
 const ContentNumber = styled('div')(() => ({
@@ -463,6 +247,7 @@ const HealthCheck = styled('img')(() => ({
 
 const Title = styled('p')(() => ({
   cursor: 'pointer',
+  textWrap: 'nowrap',
 }));
 
 const ContentButton = styled('div')(() => ({

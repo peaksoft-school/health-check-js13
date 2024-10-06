@@ -17,11 +17,16 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({ data }) => {
   } else if (pathnames.length === 1) {
     breadcrumbsToRender = ['', pathnames[0]];
   } else {
-    breadcrumbsToRender = ['', ...pathnames.slice(-2)];
+    breadcrumbsToRender = ['', ...pathnames.slice(-4)];
   }
 
+  const filteredBreadcrumbs = breadcrumbsToRender.map(
+    value =>
+      data.find(item => item.href === value) || { label: value, href: value }
+  );
+
   const findLabel = (href: string) => {
-    const match = data.find(item => item.href === href);
+    const match = filteredBreadcrumbs.find(item => item.href === href);
     return match ? match.label : href;
   };
 
