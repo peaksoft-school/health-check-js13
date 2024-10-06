@@ -23,7 +23,7 @@ const initialState: TypeInitialState = {
 };
 
 export const userApplicationSlice = createSlice({
-  name: 'userSlice',
+  name: 'userApplicationSlice',
   initialState,
   reducers: {},
 

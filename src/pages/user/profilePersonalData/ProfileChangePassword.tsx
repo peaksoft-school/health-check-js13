@@ -18,7 +18,9 @@ type FormValues = {
 
 const ProfileChangePassword = () => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state: RootState) => state.userSlice);
+  const { isLoading } = useAppSelector(
+    (state: RootState) => state.userApplicationSlice
+  );
 
   const {
     register,

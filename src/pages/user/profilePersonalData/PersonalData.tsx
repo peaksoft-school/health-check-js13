@@ -2,11 +2,7 @@ import { Box, styled, Typography, Button as MuiButton } from '@mui/material';
 import Button from '../../../components/UI/Button';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Input from '../../../components/UI/Input';
-import {
-  RootState,
-  useAppDispatch,
-  useAppSelector,
-} from '../../../hooks/customHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import {
   getPersonalData,
   putPersonalData,
@@ -25,27 +21,39 @@ type FormValues = {
 const PersonalData = () => {
   const dispatch = useAppDispatch();
   const { allPersonalData, isLoading } = useAppSelector(
-    state => state.userSlice
+    state => state.userApplicationSlice
   );
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset, // добавляем reset для сброса значений формы
   } = useForm<FormValues>({
     defaultValues: {
-      firstName: allPersonalData.firstName || undefined,
-      lastName: allPersonalData.lastName || undefined,
-      email: allPersonalData.email || undefined,
-      phoneNumber: allPersonalData.phoneNumber || undefined,
+      firstName: allPersonalData.firstName || '',
+      lastName: allPersonalData.lastName || '',
+      email: allPersonalData.email || '',
+      phoneNumber: allPersonalData.phoneNumber || '',
     },
   });
 
   const onSubmit: SubmitHandler<FormValues> = charityData => {
     const allData = { ...allPersonalData, ...charityData };
     dispatch(putPersonalData(allData));
-    dispatch(getPersonalData());
   };
+
+  // Обновляем форму, когда данные пользователя меняются
+  useEffect(() => {
+    if (allPersonalData) {
+      reset({
+        firstName: allPersonalData.firstName || '',
+        lastName: allPersonalData.lastName || '',
+        email: allPersonalData.email || '',
+        phoneNumber: allPersonalData.phoneNumber || '',
+      });
+    }
+  }, [allPersonalData, reset]);
 
   useEffect(() => {
     dispatch(getPersonalData());

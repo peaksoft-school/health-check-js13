@@ -40,7 +40,7 @@ export const userSlice = createSlice({
         fetchAllAppointments.fulfilled,
         (state, action: PayloadAction<Appointment[]>) => {
           state.status = 'idle';
-          state.appointments = action.payload; // Исправлено на appointments
+          state.appointments = action.payload;
         }
       )
       .addCase(fetchAllAppointments.rejected, (state, action) => {
