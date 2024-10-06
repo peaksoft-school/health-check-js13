@@ -12,12 +12,13 @@ const Doctor = () => {
   const goInnerPage = (id: number) => {
     navigate(`${id}/infoDoctor`);
   };
-  console.log(doctors);
 
+  const values = doctors.map((item: any) => item.department);
+  console.log(values);
   useEffect(() => {
     dispatch(doctorGet());
   }, []);
-  
+
   const translateDepartment = {
     CARDIOLOGY: 'Кардиология',
     DERMATOLOGY: 'Дерматология',
@@ -46,33 +47,29 @@ const Doctor = () => {
           ведущих университетах Европы, чтобы еще на шаг стать ближе к
           совершенству.
         </TypographyStyled>
-        {doctors.map(({ id, department, option }) => (
-          <StyledBlock key={id}>
-            <Typography className="titlebig">
-              {translateDepartment[department]}
-            </Typography>
-            <Box className="inBlock">
-              {option?.map((item: any) => (
+        {doctors.map(
+          ({ id, department, image, lastName, firstName, specialization }) => (
+            <StyledBlock key={id}>
+              <Typography className="titlebig">
+                {translateDepartment[department]}
+              </Typography>
+              <Box className="inBlock">
                 <StyledInBlock key={id}>
-                  <img
-                    className="imgOne"
-                    src={item.image}
-                    alt={item.lastName}
-                  />
+                  <img className="img" src={image} alt={lastName} />
                   <Typography className="text">
-                    {item.firstName} {item.lastName}
+                    {firstName} {lastName}
                   </Typography>
                   <Typography className="text">
-                    Врач-{item.specialization}
+                    Врач-{specialization}
                   </Typography>
                   <Button variant="outlined" onClick={() => goInnerPage(id)}>
                     Записаться на прием
                   </Button>
                 </StyledInBlock>
-              ))}
-            </Box>
-          </StyledBlock>
-        ))}
+              </Box>
+            </StyledBlock>
+          )
+        )}
         <Typography className="book">
           В нашей клинике работают:{' '}
           <span className="booch">более 30 специалистов</span>
@@ -138,6 +135,7 @@ const StyledBlock = styled(Box)(() => ({
     display: 'flex',
     flexWrap: 'wrap',
     gap: '25px',
+    border: '1px solid black',
   },
 
   '& .titlebig': {
@@ -148,7 +146,7 @@ const StyledBlock = styled(Box)(() => ({
 
 const StyledInBlock = styled(Box)(() => ({
   width: '320px',
-  height: '475px',
+  height: '505px',
   border: '1px soli balck',
 
   '& > img': {

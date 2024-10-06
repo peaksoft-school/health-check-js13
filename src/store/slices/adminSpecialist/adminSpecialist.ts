@@ -34,14 +34,14 @@ export interface SpecialistState {
   spec: BodyTableStatusTypes[];
   isLoading: boolean;
   error: string | null;
-  file: string | undefined;
+  files: string | undefined;
   infoSpec: any;
   searches: [];
 }
 
 export const initialState: SpecialistState = {
   spec: [],
-  file: '',
+  files: '',
   isLoading: false,
   error: null,
   infoSpec: {},
@@ -77,7 +77,7 @@ export const specialistSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(addFile.fulfilled, (state, { payload }) => {
-        state.file = payload.link;
+        state.files = payload.link;
         state.isLoading = false;
       })
       .addCase(addFile.rejected, state => {
@@ -88,7 +88,7 @@ export const specialistSlice = createSlice({
       })
       .addCase(addSpec.fulfilled, (state, { payload }) => {
         (state.isLoading = false), (state.spec = payload);
-        state.file = '';
+        state.files = '';
       })
       .addCase(addSpec.rejected, state => {
         state.isLoading = false;
@@ -99,7 +99,7 @@ export const specialistSlice = createSlice({
       .addCase(getDoctorById.fulfilled, (state, { payload }) => {
         state.infoSpec = payload;
         state.isLoading = false;
-        state.file = payload.image;
+        state.files = payload.image;
       })
       .addCase(getDoctorById.rejected, state => {
         state.isLoading = false;
@@ -124,7 +124,7 @@ export const specialistSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateSpec.fulfilled, state => {
-        state.file = '';
+        state.files = '';
       });
   },
 });

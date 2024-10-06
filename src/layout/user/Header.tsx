@@ -32,7 +32,7 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [openModal, setIsOpenThreeModal] = useState(false);
-  const [openSidebar, setOpenSidebar] = useState(false); // Исправлено
+  const [openSidebar, setOpenSidebar] = useState(false);
   const navigate = useNavigate();
   const { role } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
@@ -58,7 +58,7 @@ const Header = () => {
   }, [lastScrollTop]);
 
   const toggleSidebar = (open: boolean) => {
-    setOpenSidebar(open); // Исправлено
+    setOpenSidebar(open);
   };
 
   useEffect(() => {
@@ -334,7 +334,7 @@ const StyledSecondModal = styled(Box)(() => ({
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
-  zIndex: 1999,
+  zIndex: 999,
   fontFamily: '"Poppins", sans-serif',
 }));
 

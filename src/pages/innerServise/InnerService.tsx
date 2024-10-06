@@ -11,11 +11,14 @@ import Accordeon from '../../components/UI/Accardeon';
 import { NavLink, useParams } from 'react-router-dom';
 import index from '../../utils/constants/index.json';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useState } from 'react';
+import SidebarMenu from '../user/modalWindows/SidebarMenu';
 
 const InnerService = () => {
+  const [open, setOpen] = useState(false);
   const { id } = useParams();
   const innerData = index.find(item => item.id === +id);
-
+  const openModal = () => setOpen(prev => !prev);
   return (
     <>
       <StyledContainer>
@@ -130,10 +133,17 @@ const InnerService = () => {
                 </div>
               </div>
               <div className="imgContentst">
-                <Button variant="outlined">Записаться на прием</Button>
-                <Button variant="outlined">Записаться на прием</Button>
-                <Button variant="outlined">Записаться на прием</Button>
+                <Button variant="outlined" onClick={openModal}>
+                  Записаться на прием
+                </Button>
+                <Button variant="outlined" onClick={openModal}>
+                  Записаться на прием
+                </Button>
+                <Button variant="outlined" onClick={openModal}>
+                  Записаться на прием
+                </Button>
               </div>
+              {open && <SidebarMenu open={open} toggleDrawer={openModal} />}
             </StyledContainerDoctors>
           </StyledContent>
           <Application />

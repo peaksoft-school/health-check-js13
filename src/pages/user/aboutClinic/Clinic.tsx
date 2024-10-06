@@ -3,21 +3,14 @@ import { Box, styled } from '@mui/material';
 import Signed from '../../../assets/icons/Signed.svg';
 import Doctors from '../../../assets/images/Doctors.png';
 import Fon from '../../../assets/images/Fon.png';
-import CustomBreadcrumbs from '../../../components/UI/BreadCrumbs';
 
 const Clinic: FC = () => {
-  const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О клинике' }];
-
   return (
     <ClinicClass>
       <Content>
         <ContentClass>
           <Box>
-            <RouterContent>
-              <Box>
-                <CustomBreadcrumbs items={breadcrumbs} />
-              </Box>
-            </RouterContent>
+            <RouterContent></RouterContent>
             <HealthBox>
               <HealthSpan>Здоровье — самое</HealthSpan>
               <SpanGreen>ценное в жизни</SpanGreen>
@@ -44,7 +37,6 @@ const Clinic: FC = () => {
                   ваши вопросы, предоставить необходимую поддержку и обеспечить
                   вас лучшими медицинскими решениями.
                 </Text>
-               
               </CardLorems>
             </TextContent>
             <SignedContent>
@@ -69,7 +61,7 @@ export default Clinic;
 
 const ClinicClass = styled('div')(() => ({
   width: '100%',
-  maxWidth: '1440px',
+  maxWidth: '1200px',
   minWidth: '1200px',
   margin: '50px auto',
 }));
@@ -146,13 +138,13 @@ const NameClinic = styled('p')(() => ({
   paddingTop: '20px',
   fontSize: '18px',
   color: '#048741',
-  fontFamily:'Manrope,sans-serif'
+  fontFamily: 'Manrope,sans-serif',
 }));
 
 const Name = styled('p')(() => ({
   marginTop: '4px',
   fontSize: '22px',
-  fontFamily:'Manrope,sans-serif'
+  fontFamily: 'Manrope,sans-serif',
 }));
 
 const HealthSpan = styled('span')(() => ({

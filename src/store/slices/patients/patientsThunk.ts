@@ -26,7 +26,7 @@ export const searchRequest = createAsyncThunk<
   try {
     console.log(value);
     const { data } = await axiosInstance.get(
-      `/api/users/searchPatients?name=${value}`
+      `/api/users/searchPatients?word=${value}`
     );
 
     return data;
