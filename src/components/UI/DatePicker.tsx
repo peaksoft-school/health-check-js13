@@ -8,7 +8,7 @@ interface CustomDatePickerProps {
   label?: string;
   name: string;
   disabled?: boolean;
-  sx: any;
+  sx?: any;
 }
 
 const CustomDatePicker = forwardRef<HTMLInputElement, CustomDatePickerProps>(

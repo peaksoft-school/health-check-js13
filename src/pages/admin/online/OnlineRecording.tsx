@@ -11,10 +11,13 @@ import Table from '../../../components/UI/Table';
 import { ColumnDef } from '@tanstack/react-table';
 import { BodyTableOneTypes } from '../../../types/table';
 import Delete from '../../../components/UI/admin/Delete';
-import tableOne from '../../../utils/constants/tableOne.json';
+import AddAppointmentModal from './AddAppointmentModal';
+
 const OnlineRecording: FC = () => {
-  const [activeOption, setActiveOption] = useState('Онлайн-запись');
   const { appointmentArr } = useAppSelector(state => state.appoitment);
+
+  const [activeOption, setActiveOption] = useState('Онлайн-запись');
+  const [openModal, setOpenModal] = useState(true);
 
   const handleOptionClick = (option: string) => {
     setActiveOption(option);
@@ -23,7 +26,7 @@ const OnlineRecording: FC = () => {
   const dispatch = useAppDispatch();
   const isOnlineRecordingActive = activeOption === 'Онлайн-запись';
 
-  console.log(appointmentArr);
+  const toggleModal = () => setOpenModal(prev => !prev);
 
   useEffect(() => {
     dispatch(getAppoitments());
@@ -115,57 +118,65 @@ const OnlineRecording: FC = () => {
   ];
 
   return (
-    <BackgroundContainer>
-      <OnlineRecordingContainer>
-        <Box>
-          <Content>
-            <ContentOption>
-              <OnlineRecordingSpan>Онлайн-запись</OnlineRecordingSpan>
-              <StyledButton>
-                <Icon />
-                Добавить запись
-              </StyledButton>
-            </ContentOption>
-            <Box>
-              <ContentOptions>
-                <Option
-                  isActive={isOnlineRecordingActive}
-                  onClick={() => handleOptionClick('Онлайн-запись')}>
-                  Онлайн-запись
-                </Option>
-                <Option
-                  isActive={!isOnlineRecordingActive}
-                  onClick={() => handleOptionClick('Расписание')}>
-                  Расписание
-                </Option>
-              </ContentOptions>
-              <Input
-                border="none"
-                size="small"
-                placeholder="Поиск"
-                className="inputAdmin"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      style={{ cursor: 'pointer' }}
-                      position="end">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
-            {isOnlineRecordingActive ? (
-              <div style={{ margin: '20px 0' }}>
-                <Table columns={TableOne} data={tableOne} />
-              </div>
-            ) : (
-              <HorizontalScrollCalendar />
-            )}
-          </Content>
-        </Box>
-      </OnlineRecordingContainer>
-    </BackgroundContainer>
+    <>
+      <BackgroundContainer>
+        <OnlineRecordingContainer>
+          <Box>
+            <Content>
+              <ContentOption>
+                <OnlineRecordingSpan>Онлайн-запись</OnlineRecordingSpan>
+                <StyledButton onClick={toggleModal}>
+                  <Icon />
+                  Добавить запись
+                </StyledButton>
+              </ContentOption>
+              <Box>
+                <ContentOptions>
+                  <Option
+                    isActive={isOnlineRecordingActive}
+                    onClick={() => handleOptionClick('Онлайн-запись')}>
+                    Онлайн-запись
+                  </Option>
+                  <Option
+                    isActive={!isOnlineRecordingActive}
+                    onClick={() => handleOptionClick('Расписание')}>
+                    Расписание
+                  </Option>
+                </ContentOptions>
+                <Input
+                  border="none"
+                  size="small"
+                  placeholder="Поиск"
+                  className="inputAdmin"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment
+                        style={{ cursor: 'pointer' }}
+                        position="end">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+              {isOnlineRecordingActive ? (
+                <div style={{ margin: '20px 0' }}>
+                  {appointmentArr.length > 0 ? (
+                    <Table columns={TableOne} data={appointmentArr} />
+                  ) : (
+                    <h1>Здесь пока что ничего нету</h1>
+                  )}
+                </div>
+              ) : (
+                <HorizontalScrollCalendar />
+              )}
+            </Content>
+          </Box>
+        </OnlineRecordingContainer>
+      </BackgroundContainer>
+
+      <AddAppointmentModal open={openModal} onClose={toggleModal} />
+    </>
   );
 };
 
