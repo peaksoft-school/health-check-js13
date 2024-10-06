@@ -184,7 +184,7 @@ const CenterContainer = styled('div')(() => ({
   width: '80%',
   borderRadius: '15px',
   position: 'absolute',
-  bottom: '50%',
+  bottom: '20%',
   left: '10%',
   fontSize: '16px',
   textAlign: 'center',

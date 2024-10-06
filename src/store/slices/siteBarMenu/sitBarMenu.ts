@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { postOnlineRecord } from './siteBarThunk';
+import { getDoctorByDepart, postOnlineRecord } from './siteBarThunk';
 
 export type Spesialist = {
   id?: number | undefined;
@@ -21,11 +21,23 @@ export interface SelectData {
   hours: string;
 }
 
+export interface Doctor {
+  id: number;
+  isActive: boolean;
+  image: string;
+  firstName: string;
+  lastName: string;
+  specialization: string;
+  department: string;
+  scheduleUntil: string;
+}
+
 export interface SpesialistState {
   selectChoose: string | '';
   selectSpesialist: Spesialist | null;
   selectData: SelectData | null;
   isLoading: boolean;
+  doctor: Doctor[];
 }
 
 const initialState: SpesialistState = {
@@ -33,6 +45,7 @@ const initialState: SpesialistState = {
   selectSpesialist: null,
   selectData: null,
   isLoading: false,
+  doctor: [],
 };
 
 export const siteBarMenu = createSlice({
@@ -71,6 +84,10 @@ export const siteBarMenu = createSlice({
       .addCase(postOnlineRecord.rejected, state => {
         state.isLoading = false;
       });
+
+    builder.addCase(getDoctorByDepart.fulfilled, (state, action) => {
+      state.doctor = action.payload;
+    });
   },
 });
 

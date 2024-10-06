@@ -10,7 +10,10 @@ import {
   clearSelectData,
   clearSelectSpesialist,
 } from '../../../../store/slices/siteBarMenu/sitBarMenu';
-import { postOnlineRecord } from '../../../../store/slices/siteBarMenu/siteBarThunk';
+import {
+  postOnlineRecord,
+  sendSmsCode,
+} from '../../../../store/slices/siteBarMenu/siteBarThunk';
 
 interface FormData {
   name: string;
@@ -57,8 +60,10 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
   const email = watch('email');
   const code = watch('code');
 
-  const handleConstinue = () => {
-    setConstinue(true);
+  const handleSend = () => {
+    console.log(email);
+
+    dispatch(sendSmsCode({ email, setConstinue }));
   };
 
   const recordOnline: SubmitHandler<FormData> = formData => {
@@ -142,13 +147,18 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
                 <ErrorMessage>{errors.email.message}</ErrorMessage>
               )}
 
-              <LabelStyle htmlFor="capche">Введите код из почты</LabelStyle>
-              <InputStyle
-                type="text"
-                id="capche"
-                {...register('code')}
-                style={{ width: '50%' }}
-              />
+              {!constinue ? null : (
+                <>
+                  {' '}
+                  <LabelStyle htmlFor="capche">Введите код из почты</LabelStyle>
+                  <InputStyle
+                    type="text"
+                    id="capche"
+                    {...register('code')}
+                    style={{ width: '50%' }}
+                  />
+                </>
+              )}
 
               <Button
                 sx={{
@@ -162,7 +172,7 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
               </Button>
               <Button
                 type="button"
-                onClick={handleConstinue}
+                onClick={handleSend}
                 sx={{
                   width: '100%',
                   marginTop: '20px',

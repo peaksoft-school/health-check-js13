@@ -17,3 +17,36 @@ export const postOnlineRecord = createAsyncThunk(
     }
   }
 );
+
+export const sendSmsCode = createAsyncThunk(
+  'appointment/sendSms',
+  async (
+    {
+      email,
+      setConstinue,
+    }: { email: string; setConstinue: (res: boolean) => void },
+    { rejectWithValue }
+  ) => {
+    try {
+      await axiosInstance.get(`/api/appointments/EmailCod?email=${email}`);
+
+      setConstinue(true);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getDoctorByDepart = createAsyncThunk(
+  'spec/getByDepart',
+  async (departmentId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/doctors/by-department/${departmentId}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

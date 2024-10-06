@@ -20,47 +20,71 @@ import {
 } from '../../../store/slices/siteBarMenu/sitBarMenu';
 import { FC, useEffect, useState } from 'react';
 import Button from '../../../components/UI/Button';
+import { getDoctorByDepart } from '../../../store/slices/siteBarMenu/siteBarThunk';
 
 interface MainMenuProps {
   handleClose: () => void;
   setActiveComponent: (component: string) => void;
 }
 
+const options = [
+  // { value: 'ANESTHESIOLOGY', label: 'Анестезиология' },
+  // { value: 'VACCINATION', label: 'Вакцинация' },
+  { value: '8', label: 'Гинекология' },
+  { value: '2', label: 'Дерматология' },
+  { value: '1', label: 'Кардиология' },
+  { value: '3', label: 'Неврология' },
+  // { value: 'NEUROSURGERY', label: 'Нейрохирургия' },
+  { value: '4', label: 'Ортопедия' },
+  { value: '5', label: 'Педиатрия' },
+  { value: '6', label: 'Психиатрия' },
+  { value: '7', label: 'Урология' },
+  { value: '9', label: 'Гастроэнтерология' },
+  // { value: 'ONCOLOGY', label: 'Онкология' },
+];
+
 const MainMenu: FC<MainMenuProps> = ({ handleClose, setActiveComponent }) => {
   const dispatch = useAppDispatch();
-  const { selectSpesialist, selectChoose, selectData } = useAppSelector(
+  const { selectSpesialist, selectChoose, selectData, doctor } = useAppSelector(
     state => state.siteBarMenu
   );
   const displayContinue = selectSpesialist && selectChoose && selectData;
 
-  const [selectedValue, setSelectedValue] = useState<string>('');
+  const [selectedValue, setSelectedValue] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
 
-  const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    setSelectedValue(event.target.value);
-    dispatch(setSelectChoose(event.target.value));
+  const handleSelectChange = (event: SelectChangeEvent<string | number>) => {
+    const selectedOption = options.find(
+      option => option.value === event.target.value
+    );
+    if (selectedOption) {
+      setSelectedValue(selectedOption);
+      dispatch(setSelectChoose(selectedOption.value));
+    }
   };
 
   const handleDelete = () => {
-    dispatch(clearSelectSpesialist());
+    ~dispatch(clearSelectSpesialist());
   };
 
   const handleDeleteChoose = () => {
     dispatch(clearSelectChoose());
     setSelectedValue('');
   };
-  useEffect(() => {
-    if (selectChoose && !selectedValue) {
-      setSelectedValue(selectChoose);
-    }
-  }, [selectChoose, selectedValue]);
 
   const handleDeletedata = () => {
     dispatch(clearSelectData());
   };
 
   useEffect(() => {
-    dispatch(setSelectChoose(selectedValue));
-  }, [selectedValue]);
+    if (selectedValue) {
+      dispatch(getDoctorByDepart(selectedValue?.value));
+    }
+  }, [dispatch, selectedValue, selectedValue?.value]);
+
+  console.log(selectSpesialist);
 
   return (
     <MenuContainer>
@@ -75,18 +99,17 @@ const MainMenu: FC<MainMenuProps> = ({ handleClose, setActiveComponent }) => {
         <IconContainer>
           <Icons />
         </IconContainer>
-        {selectChoose ? (
+        {selectedValue ? (
           <>
-            <p style={{ fontSize: '18px' }}>{selectChoose}</p>
-
+            <p style={{ fontSize: '18px' }}>{selectedValue.label}</p>
             <KorzinkaStyle onClick={handleDeleteChoose}>
               <CorzinkaIcon />
             </KorzinkaStyle>
           </>
         ) : (
           <MySelect
-            value={selectedValue}
-            onChange={event => handleSelectChange(event)}
+            value={selectedValue?.value || ''}
+            onChange={handleSelectChange}
             displayEmpty
             fullWidth
             MenuProps={{
@@ -100,13 +123,11 @@ const MainMenu: FC<MainMenuProps> = ({ handleClose, setActiveComponent }) => {
             <MenuItem value="" disabled style={{ display: 'none' }}>
               Выбрать услуги
             </MenuItem>
-            <MenuItem value="Анестезиология">Анестезиология</MenuItem>
-            <MenuItem value="Вакцинация">Вакцинация</MenuItem>
-            <MenuItem value="Гинекология">Гинекология</MenuItem>
-            <MenuItem value="Дерматология">Дерматология</MenuItem>
-            <MenuItem value="Кардиология">Кардиология</MenuItem>
-            <MenuItem value="Неврология">Неврология</MenuItem>
-            <MenuItem value="Нейрохирургия">Нейрохирургия</MenuItem>
+            {options.map(item => (
+              <MenuItem key={item.value} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
           </MySelect>
         )}
       </SelectContainer>
