@@ -21,6 +21,8 @@ export const getPersonalData = createAsyncThunk(
       const response = await axiosInstance.get(`/api/users`);
       const currentData = response.data;
 
+      console.log(currentData);
+
       return currentData;
     } catch (error) {
       return rejectWithValue(error);
