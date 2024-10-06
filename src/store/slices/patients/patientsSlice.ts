@@ -113,8 +113,9 @@ export const patinetsSlice = createSlice({
       .addCase(addResult.pending, state => {
         state.isLoading = true;
       })
-      .addCase(addResult.fulfilled, state => {
+      .addCase(addResult.fulfilled, (state, { payload }) => {
         state.isLoading = false;
+        state.result = payload;
       })
       .addCase(addResult.rejected, state => {
         state.isLoading = false;

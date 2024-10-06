@@ -99,7 +99,7 @@ export const addResult = createAsyncThunk<any, any, any>(
       console.log(data);
 
       toastifyMessage({
-        message: data.message,
+        message: 'Результат успешно добавлено ',
         status: 'success',
         duration: 2000,
       });

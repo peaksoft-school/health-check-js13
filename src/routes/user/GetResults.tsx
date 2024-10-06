@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import resultImage from '../../assets/images/GetResultImage.png';
 import healthcheck from '../../assets/images/HEALTHCHECK.png';
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
@@ -9,6 +9,8 @@ import { AppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { useDispatch } from 'react-redux';
 import { fetchResult } from '../../store/results/resultThunk';
 import jsPDF from 'jspdf';
+import PdfRenderer from '../../components/UI/PdfView';
+import PdfRend from '../../components/UI/PdfView';
 
 export interface Result {
   departmentEnum: string;
@@ -71,6 +73,18 @@ const GetResults: FC = () => {
     doc.save('results.pdf');
   };
 
+  const printRef = useRef<HTMLDivElement>(null);
+
+  const handlePrints = () => {
+    if (printRef.current) {
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printRef.current.innerHTML;
+      window.print();
+      document.body.innerHTML = originalContents; // Restore original content after printing
+      window.location.reload(); // Reload to return to the original page state
+    }
+  };
+
   const handlePrint = () => {
     window.print();
   };
@@ -93,7 +107,7 @@ const GetResults: FC = () => {
         <BoxB></BoxB>
         <BoxC>
           <StyledTypography variant="h5">Выдача результатов</StyledTypography>
-          {showResults && results.length > 0 && (
+          {!showResults && (
             <ButtonContainer>
               <StyledButtonClose variant="text" onClick={handleCloseResults}>
                 X Закрыть результаты
@@ -102,7 +116,7 @@ const GetResults: FC = () => {
                 <ButtonIcon src="src/assets/icons/Pdf.svg" alt="PDF" />
                 PDF
               </StyledButtonPdf>
-              <StyledButtonPrint variant="text" onClick={handlePrint}>
+              <StyledButtonPrint variant="text" onClick={handlePrints}>
                 <ButtonIcon src="src/assets/icons/Printr.svg" alt="print" />
                 Распечатать
               </StyledButtonPrint>

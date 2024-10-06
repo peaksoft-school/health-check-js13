@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchResult, saveResult } from "./resultThunk";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchResult, saveResult } from './resultThunk';
 
 interface Result {
+  name?: any;
   urlPDF: string;
   departmentEnum: string;
   date: string;
@@ -25,25 +26,25 @@ export const resultSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(saveResult.pending, (state) => {
+      .addCase(saveResult.pending, state => {
         state.loading = true;
         state.error = null;
       })
       .addCase(saveResult.fulfilled, (state, action: PayloadAction<Result>) => {
         state.loading = false;
-        state.results.push(action.payload); 
+        state.results.push(action.payload);
       })
       .addCase(saveResult.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to save result';
       })
-      .addCase(fetchResult.pending, (state) => {
+      .addCase(fetchResult.pending, state => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchResult.fulfilled, (state, action: PayloadAction<Result[]>) => {
+      .addCase(fetchResult.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.results = action.payload; 
+        state.results = payload;
       })
       .addCase(fetchResult.rejected, (state, action) => {
         state.loading = false;
@@ -51,10 +52,3 @@ export const resultSlice = createSlice({
       });
   },
 });
-
-export const { name: resultSliceName } = resultSlice; 
-
-
-
-
-

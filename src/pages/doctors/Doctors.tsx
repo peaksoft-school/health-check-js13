@@ -70,11 +70,6 @@ const Doctor = () => {
             </StyledBlock>
           )
         )}
-        <Typography className="book">
-          В нашей клинике работают:{' '}
-          <span className="booch">более 30 специалистов</span>
-          <span className="write">Показать больше</span>
-        </Typography>
       </StyledBox>
     </Container>
   );
