@@ -9,15 +9,10 @@ const Doctor = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { doctors } = useAppSelector(state => state.doctor);
+
   const goInnerPage = (id: number) => {
     navigate(`${id}/infoDoctor`);
   };
-
-  const values = doctors.map((item: any) => item.department);
-  console.log(values);
-  useEffect(() => {
-    dispatch(doctorGet());
-  }, []);
 
   const translateDepartment = {
     CARDIOLOGY: 'Кардиология',
@@ -31,6 +26,10 @@ const Doctor = () => {
     GASTROENTEROLOGY: 'Гастроэнтерология',
     ONCOLOGY: 'Онкология',
   };
+
+  useEffect(() => {
+    dispatch(doctorGet());
+  }, [dispatch]);
 
   return (
     <Container>
@@ -47,29 +46,31 @@ const Doctor = () => {
           ведущих университетах Европы, чтобы еще на шаг стать ближе к
           совершенству.
         </TypographyStyled>
-        {doctors.map(
-          ({ id, department, image, lastName, firstName, specialization }) => (
-            <StyledBlock key={id}>
-              <Typography className="titlebig">
-                {translateDepartment[department]}
-              </Typography>
-              <Box className="inBlock">
-                <StyledInBlock key={id}>
-                  <img className="img" src={image} alt={lastName} />
-                  <Typography className="text">
-                    {firstName} {lastName}
-                  </Typography>
-                  <Typography className="text">
-                    Врач-{specialization}
-                  </Typography>
-                  <Button variant="outlined" onClick={() => goInnerPage(id)}>
-                    Записаться на прием
-                  </Button>
-                </StyledInBlock>
-              </Box>
-            </StyledBlock>
-          )
-        )}
+        {doctors.map(({ id, department, option }) => (
+          <StyledBlock key={id}>
+            <Typography className="titlebig">
+              {translateDepartment[department]}
+            </Typography>
+            <Box className="inBlock">
+              {option.map(
+                ({ image, lastName, firstName, specialization }: any) => (
+                  <StyledInBlock key={lastName}>
+                    <img className="img" src={image} alt={lastName} />
+                    <Typography className="text">
+                      {firstName} {lastName}
+                    </Typography>
+                    <Typography className="text">
+                      Врач-{specialization}
+                    </Typography>
+                    <Button variant="outlined" onClick={() => goInnerPage(id)}>
+                      Записаться на прием
+                    </Button>
+                  </StyledInBlock>
+                )
+              )}
+            </Box>
+          </StyledBlock>
+        ))}
       </StyledBox>
     </Container>
   );
@@ -142,7 +143,7 @@ const StyledBlock = styled(Box)(() => ({
 const StyledInBlock = styled(Box)(() => ({
   width: '320px',
   height: '505px',
-  border: '1px soli balck',
+  border: '1px solid black',
 
   '& > img': {
     width: '100%',
