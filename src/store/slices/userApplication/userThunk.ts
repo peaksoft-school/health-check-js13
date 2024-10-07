@@ -21,8 +21,6 @@ export const getPersonalData = createAsyncThunk(
       const response = await axiosInstance.get(`/api/users`);
       const currentData = response.data;
 
-      console.log(currentData);
-
       return currentData;
     } catch (error) {
       return rejectWithValue(error);
@@ -35,7 +33,9 @@ export const putPersonalData = createAsyncThunk(
   async (charityData: FormValues, { rejectWithValue }) => {
     try {
       const { id, ...newCharityData } = charityData;
-      console.log('putPersonalData', id);
+
+      console.log(charityData);
+      console.log(newCharityData);
 
       await axiosInstance.put(`/api/users/${id}`, newCharityData);
     } catch (error) {

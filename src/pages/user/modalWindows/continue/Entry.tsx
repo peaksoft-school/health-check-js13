@@ -10,7 +10,10 @@ import {
   clearSelectData,
   clearSelectSpesialist,
 } from '../../../../store/slices/siteBarMenu/sitBarMenu';
-import { postOnlineRecord } from '../../../../store/slices/siteBarMenu/siteBarThunk';
+import {
+  getOnlineRecordCode,
+  postOnlineRecord,
+} from '../../../../store/slices/siteBarMenu/siteBarThunk';
 
 interface FormData {
   name: string;
@@ -40,6 +43,8 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
   const { selectSpesialist, selectData, selectChoose } = useAppSelector(
     state => state.siteBarMenu
   );
+  console.log(selectSpesialist, selectData, selectChoose);
+
   const [constinue, setConstinue] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
@@ -59,6 +64,12 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
 
   const handleConstinue = () => {
     setConstinue(true);
+  };
+
+  console.log(email);
+
+  const handleGetOnlineRecordCode = () => {
+    email && dispatch(getOnlineRecordCode(email));
   };
 
   const recordOnline: SubmitHandler<FormData> = formData => {
@@ -142,15 +153,20 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
                 <ErrorMessage>{errors.email.message}</ErrorMessage>
               )}
 
-              <LabelStyle htmlFor="capche">Введите код из почты</LabelStyle>
-              <InputStyle
-                type="text"
-                id="capche"
-                {...register('code')}
-                style={{ width: '50%' }}
-              />
+              {constinue && (
+                <>
+                  <LabelStyle htmlFor="capche">Введите код из почты</LabelStyle>
+                  <InputStyle
+                    type="text"
+                    id="capche"
+                    {...register('code')}
+                    style={{ width: '50%' }}
+                  />
+                </>
+              )}
 
               <Button
+                onClick={handleGetOnlineRecordCode}
                 sx={{
                   width: '100%',
                   marginTop: '20px',

@@ -50,7 +50,11 @@ const Doctors = [
   },
 ];
 
-const ChooseSpecialist: FC = () => {
+export interface MainMenuProps {
+  setActiveComponent: (component: string) => void;
+}
+
+const ChooseSpecialist: FC<MainMenuProps> = ({ setActiveComponent }) => {
   const dispatch = useAppDispatch();
   const [selectedTime, setSelectedTime] = useState<{
     doctorId: number | null;
@@ -87,6 +91,7 @@ const ChooseSpecialist: FC = () => {
 
     dispatch(setSelectSpesialist(doctor));
     dispatch(setSelectData(date));
+    setActiveComponent('');
   };
 
   return (

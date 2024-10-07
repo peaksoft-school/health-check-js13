@@ -17,3 +17,16 @@ export const postOnlineRecord = createAsyncThunk(
     }
   }
 );
+
+export const getOnlineRecordCode = createAsyncThunk(
+  'onlineRecordCode/getOnlineRecordCode',
+  async (email: DataType, { rejectWithValue }) => {
+    try {
+      await axiosInstance.get(
+        `/api/appointments/EmailCod/EmailCod?email=${email}`
+      );
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
