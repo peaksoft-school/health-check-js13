@@ -2,9 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   addFile,
   addSpec,
+  changeStatus,
+  getDoctorByDepart,
   getDoctorById,
   getSpecialist,
   searchSpec,
+  updateSpec,
 } from './adminSpecialistThunk';
 
 export type BodyTableStatusTypes = {
@@ -35,6 +38,18 @@ export interface SpecialistState {
   file: string | undefined;
   infoSpec: any;
   searches: [];
+  doctor: Doctor[];
+}
+
+export interface Doctor {
+  id: number;
+  isActive: boolean;
+  image: string;
+  firstName: string;
+  lastName: string;
+  specialization: string;
+  department: string;
+  scheduleUntil: string;
 }
 
 export const initialState: SpecialistState = {
@@ -44,6 +59,7 @@ export const initialState: SpecialistState = {
   error: null,
   infoSpec: {},
   searches: [],
+  doctor: [],
 };
 
 export const specialistSlice = createSlice({
@@ -111,6 +127,22 @@ export const specialistSlice = createSlice({
       })
       .addCase(searchSpec.rejected, state => {
         state.isLoading = false;
+      })
+      .addCase(changeStatus.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(changeStatus.fulfilled, state => {
+        state.isLoading = false;
+      })
+      .addCase(changeStatus.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(updateSpec.fulfilled, state => {
+        state.file = '';
       });
+
+    builder.addCase(getDoctorByDepart.fulfilled, (state, action) => {
+      state.doctor = action.payload;
+    });
   },
 });

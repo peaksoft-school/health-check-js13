@@ -15,7 +15,6 @@ const AdminLayout = () => {
       <Main>
         <Outlet />
       </Main>
-      <footer></footer>
     </>
   );
 };

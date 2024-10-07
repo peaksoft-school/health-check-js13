@@ -3,29 +3,46 @@ import { Box, styled, Typography } from '@mui/material';
 import Button from '../../components/UI/Button';
 import FeedbackSlider from '../../components/landingPage/FeedbackSlider';
 import Footer from '../../layout/user/Footer';
-import BreadCrumbs from '../../components/UI/BreadCrumbs';
 import DoctorTenImg from '../../assets/images/DoctorTenImg.png';
 import DoctorSeven from '../../assets/images/DoctorSevenImg.png';
 import DoctorFive from '../../assets/images/DoctorFiveImg.png';
 import Application from '../../components/landingPage/Application';
 import Accordeon from '../../components/UI/Accardeon';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import index from '../../utils/constants/index.json';
-
-const breadcrumbs = [
-  { label: 'Главная', href: '/' },
-  { label: 'Услуги', href: '/uslugi' },
-  { label: 'Дерматология' },
-];
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const InnerService = () => {
   const { id } = useParams();
   const innerData = index.find(item => item.id === +id);
+
   return (
     <>
       <StyledContainer>
         <StyledBox>
-          <BreadCrumbs items={breadcrumbs} />
+          <BreadcrumbsBox>
+            <BreadcrumbLink to="/">
+              Главная
+              <ArrowForwardIosIcon
+                style={{
+                  fontSize: 'medium',
+                  color: 'green',
+                  marginTop: '3px',
+                }}
+              />
+            </BreadcrumbLink>
+            <BreadcrumbLink to="/services">
+              Услуги
+              <ArrowForwardIosIcon
+                style={{
+                  fontSize: 'medium',
+                  color: 'green',
+                  marginTop: '3px',
+                }}
+              />
+            </BreadcrumbLink>
+            <BreadcrumbLink to="/dermatology">{innerData?.name}</BreadcrumbLink>
+          </BreadcrumbsBox>
           <StyledContent>
             <StyledMapContainer>
               <StyledDoctor>{innerData?.name}</StyledDoctor>
@@ -55,10 +72,30 @@ const InnerService = () => {
                 </span>
               </Typography>
               <Accordeon style={{ width: '100%' }} title="Услуга">
-                <Typography className="good">price</Typography>
+                <Typography
+                  fontFamily={'Manrope,sans-serif'}
+                  fontWeight={700}
+                  fontSize={18}>
+                  Первичный прием врача-дерматолога
+                </Typography>
+                <Typography fontWeight={300}>
+                  Показано при любых формах ишемической болезни и пороках
+                  сердца, повышенном артериальном давлении, кардиомиопатии,
+                  аритмии и других патологиях.
+                </Typography>
                 <Ul>
-                  {[1, 2, 3, 4, 5, 6].map(todo => (
-                    <li key={todo}>wite house</li>
+                  {[1, 2].map(todo => (
+                    <li
+                      key={todo}
+                      style={{
+                        borderBottom: '1px solid grey',
+                        margin: '10px 0',
+                      }}>
+                      Первичный прием врача-дерматолога{' '}
+                      <span style={{ margin: '0 10px', fontWeight: '700' }}>
+                        1500 сом
+                      </span>
+                    </li>
                   ))}
                 </Ul>
               </Accordeon>
@@ -114,6 +151,32 @@ const StyledBox = styled(Box)(() => ({
   width: '100%',
   maxWidth: '1200px',
 }));
+
+const BreadcrumbsBox = styled(Box)`
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  margin: 10px 0;
+`;
+
+const BreadcrumbLink = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  color: green;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  gap: 5px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:last-child {
+    color: grey;
+    pointer-events: none;
+  }
+`;
 
 const Ul = styled('ul')(() => ({
   '& > li': {

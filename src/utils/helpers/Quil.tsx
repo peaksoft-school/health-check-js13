@@ -7,10 +7,12 @@ const MyEditor = ({
   setValue,
   values,
 }: {
-  setValue: (name: string, value: any) => void;
-  values: string;
+  setValue: (name: string) => void;
+  values?: string;
 }) => {
   const [editorValue, setEditorValue] = useState(values);
+
+  console.log(values);
 
   useEffect(() => {
     setEditorValue(values);
@@ -18,7 +20,7 @@ const MyEditor = ({
 
   const handleChange = (content: string) => {
     setEditorValue(content);
-    setValue('description', content);
+    setValue(content);
   };
 
   const modules = {

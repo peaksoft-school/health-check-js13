@@ -9,18 +9,16 @@ import {
   Typography,
   styled,
   Box,
+  Button,
 } from '@mui/material';
 import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../../../components/UI/Button';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import { fetchAllAppointments } from '../../../store/user/userThunk';
-import avatar from '../../../assets/images/NotAvatar.png'
-import list from '../../../assets/images/List.png'
+import XIcon from '../../../assets/icons/XIcon.svg';
 
 const Appointment: FC = () => {
   const { appointments } = useAppSelector(state => state.appointments);
-  console.log(appointments);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -37,8 +35,9 @@ const Appointment: FC = () => {
             <StyledTableCell align="right">Статус</StyledTableCell>
             <StyledTableCell align="right">
               <BoxOrder>
-                <TypographyIcon>X</TypographyIcon>
-                <Button variant="text">Очистить список заказов</Button>
+                <ButtonStyled startIcon={<XIcon />} variant="outlined">
+                  <Typography>Очистить список заказов</Typography>
+                </ButtonStyled>
               </BoxOrder>
             </StyledTableCell>
           </TableRow>
@@ -58,7 +57,7 @@ const Appointment: FC = () => {
                     <BoxInfo>
                       <TypographyName
                         component={Link}
-                        to={`/zapisi/${appointment.id}`}>
+                        to={`${appointment.id}/appointmentDatail`}>
                         {appointment.doctorName}
                       </TypographyName>
                       <Typography variant="body2">
@@ -80,9 +79,7 @@ const Appointment: FC = () => {
           ) : (
             <TableRow>
               <TableCell colSpan={4} align="center">
-                <ImgAvatar src={avatar} alt="notAvatar" />
-                <Typography>Нет записей для отображения</Typography>
-                <ImgList src={list} alt="list" />
+                <TypographyStyled>Нет записей для отображения</TypographyStyled>
               </TableCell>
             </TableRow>
           )}
@@ -107,10 +104,27 @@ const BoxOrder = styled(Box)(() => ({
   gap: '3px',
 }));
 
-const TypographyIcon = styled(Typography)(() => ({
-  color: 'red',
-  fontSize: '16px',
-  fontWeight: 600,
+const ButtonStyled = styled(Button)(({ theme }) => ({
+  '&.MuiButtonBase-root': {
+    padding: '14px 32px',
+    borderRadius: '10px',
+    color: 'black',
+    transition: 'all 0.2s ',
+    height: '44px',
+
+    '&:hover': {
+      background: '#d6d6d6',
+    },
+    '&:active': {
+      background: '#b2b0b0',
+    },
+
+    '&.Mui-disabled': {
+      border: 'none',
+      background: theme.palette.secondary.lightGrey,
+      color: theme.palette.primary.main,
+    },
+  },
 }));
 
 const BoxId = styled(Box)(() => ({
@@ -142,25 +156,9 @@ const BoxDate = styled(Box)(() => ({
   marginTop: '15px',
 }));
 
-const ImgAvatar = styled("img")(() => ({
-  width: '80px',
-  height: '80px',
-  borderRadius: '50%',
-  backgroundColor: '#D8BFD8',
-  objectFit: 'cover', 
-  border: '2px solid #BDA0C7', 
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', 
-  transition: 'transform 0.2s', 
-  '&:hover': {
-    transform: 'scale(1.05)', 
-  },
-}));
-const ImgList = styled("img")(() => ({
-  width: '80px',
-  height: '80px', 
-  '&:hover': {
-    transform: 'scale(1.05)', 
-  },
+const TypographyStyled = styled(Typography)(() => ({
+  margin: '30px 0',
+  fontSize: '30px',
 }));
 
 export default Appointment;

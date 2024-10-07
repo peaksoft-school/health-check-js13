@@ -22,14 +22,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import SpecialistSwitcher from './SpecialistSwitcher';
 import { useDebounce } from 'use-debounce';
+import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 
 const AdminSpecialist = () => {
   const [searche, setSearch] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { searches } = useAppSelector(state => state.spec);
-
+  const { searches, isLoading } = useAppSelector(state => state.spec);
   const [debounced] = useDebounce(searche, 1000);
   useEffect(() => {
     dispatch(getSpecialist());
@@ -53,6 +53,7 @@ const AdminSpecialist = () => {
     GASTROENTEROLOGY: 'Гастроэнтерология',
     ONCOLOGY: 'Онкология',
   };
+ 
 
   const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
     {
@@ -63,7 +64,7 @@ const AdminSpecialist = () => {
     {
       header: 'Статус',
       accessorKey: 'status',
-      cell: ({ row }: any) => <SpecialistSwitcher {...row.original} />,
+      cell: ({ row }: any) => <SpecialistSwitcher {...row.original} searche={searche} />,
     },
     {
       header: 'Специалист',
@@ -79,13 +80,12 @@ const AdminSpecialist = () => {
       accessorKey: 'department',
       cell: ({ row }: any) => {
         const departmentKey = row.original
-          .department as keyof typeof translateDepartment;
+          .departmentName as keyof typeof translateDepartment;
 
         if (translateDepartment[departmentKey]) {
           return <p>{translateDepartment[departmentKey]}</p>;
         } else {
-          // Если ключ на русском, просто отображаем его напрямую
-          return <p>{row.original.department}</p>;
+          return <p>{row.original.departmentName}</p>;
         }
       },
     },
@@ -98,7 +98,7 @@ const AdminSpecialist = () => {
       header: 'Действие',
       accessorKey: 'actions',
       cell: ({ row }) => {
-        return <ActionsStatus row={row} />;
+        return <ActionsStatus searche={searche} row={row}  />;
       },
     },
   ];
@@ -107,6 +107,7 @@ const AdminSpecialist = () => {
 
   return (
     <Container>
+      {isLoading && <LoadingComponent />}
       <HeaderContainer>
         <Typography variant="h4">Специалисты</Typography>
         <Button

@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import { Box, styled, Typography } from '@mui/material';
 import 'react-quill/dist/quill.snow.css';
 import { useForm } from 'react-hook-form';
@@ -14,6 +13,8 @@ import Select from '../../../components/UI/Select';
 import { department } from '../../../utils/helpers';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 import { useNavigate } from 'react-router-dom';
+import { useDropzone } from 'react-dropzone';
+import AddFileIcon from '../../../assets/icons/AddFileIcon.svg';
 
 export type TFormTypes = {
   imageURL: string | undefined;
@@ -35,44 +36,41 @@ const AddSpecialist = () => {
   const dispatch = useAppDispatch();
 
   const { file, isLoading } = useAppSelector(state => state.spec);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const navigate = useNavigate();
 
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files ? e.target.files[0] : null;
-
-    if (selectedFile) {
-      dispatch(addFile(selectedFile))
-        .unwrap()
-        .then(uploadedFile => {
-          const { link } = uploadedFile;
-          setValue('imageURL', link);
-        })
-        .catch(error => {
-          console.error('Ошибка загрузки файла:', error);
-        });
-    } else {
-      console.error('Файл не выбран');
-    }
-  };
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: acceptedFiles => {
+      const selectedFile = acceptedFiles[0];
+      if (selectedFile) {
+        dispatch(addFile(selectedFile))
+          .unwrap()
+          .then(uploadedFile => {
+            const { link } = uploadedFile;
+            setValue('imageURL', link);
+          })
+          .catch(error => {
+            console.error('Ошибка загрузки файла:', error);
+          });
+      } else {
+        console.error('Файл не выбран');
+      }
+    },
+  });
 
   const handlerChangeSelectValue = (event: any) => {
     setValue('department', event.target.value);
   };
 
-  const handleImageClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   const handlerSubmitForm = (formData: TFormTypes) => {
-    dispatch(addSpec({ formData, navigate }));
-    reset();
+    dispatch(addSpec({ formData, navigate, reset }));
   };
 
-  const handleGoBack = () => navigate(-1);
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+  console.log(file);
+  
 
   return (
     <>
@@ -85,37 +83,21 @@ const AddSpecialist = () => {
           <MainBlock>
             <BlockOne>
               <MiniBlock>
-                {file ? (
-                  <>
-                    <img
-                      className="imga"
-                      src={file}
-                      alt="file"
-                      onClick={handleImageClick}
-                    />
-                  </>
-                ) : (
-                  <div className="file-upload-container">
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      className="file-upload-input"
-                      onChange={onFileChange}
-                    />
-                  </div>
-                )}
-
-                <div>
+                <div {...getRootProps()} style={{ textAlign: 'center' }}>
+                  <input {...getInputProps()} style={{ display: 'none' }} />
+                  {file ? (
+                    <img className="imga" src={file} alt="file" />
+                  ) : (
+                    <AddFileIcon />
+                  )}
                   <Typography
                     sx={{
-                      fontSize: '12px',
-                      marginLeft: '30px',
-                      color: '#909CB5',
+                      fontSize: '14px',
+                      color: '#346EFB',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
                     }}>
-                    Нажмите для
-                  </Typography>
-                  <Typography sx={{ fontSize: '12px', color: '#909CB5' }}>
-                    добавления фотографии
+                    Нажмите что бы изменить фото
                   </Typography>
                 </div>
               </MiniBlock>

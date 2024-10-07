@@ -345,6 +345,7 @@ const BoxForm = styled(Box)(({ theme }) => ({
     marginTop: '20px',
 
     '.myButton': {
+      width:"350px",
       borderRadius: '50px',
       backgroundColor: theme.palette.primary.linearGradient,
       color: 'white',

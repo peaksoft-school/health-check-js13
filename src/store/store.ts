@@ -5,6 +5,11 @@ import { authSlice } from './slices/auth/authSlice';
 import { applicationSlice } from './slices/adminApplication/adminApplicationSlice';
 import patinetsSlice from './slices/patients/patientsSlice';
 import { specialistSlice } from './slices/adminSpecialist/adminSpecialist';
+import { userSlice } from './user/userSlice';
+import { userApplicationSlice } from './slices/userApplication/userSlise';
+import { resultSlice } from './results/resultSlice';
+import { doctorSlice } from './slices/doctorSlice/doctorsSlice';
+import { appointmentSlice } from './slices/adminAppoitments/adminAppoitments';
 import { siteBarMenu } from './slices/siteBarMenu/sitBarMenu';
 import { userApplicationSlice } from './slices/userApplication/userSlise';
 
@@ -13,6 +18,11 @@ const rootReducer = combineReducers({
   [applicationSlice.name]: applicationSlice.reducer,
   [patinetsSlice.name]: patinetsSlice.reducer,
   [specialistSlice.name]: specialistSlice.reducer,
+  [userApplicationSlice.name]: userApplicationSlice.reducer,
+  [resultSlice.name]: resultSlice.reducer,
+  [userSlice.name]: userSlice.reducer,
+  [doctorSlice.name]: doctorSlice.reducer,
+  [appointmentSlice.name]: appointmentSlice.reducer,
   [siteBarMenu.name]: siteBarMenu.reducer,
   [userApplicationSlice.name]: userApplicationSlice.reducer,
 });

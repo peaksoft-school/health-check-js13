@@ -222,15 +222,24 @@ export const Welcome = () => {
             войдите в систему.
           </TypographyStyled>
           <BoxStyledButton>
-            <Button onClick={navigateSignUp} variant="contained">
-              Зарегистрироваться
-            </Button>
-            <Button
-              onClick={navigateSignIn}
-              variant="contained"
-              className="buttonSign">
-              Войти
-            </Button>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                width: '100%',
+              }}>
+              <Button onClick={navigateSignUp} variant="contained">
+                Зарегистрироваться
+              </Button>
+              <Button
+                onClick={navigateSignIn}
+                variant="contained"
+                className="buttonSign">
+                Войти
+              </Button>
+            </div>
             <BoxGoogle onClick={googleAuthFn}>
               <Gogle />
               Зарегистрироваться с Google
@@ -270,10 +279,10 @@ const BoxGoogle = styled(Box)(() => ({
   cursor: 'pointer',
   fontFamily: '"Manrope", san-serif',
   fontWeight: '600',
-  background: 'linear-gradient(181deg, #08DF7D 0.95%, #048F50 82.76%)',
+  background: 'white',
   padding: '13px 10px',
   borderRadius: '8px',
-  color: 'white',
+  color: 'black',
   height: '44px',
 
   '& > img': {
@@ -291,12 +300,14 @@ const StyledContentText = styled('div')(() => ({
 
 const BoxStyledButton = styled(Box)(() => ({
   display: 'flex',
-  width: '500px',
-  height: '100px',
-  flexWrap: 'wrap',
+  width: '550px',
+  height: '120px',
   justifyContent: 'center',
   gap: '5px',
   margin: '20px 0 0 0',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  marginTop: '50px',
   '& .buttonSign': {
     width: '250px',
     height: '45px',
@@ -309,6 +320,7 @@ const StyledSecondModal = styled(Box)(() => ({
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '659px',
+  zIndex:"19999999999999",
   height: '468px',
   backgroundColor: '#ebf2fc',
   display: 'flex',
@@ -318,7 +330,6 @@ const StyledSecondModal = styled(Box)(() => ({
   borderRadius: '20px',
   padding: '16px',
   fontFamily: '"Poppins",sans-serif',
-
   h2: {
     fontFamily: "'Manrope', sans-serif",
     fontWeight: 500,

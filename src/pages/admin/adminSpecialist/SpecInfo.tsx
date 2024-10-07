@@ -70,20 +70,24 @@ const SpecInfo = () => {
       dispatch(getDoctorById(Number(id)));
     }
   }, [id, dispatch]);
-
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   useEffect(() => {
     if (infoSpec) {
       reset(infoSpec);
 
       setQuillValue(infoSpec?.description || '');
     }
-  }, [infoSpec, reset]);
+  }, [infoSpec, reset, id]);
 
   const handlerChangeSelectValue = (event: any) => {
     setValue('department', event.target.value);
   };
 
   const handlerQuillChange = (content: string) => {
+    console.log(content, 'content');
+
     setQuillValue(content);
     setValue('description', content);
   };
@@ -110,7 +114,7 @@ const SpecInfo = () => {
   const submitHandlerEvent = (data: DoctorUpdate) => {
     const { image, scheduleUntil, isActive, ...cleanedData } = data;
 
-    dispatch(updateSpec({ data: cleanedData, navigate }));
+    dispatch(updateSpec({ data: cleanedData, navigate,reset }));
   };
 
   return (
@@ -218,6 +222,7 @@ const SpecInfo = () => {
                     fullWidth
                     type="button"
                     variant="text"
+                    onClick={handleGoBack}
                     style={{ height: '40px' }}>
                     Отмена
                   </Button>
@@ -326,7 +331,6 @@ const BlockThree = styled(Box)(() => ({
   height: '250px',
   display: 'flex',
   alignItems: 'end',
-  border: '1px solid black',
   flexDirection: 'column',
   marginTop: '20px',
 }));

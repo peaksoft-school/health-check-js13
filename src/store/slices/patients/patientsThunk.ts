@@ -23,8 +23,8 @@ export const searchRequest = createAsyncThunk<
   string,
   { rejectValue: unknown }
 >('patinets/searchRequest', async (value, { rejectWithValue }) => {
-  console.log(value);
   try {
+    console.log(value);
     const { data } = await axiosInstance.get(
       `/api/users/searchPatients?name=${value}`
     );
@@ -53,6 +53,7 @@ export const deletePatinet = createAsyncThunk<
       });
 
       dispatch(searchRequest(value));
+      dispatch(getPatients());
 
       return data;
     } catch (error) {
@@ -75,6 +76,35 @@ export const getUserInfo = createAsyncThunk<any, any, any>(
         `/api/users/getPatientById/${id}`
       );
       navigate(`${id}/info`);
+      return data;
+    } catch (error) {
+      toastifyMessage({
+        message: 'Что то пошло не так, попробуйте еще раз',
+        status: 'error',
+        duration: 1500,
+      });
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const addResult = createAsyncThunk<any, any, any>(
+  'patients/addResult',
+  async (
+    { data: value, id, openModal, setOpenResultBlock },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await axiosInstance.post(`/api/results/${id}`, value);
+      console.log(data);
+
+      toastifyMessage({
+        message: data.message,
+        status: 'success',
+        duration: 2000,
+      });
+      openModal();
+      setOpenResultBlock(true);
       return data;
     } catch (error) {
       toastifyMessage({

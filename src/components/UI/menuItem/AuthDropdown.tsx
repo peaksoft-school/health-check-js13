@@ -49,8 +49,7 @@ export default function AuthDropdown() {
   }, [open]);
 
   const logoutFn = () => {
-    dispatch(logout());
-    navigate('/');
+    dispatch(logout({ navigate }));
   };
   const toPersone = () => {
     navigate('profile/pesonalData');
@@ -63,7 +62,7 @@ export default function AuthDropdown() {
     navigate('sign-up');
   };
   const MyEtries = () => {
-    navigate('zapisi');
+    navigate('appointment');
   };
 
   return (
@@ -104,13 +103,13 @@ export default function AuthDropdown() {
                     {isAuth ? (
                       <div>
                         <ButtonMui onClick={toPersone}>Мой Профиль</ButtonMui>
+                        <ButtonMui onClick={MyEtries}>Мои записи</ButtonMui>
                         <ButtonMui onClick={logoutFn}>Выйти</ButtonMui>
                       </div>
                     ) : (
                       <div>
                         <ButtonMui onClick={signInFn}>Войти</ButtonMui>
                         <ButtonMui onClick={signUpFn}>Регистрация</ButtonMui>
-                        <ButtonMui onClick={MyEtries}>Мои записи</ButtonMui>
                       </div>
                     )}
                   </MenuList>

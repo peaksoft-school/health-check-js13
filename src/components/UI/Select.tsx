@@ -8,8 +8,8 @@ import {
 import { forwardRef } from 'react';
 
 interface Option {
-  value: string;
-  label: string;
+  value?: string;
+  label?: string;
 }
 
 interface SelectProps {
@@ -29,38 +29,43 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     {
       disabled,
       options,
-      value,
+      value = '',
       onChange,
       label,
       fullWidth,
       style,
-      placeholder,
+      placeholder = 'Выберите значение',
       ...rest
     },
     ref
-  ) => (
-    <StyledDiv>
-      <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
-        {label}
-      </Typography>
+  ) => {
+    return (
+      <StyledDiv>
+        <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
+          {label}
+        </Typography>
 
-      <StyledMySelect
-        value={value}
-        fullWidth={fullWidth}
-        onChange={onChange}
-        disabled={disabled}
-        inputRef={ref}
-        defaultValue={placeholder}
-        style={style}
-        {...rest}>
-        {options.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
+        <StyledMySelect
+          value={value} // Используем value вместо defaultValue
+          fullWidth={fullWidth}
+          onChange={onChange}
+          disabled={disabled}
+          inputRef={ref}
+          displayEmpty
+          style={style}
+          {...rest}>
+          <MenuItem disabled value="">
+            {placeholder}
           </MenuItem>
-        ))}
-      </StyledMySelect>
-    </StyledDiv>
-  )
+          {options.map(item => (
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
+        </StyledMySelect>
+      </StyledDiv>
+    );
+  }
 );
 
 export default Select;
@@ -71,7 +76,7 @@ const StyledDiv = styled('div')(() => ({
 }));
 
 const StyledMySelect = styled(MySelect)(({ theme }) => ({
-  width: '490px',
+  width: '100%',
   height: '38px',
   borderRadius: '6px',
   borderColor: theme.palette.secondary.lightGrey,

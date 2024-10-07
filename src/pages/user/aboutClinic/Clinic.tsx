@@ -44,6 +44,7 @@ const Clinic: FC = () => {
                   ваши вопросы, предоставить необходимую поддержку и обеспечить
                   вас лучшими медицинскими решениями.
                 </Text>
+               
               </CardLorems>
             </TextContent>
             <SignedContent>
@@ -145,28 +146,31 @@ const NameClinic = styled('p')(() => ({
   paddingTop: '20px',
   fontSize: '18px',
   color: '#048741',
+  fontFamily:'Manrope,sans-serif'
 }));
 
 const Name = styled('p')(() => ({
   marginTop: '4px',
   fontSize: '22px',
+  fontFamily:'Manrope,sans-serif'
 }));
 
 const HealthSpan = styled('span')(() => ({
   fontSize: '36px',
-  fontFamily: 'Arial sans-serif',
+  fontFamily: 'Manrope,sans-serif',
   fontWeight: 'bold',
 }));
 
 const SpanGreen = styled('span')(() => ({
   fontSize: '36px',
   color: '#048741',
-  fontFamily: 'Arial sans-serif',
+  fontFamily: 'Manrope,sans-serif',
   fontWeight: 'bold',
 }));
 
 const Text = styled('p')(() => ({
   color: '#4D4E51',
+  fontFamily: 'Manrope,sans-serif',
 }));
 
 const FonImg = styled('img')(() => ({

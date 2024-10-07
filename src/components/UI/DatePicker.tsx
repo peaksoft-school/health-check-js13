@@ -8,10 +8,11 @@ interface CustomDatePickerProps {
   label?: string;
   name: string;
   disabled?: boolean;
+  sx?: any;
 }
 
 const CustomDatePicker = forwardRef<HTMLInputElement, CustomDatePickerProps>(
-  ({ control, label, name, disabled }, ref) => (
+  ({ control, label, name, disabled, sx }, ref) => (
     <LabelDiv>
       <Typography sx={{ color: disabled ? 'lightgray' : '#939292' }}>
         {label}
@@ -28,6 +29,7 @@ const CustomDatePicker = forwardRef<HTMLInputElement, CustomDatePickerProps>(
             onChange={newValue => {
               onChange(newValue);
             }}
+            sx={sx}
           />
         )}
       />

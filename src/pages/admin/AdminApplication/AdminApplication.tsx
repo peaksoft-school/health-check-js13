@@ -163,7 +163,7 @@ const AdminApplication = () => {
     <Container>
       {isLoading && <LoadingComponent />}
       <Block>
-      <Typography variant="h4">Заявки</Typography>
+        <Typography variant="h4">Заявки</Typography>
         <Input
           onChange={e => setSearch(e.target.value)}
           value={searches}
@@ -221,8 +221,6 @@ const Input = styled(TextField)(() => ({
     },
   },
 }));
-
-
 
 const BoxTable = styled(Box)(() => ({
   margin: '20px 0 0 0',

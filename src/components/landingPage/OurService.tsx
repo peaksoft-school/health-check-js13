@@ -1,36 +1,42 @@
 import { Box, Typography, styled } from '@mui/material';
 import Button from '../UI/Button';
 import index from '../../utils/constants/index.json';
+import { useNavigate } from 'react-router-dom';
 
-const OurService = () => (
-  <Container>
-    <Box className="box">
-      <Box className="textBox">
-        <Typography variant="h3">
-          Наши <span className="service">услуги</span>
-        </Typography>
-        <Typography>
-          За все время работы клиника приняла более 1 млн. пациентов.
-        </Typography>
-      </Box>
-      <Box className="serviceBox">
-        {index.splice(0, 9).map(({ img, id, name }) => (
-          <Box key={id}>
-            <Box className="content">
-              <img className="img" src={img} alt="img" />
+const OurService = () => {
+  const navigate = useNavigate();
+  return (
+    <Container>
+      <Box className="box">
+        <Box className="textBox">
+          <Typography variant="h3">
+            Наши <span className="service">услуги</span>
+          </Typography>
+          <Typography>
+            За все время работы клиника приняла более 1 млн. пациентов.
+          </Typography>
+        </Box>
+        <Box className="serviceBox">
+          {index.splice(0, 9).map(({ img, id, name }) => (
+            <Box key={id}>
+              <Box className="content" onClick={() => navigate('services')}>
+                <img className="img" src={img} alt="img" />
+              </Box>
+              <Typography className="text" variant="body1">
+                {name}
+              </Typography>
             </Box>
-            <Typography className="text" variant="body1">
-              {name}
-            </Typography>
-          </Box>
-        ))}
+          ))}
+        </Box>
+        <Box className="float">
+          <Button variant="outlined" onClick={() => navigate('services')}>
+            Смотреть все
+          </Button>
+        </Box>
       </Box>
-      <Box className="float">
-        <Button variant="outlined">Смотреть все</Button>
-      </Box>
-    </Box>
-  </Container>
-);
+    </Container>
+  );
+};
 
 export default OurService;
 
@@ -47,6 +53,7 @@ const Container = styled(Box)(() => ({
     margin: '0 auto',
     display: 'flex',
     flexDirection: 'column',
+    alignItems:'center'
   },
   '.textBox': {
     width: '100%',
@@ -57,10 +64,10 @@ const Container = styled(Box)(() => ({
     gap: '20px',
   },
   '.float': {
-    float: 'center',
     display: 'flex',
     justifyContent: 'center',
     marginTop: '20px',
+    width:"20%"
   },
   '.service': {
     color: 'green',

@@ -8,11 +8,11 @@ import { styled, Typography, Box } from '@mui/material';
 const AboutClinic = () => (
   <StyledContainer>
     <StyledImageContainerText>
-      <StyledTextHealt>
+      <StyledTextHealt fontFamily={'Manrope,sans-serif'}>
         О нашей клинике <span>“HealthCheck”</span>
       </StyledTextHealt>
       <StyledText>
-        <Typography>
+        <Typography fontFamily={'Manrope,sans-serif'}>
           Вся наша команда готова обеспечить вам медицинский уход и заботу на
           самом вы соком уровне. Наша главная задача — оказать Вам теплый прием
           и обеспечить самый лучший медицинский уход. У нас Вы в хороших руках!
@@ -23,20 +23,20 @@ const AboutClinic = () => (
           индивидуальный план лечения, подробно рассказывая о каждом <br />
           этапе.
         </Typography>
-        <Typography>
+        <Typography fontFamily={'Manrope,sans-serif'}>
           Доброжелательность и уважительное отношение к пациентам, не только
           материальная, но и моральная ответственность за результаты лечения —
           все это взято за основу политики Medical Clinic. Профессионализм и
           высокое качество оказываемых услуг помогают нам привлечь пациентов
           которые рекомендуют нас своим родным и близким.
         </Typography>
-        <Typography>
+        <Typography fontFamily={'Manrope,sans-serif'}>
           Уже 20 лет мы работаем на уровне лучших мировых стандартов, внедряя и
           развивая передовые методы лечения для сохранения здоровья наших
           пациентов.
         </Typography>
       </StyledText>
-      <StyledTextIcon>
+      <StyledTextIcon fontFamily={'Manrope,sans-serif'}>
         Читать подробнее о клинике <img src={Podrovnee} alt="" />
       </StyledTextIcon>
     </StyledImageContainerText>

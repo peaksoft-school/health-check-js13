@@ -1,4 +1,10 @@
-import { Box, InputAdornment, styled, TextField } from '@mui/material';
+import {
+  Box,
+  InputAdornment,
+  styled,
+  TextField,
+  Typography,
+} from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
@@ -11,14 +17,25 @@ import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
+import Close from '../../assets/icons/CloseIcon.svg';
+import Gogle from '../../assets/icons/gogle.svg';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../configs/firebase';
+import { googleAuthFirbase } from '../../store/slices/auth/authThunk';
+import Modal from '../../components/UI/Modal';
 import SidebarMenu from '../../pages/user/modalWindows/SidebarMenu';
 
 const Header = () => {
   const [showBoxContent, setShowBoxContent] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
-  const [open, setOpen] = useState<boolean>(false);
+  const [openModal, setIsOpenThreeModal] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(false); // Исправлено
+  const navigate = useNavigate();
+  const { role } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
 
   const handleScroll = () => {
     const scrollTop = pageYOffset || document.documentElement.scrollTop;
@@ -40,8 +57,40 @@ const Header = () => {
     };
   }, [lastScrollTop]);
 
-  const toggleDrawer = (open: boolean) => {
-    setOpen(open);
+  const toggleSidebar = (open: boolean) => {
+    setOpenSidebar(open); // Исправлено
+  };
+
+  useEffect(() => {
+    const handleScrolled = () => {
+      if (scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScrolled);
+
+    return () => {
+      window.removeEventListener('scroll', handleScrolled);
+    };
+  }, []);
+
+  const navigateSignUp = () => navigate('sign-up');
+  const navigateSignIn = () => navigate('sign-in');
+  const googleAuthFn = () => {
+    signInWithPopup(auth, provider)
+      .then(data => {
+        if (data.user) {
+          data.user.getIdToken().then(token => {
+            dispatch(googleAuthFirbase({ tokenId: token }));
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при аутентификации через Google:', error);
+      });
   };
 
   return (
@@ -106,9 +155,7 @@ const Header = () => {
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
-                <div>
-                  <SidebarMenu open={open} toggleDrawer={toggleDrawer} />
-                </div>
+                <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
                 <HR />
               </ContentCards>
             </ContentCardsFunc>
@@ -127,18 +174,64 @@ const Header = () => {
                   </Box>
                 ))}
                 <ContentButton>
-                  <ButtonClass variant="outlined">
-                    получить результаты
-                  </ButtonClass>
-                  <Button1 onClick={() => toggleDrawer(true)}>
-                    запись онлайн
-                  </Button1>
+                  {role === 'USER' ? (
+                    <Link to="results">
+                      <ButtonClass variant="outlined">
+                        получить результаты
+                      </ButtonClass>
+                    </Link>
+                  ) : (
+                    <Box>
+                      <ButtonClass
+                        variant="outlined"
+                        onClick={() => setIsOpenThreeModal(true)}>
+                        получить результаты
+                      </ButtonClass>
+                    </Box>
+                  )}
+
+                  <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
                 </ContentButton>
               </BoxContent>
             </ContentCards1>
           </Content>
         </Box>
       </HeaderClass>
+      <Modal open={openModal} onClose={() => setIsOpenThreeModal(false)}>
+        <StyledSecondModal>
+          <TypographyStyled variant="h6">
+            Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
+            войдите в систему.
+          </TypographyStyled>
+          <BoxStyledButton>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                width: '100%',
+              }}>
+              <Button onClick={navigateSignUp} variant="contained">
+                Зарегистрироваться
+              </Button>
+              <Button
+                onClick={navigateSignIn}
+                variant="contained"
+                className="buttonSign">
+                Войти
+              </Button>
+            </div>
+            <BoxGoogle onClick={googleAuthFn}>
+              <Gogle />
+              Зарегистрироваться с Google
+            </BoxGoogle>
+          </BoxStyledButton>
+          <StyledModalIcon onClick={() => setIsOpenThreeModal(false)}>
+            <Close />
+          </StyledModalIcon>
+        </StyledSecondModal>
+      </Modal>
     </div>
   );
 };
@@ -159,10 +252,95 @@ const StyledNavLink = styled(NavLink)(() => ({
   },
 }));
 
+const TypographyStyled = styled(Typography)(() => ({
+  textAlign: 'center',
+  fontFamily: 'monospace',
+  fontWeight: '100',
+}));
+
+const BoxStyledButton = styled(Box)(() => ({
+  display: 'flex',
+  width: '550px',
+  height: '120px',
+  justifyContent: 'center',
+  gap: '5px',
+  margin: '20px 0 0 0',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  marginTop: '50px',
+  '& .buttonSign': {
+    width: '250px',
+    height: '45px',
+  },
+}));
+
+const BoxGoogle = styled(Box)(() => ({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '10px',
+  cursor: 'pointer',
+  fontFamily: '"Manrope", san-serif',
+  fontWeight: '600',
+  background: 'white',
+  padding: '13px 10px',
+  borderRadius: '8px',
+  color: 'black',
+  height: '44px',
+
+  '& > img': {
+    width: '20px',
+    height: '20px',
+  },
+}));
+
+const StyledModalIcon = styled('div')(() => ({
+  width: '36px',
+  height: '36px',
+  position: 'absolute',
+  top: '10px',
+  right: '10px',
+  cursor: 'pointer',
+}));
+
+const StyledSecondModal = styled(Box)(() => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '659px',
+  zIndex: '19999999999999',
+  height: '468px',
+  backgroundColor: '#ebf2fc',
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  borderRadius: '20px',
+  padding: '16px',
+  fontFamily: '"Poppins",sans-serif',
+  h2: {
+    fontFamily: "'Manrope', sans-serif",
+    fontWeight: 500,
+    width: '380px',
+    height: '50px',
+    fontSize: '27px',
+    marginBottom: '50px',
+  },
+
+  p: {
+    fontFamily: "'Manrope', sans-serif",
+    fontWeight: 400,
+    fontSize: '18px',
+    marginBottom: '10px',
+  },
+}));
+
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
-  zIndex: 999,
+  zIndex: 1999,
   fontFamily: '"Poppins", sans-serif',
 }));
 
@@ -175,13 +353,14 @@ const Content = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  width: '100%',
 }));
 
 const ContentCardsFunc = styled('div')(() => ({
+  width: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100%',
   backgroundColor: '#fff',
 }));
 

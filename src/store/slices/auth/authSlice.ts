@@ -21,11 +21,14 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout(state) {
+    logout(state, { payload }) {
       state.isAuth = false;
       state.role = 'GUEST';
       state.token = '';
       state.email = '';
+      payload.navigate('/');
+
+      localStorage.removeItem('HEALTH_CHECK');
     },
   },
   extraReducers: builder => {
