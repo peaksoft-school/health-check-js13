@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Manrope', sans-serif;
+}
+
 .container {
   width: 100%;
   max-width: 1440px;
@@ -75,8 +79,6 @@
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
-
-
 
 .ql-toolbar .ql-bold {
   color: #4caf50;

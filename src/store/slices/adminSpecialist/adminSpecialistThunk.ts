@@ -143,3 +143,17 @@ export const changeStatus = createAsyncThunk<any, any, any>(
     }
   }
 );
+
+export const getDoctorByDepart = createAsyncThunk(
+  'spec/getByDepart',
+  async (departmentId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/doctors/by-department/${departmentId}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

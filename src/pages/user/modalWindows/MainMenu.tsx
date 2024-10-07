@@ -86,7 +86,7 @@ const MainMenu: FC<MainMenuProps> = ({ handleClose, setActiveComponent }) => {
         ) : (
           <MySelect
             value={selectedValue}
-            onChange={event => handleSelectChange(event)}
+            onChange={(event: any) => handleSelectChange(event)}
             displayEmpty
             fullWidth
             MenuProps={{

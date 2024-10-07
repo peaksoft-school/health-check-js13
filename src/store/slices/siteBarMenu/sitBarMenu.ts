@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { postOnlineRecord } from './siteBarThunk';
 
 export type Spesialist = {
   id?: number | undefined;
@@ -21,10 +20,21 @@ export interface SelectData {
   hours: string;
 }
 
+export type OnlineRecordData = {
+  id: number | undefined;
+  patientFullName: string;
+  phoneNumber: string;
+  email: string;
+  position: string | undefined;
+  doctorFullName: string | undefined;
+  dateAndTime: string | undefined;
+};
+
 export interface SpesialistState {
   selectChoose: string | '';
   selectSpesialist: Spesialist | null;
   selectData: SelectData | null;
+  onlineRecordData: OnlineRecordData | null;
   isLoading: boolean;
 }
 
@@ -32,6 +42,7 @@ const initialState: SpesialistState = {
   selectChoose: '',
   selectSpesialist: null,
   selectData: null,
+  onlineRecordData: null,
   isLoading: false,
 };
 
@@ -53,24 +64,19 @@ export const siteBarMenu = createSlice({
       state.selectChoose = '';
     },
 
+    setOnlineRecordData: (state, action: PayloadAction<OnlineRecordData>) => {
+      state.onlineRecordData = action.payload;
+    },
+    clearOnlineRecordData: state => {
+      state.onlineRecordData = null;
+    },
+
     setSelectData: (state, action: PayloadAction<SelectData>) => {
       state.selectData = action.payload;
     },
     clearSelectData: state => {
       state.selectData = null;
     },
-  },
-  extraReducers: builder => {
-    builder
-      .addCase(postOnlineRecord.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(postOnlineRecord.fulfilled, state => {
-        state.isLoading = false;
-      })
-      .addCase(postOnlineRecord.rejected, state => {
-        state.isLoading = false;
-      });
   },
 });
 
@@ -81,6 +87,7 @@ export const {
   clearSelectChoose,
   setSelectData,
   clearSelectData,
+  setOnlineRecordData,
+  clearOnlineRecordData,
 } = siteBarMenu.actions;
 
-export default siteBarMenu.reducer;

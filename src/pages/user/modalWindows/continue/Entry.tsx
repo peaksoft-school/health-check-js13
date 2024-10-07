@@ -9,11 +9,10 @@ import {
   clearSelectChoose,
   clearSelectData,
   clearSelectSpesialist,
+  OnlineRecordData,
+  setOnlineRecordData,
 } from '../../../../store/slices/siteBarMenu/sitBarMenu';
-import {
-  getOnlineRecordCode,
-  postOnlineRecord,
-} from '../../../../store/slices/siteBarMenu/siteBarThunk';
+import { getOnlineRecordCode } from '../../../../store/slices/siteBarMenu/siteBarThunk';
 
 interface FormData {
   name: string;
@@ -27,23 +26,11 @@ interface EntryProps {
   handleClose: () => void;
 }
 
-export type DataType = {
-  departmentName: string;
-  doctorId: number | undefined;
-  dateOfVisiting: string | undefined;
-  timeOfVisiting: string | undefined;
-  userFullName: string;
-  userPhoneNumber: string;
-  userEmail: string;
-  smsCode: string;
-};
-
 const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
   const dispatch = useAppDispatch();
-  const { selectSpesialist, selectData, selectChoose } = useAppSelector(
+  const { selectSpesialist, onlineRecordData } = useAppSelector(
     state => state.siteBarMenu
   );
-  console.log(selectSpesialist, selectData, selectChoose);
 
   const [constinue, setConstinue] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -63,29 +50,25 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
   const code = watch('code');
 
   const handleConstinue = () => {
-    setConstinue(true);
+    email && dispatch(getOnlineRecordCode({ email, setConstinue }));
   };
-
-  console.log(email);
 
   const handleGetOnlineRecordCode = () => {
-    email && dispatch(getOnlineRecordCode(email));
+    const data: OnlineRecordData = {
+      id: selectSpesialist?.id,
+      patientFullName: name,
+      phoneNumber: phone,
+      email: email,
+      position: selectSpesialist?.position,
+      doctorFullName: selectSpesialist?.name,
+      dateAndTime: selectSpesialist?.times,
+    };
+
+    dispatch(setOnlineRecordData(data));
   };
 
-  const recordOnline: SubmitHandler<FormData> = formData => {
+  const recordOnline: SubmitHandler<FormData> = () => {
     setIsSubmitted(prev => !prev);
-
-    const data: DataType = {
-      departmentName: selectChoose,
-      doctorId: selectSpesialist?.id,
-      dateOfVisiting: selectSpesialist?.day,
-      timeOfVisiting: selectData?.hours,
-      userFullName: formData.name,
-      userPhoneNumber: formData.phone,
-      userEmail: formData.email,
-      smsCode: formData.code,
-    };
-    dispatch(postOnlineRecord(data));
   };
 
   const enrollMore = () => {
@@ -96,6 +79,7 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
     handleContinueClick();
   };
 
+  console.log(onlineRecordData);
   return (
     <>
       {isSubmitted ? (

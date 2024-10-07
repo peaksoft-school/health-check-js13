@@ -3,6 +3,7 @@ import {
   addFile,
   addSpec,
   changeStatus,
+  getDoctorByDepart,
   getDoctorById,
   getSpecialist,
   searchSpec,
@@ -37,6 +38,18 @@ export interface SpecialistState {
   files: string | undefined;
   infoSpec: any;
   searches: [];
+  doctor: Doctor[];
+}
+
+export interface Doctor {
+  id: number;
+  isActive: boolean;
+  image: string;
+  firstName: string;
+  lastName: string;
+  specialization: string;
+  department: string;
+  scheduleUntil: string;
 }
 
 export const initialState: SpecialistState = {
@@ -46,6 +59,7 @@ export const initialState: SpecialistState = {
   error: null,
   infoSpec: {},
   searches: [],
+  doctor: [],
 };
 
 export const specialistSlice = createSlice({
@@ -126,5 +140,9 @@ export const specialistSlice = createSlice({
       .addCase(updateSpec.fulfilled, state => {
         state.files = '';
       });
+
+    builder.addCase(getDoctorByDepart.fulfilled, (state, action) => {
+      state.doctor = action.payload;
+    });
   },
 });

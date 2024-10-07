@@ -36,6 +36,9 @@ const Header = () => {
   const navigate = useNavigate();
   const { role } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
+  const openMoadl = () => {
+    setIsOpenThreeModal(prev => !prev);
+  };
 
   const handleScroll = () => {
     const scrollTop = pageYOffset || document.documentElement.scrollTop;
@@ -57,7 +60,7 @@ const Header = () => {
     };
   }, [lastScrollTop]);
 
-  const toggleSidebar = (open: boolean) => {
+  const toggleSidebar = (open: any) => {
     setOpenSidebar(open);
   };
 
@@ -101,7 +104,9 @@ const Header = () => {
             <ContentCardsFunc>
               <ContentCards className={scrolled ? 'scrolled' : ''}>
                 <ContentNom>
-                  <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+                  <ALink
+                    target="_blank"
+                    href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
                     <ContainerNom>
                       <TheMap />
                       <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
@@ -130,13 +135,17 @@ const Header = () => {
                 </ContentInput>
                 <ContainerCards>
                   <IconContainer>
-                    <a href="https://www.instagram.com/_i.a.n.05_/">
+                    <a
+                      target="_blank"
+                      href="https://www.instagram.com/_i.a.n.05_/">
                       <Instagram />
                     </a>
-                    <a href="https://t.me/+996500344433">
+                    <a target="_blank" href="https://t.me/+996500344433">
                       <Telegram />
                     </a>
-                    <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
+                    <a
+                      target="_blank"
+                      href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
                       <WhatsApp />
                     </a>
                   </IconContainer>
@@ -149,7 +158,12 @@ const Header = () => {
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
-                <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
+                {role === 'USER' && (
+                  <SidebarMenu
+                    open={openSidebar}
+                    toggleDrawer={toggleSidebar}
+                  />
+                )}
                 <HR />
               </ContentCards>
             </ContentCardsFunc>
@@ -184,14 +198,18 @@ const Header = () => {
                     </Box>
                   )}
 
-                  <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
+                  {role === 'USER' ? (
+                    <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
+                  ) : (
+                    <Button1 onClick={openMoadl}>запись онлайн</Button1>
+                  )}
                 </ContentButton>
               </BoxContent>
             </ContentCards1>
           </Content>
         </Box>
       </HeaderClass>
-      <Modal open={openModal} onClose={() => setIsOpenThreeModal(false)}>
+      <Modal open={openModal} onClose={openMoadl}>
         <StyledSecondModal>
           <TypographyStyled variant="h6">
             Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
@@ -221,7 +239,7 @@ const Header = () => {
               Зарегистрироваться с Google
             </BoxGoogle>
           </BoxStyledButton>
-          <StyledModalIcon onClick={() => setIsOpenThreeModal(false)}>
+          <StyledModalIcon onClick={openMoadl}>
             <Close />
           </StyledModalIcon>
         </StyledSecondModal>

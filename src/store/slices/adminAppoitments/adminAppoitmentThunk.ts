@@ -8,7 +8,6 @@ export const getAppoitments = createAsyncThunk(
       const { data } = await axiosInstance.get(
         '/api/appointments/getOnlineAppointments'
       );
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error);
