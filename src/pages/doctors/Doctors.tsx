@@ -8,13 +8,15 @@ import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 const Doctor = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { doctors } = useAppSelector(state => state.doctor);
+  const { doctors, isLoading } = useAppSelector(state => state.doctor);
 
+  // Обработка навигации на внутреннюю страницу
   const goInnerPage = (id: number) => {
     navigate(`${id}/infoDoctor`);
   };
 
-  const translateDepartment = {
+  // Перевод названий департаментов
+  const translateDepartment: Record<string, string> = {
     CARDIOLOGY: 'Кардиология',
     DERMATOLOGY: 'Дерматология',
     NEUROLOGY: 'Неврология',
@@ -31,6 +33,22 @@ const Doctor = () => {
     dispatch(doctorGet());
   }, [dispatch]);
 
+  if (isLoading) return <Typography>Загрузка...</Typography>;
+  if (!doctors || doctors.length === 0)
+    return <Typography>Нет врачей</Typography>;
+
+  const groupedDoctors = doctors.reduce((acc, doctor) => {
+    const { department } = doctor;
+    if (!acc[department]) {
+      acc[department] = [];
+    }
+    acc[department].push(doctor);
+    return acc;
+  }, {} as Record<string, any[]>);
+
+ 
+  console.log(doctors);
+
   return (
     <Container>
       <StyledBox>
@@ -38,34 +56,39 @@ const Doctor = () => {
           Наши <span className="span">врачи</span>
         </Typography>
         <TypographyStyled>
-          Попасть в команду медицинской клиники «Medical Clinic» <br /> могут
-          только лучшие специалисты с многолетней практикой и доказанным опытом.
+          Попасть в команду медицинской клиники «Medical Clinic» <br /> могут
+          только лучшие специалисты с многолетней практикой и доказанным опытом.
         </TypographyStyled>
         <TypographyStyled>
           Мы развиваемся, учимся и оттачиваем мастерство, <br /> стажируемся в
           ведущих университетах Европы, чтобы еще на шаг стать ближе к
           совершенству.
         </TypographyStyled>
-        {doctors.map(({ id, department, option }) => (
-          <StyledBlock key={id}>
+
+        {Object.keys(groupedDoctors).map(department => (
+          <StyledBlock key={department}>
             <Typography className="titlebig">
               {translateDepartment[department]}
             </Typography>
             <Box className="inBlock">
-              {option.map(
-                ({ image, lastName, firstName, specialization }: any) => (
-                  <StyledInBlock key={lastName}>
-                    <img className="img" src={image} alt={lastName} />
-                    <Typography className="text">
-                      {firstName} {lastName}
-                    </Typography>
-                    <Typography className="text">
-                      Врач-{specialization}
-                    </Typography>
-                    <Button variant="outlined" onClick={() => goInnerPage(id)}>
-                      Записаться на прием
-                    </Button>
-                  </StyledInBlock>
+              {groupedDoctors[department].map(({ id, option }: any) =>
+                option?.map(
+                  ({ image, lastName, firstName, specialization }: any) => (
+                    <StyledInBlock key={lastName}>
+                      <img className="img" src={image} alt={lastName} />
+                      <Typography className="text">
+                        {firstName} {lastName}
+                      </Typography>
+                      <Typography className="text">
+                        Врач-{specialization}
+                      </Typography>
+                      <Button
+                        variant="outlined"
+                        onClick={() => goInnerPage(id)}>
+                        Записаться на прием
+                      </Button>
+                    </StyledInBlock>
+                  )
                 )
               )}
             </Box>
@@ -77,6 +100,8 @@ const Doctor = () => {
 };
 
 export default Doctor;
+
+// Стили для компонентов остаются прежними...
 
 const Container = styled(Box)(() => ({
   width: '100%',
@@ -141,28 +166,26 @@ const StyledBlock = styled(Box)(() => ({
 }));
 
 const StyledInBlock = styled(Box)(() => ({
-  width: '320px',
-  height: '505px',
-  border: '1px solid black',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '200px',
 
-  '& > img': {
-    width: '100%',
-    height: '70%',
+  '& .img': {
+    width: '150px',
+    height: '150px',
+    borderRadius: '50%',
     objectFit: 'cover',
-    borderRadius: '6px',
-    marginBottom: '10px',
-    cursor: 'pointer',
+    border: '3px solid #048741',
   },
 
   '& .text': {
-    margin: '5px 0',
+    textAlign: 'center',
+    fontSize: '16px',
   },
 }));
 
-const TypographyStyled = styled(Box)(() => ({
-  margin: '20px 0 10px 0',
-  fontFamily: '"Poppins", sans-serif',
-  color: '#4D4E51',
-  fontWeight: '400',
-  fontStyle: 'normal',
+const TypographyStyled = styled(Typography)(() => ({
+  fontSize: '20px',
+  margin: '15px 0',
 }));
