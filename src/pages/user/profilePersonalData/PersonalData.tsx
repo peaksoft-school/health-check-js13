@@ -28,7 +28,7 @@ const PersonalData = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset, // добавляем reset для сброса значений формы
+    reset,
   } = useForm<FormValues>({
     defaultValues: {
       firstName: allPersonalData.firstName || '',

@@ -19,7 +19,7 @@ const SelectSpesialist: FC<MainMenuProps> = ({ setActiveComponent }) => {
         <H2> Выбор специалиста</H2>
       </BoxHeaderStyle>
       <div>
-        <ChooseSpecialist />
+        <ChooseSpecialist setActiveComponent={setActiveComponent} />
       </div>
     </MenuContainer>
   );
