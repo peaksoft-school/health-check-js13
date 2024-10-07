@@ -14,3 +14,32 @@ export const getAppoitments = createAsyncThunk(
     }
   }
 );
+
+export const searchOnline = createAsyncThunk<any, any, any>(
+  'appoitment/searchOnline',
+  async (debounced, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/appointments/search?word=${debounced}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteOnline = createAsyncThunk(
+  'appoitment/deleteOnline',
+  async ({ deleteUser, value }: any, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axiosInstance.delete(
+        `/api/appointments?id=${deleteUser}`
+      );
+      dispatch(searchOnline(value));
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
