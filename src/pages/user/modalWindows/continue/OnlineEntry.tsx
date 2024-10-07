@@ -2,9 +2,15 @@ import { IconButton, styled } from '@mui/material';
 import Button from '../../../../components/UI/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import SuccessfullyIcon from '../../.././../assets/icons/SuccessfullyIcon.svg';
-import { useAppSelector } from '../../../../hooks/customHooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/customHooks';
 import { FC, useState } from 'react';
 import RejectedIcon from '../../../../assets/icons/RejectedIcon.svg';
+import {
+  clearOnlineRecordData,
+  clearSelectChoose,
+  clearSelectData,
+  clearSelectSpesialist,
+} from '../../../../store/slices/siteBarMenu/sitBarMenu';
 
 interface MainMenuProps {
   handleClose: () => void;
@@ -12,6 +18,7 @@ interface MainMenuProps {
 }
 
 const OnlineEntry: FC<MainMenuProps> = ({ handleClose, enrollMore }) => {
+  const dispatch = useAppDispatch();
   const { selectSpesialist, selectData } = useAppSelector(
     state => state.siteBarMenu
   );
@@ -29,6 +36,10 @@ const OnlineEntry: FC<MainMenuProps> = ({ handleClose, enrollMore }) => {
   };
   const handleFinishCalcelClose = () => {
     setFinishCalcel(false);
+    dispatch(clearSelectSpesialist());
+    dispatch(clearSelectChoose());
+    dispatch(clearSelectData());
+    dispatch(clearOnlineRecordData());
   };
 
   return (
