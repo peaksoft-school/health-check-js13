@@ -10,7 +10,6 @@ import Application from '../../components/landingPage/Application';
 import Accordeon from '../../components/UI/Accardeon';
 import { NavLink, useParams } from 'react-router-dom';
 import index from '../../utils/constants/index.json';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useState } from 'react';
 import SidebarMenu from '../user/modalWindows/SidebarMenu';
 
@@ -23,29 +22,6 @@ const InnerService = () => {
     <>
       <StyledContainer>
         <StyledBox>
-          <BreadcrumbsBox>
-            <BreadcrumbLink to="/">
-              Главная
-              <ArrowForwardIosIcon
-                style={{
-                  fontSize: 'medium',
-                  color: 'green',
-                  marginTop: '3px',
-                }}
-              />
-            </BreadcrumbLink>
-            <BreadcrumbLink to="/services">
-              Услуги
-              <ArrowForwardIosIcon
-                style={{
-                  fontSize: 'medium',
-                  color: 'green',
-                  marginTop: '3px',
-                }}
-              />
-            </BreadcrumbLink>
-            <BreadcrumbLink to="/dermatology">{innerData?.name}</BreadcrumbLink>
-          </BreadcrumbsBox>
           <StyledContent>
             <StyledMapContainer>
               <StyledDoctor>{innerData?.name}</StyledDoctor>

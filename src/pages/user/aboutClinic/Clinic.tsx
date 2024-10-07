@@ -12,7 +12,7 @@ const Clinic: FC = () => {
           <Box>
             <RouterContent></RouterContent>
             <HealthBox>
-              <HealthSpan>Здоровье — самое</HealthSpan>
+              <HealthSpan>Здоровье — самое </HealthSpan>
               <SpanGreen>ценное в жизни</SpanGreen>
             </HealthBox>
             <TextContent>
@@ -86,8 +86,9 @@ const RouterContent = styled('div')(() => ({
 
 const HealthBox = styled('div')(() => ({
   marginTop: '20px',
-  display: 'flex',
-  gap: '7px',
+  // display: 'flex',
+  // gap: '7px',
+
 }));
 
 const TextContent = styled('div')(() => ({
@@ -148,13 +149,13 @@ const Name = styled('p')(() => ({
 }));
 
 const HealthSpan = styled('span')(() => ({
-  fontSize: '36px',
+  fontSize: '30px',
   fontFamily: 'Manrope,sans-serif',
   fontWeight: 'bold',
 }));
 
 const SpanGreen = styled('span')(() => ({
-  fontSize: '36px',
+  fontSize: '30px',
   color: '#048741',
   fontFamily: 'Manrope,sans-serif',
   fontWeight: 'bold',

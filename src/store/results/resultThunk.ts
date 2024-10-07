@@ -21,10 +21,11 @@ export const saveResult = createAsyncThunk(
 
 export const fetchResult = createAsyncThunk<any, any, any>(
   'results/fetchResult',
-  async (resultNumber, { rejectWithValue }) => {
-    console.log(resultNumber);
+  async ({ resultNumber, showButton }, { rejectWithValue }) => {
+    console.log(resultNumber)
     try {
       const { data } = await axiosInstance.get(`/api/results/${resultNumber}`);
+      showButton();
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data || 'Error fetching result');

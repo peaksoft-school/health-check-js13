@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { doctorGet } from '../../store/slices/doctorSlice/doctorThunk';
 import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
 
 const Doctor = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Doctor = () => {
     dispatch(doctorGet());
   }, [dispatch]);
 
-  if (isLoading) return <Typography>Загрузка...</Typography>;
+  if (isLoading) return <LoadingComponent />;
   if (!doctors || doctors.length === 0)
     return <Typography>Нет врачей</Typography>;
 
@@ -46,7 +47,6 @@ const Doctor = () => {
     return acc;
   }, {} as Record<string, any[]>);
 
- 
   console.log(doctors);
 
   return (
@@ -101,8 +101,6 @@ const Doctor = () => {
 
 export default Doctor;
 
-// Стили для компонентов остаются прежними...
-
 const Container = styled(Box)(() => ({
   width: '100%',
   minHeight: '400px',
@@ -156,7 +154,6 @@ const StyledBlock = styled(Box)(() => ({
     display: 'flex',
     flexWrap: 'wrap',
     gap: '25px',
-    border: '1px solid black',
   },
 
   '& .titlebig': {
@@ -168,15 +165,17 @@ const StyledBlock = styled(Box)(() => ({
 const StyledInBlock = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  width: '200px',
-
+  alignItems: 'start',
+  width: '350px',
+  height: '500px',
+  gap: '5px',
   '& .img': {
-    width: '150px',
-    height: '150px',
-    borderRadius: '50%',
+    width: '100%',
+    height: '100%',
     objectFit: 'cover',
-    border: '3px solid #048741',
+    aspectRatio: '4 / 3',
+    borderRadius: '10px',
+    backgroundColor: '#e8eaf0',
   },
 
   '& .text': {
