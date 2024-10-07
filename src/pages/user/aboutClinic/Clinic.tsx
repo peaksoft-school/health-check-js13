@@ -3,6 +3,7 @@ import { Box, styled } from '@mui/material';
 import Signed from '../../../assets/icons/Signed.svg';
 import Doctors from '../../../assets/images/Doctors.png';
 import Fon from '../../../assets/images/Fon.png';
+import AboutClinic from '../../../components/landingPage/AboutClinic';
 
 const Clinic: FC = () => {
   return (
@@ -53,6 +54,7 @@ const Clinic: FC = () => {
           </FonBox>
         </ContentClass>
       </Content>
+      <AboutClinic />
     </ClinicClass>
   );
 };
@@ -86,9 +88,6 @@ const RouterContent = styled('div')(() => ({
 
 const HealthBox = styled('div')(() => ({
   marginTop: '20px',
-  // display: 'flex',
-  // gap: '7px',
-
 }));
 
 const TextContent = styled('div')(() => ({
@@ -168,7 +167,7 @@ const Text = styled('p')(() => ({
 
 const FonImg = styled('img')(() => ({
   position: 'absolute',
-  width: '551px',
+  width: '523px',
   height: '385.84px',
   top: '149px',
   left: '-45px',

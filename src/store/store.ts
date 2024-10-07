@@ -11,6 +11,7 @@ import { resultSlice } from './results/resultSlice';
 import { doctorSlice } from './slices/doctorSlice/doctorsSlice';
 import { appointmentSlice } from './slices/adminAppoitments/adminAppoitments';
 import { siteBarMenu } from './slices/siteBarMenu/sitBarMenu';
+import { userApplicationSlice } from './slices/userApplication/userSlise';
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   [doctorSlice.name]: doctorSlice.reducer,
   [appointmentSlice.name]: appointmentSlice.reducer,
   [siteBarMenu.name]: siteBarMenu.reducer,
+  [userApplicationSlice.name]: userApplicationSlice.reducer,
 });
 
 const persistConfig = {

@@ -125,7 +125,6 @@ const InnerService = () => {
           <Application />
         </StyledBox>
       </StyledContainer>
-
       <Footer />
     </>
   );
@@ -137,32 +136,6 @@ const StyledBox = styled(Box)(() => ({
   width: '100%',
   maxWidth: '1200px',
 }));
-
-const BreadcrumbsBox = styled(Box)`
-  display: flex;
-  align-items: center;
-  font-size: 1.1em;
-  margin: 10px 0;
-`;
-
-const BreadcrumbLink = styled(NavLink)`
-  display: flex;
-  align-items: center;
-  color: green;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 15px;
-  gap: 5px;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:last-child {
-    color: grey;
-    pointer-events: none;
-  }
-`;
 
 const Ul = styled('ul')(() => ({
   '& > li': {
@@ -214,7 +187,7 @@ const StyledContainerDoctors = styled(Box)(() => ({
 }));
 
 const StyledContainer = styled(Box)(() => ({
-  maxWidth: '90rem',
+  maxWidth: '1440px',
   width: '100%',
   margin: '0 auto',
   display: 'flex',

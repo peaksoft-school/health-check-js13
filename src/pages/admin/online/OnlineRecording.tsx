@@ -5,13 +5,13 @@ import { Box, Checkbox, InputAdornment, styled } from '@mui/material';
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
 import Icon from '../../../assets/icons/Pluse.svg';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
-import { getAppoitments } from '../../../store/slices/adminAppoitments/adminAppoitmentThunk';
 import HorizontalScrollCalendar from '../calendar/Calrndar';
 import Table from '../../../components/UI/Table';
 import { ColumnDef } from '@tanstack/react-table';
 import { BodyTableOneTypes } from '../../../types/table';
 import Delete from '../../../components/UI/admin/Delete';
 import tableOne from '../../../utils/constants/tableOne.json';
+import { getAppoitments } from '../../../store/slices/adminAppoitments/adminAppoitmentThunk';
 const OnlineRecording: FC = () => {
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
   const { appointmentArr } = useAppSelector(state => state.appoitment);
@@ -29,9 +29,9 @@ const OnlineRecording: FC = () => {
     dispatch(getAppoitments());
   }, [dispatch]);
 
-  const TableOne: ColumnDef<BodyTableOneTypes>[] = [
+  const TableOne: any[] = [
     {
-      header: ({ table }) => (
+      header: ({ table }: any) => (
         <div
           style={{
             display: 'flex',
@@ -60,11 +60,11 @@ const OnlineRecording: FC = () => {
     },
     {
       header: 'Имя и фамилия',
-      accessorKey: 'first_name',
+      accessorKey: 'patientFullName',
     },
     {
       header: 'Номер телефона',
-      accessorKey: 'phone',
+      accessorKey: 'phoneNumber',
     },
     {
       header: 'Почта',
@@ -72,19 +72,19 @@ const OnlineRecording: FC = () => {
     },
     {
       header: 'Выбор услуги',
-      accessorKey: 'service',
+      accessorKey: 'position',
     },
     {
       header: 'Выбор специалиста',
-      accessorKey: 'addService',
+      accessorKey: 'doctorFullName',
     },
     {
       header: 'Дата и время',
-      accessorKey: 'date',
+      accessorKey: 'dateAndTime',
     },
     {
       header: 'Обработан',
-      accessorKey: 'progress',
+      accessorKey: 'status',
       cell: () => (
         <div
           style={{
@@ -99,7 +99,7 @@ const OnlineRecording: FC = () => {
     },
     {
       header: 'Action',
-      accessorKey: 'and',
+      accessorKey: 'status',
       cell: () => (
         <div
           style={{
@@ -157,7 +157,7 @@ const OnlineRecording: FC = () => {
             </Box>
             {isOnlineRecordingActive ? (
               <div style={{ margin: '20px 0' }}>
-                <Table columns={TableOne} data={tableOne} />
+                <Table columns={TableOne} data={appointmentArr} />
               </div>
             ) : (
               <HorizontalScrollCalendar />
