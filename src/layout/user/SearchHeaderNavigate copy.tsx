@@ -30,8 +30,6 @@ const Search = () => {
 
     if (query.trim()) {
       dispatch(searchGlobalThunk(query));
-
-      // Найдем первое совпадение по частичному совпадению
       const foundItem = searchAllData.find(
         item =>
           item.doctorFullName.toLowerCase().includes(query.toLowerCase()) ||
@@ -39,7 +37,6 @@ const Search = () => {
       );
 
       if (foundItem) {
-        // Дополняем ввод до полного значения
         const completedQuery = foundItem.doctorFullName
           .toLowerCase()
           .includes(query.toLowerCase())
@@ -130,7 +127,8 @@ const Input = styled(TextField)(() => ({
     borderRadius: '1.5rem',
     height: '2.5rem',
     backgroundColor: '#F3F1F1',
-    padding: '20px',
+    // padding: '20px',
+    padding: '0 20px 0 11px',
     '@media (max-width: 767px)': {
       width: '100%',
       height: 'auto',

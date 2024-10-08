@@ -1,4 +1,4 @@
-import { Box, styled, TextField, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
@@ -109,9 +109,9 @@ const Header = () => {
                     <MaxNumber>08:00 до 18:00</MaxNumber>
                   </ContainerNom>
                 </ContentNom>
-
-                <Search />
-
+                <ContentInput>
+                  <Search />
+                </ContentInput>
                 <ContainerCards>
                   <IconContainer>
                     <a
@@ -138,9 +138,9 @@ const Header = () => {
                   <AuthDropdown />
                 </ContainerCards>
                 <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
+                <HR />
               </ContentCards>
             </ContentCardsFunc>
-            <HR />
 
             <ContentCards1>
               <BoxContent>
@@ -324,7 +324,7 @@ const StyledSecondModal = styled(Box)(() => ({
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
-  zIndex: 1999,
+  zIndex: 999,
   fontFamily: '"Poppins", sans-serif',
 }));
 
@@ -352,17 +352,17 @@ const ContentCards = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  flexWrap: 'nowrap',
+  flexWrap: 'wrap',
   paddingTop: 5,
   transition: 'background-color 0.3s ease',
-  width: '1440px',
+  width: '1217px',
 }));
 
 const ContentCards1 = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  flexWrap: 'nowrap',
+  flexWrap: 'wrap',
 }));
 
 const ContentNom = styled('div')(() => ({
@@ -397,6 +397,21 @@ const MaxNumber = styled('p')(() => ({
 
 const GreenP = styled('p')(() => ({
   color: '#009344',
+}));
+
+const ContentInput = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginLeft: '1.25rem',
+  width: '367px',
+  flex: '1',
+
+  '@media (max-width: 767px)': {
+    marginLeft: '0',
+    width: '100%',
+    marginTop: '10px',
+  },
 }));
 
 const ContainerCards = styled('div')(() => ({
