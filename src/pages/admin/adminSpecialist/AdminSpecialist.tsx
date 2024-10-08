@@ -53,7 +53,6 @@ const AdminSpecialist = () => {
     GASTROENTEROLOGY: 'Гастроэнтерология',
     ONCOLOGY: 'Онкология',
   };
- 
 
   const statusHeader: ColumnDef<BodyTableStatusTypes>[] = [
     {
@@ -64,7 +63,9 @@ const AdminSpecialist = () => {
     {
       header: 'Статус',
       accessorKey: 'status',
-      cell: ({ row }: any) => <SpecialistSwitcher {...row.original} searche={searche} />,
+      cell: ({ row }: any) => (
+        <SpecialistSwitcher {...row.original} searche={searche} />
+      ),
     },
     {
       header: 'Специалист',
@@ -93,12 +94,20 @@ const AdminSpecialist = () => {
     {
       header: 'Расписание до',
       accessorKey: 'scheduleUntil',
+      cell: ({ row }) => {
+        const { scheduleUntil, department } = row.original;
+        if (scheduleUntil) {
+          return <div>{scheduleUntil}</div>;
+        }
+        return <div>Пока нет даты </div>;
+      },
     },
+
     {
       header: 'Действие',
       accessorKey: 'actions',
       cell: ({ row }) => {
-        return <ActionsStatus searche={searche} row={row}  />;
+        return <ActionsStatus searche={searche} row={row} />;
       },
     },
   ];

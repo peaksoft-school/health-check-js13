@@ -16,17 +16,7 @@ export type OnlineRecordData = {
   isCheckout: boolean;
 };
 
-type AppointmentState = {
-  appointmentArr: OnlineRecordData[];
-  isLoading: boolean;
-  error: string | null;
-  searchAll: OnlineRecordData[];
-  user: OnlineRecordData[];
-  deleteUser: any[];
-  isChecked: boolean;
-};
-
-const initialState: AppointmentState = {
+const initialState = {
   appointmentArr: [],
   isLoading: false,
   error: null,
@@ -34,6 +24,7 @@ const initialState: AppointmentState = {
   user: [],
   deleteUser: [],
   isChecked: false,
+  all: [],
 };
 
 export const appointmentSlice = createSlice({
@@ -42,7 +33,7 @@ export const appointmentSlice = createSlice({
 
   reducers: {
     toggleUserCheck(state, { payload }) {
-      state.searchAll = state.searchAll.map(user => {
+      state.user = state.user.map(user => {
         if (user.id === payload.id) {
           return { ...user, isChecked: !user.isChecked };
         }
@@ -58,20 +49,17 @@ export const appointmentSlice = createSlice({
 
     selectAllCheck(state, { payload }) {
       state.isChecked = payload;
-      state.searchAll = state.searchAll.map(user => ({
+      state.user = state.user.map(user => ({
         ...user,
         isChecked: payload && user.isProcessed,
       }));
 
-      state.deleteUser = state.searchAll
+      state.deleteUser = state.user
         .filter(user => user.isChecked && user.isProcessed)
         .map(user => user.id);
     },
-    addRecordingData: (state, action: PayloadAction<OnlineRecordData>) => {
-      if (!Array.isArray(state.user)) {
-        state.user = [];
-      }
-      state.user.push(action.payload);
+    addRecordingData: (state, { payload }) => {
+      state.user.push(payload);
     },
   },
 

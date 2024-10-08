@@ -51,7 +51,6 @@ export const postApplication = createAsyncThunk<
     { value, handleOpenSecondModal, handleCloseSecondModal },
     { rejectWithValue }
   ) => {
-    console.log(value);
     try {
       const { data } = await axiosInstance.post<IProps>(
         '/api/applications',

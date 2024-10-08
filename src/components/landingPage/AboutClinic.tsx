@@ -81,6 +81,8 @@ const StyledContainer = styled(Box)`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 1200px;
+  min-width: 1200px;
   margin: 1.25rem auto;
 `;
 

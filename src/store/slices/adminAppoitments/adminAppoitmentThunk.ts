@@ -37,6 +37,7 @@ export const deleteOnline = createAsyncThunk(
         `/api/appointments?id=${deleteUser}`
       );
       dispatch(searchOnline(value));
+      dispatch(getAppoitments());
       return data;
     } catch (error) {
       return rejectWithValue(error);

@@ -63,18 +63,23 @@ const InnerService = () => {
                   аритмии и других патологиях.
                 </Typography>
                 <Ul>
-                  {[1, 2].map(todo => (
-                    <li
-                      key={todo}
-                      style={{
-                        borderBottom: '1px solid grey',
-                        margin: '10px 0',
-                      }}>
-                      Первичный прием врача-дерматолога{' '}
-                      <span style={{ margin: '0 10px', fontWeight: '700' }}>
-                        1500 сом
-                      </span>
-                    </li>
+                  {[
+                    { item: 'Первичный прием врача', price: 500 },
+                    { item: 'Вторичный прием врача', price: 1500 },
+                  ].map(todo => (
+                    <>
+                      <li
+                        key={todo}
+                        style={{
+                          borderBottom: '1px solid grey',
+                          margin: '10px 0',
+                        }}>
+                        {todo.item} прием врача-{innerData?.name}{' '}
+                        <span style={{ margin: '0 10px', fontWeight: '700' }}>
+                          {todo.price}
+                        </span>
+                      </li>
+                    </>
                   ))}
                 </Ul>
               </Accordeon>

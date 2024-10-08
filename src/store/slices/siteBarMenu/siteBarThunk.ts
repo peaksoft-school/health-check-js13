@@ -22,7 +22,7 @@ export const getOnlineRecordCode = createAsyncThunk(
   async ({ email, setConstinue }: any, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `/api/appointments/EmailCod/EmailCod?email=${email}`
+        `/api/appointments/EmailCod?email=${email}`
       );
       setConstinue();
       return data;

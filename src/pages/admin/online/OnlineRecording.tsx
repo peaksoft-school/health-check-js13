@@ -1,9 +1,7 @@
 import { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
 import Button from '../../../components/UI/Button';
-// import Input from '../../../components/UI/Input';
-import { Box, InputAdornment, styled, TextField } from '@mui/material';
+import { Box, InputAdornment, styled } from '@mui/material';
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
-import Icon from '../../../assets/icons/Pluse.svg';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import HorizontalScrollCalendar from '../calendar/Calrndar';
 import Table from '../../../components/UI/Table';
@@ -18,14 +16,18 @@ import Checkbox from '../../../components/UI/CheckBox';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 import { useDebounce } from 'use-debounce';
 import Input from '../../../components/UI/Input';
+
 import {
   selectAllCheck,
   toggleUserCheck,
-} from '../../../store/slices/adminApplication/adminApplicationSlice';
+} from '../../../store/slices/adminAppoitments/adminAppoitments';
+
+import DeleteSelectedAppoitment from '../../../components/UI/admin/DeleteAppoitment';
 
 const OnlineRecording: FC = () => {
-  const { appointmentArr, isLoading, user, searchAll, isChecked } =
-    useAppSelector(state => state.appoitment);
+  const { appointmentArr, isLoading, user, isChecked } = useAppSelector(
+    state => state.appoitment
+  );
   const [search, setSearch] = useState('');
   const [debounced] = useDebounce(search, 1000);
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
@@ -43,8 +45,6 @@ const OnlineRecording: FC = () => {
       })
     );
   };
-  console.log(user);
-
   const isOnlineRecordingActive = activeOption === 'Онлайн-запись';
 
   useEffect(() => {
@@ -61,9 +61,9 @@ const OnlineRecording: FC = () => {
     event: React.ChangeEvent<HTMLInputElement>,
     id: number | string
   ) => {
-    const user = searchAll.find(user => user.id === id);
+    const searchUser = user.find(user => user.id === id);
 
-    if (user && user.isProcessed) {
+    if (searchUser && searchUser.isProcessed) {
       dispatch(
         toggleUserCheck({
           id,
@@ -78,6 +78,7 @@ const OnlineRecording: FC = () => {
     dispatch(selectAllCheck(newChecked));
   };
 
+  console.log(user);
   const TableOne: any[] = [
     {
       header: () => (
@@ -89,7 +90,11 @@ const OnlineRecording: FC = () => {
             cursor: 'pointer',
           }}>
           <Checkbox onChange={handleSelectAll} checked={isChecked} />
-          <Delete />
+          <DeleteSelectedAppoitment
+            deleteFn={deleteOnline}
+            value={search}
+            variant="appotment"
+          />
         </div>
       ),
       accessorKey: 'select',
@@ -172,7 +177,7 @@ const OnlineRecording: FC = () => {
             name={row.original.patientFullName}
             variant=""
             value={search}
-            isProcessed={row.original.status === 'COMPLETED'}
+            isProcessed={row.original.isProcessed}
           />
         </div>
       ),

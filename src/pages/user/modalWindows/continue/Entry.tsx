@@ -51,7 +51,6 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
   const code = watch('code');
 
   const handleConstinue = () => {
-    setConstinue(true);
     email && dispatch(getOnlineRecordCode({ email, setConstinue }));
   };
 

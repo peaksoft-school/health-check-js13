@@ -21,8 +21,13 @@ type PropsDelete = {
   value: string;
 };
 
-const DeleteSelected = ({ deleteFn, variant, value }: PropsDelete) => {
-  const { deleteUser, isChecked } = useAppSelector(store => store.application);
+const DeleteSelectedAppoitment = ({
+  deleteFn,
+  variant = '',
+  value,
+}: PropsDelete) => {
+  const { deleteUser, isChecked } = useAppSelector(store => store.appoitment);
+  console.log(deleteUser);
   const [toggleModal, setToggleModal] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -34,16 +39,10 @@ const DeleteSelected = ({ deleteFn, variant, value }: PropsDelete) => {
   const toggleModalHandler = () => setToggleModal(prev => !prev);
 
   const deleteHandler = () => {
-    if (variant === 'applications' && deleteUser.length) {
-      deleteFn &&
-        deleteUser.length > 0 &&
-        dispatch(deleteFn({ deleteUser, value }));
-    } else if (variant === 'appotment' && deleteUser.length) {
-      deleteFn &&
-        deleteUser.length > 0 &&
-        dispatch(deleteFn({ deleteUser, value }));
+    if (variant === 'appotment' && deleteUser.length) {
+      deleteFn && dispatch(deleteFn({ deleteUser, value }));
     } else {
-      deleteFn && deleteUser.length > 0 && dispatch(deleteFn(getIds()));
+      deleteFn && dispatch(deleteFn(getIds()));
     }
     toggleModalHandler();
   };
@@ -80,7 +79,7 @@ const DeleteSelected = ({ deleteFn, variant, value }: PropsDelete) => {
   );
 };
 
-export default DeleteSelected;
+export default DeleteSelectedAppoitment;
 
 const StyledDeleteButton = styled(ButtonBase)(() => ({
   width: '26px',
