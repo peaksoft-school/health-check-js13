@@ -6,6 +6,17 @@ const initialState = {
   error: null,
   doctors: [],
   doctorsOne: {},
+  cardiologyDoctors: [],
+  dermatologyDoctors: [],
+  neurologyDoctors: [],
+  orthopedicsDoctors: [],
+  pediatricsDoctors: [],
+  psychiatryDoctors: [],
+  urologyDoctors: [],
+  gynecologyDoctors: [],
+  gastroenterologyDoctors: [],
+  oncologyDoctors: [],
+  otherDoctors: [],
 };
 
 export const doctorSlice = createSlice({
@@ -29,10 +40,59 @@ export const doctorSlice = createSlice({
                 id: item.id,
                 image: item.image,
                 lastName: item.lastName,
-                specialization:item.specialization
+                specialization: item.specialization,
               },
             ],
           };
+        });
+        state.cardiologyDoctors = [];
+        state.dermatologyDoctors = [];
+        state.neurologyDoctors = [];
+        state.otherDoctors = [];
+        state.orthopedicsDoctors = [];
+        state.pediatricsDoctors = [];
+        state.psychiatryDoctors = [];
+        state.urologyDoctors = [];
+        state.gynecologyDoctors = [];
+        state.gastroenterologyDoctors = [];
+        state.oncologyDoctors = [];
+
+        payload.forEach((item: any) => {
+          switch (item.department.toUpperCase()) {
+            case 'CARDIOLOGY':
+              state.cardiologyDoctors.push(item);
+              break;
+            case 'DERMATOLOGY':
+              state.dermatologyDoctors.push(item);
+              break;
+            case 'NEUROLOGY':
+              state.neurologyDoctors.push(item);
+              break;
+            case 'ORTHOPEDICS':
+              state.orthopedicsDoctors.push(item);
+              break;
+            case 'PEDIATRICS':
+              state.pediatricsDoctors.push(item);
+              break;
+            case 'PSYCHIATRY':
+              state.psychiatryDoctors.push(item);
+              break;
+            case 'UROLOGY':
+              state.urologyDoctors.push(item);
+              break;
+            case 'GYNECOLOGY':
+              state.gynecologyDoctors.push(item);
+              break;
+            case 'GASTROENTEROLOGY':
+              state.gastroenterologyDoctors.push(item);
+              break;
+            case 'ONCOLOGY':
+              state.oncologyDoctors.push(item);
+              break;
+            default:
+              state.otherDoctors.push(item);
+              break;
+          }
         });
         state.isLoading = false;
       })

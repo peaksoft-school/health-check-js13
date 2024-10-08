@@ -56,7 +56,7 @@ export const applicationSlice = createSlice({
     },
 
     selectAllCheck(state, { payload }) {
-      console.log(payload)
+      console.log(payload);
       state.isChecked = payload;
       state.search = state.search.map(user => ({
         ...user,

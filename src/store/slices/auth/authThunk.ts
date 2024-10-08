@@ -21,7 +21,7 @@ export const signUp = createAsyncThunk<
     formData: SignUpFormSchema;
     navigate: NavigateFunction;
   },
-  { rejectValue: string }
+  any
 >('auth/signUp', async ({ formData, navigate }, { rejectWithValue }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { confirmPassword, ...restData } = formData;
@@ -42,20 +42,13 @@ export const signUp = createAsyncThunk<
 
     return data;
   } catch (error) {
-    const err = error as ErrorResponse;
-
-    const errorMessage =
-      err?.response?.data?.exceptionMessage ||
-      err.message ||
-      'Something went wrong';
-
     toastifyMessage({
-      message: errorMessage,
+      message: 'Что то пошло не так попробуйте еще раз',
       status: 'error',
       duration: 2000,
     });
 
-    return rejectWithValue(errorMessage);
+    return rejectWithValue(error);
   }
 });
 

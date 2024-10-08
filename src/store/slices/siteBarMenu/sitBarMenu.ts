@@ -34,15 +34,15 @@ export interface SpesialistState {
   selectChoose: string | '';
   selectSpesialist: Spesialist | null;
   selectData: SelectData | null;
-  onlineRecordData: OnlineRecordData | null;
+  onlineRecordData: OnlineRecordData[] | null;
   isLoading: boolean;
 }
 
-const initialState: SpesialistState = {
+const initialState: OnlineRecordData | SpesialistState = {
   selectChoose: '',
   selectSpesialist: null,
   selectData: null,
-  onlineRecordData: null,
+  onlineRecordData: [],
   isLoading: false,
 };
 
@@ -90,5 +90,3 @@ export const {
   setOnlineRecordData,
   clearOnlineRecordData,
 } = siteBarMenu.actions;
-
-export default siteBarMenu.reducer;

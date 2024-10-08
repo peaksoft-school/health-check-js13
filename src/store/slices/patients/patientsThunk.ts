@@ -26,7 +26,7 @@ export const searchRequest = createAsyncThunk<
   try {
     console.log(value);
     const { data } = await axiosInstance.get(
-      `/api/users/searchPatients?name=${value}`
+      `/api/users/searchPatients?word=${value}`
     );
 
     return data;
@@ -99,7 +99,7 @@ export const addResult = createAsyncThunk<any, any, any>(
       console.log(data);
 
       toastifyMessage({
-        message: data.message,
+        message: 'Результат успешно добавлено ',
         status: 'success',
         duration: 2000,
       });

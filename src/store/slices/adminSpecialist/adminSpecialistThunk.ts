@@ -10,7 +10,6 @@ export const getSpecialist = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get('/api/doctors');
-      console.log(data, 'data');
       return data;
     } catch (error) {
       return rejectWithValue(error);
@@ -122,7 +121,6 @@ export const searchSpec = createAsyncThunk<any, any, any>(
       const { data } = await axiosInstance.get(
         `/api/doctors/search?word=${name}`
       );
-      console.log(data);
       dispatch(getSpecialist());
       return data;
     } catch (error) {

@@ -3,7 +3,6 @@ import index from '../../../utils/constants/index.json';
 import Accordeon from '../../../components/UI/Accardeon';
 import accardeonData from '../../../utils/constants/accardeonData.json';
 import { NavLink, useNavigate } from 'react-router-dom';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const ServiceClinic = () => {
   const navigate = useNavigate();
@@ -16,21 +15,6 @@ const ServiceClinic = () => {
   return (
     <StyledContainer>
       <StyledContainerMain>
-        <BreadcrumbsBox>
-          <BreadcrumbLink to="/">
-            Главная
-            <ArrowForwardIosIcon
-              style={{
-                fontSize: 'medium',
-                color: 'green',
-                marginTop: '3px',
-              }}
-            />
-          </BreadcrumbLink>
-          <BreadcrumbLink to="/services">
-            <Typography border={'1px solid black'}>Услуги</Typography>
-          </BreadcrumbLink>
-        </BreadcrumbsBox>
         <StyledTypography>
           Наши <StyledSpan>услуги</StyledSpan>
         </StyledTypography>

@@ -126,14 +126,13 @@ const AddAppointmentModal = ({ open, onClose }: Props) => {
           </TimeContainer>
 
           <div>
-            {/* {DAYS.map(item => (
-              <p>{item.day}</p>
-            ))} */}
             <RepeatDaysButtons />
           </div>
 
           <BtnContainer>
-            <Button variant="text">Отменить</Button>
+            <Button onClick={onClose} variant="text" type="button">
+              Отменить
+            </Button>
             <Button>опубликовать</Button>
           </BtnContainer>
         </Form>

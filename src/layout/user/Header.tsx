@@ -32,10 +32,13 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [openModal, setIsOpenThreeModal] = useState(false);
-  const [openSidebar, setOpenSidebar] = useState(false); // Исправлено
+  const [openSidebar, setOpenSidebar] = useState(false);
   const navigate = useNavigate();
   const { role } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
+  const openMoadl = () => {
+    setIsOpenThreeModal(prev => !prev);
+  };
 
   const handleScroll = () => {
     const scrollTop = pageYOffset || document.documentElement.scrollTop;
@@ -57,8 +60,8 @@ const Header = () => {
     };
   }, [lastScrollTop]);
 
-  const toggleSidebar = (open: boolean) => {
-    setOpenSidebar(open); // Исправлено
+  const toggleSidebar = (open: any) => {
+    setOpenSidebar(open);
   };
 
   useEffect(() => {
@@ -155,7 +158,12 @@ const Header = () => {
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
-                <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
+                {role === 'USER' && (
+                  <SidebarMenu
+                    open={openSidebar}
+                    toggleDrawer={toggleSidebar}
+                  />
+                )}
                 <HR />
               </ContentCards>
             </ContentCardsFunc>
@@ -190,14 +198,18 @@ const Header = () => {
                     </Box>
                   )}
 
-                  <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
+                  {role === 'USER' ? (
+                    <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
+                  ) : (
+                    <Button1 onClick={openMoadl}>запись онлайн</Button1>
+                  )}
                 </ContentButton>
               </BoxContent>
             </ContentCards1>
           </Content>
         </Box>
       </HeaderClass>
-      <Modal open={openModal} onClose={() => setIsOpenThreeModal(false)}>
+      <Modal open={openModal} onClose={openMoadl}>
         <StyledSecondModal>
           <TypographyStyled variant="h6">
             Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
@@ -227,7 +239,7 @@ const Header = () => {
               Зарегистрироваться с Google
             </BoxGoogle>
           </BoxStyledButton>
-          <StyledModalIcon onClick={() => setIsOpenThreeModal(false)}>
+          <StyledModalIcon onClick={openMoadl}>
             <Close />
           </StyledModalIcon>
         </StyledSecondModal>
@@ -340,7 +352,7 @@ const StyledSecondModal = styled(Box)(() => ({
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
-  zIndex: 1999,
+  zIndex: 999,
   fontFamily: '"Poppins", sans-serif',
 }));
 
