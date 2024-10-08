@@ -52,7 +52,7 @@ const Header = () => {
   }, [lastScrollTop]);
 
   const toggleSidebar = (open: boolean) => {
-    setOpenSidebar(open); // Исправлено
+    setOpenSidebar(open);
   };
 
   useEffect(() => {
