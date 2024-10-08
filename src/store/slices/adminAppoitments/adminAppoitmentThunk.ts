@@ -43,3 +43,19 @@ export const deleteOnline = createAsyncThunk(
     }
   }
 );
+
+export const changeStatusOnline = createAsyncThunk(
+  'appoitment/changeStatusOnline',
+  async ({ value, isProceeded, id }: any, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axiosInstance.put(
+        `/api/appointments/${id}/changeProcessed?isProcessed=${isProceeded}`
+      );
+      dispatch(searchOnline(value));
+      dispatch(getAppoitments());
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

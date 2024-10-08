@@ -9,36 +9,43 @@ import HorizontalScrollCalendar from '../calendar/Calrndar';
 import Table from '../../../components/UI/Table';
 import Delete from '../../../components/UI/admin/Delete';
 import {
+  changeStatusOnline,
   deleteOnline,
   getAppoitments,
   searchOnline,
 } from '../../../store/slices/adminAppoitments/adminAppoitmentThunk';
-import AddAppointmentModal from './AddAppointmentModal';
 import Checkbox from '../../../components/UI/CheckBox';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 import { useDebounce } from 'use-debounce';
 import Input from '../../../components/UI/Input';
+import {
+  selectAllCheck,
+  toggleUserCheck,
+} from '../../../store/slices/adminApplication/adminApplicationSlice';
 
 const OnlineRecording: FC = () => {
-  const { appointmentArr, isLoading, user } = useAppSelector(
-    state => state.appoitment
-  );
+  const { appointmentArr, isLoading, user, searchAll, isChecked } =
+    useAppSelector(state => state.appoitment);
   const [search, setSearch] = useState('');
   const [debounced] = useDebounce(search, 1000);
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
-  const [openModal, setOpenModal] = useState(true);
-
+  const dispatch = useAppDispatch();
   const handleOptionClick = (option: string) => {
     setActiveOption(option);
   };
-  const handlerSelectCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.checked);
+  const handlerSelectCheck = (e: ChangeEvent<HTMLInputElement>, id: number) => {
+    const checked = e.target.checked;
+    dispatch(
+      changeStatusOnline({
+        isProceeded: checked,
+        value: search,
+        id,
+      })
+    );
   };
-  console.log(appointmentArr);
-  const dispatch = useAppDispatch();
-  const isOnlineRecordingActive = activeOption === 'Онлайн-запись';
+  console.log(user);
 
-  const toggleModal = () => setOpenModal(prev => !prev);
+  const isOnlineRecordingActive = activeOption === 'Онлайн-запись';
 
   useEffect(() => {
     if (debounced) {
@@ -50,9 +57,30 @@ const OnlineRecording: FC = () => {
     dispatch(getAppoitments());
   }, [dispatch]);
 
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: number | string
+  ) => {
+    const user = searchAll.find(user => user.id === id);
+
+    if (user && user.isProcessed) {
+      dispatch(
+        toggleUserCheck({
+          id,
+          isChecked: event.target.checked,
+        })
+      );
+    }
+  };
+
+  const handleSelectAll = (e: ChangeEvent<HTMLInputElement>) => {
+    const newChecked = e.target.checked;
+    dispatch(selectAllCheck(newChecked));
+  };
+
   const TableOne: any[] = [
     {
-      header: ({ table }: any) => (
+      header: () => (
         <div
           style={{
             display: 'flex',
@@ -60,15 +88,15 @@ const OnlineRecording: FC = () => {
             gap: '5px',
             cursor: 'pointer',
           }}>
-          <Checkbox />
+          <Checkbox onChange={handleSelectAll} checked={isChecked} />
           <Delete />
         </div>
       ),
       accessorKey: 'select',
       cell: ({ row }: any) => (
         <Checkbox
-          onChange={handlerSelectCheck}
-          checked={row.original.status === 'COMPLETED'}
+          checked={row.original.isChecked}
+          onChange={e => handleCheckboxChange(e, Number(row.original.id))}
         />
       ),
     },
@@ -110,17 +138,22 @@ const OnlineRecording: FC = () => {
     {
       header: 'Обработан',
       accessorKey: 'statuss',
-      cell: () => (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-          }}>
-          <Checkbox />
-        </div>
-      ),
+      cell: ({ row }: any) => {
+        return (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}>
+            <Checkbox
+              checked={row.original.isProcessed}
+              onChange={e => handlerSelectCheck(e, Number(row.original.id))}
+            />
+          </div>
+        );
+      },
     },
     {
       header: 'Action',

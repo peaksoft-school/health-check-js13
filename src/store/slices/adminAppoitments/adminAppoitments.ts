@@ -11,12 +11,43 @@ const initialState = {
   error: null,
   searchAll: [],
   user: [],
+  deleteUser: [],
+  isChecked: false,
 };
 
 export const appointmentSlice = createSlice({
   name: 'appoitment',
   initialState,
-  reducers: {},
+
+  reducers: {
+    toggleUserCheck(state, { payload }) {
+      state.searchAll = state.searchAll.map(user => {
+        if (user.id === payload.id) {
+          return { ...user, isChecked: !user.isChecked };
+        }
+        return user;
+      });
+
+      const allChecked = state.appointmentArr
+        .filter(user => user.isProcessed)
+        .every(user => user.isChecked);
+
+      state.isChecked = allChecked;
+    },
+
+    selectAllCheck(state, { payload }) {
+      state.isChecked = payload;
+      state.searchAll = state.searchAll.map(user => ({
+        ...user,
+        isChecked: payload && user.isProcessed,
+      }));
+
+      state.deleteUser = state.searchAll
+        .filter(user => user.isChecked && user.isProcessed)
+        .map(user => user.id);
+    },
+  },
+
   extraReducers(builder) {
     builder
       .addCase(getAppoitments.pending, state => {
@@ -25,7 +56,10 @@ export const appointmentSlice = createSlice({
       .addCase(getAppoitments.fulfilled, (state, { payload }) => {
         state.appointmentArr = payload;
         state.isLoading = false;
-        state.user = payload;
+        state.user = payload.map((item: any) => ({
+          ...item,
+          isChecked: false,
+        }));
       })
       .addCase(getAppoitments.rejected, state => {
         state.isLoading = false;
@@ -36,7 +70,10 @@ export const appointmentSlice = createSlice({
       .addCase(searchOnline.fulfilled, (state, { payload }) => {
         state.searchAll = payload;
         state.isLoading = false;
-        state.user = payload;
+        state.user = payload.map((item: any) => ({
+          ...item,
+          isChecked: false,
+        }));
       })
       .addCase(searchOnline.rejected, state => {
         state.isLoading = false;
@@ -52,3 +89,4 @@ export const appointmentSlice = createSlice({
       });
   },
 });
+export const { selectAllCheck, toggleUserCheck } = appointmentSlice.actions;
