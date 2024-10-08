@@ -107,8 +107,8 @@ const Search = () => {
             }}
             onKeyDown={e => {
               if (e.key === 'Enter') {
-                e.preventDefault(); // предотвращаем стандартное поведение
-                handleSearch(e); // вызываем поиск и редирект
+                e.preventDefault();
+                handleSearch(e);
               }
             }}
           />
@@ -122,6 +122,7 @@ export default Search;
 
 const ContentInput = styled('form')(() => ({
   width: '100%',
+  zIndex: '10000',
 }));
 
 const Input = styled(TextField)(() => ({
