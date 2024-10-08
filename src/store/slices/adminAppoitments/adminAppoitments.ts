@@ -1,11 +1,32 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   deleteOnline,
   getAppoitments,
   searchOnline,
 } from './adminAppoitmentThunk';
 
-const initialState = {
+export type OnlineRecordData = {
+  id: number | undefined;
+  patientFullName: string;
+  phoneNumber: string;
+  email: string;
+  position: string | undefined;
+  doctorFullName: string | undefined;
+  dateAndTime: string | undefined;
+  isCheckout: boolean;
+};
+
+type AppointmentState = {
+  appointmentArr: OnlineRecordData[];
+  isLoading: boolean;
+  error: string | null;
+  searchAll: OnlineRecordData[];
+  user: OnlineRecordData[];
+  deleteUser: any[];
+  isChecked: boolean;
+};
+
+const initialState: AppointmentState = {
   appointmentArr: [],
   isLoading: false,
   error: null,
@@ -45,6 +66,12 @@ export const appointmentSlice = createSlice({
       state.deleteUser = state.searchAll
         .filter(user => user.isChecked && user.isProcessed)
         .map(user => user.id);
+    },
+    addRecordingData: (state, action: PayloadAction<OnlineRecordData>) => {
+      if (!Array.isArray(state.user)) {
+        state.user = [];
+      }
+      state.user.push(action.payload);
     },
   },
 
@@ -89,4 +116,5 @@ export const appointmentSlice = createSlice({
       });
   },
 });
-export const { selectAllCheck, toggleUserCheck } = appointmentSlice.actions;
+export const { selectAllCheck, toggleUserCheck, addRecordingData } =
+  appointmentSlice.actions;
