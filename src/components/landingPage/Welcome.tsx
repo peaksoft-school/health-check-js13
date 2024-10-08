@@ -256,7 +256,7 @@ export const Welcome = () => {
 
 const StyledContainer = styled('div')(() => ({
   width: '100%',
-  maxWidth: '1420px',
+  maxWidth: '1500px',
   minWidth: '1200px',
   margin: '50px auto',
   display: 'flex',

@@ -35,6 +35,7 @@ type TInitialState = {
   getUser: Types | null;
   pdfFile: any;
   user: [];
+  result: [];
 };
 
 const initialState: TInitialState = {
@@ -45,6 +46,7 @@ const initialState: TInitialState = {
   getUser: null,
   pdfFile: [],
   user: [],
+  result: [],
 };
 
 export const patinetsSlice = createSlice({
@@ -111,8 +113,9 @@ export const patinetsSlice = createSlice({
       .addCase(addResult.pending, state => {
         state.isLoading = true;
       })
-      .addCase(addResult.fulfilled, state => {
+      .addCase(addResult.fulfilled, (state, { payload }) => {
         state.isLoading = false;
+        state.result = payload;
       })
       .addCase(addResult.rejected, state => {
         state.isLoading = false;

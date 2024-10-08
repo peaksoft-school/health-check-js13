@@ -10,39 +10,18 @@ import Application from '../../components/landingPage/Application';
 import Accordeon from '../../components/UI/Accardeon';
 import { NavLink, useParams } from 'react-router-dom';
 import index from '../../utils/constants/index.json';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useState } from 'react';
+import SidebarMenu from '../user/modalWindows/SidebarMenu';
 
 const InnerService = () => {
+  const [open, setOpen] = useState(false);
   const { id } = useParams();
   const innerData = index.find(item => item.id === +id);
-
+  const openModal = () => setOpen(prev => !prev);
   return (
     <>
       <StyledContainer>
         <StyledBox>
-          <BreadcrumbsBox>
-            <BreadcrumbLink to="/">
-              Главная
-              <ArrowForwardIosIcon
-                style={{
-                  fontSize: 'medium',
-                  color: 'green',
-                  marginTop: '3px',
-                }}
-              />
-            </BreadcrumbLink>
-            <BreadcrumbLink to="/services">
-              Услуги
-              <ArrowForwardIosIcon
-                style={{
-                  fontSize: 'medium',
-                  color: 'green',
-                  marginTop: '3px',
-                }}
-              />
-            </BreadcrumbLink>
-            <BreadcrumbLink to="/dermatology">{innerData?.name}</BreadcrumbLink>
-          </BreadcrumbsBox>
           <StyledContent>
             <StyledMapContainer>
               <StyledDoctor>{innerData?.name}</StyledDoctor>
@@ -130,16 +109,22 @@ const InnerService = () => {
                 </div>
               </div>
               <div className="imgContentst">
-                <Button variant="outlined">Записаться на прием</Button>
-                <Button variant="outlined">Записаться на прием</Button>
-                <Button variant="outlined">Записаться на прием</Button>
+                <Button variant="outlined" onClick={openModal}>
+                  Записаться на прием
+                </Button>
+                <Button variant="outlined" onClick={openModal}>
+                  Записаться на прием
+                </Button>
+                <Button variant="outlined" onClick={openModal}>
+                  Записаться на прием
+                </Button>
               </div>
+              {open && <SidebarMenu open={open} toggleDrawer={openModal} />}
             </StyledContainerDoctors>
           </StyledContent>
           <Application />
         </StyledBox>
       </StyledContainer>
-
       <Footer />
     </>
   );
@@ -151,32 +136,6 @@ const StyledBox = styled(Box)(() => ({
   width: '100%',
   maxWidth: '1200px',
 }));
-
-const BreadcrumbsBox = styled(Box)`
-  display: flex;
-  align-items: center;
-  font-size: 1.1em;
-  margin: 10px 0;
-`;
-
-const BreadcrumbLink = styled(NavLink)`
-  display: flex;
-  align-items: center;
-  color: green;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 15px;
-  gap: 5px;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:last-child {
-    color: grey;
-    pointer-events: none;
-  }
-`;
 
 const Ul = styled('ul')(() => ({
   '& > li': {
@@ -228,7 +187,7 @@ const StyledContainerDoctors = styled(Box)(() => ({
 }));
 
 const StyledContainer = styled(Box)(() => ({
-  maxWidth: '90rem',
+  maxWidth: '1440px',
   width: '100%',
   margin: '0 auto',
   display: 'flex',

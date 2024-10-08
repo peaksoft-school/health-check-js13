@@ -16,7 +16,7 @@ import PdfIcon from '../../../assets/icons/PdfIcon.svg';
 import { addPdfFile } from '../../../store/slices/patients/patientsSlice';
 import CloseIcon from '../../../assets/icons/CloseIcon.svg';
 const PatientInfo = () => {
-  const { getUser, isLoading, pdfFile } = useAppSelector(
+  const { getUser, isLoading, pdfFile, result } = useAppSelector(
     state => state.patients
   );
   const [selectedValue, setSelectedValue] = useState('');
@@ -34,7 +34,19 @@ const PatientInfo = () => {
 
   const openModalPdf = () => {
     setOpenPdf(prev => !prev);
-    console.log('click');
+  };
+
+  const translateDepartment = {
+    CARDIOLOGY: 'Кардиология',
+    DERMATOLOGY: 'Дерматология',
+    NEUROLOGY: 'Неврология',
+    ORTHOPEDICS: 'Ортопедия',
+    PEDIATRICS: 'Педиатрия',
+    PSYCHIATRY: 'Психиатрия',
+    UROLOGY: 'Урология',
+    GYNECOLOGY: 'Гинекология',
+    GASTROENTEROLOGY: 'Гастроэнтерология',
+    ONCOLOGY: 'Онкология',
   };
 
   if (!getUser) return <p>No user info available</p>;
@@ -58,7 +70,7 @@ const PatientInfo = () => {
     },
   });
   const id = getUser.id;
-  console.log(files);
+  console.log(result);
   const submitHandlers = (data: any) => {
     const formattedDate = data.date.format('YYYY-MM-DD');
 
@@ -205,24 +217,27 @@ const PatientInfo = () => {
             Номер телефона: <StyledText>{getUser.phoneNumber}</StyledText>
           </StyledRow>
         </InfoBlock>
+
         {openResultBlock && (
           <ResultInfo>
             <Blocks>
               <TypographyStyled>Услуга</TypographyStyled>
-              <Typography>Витамин Д</Typography>
-              <Typography>Белок общий (R)</Typography>
+              <Typography>
+                {translateDepartment[result?.departmentEnum]}
+              </Typography>
+              {/* <Typography>Белок общий (R)</Typography>
               <Typography>Глюкоза</Typography>
               <Typography>Инсулин</Typography>
-              <Typography>Калций общий</Typography>
+              <Typography>Калций общий</Typography> */}
             </Blocks>
             <Blocks>
               <TypographyStyled>Дата и время:</TypographyStyled>
-              <Typography>12.12.2023</Typography>
-              <Typography>15:15</Typography>
+              <Typography>{result.dateOfUpResult}</Typography>
+              <Typography>{result.timeOfUpResult.split('.')[0]}</Typography>
             </Blocks>
             <Blocks>
               <TypographyStyled>Номер заказа:</TypographyStyled>
-              <Typography>2564h89r9654a5698742</Typography>
+              <Typography>{result?.resultNumber}</Typography>
             </Blocks>
             <Blocks>
               <TypographyStyled>Загруженный файл</TypographyStyled>

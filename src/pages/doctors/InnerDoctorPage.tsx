@@ -4,14 +4,19 @@ import ArrowIcons from '../../assets/icons/ArrowIcons.svg';
 import FeedbackSlider from '../../components/landingPage/FeedbackSlider';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { doctorGetId } from '../../store/slices/doctorSlice/doctorThunk';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import SidebarMenu from '../user/modalWindows/SidebarMenu';
 const InnerDoctorPage = () => {
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const openSideBare = () => {
+    setOpen(prev => !prev);
+  };
 
   const { doctorsOne } = useAppSelector(state => state.doctor);
   console.log(doctorsOne);
@@ -90,7 +95,7 @@ const InnerDoctorPage = () => {
                   </span>
                 </Typography>
               </div>
-              <Button>Записаться на прием</Button>
+              <Button onClick={openSideBare}>Записаться на прием</Button>
             </TitleBlock>
           </DoctorCard>
           <DoctorCards>
@@ -118,6 +123,7 @@ const InnerDoctorPage = () => {
         </Main>
       </Block>
       <FeedbackSlider />
+      <SidebarMenu open={open} toggleDrawer={openSideBare} />
     </>
   );
 };

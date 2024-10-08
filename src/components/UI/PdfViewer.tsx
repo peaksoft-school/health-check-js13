@@ -6,7 +6,6 @@ const PdfRenderer = ({ pdfUrl }: { pdfUrl: string }) => {
 
   useEffect(() => {
     const loadPdf = async () => {
-      // Отмена предыдущих операций, если они есть
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
@@ -14,7 +13,7 @@ const PdfRenderer = ({ pdfUrl }: { pdfUrl: string }) => {
 
       const loadingTask = (window as any).pdfjsLib.getDocument({
         url: pdfUrl,
-        signal: abortControllerRef.current.signal, // Передаем сигнал отмены
+        signal: abortControllerRef.current.signal,
       });
 
       try {
@@ -48,7 +47,6 @@ const PdfRenderer = ({ pdfUrl }: { pdfUrl: string }) => {
     loadPdf();
 
     return () => {
-      // Очистка при размонтировании компонента
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }

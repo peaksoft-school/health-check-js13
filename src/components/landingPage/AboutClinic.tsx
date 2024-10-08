@@ -79,16 +79,13 @@ const StyledContainerImage = styled(Box)`
 
 const StyledContainer = styled(Box)`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
-  max-width: 90rem;
-  min-width: 76.25rem;
   margin: 1.25rem auto;
-  padding: 2% 7rem 0 7rem;
 `;
 
 const StyledText = styled(Typography)`
-  width: 80%;
+  width: 100%;
   height: 80%;
   font-family: 'Manrope', sans-serif;
   margin-top: 2.4rem;
@@ -102,6 +99,7 @@ const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
   margin-top: 5.8rem;
+  margin-left: 5.8rem;
 `;
 
 const StyledTextHealt = styled(Typography)`

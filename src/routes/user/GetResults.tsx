@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import resultImage from '../../assets/images/GetResultImage.png';
 import healthcheck from '../../assets/images/HEALTHCHECK.png';
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
@@ -20,21 +20,18 @@ const GetResults: FC = () => {
   const { results = [] } = useAppSelector(
     state => (state.results as { results: Result[] }) || {}
   );
-  const [orderNumber, setOrderNumber] = useState<number | null>(null);
+  const [resultNumber, setOrderNumber] = useState<number | null>(null);
   const [showResults, setShowResults] = useState<boolean>(false);
+  const [opens, setOpenButton] = useState<boolean>(false);
 
-  // const handleSearch = () => {
-  //   if (orderNumber) {
-  //     dispatch(fetchResult(orderNumber));
-  //     setShowResults(true);
-  //   } else {
-  //     alert('Vvedite nomer');
-  //   }
-  // };
+  const openButton = () => setShowResults(prev => !prev);
+  const showButton = () => setOpenButton(prev => !prev);
 
   const handleSearch = async () => {
-    if (orderNumber) {
-      const resultAction = await dispatch(fetchResult(orderNumber));
+    if (resultNumber) {
+      const resultAction = await dispatch(
+        fetchResult({ resultNumber, showButton })
+      );
 
       if (fetchResult.fulfilled.match(resultAction)) {
         const fetchedResult = resultAction.payload;
@@ -50,29 +47,6 @@ const GetResults: FC = () => {
     } else {
       alert('Введите номер');
     }
-  };
-
-  const handleCloseResults = () => {
-    setShowResults(false);
-  };
-
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    doc.text('Выдача результатов', 10, 10);
-
-    results.forEach((result, index) => {
-      doc.text(
-        `${index + 1}. ${result.departmentEnum}: ${result.urlPDF}`,
-        10,
-        20 + index * 10
-      );
-    });
-
-    doc.save('results.pdf');
-  };
-
-  const handlePrint = () => {
-    window.print();
   };
 
   return (
@@ -92,22 +66,17 @@ const GetResults: FC = () => {
         </BoxA>
         <BoxB></BoxB>
         <BoxC>
-          <StyledTypography variant="h5">Выдача результатов</StyledTypography>
-          {showResults && results.length > 0 && (
-            <ButtonContainer>
-              <StyledButtonClose variant="text" onClick={handleCloseResults}>
-                X Закрыть результаты
-              </StyledButtonClose>
-              <StyledButtonPdf variant="text" onClick={handleDownloadPDF}>
-                <ButtonIcon src="src/assets/icons/Pdf.svg" alt="PDF" />
-                PDF
-              </StyledButtonPdf>
-              <StyledButtonPrint variant="text" onClick={handlePrint}>
-                <ButtonIcon src="src/assets/icons/Printr.svg" alt="print" />
-                Распечатать
-              </StyledButtonPrint>
-            </ButtonContainer>
+          <StyledTypography variant="h5" textAlign={'center'}>
+            Выдача результатов
+          </StyledTypography>
+          {opens && (
+            <Button
+              sx={{ width: '50%', margin: '20px 0' }}
+              onClick={openButton}>
+              {showResults ? 'Закрыть результаты' : 'Открыть результаты '}
+            </Button>
           )}
+
           <StyledTypographyTitle>Вы можете:</StyledTypographyTitle>
           <StyledList>
             <ListItem>
@@ -116,29 +85,27 @@ const GetResults: FC = () => {
             <ListItem>
               <StyledListItemText primary="Распечатать результат можно непосредственно с этой страницы или сохранить в PDF формате с помощью кнопок, расположенных в верхней части сайта." />
             </ListItem>
-            <ListItem>
-              <StyledListItemTextRed primary="При возникновении проблем с отображением результатов, Вы можете оставить заявку на получение результатов по электронной почте, позвонив в Службу поддержки клиентов по номеру 909 090." />
-            </ListItem>
+            {!showResults && (
+              <ListItem>
+                <StyledListItemTextRed primary="При возникновении проблем с отображением результатов, Вы можете оставить заявку на получение результатов по электронной почте, позвонив в Службу поддержки клиентов по номеру 909 090." />
+              </ListItem>
+            )}
           </StyledList>
 
-          {showResults ? (
-            results.length > 0 ? (
-              <List>
-                {results.map((result, index) => (
-                  <ListItem key={index}>
-                    <StyledListItemText
-                      primary={`Отдел: ${result.departmentEnum}, PDF: ${result.urlPDF}`}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV6Dviw9Xl-75lD9ZfQyBguiUtxrTZ7opDNA&s"
-                alt="Результаты не найдены"
-              />
-            )
-          ) : null}
+          {showResults && (
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '-450px',
+                left: '0',
+              }}>
+              <object
+                data={results.urlPDF}
+                type="application/pdf"
+                width="600"
+                height="400"></object>
+            </div>
+          )}
         </BoxC>
       </BoxI>
     </BoxGroup>
@@ -148,7 +115,7 @@ const GetResults: FC = () => {
 const BoxGroup = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
-  minWidth: '1440px',
+  minWidth: '1200px',
 }));
 const BoxI = styled(Box)(() => ({
   border: '1px solid silver',
@@ -213,16 +180,17 @@ const BoxC = styled(Box)(() => ({
   padding: '20px',
   backgroundColor: 'rgba(254, 251, 251, 0.5)',
   width: '600px',
-  height: '420px',
+  height: '450px',
   marginTop: '30px',
   marginLeft: '15px',
+  position: 'relative',
 }));
 
 const StyledTypography = styled(Typography)(() => ({
   color: 'rgba(52, 110, 251, 1)',
 }));
 const StyledTypographyTitle = styled(Typography)(() => ({
-  margin: '20px 0',
+  // margin: '20px 0',
   color: 'rgba(52, 110, 251, 1)',
 }));
 const StyledList = styled(List)(() => ({

@@ -29,7 +29,7 @@ export type UpdateDoctor = {
 
 export type DoctorUpdate = {
   id: number;
-  imageUrl: string;
+  imageURL: string;
   firstName: string;
   lastName: string;
   department: string;
@@ -50,7 +50,7 @@ const SpecInfo = () => {
     watch,
   } = useForm<DoctorUpdate>({
     defaultValues: {
-      imageUrl: '',
+      imageURL: '',
       firstName: '',
       lastName: '',
       department: '',
@@ -60,7 +60,7 @@ const SpecInfo = () => {
   });
 
   const dispatch = useAppDispatch();
-  const { file, isLoading, infoSpec } = useAppSelector(state => state.spec);
+  const { files, isLoading, infoSpec } = useAppSelector(state => state.spec);
   const [quillValue, setQuillValue] = useState(infoSpec?.description || '');
   const navigate = useNavigate();
   const { id } = useParams();
@@ -86,20 +86,19 @@ const SpecInfo = () => {
   };
 
   const handlerQuillChange = (content: string) => {
-    console.log(content, 'content');
-
     setQuillValue(content);
     setValue('description', content);
   };
 
   const onDrop = (acceptedFiles: any) => {
     if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
+      const file = acceptedFiles[0] || files;
+      console.log(file);
       dispatch(addFile(file))
         .unwrap()
         .then(uploadedFile => {
           const { link } = uploadedFile;
-          setValue('imageUrl', link);
+          setValue('imageURL', link);
         })
         .catch(error => {
           console.error('Ошибка загрузки файла:', error);
@@ -113,8 +112,11 @@ const SpecInfo = () => {
 
   const submitHandlerEvent = (data: DoctorUpdate) => {
     const { image, scheduleUntil, isActive, ...cleanedData } = data;
+    const imageToSend = files || infoSpec?.imageURL;
 
-    dispatch(updateSpec({ data: cleanedData, navigate,reset }));
+    const dataToSend = { ...cleanedData, imageURL: imageToSend };
+
+    dispatch(updateSpec({ data: dataToSend, navigate, reset }));
   };
 
   return (
@@ -128,8 +130,8 @@ const SpecInfo = () => {
           <MainBlock onSubmit={handleSubmit(submitHandlerEvent)}>
             <BlockOne>
               <MiniBlock>
-                {file ? (
-                  <img className="imga" src={file} alt="file" />
+                {files ? (
+                  <img className="imga" src={files} alt="file" />
                 ) : (
                   <img src={infoSpec?.imageURL || AddFileIcon} alt="file" />
                 )}

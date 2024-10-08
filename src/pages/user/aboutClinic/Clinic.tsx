@@ -3,23 +3,17 @@ import { Box, styled } from '@mui/material';
 import Signed from '../../../assets/icons/Signed.svg';
 import Doctors from '../../../assets/images/Doctors.png';
 import Fon from '../../../assets/images/Fon.png';
-import CustomBreadcrumbs from '../../../components/UI/BreadCrumbs';
+import AboutClinic from '../../../components/landingPage/AboutClinic';
 
 const Clinic: FC = () => {
-  const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О клинике' }];
-
   return (
     <ClinicClass>
       <Content>
         <ContentClass>
           <Box>
-            <RouterContent>
-              <Box>
-                <CustomBreadcrumbs items={breadcrumbs} />
-              </Box>
-            </RouterContent>
+            <RouterContent></RouterContent>
             <HealthBox>
-              <HealthSpan>Здоровье — самое</HealthSpan>
+              <HealthSpan>Здоровье — самое </HealthSpan>
               <SpanGreen>ценное в жизни</SpanGreen>
             </HealthBox>
             <TextContent>
@@ -44,7 +38,6 @@ const Clinic: FC = () => {
                   ваши вопросы, предоставить необходимую поддержку и обеспечить
                   вас лучшими медицинскими решениями.
                 </Text>
-               
               </CardLorems>
             </TextContent>
             <SignedContent>
@@ -61,6 +54,7 @@ const Clinic: FC = () => {
           </FonBox>
         </ContentClass>
       </Content>
+      <AboutClinic />
     </ClinicClass>
   );
 };
@@ -69,7 +63,7 @@ export default Clinic;
 
 const ClinicClass = styled('div')(() => ({
   width: '100%',
-  maxWidth: '1440px',
+  maxWidth: '1200px',
   minWidth: '1200px',
   margin: '50px auto',
 }));
@@ -94,8 +88,6 @@ const RouterContent = styled('div')(() => ({
 
 const HealthBox = styled('div')(() => ({
   marginTop: '20px',
-  display: 'flex',
-  gap: '7px',
 }));
 
 const TextContent = styled('div')(() => ({
@@ -146,23 +138,23 @@ const NameClinic = styled('p')(() => ({
   paddingTop: '20px',
   fontSize: '18px',
   color: '#048741',
-  fontFamily:'Manrope,sans-serif'
+  fontFamily: 'Manrope,sans-serif',
 }));
 
 const Name = styled('p')(() => ({
   marginTop: '4px',
   fontSize: '22px',
-  fontFamily:'Manrope,sans-serif'
+  fontFamily: 'Manrope,sans-serif',
 }));
 
 const HealthSpan = styled('span')(() => ({
-  fontSize: '36px',
+  fontSize: '30px',
   fontFamily: 'Manrope,sans-serif',
   fontWeight: 'bold',
 }));
 
 const SpanGreen = styled('span')(() => ({
-  fontSize: '36px',
+  fontSize: '30px',
   color: '#048741',
   fontFamily: 'Manrope,sans-serif',
   fontWeight: 'bold',
@@ -175,7 +167,7 @@ const Text = styled('p')(() => ({
 
 const FonImg = styled('img')(() => ({
   position: 'absolute',
-  width: '551px',
+  width: '523px',
   height: '385.84px',
   top: '149px',
   left: '-45px',

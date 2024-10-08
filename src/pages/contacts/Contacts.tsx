@@ -48,8 +48,8 @@ export default Contacts;
 
 const Container = styled(Box)(() => ({
   width: '100%',
-  minWidth: '1200px',
-  maxWidth: '1440px',
+  // minWidth: '1200px',
+  // maxWidth: '1440px',
   margin: '20px auto',
 }));
 

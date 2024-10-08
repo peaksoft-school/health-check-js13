@@ -12,7 +12,6 @@ const MyEditor = ({
 }) => {
   const [editorValue, setEditorValue] = useState(values);
 
-  console.log(values);
 
   useEffect(() => {
     setEditorValue(values);
