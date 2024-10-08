@@ -13,7 +13,7 @@ import {
 
 interface SidebarMenuProps {
   open: boolean;
-  toggleDrawer: (open: boolean) => void;
+  toggleDrawer: () => void;
 }
 
 const SidebarMenu: FC<SidebarMenuProps> = ({ open, toggleDrawer }) => {
@@ -23,7 +23,7 @@ const SidebarMenu: FC<SidebarMenuProps> = ({ open, toggleDrawer }) => {
 
   const handleClose = () => {
     setActiveComponent('main');
-    toggleDrawer(false);
+    toggleDrawer();
 
     dispatch(clearSelectSpesialist());
     dispatch(clearSelectChoose());

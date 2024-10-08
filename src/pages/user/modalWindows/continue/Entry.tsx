@@ -13,6 +13,7 @@ import {
   setOnlineRecordData,
 } from '../../../../store/slices/siteBarMenu/sitBarMenu';
 import { getOnlineRecordCode } from '../../../../store/slices/siteBarMenu/siteBarThunk';
+import { addRecordingData } from '../../../../store/slices/adminAppoitments/adminAppoitments';
 
 interface FormData {
   name: string;
@@ -28,9 +29,9 @@ interface EntryProps {
 
 const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
   const dispatch = useAppDispatch();
-  const { selectSpesialist, onlineRecordData } = useAppSelector(
-    state => state.siteBarMenu
-  );
+  const { selectSpesialist } = useAppSelector(state => state.siteBarMenu);
+
+  const { user } = useAppSelector(state => state.appoitment);
 
   const [constinue, setConstinue] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -50,7 +51,7 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
   const code = watch('code');
 
   const handleConstinue = () => {
-    setConstinue(true)
+    setConstinue(true);
     email && dispatch(getOnlineRecordCode({ email, setConstinue }));
   };
 
@@ -63,9 +64,11 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
       position: selectSpesialist?.position,
       doctorFullName: selectSpesialist?.name,
       dateAndTime: selectSpesialist?.times,
+      isCheckout: false,
     };
 
     dispatch(setOnlineRecordData(data));
+    dispatch(addRecordingData(data));
   };
 
   const recordOnline: SubmitHandler<FormData> = () => {
@@ -80,7 +83,7 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
     handleContinueClick();
   };
 
-  console.log(onlineRecordData);
+  console.log(user);
   return (
     <>
       {isSubmitted ? (

@@ -60,8 +60,8 @@ const Header = () => {
     };
   }, [lastScrollTop]);
 
-  const toggleSidebar = (open: any) => {
-    setOpenSidebar(open);
+  const toggleSidebar = () => {
+    setOpenSidebar(open => !open);
   };
 
   useEffect(() => {
