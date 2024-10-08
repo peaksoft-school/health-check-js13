@@ -1,10 +1,4 @@
-import {
-  Box,
-  InputAdornment,
-  styled,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, styled } from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
@@ -12,86 +6,15 @@ import Telephone from '../../assets/icons/CallIcon.svg';
 import TheMap from '../../assets/icons/JpsIcon.svg';
 import Hour from '../../assets/icons/TimeIcon.svg';
 import Medcheck from '../../assets/images/HEALTHCHECK.png';
-import Search from '../../assets/icons/SearchIcon.svg';
 import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
-import { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
-import Close from '../../assets/icons/CloseIcon.svg';
-import Gogle from '../../assets/icons/gogle.svg';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, provider } from '../../configs/firebase';
-import { googleAuthFirbase } from '../../store/slices/auth/authThunk';
-import Modal from '../../components/UI/Modal';
-import SidebarMenu from '../../pages/user/modalWindows/SidebarMenu';
+
+import Search from './SearchHeaderNavigate copy';
 
 const Header = () => {
-  const [showBoxContent, setShowBoxContent] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
-  const [openModal, setIsOpenThreeModal] = useState(false);
-  const [openSidebar, setOpenSidebar] = useState(false); // Исправлено
   const navigate = useNavigate();
-  const { role } = useAppSelector(state => state.auth);
-  const dispatch = useAppDispatch();
-
-  const handleScroll = () => {
-    const scrollTop = pageYOffset || document.documentElement.scrollTop;
-
-    if (scrollTop > lastScrollTop) {
-      setShowBoxContent(false);
-    } else {
-      setShowBoxContent(true);
-    }
-
-    setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollTop]);
-
-  const toggleSidebar = (open: boolean) => {
-    setOpenSidebar(open); // Исправлено
-  };
-
-  useEffect(() => {
-    const handleScrolled = () => {
-      if (scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScrolled);
-
-    return () => {
-      window.removeEventListener('scroll', handleScrolled);
-    };
-  }, []);
-
-  const navigateSignUp = () => navigate('sign-up');
-  const navigateSignIn = () => navigate('sign-in');
-  const googleAuthFn = () => {
-    signInWithPopup(auth, provider)
-      .then(data => {
-        if (data.user) {
-          data.user.getIdToken().then(token => {
-            dispatch(googleAuthFirbase({ tokenId: token }));
-          });
-        }
-      })
-      .catch(error => {
-        console.error('Ошибка при аутентификации через Google:', error);
-      });
-  };
 
   return (
     <div className="boxter">
@@ -99,11 +22,9 @@ const Header = () => {
         <Box className="container">
           <Content>
             <ContentCardsFunc>
-              <ContentCards className={scrolled ? 'scrolled' : ''}>
+              <ContentCards>
                 <ContentNom>
-                  <ALink
-                    target="_blank"
-                    href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
+                  <ALink href="https://yandex.ru/maps/10309/bishkek/house/Y00YcAVoTUcEQFpofXR2dHRqZA==/?ll=74.628236%2C42.876148&z=19.25">
                     <ContainerNom>
                       <TheMap />
                       <MaxNumber>106452, г. Бишкек, Гражданская 119</MaxNumber>
@@ -115,50 +36,34 @@ const Header = () => {
                     <MaxNumber>08:00 до 18:00</MaxNumber>
                   </ContainerNom>
                 </ContentNom>
-                <ContentInput>
-                  <Input
-                    fullWidth
-                    size="small"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Search />
-                        </InputAdornment>
-                      ),
-                    }}
-                    type="text"
-                    placeholder="Поиск по сайту"
-                  />
-                </ContentInput>
+
+                <Search />
+
                 <ContainerCards>
                   <IconContainer>
-                    <a
-                      target="_blank"
-                      href="https://www.instagram.com/_i.a.n.05_/">
+                    <a href="https://www.instagram.com/_i.a.n.05_/">
                       <Instagram />
                     </a>
-                    <a target="_blank" href="https://t.me/+996500344433">
+                    <a href="https://t.me/+996500344433">
                       <Telegram />
                     </a>
-                    <a
-                      target="_blank"
-                      href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
+                    <a href="https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0">
                       <WhatsApp />
                     </a>
                   </IconContainer>
                   <ContentNumber>
+                    <Telephone />
                     <NumberCards>
-                      <Telephone />
-                      <span>+996(800) 000 000</span>
+                      <Span>+996(800) 000 000</Span> <br />
+                      <Span>+996(505) 000 000</Span>
                     </NumberCards>
-                    <Span>+996(505) 000 000</Span>
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
-                <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
-                <HR />
               </ContentCards>
+              <HR />
             </ContentCardsFunc>
+
             <ContentCards1>
               <BoxContent>
                 <HealthCheck
@@ -174,64 +79,18 @@ const Header = () => {
                   </Box>
                 ))}
                 <ContentButton>
-                  {role === 'USER' ? (
-                    <Link to="results">
-                      <ButtonClass variant="outlined">
-                        получить результаты
-                      </ButtonClass>
-                    </Link>
-                  ) : (
-                    <Box>
-                      <ButtonClass
-                        variant="outlined"
-                        onClick={() => setIsOpenThreeModal(true)}>
-                        получить результаты
-                      </ButtonClass>
-                    </Box>
-                  )}
-
-                  <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
+                  <Link to="results">
+                    <ButtonClass variant="outlined">
+                      получить результаты
+                    </ButtonClass>
+                  </Link>
+                  <Button1>запись онлайн</Button1>
                 </ContentButton>
               </BoxContent>
             </ContentCards1>
           </Content>
         </Box>
       </HeaderClass>
-      <Modal open={openModal} onClose={() => setIsOpenThreeModal(false)}>
-        <StyledSecondModal>
-          <TypographyStyled variant="h6">
-            Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
-            войдите в систему.
-          </TypographyStyled>
-          <BoxStyledButton>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px',
-                width: '100%',
-              }}>
-              <Button onClick={navigateSignUp} variant="contained">
-                Зарегистрироваться
-              </Button>
-              <Button
-                onClick={navigateSignIn}
-                variant="contained"
-                className="buttonSign">
-                Войти
-              </Button>
-            </div>
-            <BoxGoogle onClick={googleAuthFn}>
-              <Gogle />
-              Зарегистрироваться с Google
-            </BoxGoogle>
-          </BoxStyledButton>
-          <StyledModalIcon onClick={() => setIsOpenThreeModal(false)}>
-            <Close />
-          </StyledModalIcon>
-        </StyledSecondModal>
-      </Modal>
     </div>
   );
 };
@@ -252,95 +111,9 @@ const StyledNavLink = styled(NavLink)(() => ({
   },
 }));
 
-const TypographyStyled = styled(Typography)(() => ({
-  textAlign: 'center',
-  fontFamily: 'monospace',
-  fontWeight: '100',
-}));
-
-const BoxStyledButton = styled(Box)(() => ({
-  display: 'flex',
-  width: '550px',
-  height: '120px',
-  justifyContent: 'center',
-  gap: '5px',
-  margin: '20px 0 0 0',
-  alignItems: 'center',
-  flexWrap: 'wrap',
-  marginTop: '50px',
-  '& .buttonSign': {
-    width: '250px',
-    height: '45px',
-  },
-}));
-
-const BoxGoogle = styled(Box)(() => ({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: '10px',
-  cursor: 'pointer',
-  fontFamily: '"Manrope", san-serif',
-  fontWeight: '600',
-  background: 'white',
-  padding: '13px 10px',
-  borderRadius: '8px',
-  color: 'black',
-  height: '44px',
-
-  '& > img': {
-    width: '20px',
-    height: '20px',
-  },
-}));
-
-const StyledModalIcon = styled('div')(() => ({
-  width: '36px',
-  height: '36px',
-  position: 'absolute',
-  top: '10px',
-  right: '10px',
-  cursor: 'pointer',
-}));
-
-const StyledSecondModal = styled(Box)(() => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '659px',
-  zIndex: '19999999999999',
-  height: '468px',
-  backgroundColor: '#ebf2fc',
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  alignItems: 'center',
-  borderRadius: '20px',
-  padding: '16px',
-  fontFamily: '"Poppins",sans-serif',
-  h2: {
-    fontFamily: "'Manrope', sans-serif",
-    fontWeight: 500,
-    width: '380px',
-    height: '50px',
-    fontSize: '27px',
-    marginBottom: '50px',
-  },
-
-  p: {
-    fontFamily: "'Manrope', sans-serif",
-    fontWeight: 400,
-    fontSize: '18px',
-    marginBottom: '10px',
-  },
-}));
-
 const HeaderClass = styled('header')(() => ({
   position: 'sticky',
   top: 0,
-  zIndex: 1999,
   fontFamily: '"Poppins", sans-serif',
 }));
 
@@ -353,38 +126,24 @@ const Content = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  width: '100%',
 }));
 
 const ContentCardsFunc = styled('div')(() => ({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  maxWidth: '1200px',
   backgroundColor: '#fff',
 }));
 
 const ContentCards = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexWrap: 'wrap',
   paddingTop: 5,
   transition: 'background-color 0.3s ease',
-  width: '1217px',
-}));
-
-const ContentCards1 = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  flexWrap: 'wrap',
+  width: '1200px',
+  display: 'grid',
+  gridTemplateColumns: '0.7fr 1fr 0.7fr',
 }));
 
 const ContentNom = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  marginRight: '5rem',
 
   '@media (max-width: 767px)': {
     width: '100%',
@@ -404,6 +163,8 @@ const ContainerNom = styled('div')(() => ({
 }));
 
 const MaxNumber = styled('p')(() => ({
+  fontSize: '16px',
+  textWrap: 'nowrap',
   '@media (max-width: 567px)': {
     flexWrap: 'wrap',
     width: '100%',
@@ -415,25 +176,10 @@ const GreenP = styled('p')(() => ({
   color: '#009344',
 }));
 
-const ContentInput = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginLeft: '1.25rem',
-  width: '367px',
-  flex: '1',
-
-  '@media (max-width: 767px)': {
-    marginLeft: '0',
-    width: '100%',
-    marginTop: '10px',
-  },
-}));
-
 const ContainerCards = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
-  gap: '2.1875rem',
+  gap: '20px',
   '@media (max-width: 767px)': {
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -441,13 +187,20 @@ const ContainerCards = styled('div')(() => ({
   },
 }));
 
-const BoxContent = styled('div')(() => ({
-  width: '1220px',
+const ContentCards1 = styled('div')(() => ({
   display: 'flex',
-  gap: '31px',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+}));
+
+const BoxContent = styled('div')(() => ({
+  width: '1200px',
+  display: 'flex',
+  gap: '17px',
   alignItems: 'center',
   marginTop: '0.875rem',
-  flexWrap: 'wrap',
+  flexWrap: 'nowrap',
   position: 'relative',
 
   '@media (max-width: 767px)': {
@@ -463,43 +216,23 @@ const HR = styled('hr')(() => ({
   border: '1px solid #D9D9D9',
 }));
 
-const Input = styled(TextField)(() => ({
-  '& .MuiOutlinedInput-root': {
-    borderRadius: '1.5rem',
-    width: '100%',
-    height: '2.5rem',
-    backgroundColor: '#F3F1F1',
-    padding: '0 20px 0 5px',
-    '@media (max-width: 767px)': {
-      width: '100%',
-      height: 'auto',
-    },
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderRadius: '1.5rem',
-    border: 'none',
-    outline: 'none',
-  },
-}));
-
 const ContentNumber = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
+  fontSize: '16px',
 }));
 
 const Span = styled('span')(() => ({
-  marginLeft: '1.375rem',
+  marginLeft: '10px',
+  textWrap: 'nowrap',
 }));
 
 const NumberCards = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
+  display: 'block',
 }));
 
 const HealthCheck = styled('img')(() => ({
-  width: '16.25rem',
-  height: '4.5625rem',
+  width: '260px',
+  height: '73px',
   flexWrap: 'wrap',
   cursor: 'pointer',
   '@media (max-width: 767px)': {
@@ -510,6 +243,7 @@ const HealthCheck = styled('img')(() => ({
 
 const Title = styled('p')(() => ({
   cursor: 'pointer',
+  textWrap: 'nowrap',
 }));
 
 const ContentButton = styled('div')(() => ({
@@ -548,8 +282,8 @@ const Button1 = styled(Button)(() => ({
 
 const IconContainer = styled('div')(() => ({
   display: 'flex',
-  gap: '0.625rem',
-  marginLeft: '2.1875rem',
+  gap: '10px',
+  marginLeft: '2rem',
   '@media (max-width: 767px)': {
     width: '100%',
     justifyContent: 'center',
