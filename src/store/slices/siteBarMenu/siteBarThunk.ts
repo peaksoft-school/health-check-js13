@@ -24,7 +24,7 @@ export const getOnlineRecordCode = createAsyncThunk(
       const { data } = await axiosInstance.get(
         `/api/appointments/EmailCod?email=${email}`
       );
-      setConstinue();
+      setConstinue(true);
       return data;
     } catch (error) {
       return rejectWithValue(error);

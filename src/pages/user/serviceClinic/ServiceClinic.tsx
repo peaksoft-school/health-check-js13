@@ -11,6 +11,7 @@ const ServiceClinic = () => {
     navigate(`${id}/service`);
     console.log(id);
   };
+  
 
   return (
     <StyledContainer>

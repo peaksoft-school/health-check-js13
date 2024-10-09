@@ -13,6 +13,7 @@ const Home = () => {
       <AboutPart />
       <OurService />
       <AboutClinic />
+      <br />
       <Doctors />
       <FeedbackSlider />
       <Application updateFunc={() => console.log('')} />

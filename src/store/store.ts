@@ -10,6 +10,7 @@ import { resultSlice } from './results/resultSlice';
 import { doctorSlice } from './slices/doctorSlice/doctorsSlice';
 import { appointmentSlice } from './slices/adminAppoitments/adminAppoitments';
 import { siteBarMenu } from './slices/siteBarMenu/sitBarMenu';
+import { globalSearchAll } from './globalSeach/userSlice';
 import { userApplicationSlice } from './slices/userApplication/userSlise';
 
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   [doctorSlice.name]: doctorSlice.reducer,
   [appointmentSlice.name]: appointmentSlice.reducer,
   [siteBarMenu.name]: siteBarMenu.reducer,
+  [globalSearchAll.name]: globalSearchAll.reducer,
 });
 
 const persistConfig = {

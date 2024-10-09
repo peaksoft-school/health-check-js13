@@ -32,6 +32,7 @@ const AddSpecialist = () => {
     formState: { errors },
     setValue,
     reset,
+    watch,
   } = useForm<TFormTypes>();
   const dispatch = useAppDispatch();
 
@@ -60,17 +61,18 @@ const AddSpecialist = () => {
 
   const handlerChangeSelectValue = (event: any) => {
     setValue('department', event.target.value);
+    console.log(event.target.value);
   };
 
   const handlerSubmitForm = (formData: TFormTypes) => {
-    console.log(formData);
+    // const {departmentName,...fored}
     dispatch(addSpec({ formData, navigate, reset }));
   };
 
   const handleGoBack = () => {
     navigate(-1);
   };
-  
+
   console.log(files);
 
   return (
@@ -149,6 +151,7 @@ const AddSpecialist = () => {
                       onChange={handlerChangeSelectValue}
                       options={department}
                       style={{ width: '545px', height: '40px' }}
+                      value={watch('department')}
                     />
                   </label>
                   <Input

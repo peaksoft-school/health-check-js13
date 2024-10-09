@@ -164,27 +164,37 @@ export const changePassword = createAsyncThunk<
 
 export const googleAuthFirbase = createAsyncThunk<
   TAuthResponse,
-  { tokenId: string },
+  { tokenId: string; openModalAll?: () => void },
   { rejectValue: string }
->('auth/googleAuthFirbase', async ({ tokenId }, { rejectWithValue }) => {
-  try {
-    const { data } = await axiosInstance.post(
-      `/api/auth/authGoogle?tokenId=${tokenId}`
-    );
+>(
+  'auth/googleAuthFirbase',
+  async ({ tokenId, openModalAll }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(
+        `/api/auth/authGoogle?tokenId=${tokenId}`
+      );
 
-    return data;
-  } catch (error) {
-    const err = error as ErrorResponse;
-    const errorMessage =
-      err?.response?.data?.exceptionMessage ||
-      err.message ||
-      'Something went wrong';
+      toastifyMessage({
+        message: 'Вы успешно вошли',
+        status: 'success',
+        duration: 2000,
+      });
+      openModalAll?.();
 
-    toastifyMessage({
-      message: errorMessage,
-      status: 'error',
-      duration: 2000,
-    });
-    return rejectWithValue(errorMessage);
+      return data;
+    } catch (error) {
+      const err = error as ErrorResponse;
+      const errorMessage =
+        err?.response?.data?.exceptionMessage ||
+        err.message ||
+        'Something went wrong';
+
+      toastifyMessage({
+        message: errorMessage,
+        status: 'error',
+        duration: 2000,
+      });
+      return rejectWithValue(errorMessage);
+    }
   }
-});
+);

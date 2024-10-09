@@ -1,10 +1,4 @@
-import {
-  Box,
-  InputAdornment,
-  styled,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import Instagram from '../../assets/icons/HeaderInstagram.svg';
 import Telegram from '../../assets/icons/HeaderTelegram.svg';
 import WhatsApp from '../../assets/icons/HeaderWhatsApp.svg';
@@ -12,11 +6,10 @@ import Telephone from '../../assets/icons/CallIcon.svg';
 import TheMap from '../../assets/icons/JpsIcon.svg';
 import Hour from '../../assets/icons/TimeIcon.svg';
 import Medcheck from '../../assets/images/HEALTHCHECK.png';
-import Search from '../../assets/icons/SearchIcon.svg';
 import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import Close from '../../assets/icons/CloseIcon.svg';
@@ -26,59 +19,20 @@ import { auth, provider } from '../../configs/firebase';
 import { googleAuthFirbase } from '../../store/slices/auth/authThunk';
 import Modal from '../../components/UI/Modal';
 import SidebarMenu from '../../pages/user/modalWindows/SidebarMenu';
+import Search from './SearchHeaderNavigate copy';
 
 const Header = () => {
-  const [showBoxContent, setShowBoxContent] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
   const [openModal, setIsOpenThreeModal] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const navigate = useNavigate();
   const { role } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
-  const openMoadl = () => {
-    setIsOpenThreeModal(prev => !prev);
-  };
-
-  const handleScroll = () => {
-    const scrollTop = pageYOffset || document.documentElement.scrollTop;
-
-    if (scrollTop > lastScrollTop) {
-      setShowBoxContent(false);
-    } else {
-      setShowBoxContent(true);
-    }
-
-    setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollTop]);
 
   const toggleSidebar = () => {
     setOpenSidebar(open => !open);
   };
 
-  useEffect(() => {
-    const handleScrolled = () => {
-      if (scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScrolled);
-
-    return () => {
-      window.removeEventListener('scroll', handleScrolled);
-    };
-  }, []);
+  const openModalAll = () => setIsOpenThreeModal(prev => !prev);
 
   const navigateSignUp = () => navigate('sign-up');
   const navigateSignIn = () => navigate('sign-in');
@@ -87,7 +41,7 @@ const Header = () => {
       .then(data => {
         if (data.user) {
           data.user.getIdToken().then(token => {
-            dispatch(googleAuthFirbase({ tokenId: token }));
+            dispatch(googleAuthFirbase({ tokenId: token, openModalAll }));
           });
         }
       })
@@ -102,7 +56,7 @@ const Header = () => {
         <Box className="container">
           <Content>
             <ContentCardsFunc>
-              <ContentCards className={scrolled ? 'scrolled' : ''}>
+              <ContentCards>
                 <ContentNom>
                   <ALink
                     target="_blank"
@@ -118,21 +72,11 @@ const Header = () => {
                     <MaxNumber>08:00 до 18:00</MaxNumber>
                   </ContainerNom>
                 </ContentNom>
+
                 <ContentInput>
-                  <Input
-                    fullWidth
-                    size="small"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Search />
-                        </InputAdornment>
-                      ),
-                    }}
-                    type="text"
-                    placeholder="Поиск по сайту"
-                  />
+                  <Search />
                 </ContentInput>
+
                 <ContainerCards>
                   <IconContainer>
                     <a
@@ -158,15 +102,12 @@ const Header = () => {
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
-                {role === 'USER' && (
-                  <SidebarMenu
-                    open={openSidebar}
-                    toggleDrawer={toggleSidebar}
-                  />
-                )}
-                <HR />
               </ContentCards>
             </ContentCardsFunc>
+
+            <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
+            <HR />
+
             <ContentCards1>
               <BoxContent>
                 <HealthCheck
@@ -201,7 +142,7 @@ const Header = () => {
                   {role === 'USER' ? (
                     <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
                   ) : (
-                    <Button1 onClick={openMoadl}>запись онлайн</Button1>
+                    <Button1 onClick={openModalAll}>запись онлайн</Button1>
                   )}
                 </ContentButton>
               </BoxContent>
@@ -209,11 +150,12 @@ const Header = () => {
           </Content>
         </Box>
       </HeaderClass>
-      <Modal open={openModal} onClose={openMoadl}>
+
+      <Modal open={openModal} onClose={openModalAll}>
         <StyledSecondModal>
-          <TypographyStyled variant="h6">
-            Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
-            войдите в систему.
+          <TypographyStyled fontFamily={'Manrope,sans-serif'} fontWeight={900} variant="h6">
+            Для того чтобы оставить заявку, пожалуйста, <br /> зарегистрируйтесь
+            или войдите в систему.
           </TypographyStyled>
           <BoxStyledButton>
             <div
@@ -239,7 +181,7 @@ const Header = () => {
               Зарегистрироваться с Google
             </BoxGoogle>
           </BoxStyledButton>
-          <StyledModalIcon onClick={openMoadl}>
+          <StyledModalIcon onClick={openModalAll}>
             <Close />
           </StyledModalIcon>
         </StyledSecondModal>
@@ -266,8 +208,7 @@ const StyledNavLink = styled(NavLink)(() => ({
 
 const TypographyStyled = styled(Typography)(() => ({
   textAlign: 'center',
-  fontFamily: 'monospace',
-  fontWeight: '100',
+  fontWeight: '500',
 }));
 
 const BoxStyledButton = styled(Box)(() => ({
@@ -432,7 +373,7 @@ const ContentInput = styled('div')(() => ({
   justifyContent: 'center',
   alignItems: 'center',
   marginLeft: '1.25rem',
-  width: '367px',
+  width: '467px',
   flex: '1',
 
   '@media (max-width: 767px)': {
@@ -470,28 +411,9 @@ const BoxContent = styled('div')(() => ({
 }));
 
 const HR = styled('hr')(() => ({
-  width: '100%',
+  width: '1200px',
   marginTop: '0.8125rem',
   border: '1px solid #D9D9D9',
-}));
-
-const Input = styled(TextField)(() => ({
-  '& .MuiOutlinedInput-root': {
-    borderRadius: '1.5rem',
-    width: '100%',
-    height: '2.5rem',
-    backgroundColor: '#F3F1F1',
-    padding: '0 20px 0 5px',
-    '@media (max-width: 767px)': {
-      width: '100%',
-      height: 'auto',
-    },
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderRadius: '1.5rem',
-    border: 'none',
-    outline: 'none',
-  },
 }));
 
 const ContentNumber = styled('div')(() => ({

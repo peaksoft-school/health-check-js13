@@ -90,6 +90,19 @@ const SpecInfo = () => {
     setValue('description', content);
   };
 
+  const translateDepartment = {
+    CARDIOLOGY: 'Кардиология',
+    DERMATOLOGY: 'Дерматология',
+    NEUROLOGY: 'Неврология',
+    ORTHOPEDICS: 'Ортопедия',
+    PEDIATRICS: 'Педиатрия',
+    PSYCHIATRY: 'Психиатрия',
+    UROLOGY: 'Урология',
+    GYNECOLOGY: 'Гинекология',
+    GASTROENTEROLOGY: 'Гастроэнтерология',
+    ONCOLOGY: 'Онкология',
+  };
+
   const onDrop = (acceptedFiles: any) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0] || files;
@@ -107,6 +120,7 @@ const SpecInfo = () => {
       console.error('Файл не выбран');
     }
   };
+  console.log(infoSpec);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
@@ -186,7 +200,7 @@ const SpecInfo = () => {
                   <label style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Отделение
                     <Select
-                      placeholder="Выберите отделение"
+                      placeholder={translateDepartment[infoSpec.departmentName]}
                       fullWidth
                       onChange={handlerChangeSelectValue}
                       options={department}

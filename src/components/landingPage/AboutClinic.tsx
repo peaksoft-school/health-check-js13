@@ -36,9 +36,9 @@ const AboutClinic = () => (
           пациентов.
         </Typography>
       </StyledText>
-      <StyledTextIcon fontFamily={'Manrope,sans-serif'}>
+      {/* <StyledTextIcon fontFamily={'Manrope,sans-serif'}>
         Читать подробнее о клинике <img src={Podrovnee} alt="" />
-      </StyledTextIcon>
+      </StyledTextIcon> */}
     </StyledImageContainerText>
 
     <StyledBox>

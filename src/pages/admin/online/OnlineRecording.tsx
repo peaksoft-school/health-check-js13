@@ -108,6 +108,7 @@ const OnlineRecording: FC = () => {
     {
       header: '№',
       accessorKey: 'id',
+      accessorFn: (_, index) => index + 1,
     },
     {
       header: 'Имя и фамилия',
