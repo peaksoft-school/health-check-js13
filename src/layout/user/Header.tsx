@@ -51,8 +51,8 @@ const Header = () => {
     };
   }, [lastScrollTop]);
 
-  const toggleSidebar = (open: boolean) => {
-    setOpenSidebar(open);
+  const toggleSidebar = () => {
+    setOpenSidebar(open => !open);
   };
 
   useEffect(() => {

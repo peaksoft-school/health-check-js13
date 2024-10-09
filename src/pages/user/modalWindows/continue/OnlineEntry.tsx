@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/customHooks';
 import { FC, useState } from 'react';
 import RejectedIcon from '../../../../assets/icons/RejectedIcon.svg';
 import {
-  clearOnlineRecordData,
   clearSelectChoose,
   clearSelectData,
   clearSelectSpesialist,
@@ -39,7 +38,6 @@ const OnlineEntry: FC<MainMenuProps> = ({ handleClose, enrollMore }) => {
     dispatch(clearSelectSpesialist());
     dispatch(clearSelectChoose());
     dispatch(clearSelectData());
-    dispatch(clearOnlineRecordData());
   };
 
   return (

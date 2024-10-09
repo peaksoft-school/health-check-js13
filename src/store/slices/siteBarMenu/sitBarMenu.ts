@@ -28,17 +28,18 @@ export type OnlineRecordData = {
   position: string | undefined;
   doctorFullName: string | undefined;
   dateAndTime: string | undefined;
+  isCheckout: boolean;
 };
 
 export interface SpesialistState {
   selectChoose: string | '';
   selectSpesialist: Spesialist | null;
   selectData: SelectData | null;
-  onlineRecordData: OnlineRecordData[] | null;
+  onlineRecordData: OnlineRecordData[];
   isLoading: boolean;
 }
 
-const initialState: OnlineRecordData | SpesialistState = {
+const initialState: SpesialistState = {
   selectChoose: '',
   selectSpesialist: null,
   selectData: null,
@@ -65,10 +66,13 @@ export const siteBarMenu = createSlice({
     },
 
     setOnlineRecordData: (state, action: PayloadAction<OnlineRecordData>) => {
-      state.onlineRecordData = action.payload;
+      if (!Array.isArray(state.onlineRecordData)) {
+        state.onlineRecordData = [];
+      }
+      state.onlineRecordData.push(action.payload);
     },
     clearOnlineRecordData: state => {
-      state.onlineRecordData = null;
+      state.onlineRecordData = [];
     },
 
     setSelectData: (state, action: PayloadAction<SelectData>) => {

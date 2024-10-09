@@ -1,11 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   deleteOnline,
   getAppoitments,
   searchOnline,
 } from './adminAppoitmentThunk';
 
-const initialState = {
+export type OnlineRecordData = {
+  id: number | undefined;
+  patientFullName: string;
+  phoneNumber: string;
+  email: string;
+  position: string | undefined;
+  doctorFullName: string | undefined;
+  dateAndTime: string | undefined;
+  isCheckout: boolean;
+};
+
+type AppointmentState = {
+  appointmentArr: OnlineRecordData[];
+  isLoading: boolean;
+  error: string | null;
+  searchAll: OnlineRecordData[];
+  user: OnlineRecordData[];
+};
+
+const initialState: AppointmentState = {
   appointmentArr: [],
   isLoading: false,
   error: null,
@@ -16,7 +35,14 @@ const initialState = {
 export const appointmentSlice = createSlice({
   name: 'appoitment',
   initialState,
-  reducers: {},
+  reducers: {
+    addRecordingData: (state, action: PayloadAction<OnlineRecordData>) => {
+      if (!Array.isArray(state.user)) {
+        state.user = [];
+      }
+      state.user.push(action.payload);
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getAppoitments.pending, state => {
@@ -52,3 +78,5 @@ export const appointmentSlice = createSlice({
       });
   },
 });
+
+export const { addRecordingData } = appointmentSlice.actions;
