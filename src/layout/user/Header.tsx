@@ -109,9 +109,11 @@ const Header = () => {
                     <MaxNumber>08:00 до 18:00</MaxNumber>
                   </ContainerNom>
                 </ContentNom>
+
                 <ContentInput>
                   <Search />
                 </ContentInput>
+
                 <ContainerCards>
                   <IconContainer>
                     <a
@@ -137,10 +139,11 @@ const Header = () => {
                   </ContentNumber>
                   <AuthDropdown />
                 </ContainerCards>
-                <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
-                <HR />
               </ContentCards>
             </ContentCardsFunc>
+
+            <SidebarMenu open={openSidebar} toggleDrawer={toggleSidebar} />
+            <HR />
 
             <ContentCards1>
               <BoxContent>
@@ -404,7 +407,7 @@ const ContentInput = styled('div')(() => ({
   justifyContent: 'center',
   alignItems: 'center',
   marginLeft: '1.25rem',
-  width: '367px',
+  width: '467px',
   flex: '1',
 
   '@media (max-width: 767px)': {
