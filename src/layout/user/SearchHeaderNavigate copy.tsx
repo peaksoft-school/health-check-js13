@@ -9,17 +9,19 @@ interface SearchItem {
 }
 
 const doctorsData: SearchItem[] = [
-  { doctorName: 'Нурсламs Абдумаликовs', href: 'doctors/15/infoDoctor' },
-  { doctorName: 'Петрdddd Петровdddd', href: 'doctors/2/infoDoctor' },
+  { doctorName: 'Нурслам Абдумаликов', href: 'doctors/15/infoDoctor' },
+  { doctorName: 'Ернис Койчуманов', href: 'doctors/2/infoDoctor' },
   { doctorName: 'Анна Сидорова', href: 'doctors/3/infoDoctor' },
   { doctorName: 'Кутман Кубанычбеков', href: 'doctors/19/infoDoctor' },
-  { doctorName: 'Антон 1 Смирнов', href: 'doctors/10/infoDoctor' },
+  { doctorName: 'Азият Абдумаликов', href: 'doctors/11/infoDoctor' },
+  { doctorName: 'Сыргабек Акбаралиев', href: 'doctors/12/infoDoctor' },
+  { doctorName: 'Сыймык Бейшекеев', href: 'doctors/14/infoDoctor' },
   { doctorName: 'Дмитрий Козлов', href: 'doctors/4/infoDoctor' },
-  { doctorName: 'Нурслам 1 Абдумаликовa', href: 'doctors/17/infoDoctor' },
   { doctorName: 'Ольга Михайлова', href: 'doctors/6/infoDoctor' },
   { doctorName: 'Игорь Васильев', href: 'doctors/7/infoDoctor' },
   { doctorName: 'Мария Павлова', href: 'doctors/8/infoDoctor' },
   { doctorName: 'Станислав Кузнецов', href: 'doctors/9/infoDoctor' },
+  { doctorName: 'Бекмырза Абулвакиров', href: 'doctors/17/infoDoctor' },
   { doctorName: 'Кардиология', href: 'doctors' },
   { doctorName: 'Неврология', href: 'doctors' },
   { doctorName: 'Ортопедия', href: 'doctors' },

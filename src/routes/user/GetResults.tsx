@@ -9,6 +9,7 @@ import { AppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { useDispatch } from 'react-redux';
 import { fetchResult } from '../../store/results/resultThunk';
 import jsPDF from 'jspdf';
+import LoadingComponent from '../../utils/helpers/LoadingComponents';
 
 export interface Result {
   departmentEnum: string;
@@ -17,9 +18,7 @@ export interface Result {
 
 const GetResults: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { results = [] } = useAppSelector(
-    state => (state.results as { results: Result[] }) || {}
-  );
+  const { results = [], loading } = useAppSelector(state => state.results);
   const [resultNumber, setOrderNumber] = useState<number | null>(null);
   const [showResults, setShowResults] = useState<boolean>(false);
   const [opens, setOpenButton] = useState<boolean>(false);
@@ -53,6 +52,7 @@ const GetResults: FC = () => {
     <BoxGroup>
       <BoxI>
         <BoxA>
+          {loading && <LoadingComponent />}
           <ImgHealthcheck src={healthcheck} alt="healthcheck" />
           <BoxAb>
             <InputResult

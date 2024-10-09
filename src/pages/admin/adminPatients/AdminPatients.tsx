@@ -21,7 +21,7 @@ import { useDebounce } from 'use-debounce';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 
 const AdminPatients = () => {
-  const { isLoading, error, user } = useAppSelector(state => state.patients);
+  const { isLoading, error, user ,searches} = useAppSelector(state => state.patients);
   const [search, setSearch] = useState('');
   const dispatch = useAppDispatch();
   const [debounsed] = useDebounce(search, 1000);
@@ -57,6 +57,13 @@ const AdminPatients = () => {
     {
       header: 'Дата сдачи',
       accessorKey: 'date',
+      cell: ({ row }: any) => {
+        const { date } = row.original;
+        if (date) {
+          return <div>{date}</div>;
+        }
+        return <div>Пока нет даты</div>;
+      },
     },
     {
       header: 'Действия',
@@ -89,7 +96,7 @@ const AdminPatients = () => {
     );
   };
 
-  const memoPatients = useMemo(() => user, [user]);
+  const memoPatients = useMemo(() => searches, [searches]);
 
   return (
     <Container>

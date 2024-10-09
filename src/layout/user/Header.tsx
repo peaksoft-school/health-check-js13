@@ -32,6 +32,8 @@ const Header = () => {
     setOpenSidebar(open => !open);
   };
 
+  const openModalAll = () => setIsOpenThreeModal(prev => !prev);
+
   const navigateSignUp = () => navigate('sign-up');
   const navigateSignIn = () => navigate('sign-in');
   const googleAuthFn = () => {
@@ -39,7 +41,7 @@ const Header = () => {
       .then(data => {
         if (data.user) {
           data.user.getIdToken().then(token => {
-            dispatch(googleAuthFirbase({ tokenId: token }));
+            dispatch(googleAuthFirbase({ tokenId: token, openModalAll }));
           });
         }
       })
@@ -137,7 +139,11 @@ const Header = () => {
                     </Box>
                   )}
 
-                  <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
+                  {role === 'USER' ? (
+                    <Button1 onClick={toggleSidebar}>запись онлайн</Button1>
+                  ) : (
+                    <Button1 onClick={openModalAll}>запись онлайн</Button1>
+                  )}
                 </ContentButton>
               </BoxContent>
             </ContentCards1>
@@ -145,11 +151,11 @@ const Header = () => {
         </Box>
       </HeaderClass>
 
-      <Modal open={openModal} onClose={() => setIsOpenThreeModal(false)}>
+      <Modal open={openModal} onClose={openModalAll}>
         <StyledSecondModal>
-          <TypographyStyled variant="h6">
-            Для того чтобы оставить заявку, пожалуйста, зарегистрируйтесь или
-            войдите в систему.
+          <TypographyStyled fontFamily={'Manrope,sans-serif'} fontWeight={900} variant="h6">
+            Для того чтобы оставить заявку, пожалуйста, <br /> зарегистрируйтесь
+            или войдите в систему.
           </TypographyStyled>
           <BoxStyledButton>
             <div
@@ -175,7 +181,7 @@ const Header = () => {
               Зарегистрироваться с Google
             </BoxGoogle>
           </BoxStyledButton>
-          <StyledModalIcon onClick={() => setIsOpenThreeModal(false)}>
+          <StyledModalIcon onClick={openModalAll}>
             <Close />
           </StyledModalIcon>
         </StyledSecondModal>
@@ -202,8 +208,7 @@ const StyledNavLink = styled(NavLink)(() => ({
 
 const TypographyStyled = styled(Typography)(() => ({
   textAlign: 'center',
-  fontFamily: 'monospace',
-  fontWeight: '100',
+  fontWeight: '500',
 }));
 
 const BoxStyledButton = styled(Box)(() => ({
@@ -406,7 +411,7 @@ const BoxContent = styled('div')(() => ({
 }));
 
 const HR = styled('hr')(() => ({
-  width: '100%',
+  width: '1200px',
   marginTop: '0.8125rem',
   border: '1px solid #D9D9D9',
 }));

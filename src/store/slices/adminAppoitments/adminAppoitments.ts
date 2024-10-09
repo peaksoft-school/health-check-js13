@@ -16,33 +16,53 @@ export type OnlineRecordData = {
   isCheckout: boolean;
 };
 
-type AppointmentState = {
-  appointmentArr: OnlineRecordData[];
-  isLoading: boolean;
-  error: string | null;
-  searchAll: OnlineRecordData[];
-  user: OnlineRecordData[];
-};
-
-const initialState: AppointmentState = {
+const initialState = {
   appointmentArr: [],
   isLoading: false,
   error: null,
   searchAll: [],
   user: [],
+  deleteUser: [],
+  isChecked: false,
+  all: [],
 };
 
 export const appointmentSlice = createSlice({
   name: 'appoitment',
   initialState,
+
   reducers: {
-    addRecordingData: (state, action: PayloadAction<OnlineRecordData>) => {
-      if (!Array.isArray(state.user)) {
-        state.user = [];
-      }
-      state.user.push(action.payload);
+    toggleUserCheck(state, { payload }) {
+      state.user = state.user.map(user => {
+        if (user.id === payload.id) {
+          return { ...user, isChecked: !user.isChecked };
+        }
+        return user;
+      });
+
+      const allChecked = state.appointmentArr
+        .filter(user => user.isProcessed)
+        .every(user => user.isChecked);
+
+      state.isChecked = allChecked;
+    },
+
+    selectAllCheck(state, { payload }) {
+      state.isChecked = payload;
+      state.user = state.user.map(user => ({
+        ...user,
+        isChecked: payload && user.isProcessed,
+      }));
+
+      state.deleteUser = state.user
+        .filter(user => user.isChecked && user.isProcessed)
+        .map(user => user.id);
+    },
+    addRecordingData: (state, { payload }) => {
+      state.user.push(payload);
     },
   },
+
   extraReducers(builder) {
     builder
       .addCase(getAppoitments.pending, state => {
@@ -51,7 +71,10 @@ export const appointmentSlice = createSlice({
       .addCase(getAppoitments.fulfilled, (state, { payload }) => {
         state.appointmentArr = payload;
         state.isLoading = false;
-        state.user = payload;
+        state.user = payload.map((item: any) => ({
+          ...item,
+          isChecked: false,
+        }));
       })
       .addCase(getAppoitments.rejected, state => {
         state.isLoading = false;
@@ -62,7 +85,10 @@ export const appointmentSlice = createSlice({
       .addCase(searchOnline.fulfilled, (state, { payload }) => {
         state.searchAll = payload;
         state.isLoading = false;
-        state.user = payload;
+        state.user = payload.map((item: any) => ({
+          ...item,
+          isChecked: false,
+        }));
       })
       .addCase(searchOnline.rejected, state => {
         state.isLoading = false;
@@ -78,5 +104,5 @@ export const appointmentSlice = createSlice({
       });
   },
 });
-
-export const { addRecordingData } = appointmentSlice.actions;
+export const { selectAllCheck, toggleUserCheck, addRecordingData } =
+  appointmentSlice.actions;

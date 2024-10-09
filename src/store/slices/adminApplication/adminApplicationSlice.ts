@@ -41,6 +41,7 @@ export const applicationSlice = createSlice({
 
   reducers: {
     toggleUserCheck(state, { payload }) {
+
       state.search = state.search.map(user => {
         if (user.id === payload.id) {
           return { ...user, isChecked: !user.isChecked };

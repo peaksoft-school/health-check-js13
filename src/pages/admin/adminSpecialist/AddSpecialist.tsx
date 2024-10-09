@@ -32,10 +32,11 @@ const AddSpecialist = () => {
     formState: { errors },
     setValue,
     reset,
+    watch,
   } = useForm<TFormTypes>();
   const dispatch = useAppDispatch();
 
-  const { file, isLoading } = useAppSelector(state => state.spec);
+  const { files, isLoading } = useAppSelector(state => state.spec);
 
   const navigate = useNavigate();
 
@@ -60,17 +61,19 @@ const AddSpecialist = () => {
 
   const handlerChangeSelectValue = (event: any) => {
     setValue('department', event.target.value);
+    console.log(event.target.value);
   };
 
   const handlerSubmitForm = (formData: TFormTypes) => {
+    // const {departmentName,...fored}
     dispatch(addSpec({ formData, navigate, reset }));
   };
 
   const handleGoBack = () => {
     navigate(-1);
   };
-  console.log(file);
-  
+
+  console.log(files);
 
   return (
     <>
@@ -85,8 +88,8 @@ const AddSpecialist = () => {
               <MiniBlock>
                 <div {...getRootProps()} style={{ textAlign: 'center' }}>
                   <input {...getInputProps()} style={{ display: 'none' }} />
-                  {file ? (
-                    <img className="imga" src={file} alt="file" />
+                  {files ? (
+                    <img className="imga" src={files} alt="file" />
                   ) : (
                     <AddFileIcon />
                   )}
@@ -148,6 +151,7 @@ const AddSpecialist = () => {
                       onChange={handlerChangeSelectValue}
                       options={department}
                       style={{ width: '545px', height: '40px' }}
+                      value={watch('department')}
                     />
                   </label>
                   <Input

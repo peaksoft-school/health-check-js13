@@ -9,6 +9,7 @@ import {
 } from '../../../store/slices/userApplication/userThunk';
 import { useEffect } from 'react';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
+import { useNavigate } from 'react-router-dom';
 
 type FormValues = {
   id: number;
@@ -23,6 +24,7 @@ const PersonalData = () => {
   const { allPersonalData, isLoading } = useAppSelector(
     state => state.userApplicationSlice
   );
+  const navigate = useNavigate();
 
   const {
     register,
@@ -43,7 +45,6 @@ const PersonalData = () => {
     dispatch(putPersonalData(allData));
   };
 
-  // Обновляем форму, когда данные пользователя меняются
   useEffect(() => {
     if (allPersonalData) {
       reset({
@@ -117,7 +118,7 @@ const PersonalData = () => {
           />
         </Box>
         <ButtonContainer>
-          <MyButton fullWidth type="button">
+          <MyButton onClick={() => navigate(-1)} fullWidth type="button">
             назад
           </MyButton>
           <Button type="submit">Редактировать</Button>

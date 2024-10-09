@@ -1,44 +1,51 @@
 import { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
 import Button from '../../../components/UI/Button';
-// import Input from '../../../components/UI/Input';
-import { Box, InputAdornment, styled, TextField } from '@mui/material';
+import { Box, InputAdornment, styled } from '@mui/material';
 import SearchIcon from '../../../assets/icons/SearchIcon.svg';
-import Icon from '../../../assets/icons/Pluse.svg';
 import { useAppDispatch, useAppSelector } from '../../../hooks/customHooks';
 import HorizontalScrollCalendar from '../calendar/Calrndar';
 import Table from '../../../components/UI/Table';
 import Delete from '../../../components/UI/admin/Delete';
 import {
+  changeStatusOnline,
   deleteOnline,
   getAppoitments,
   searchOnline,
 } from '../../../store/slices/adminAppoitments/adminAppoitmentThunk';
-import AddAppointmentModal from './AddAppointmentModal';
 import Checkbox from '../../../components/UI/CheckBox';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
 import { useDebounce } from 'use-debounce';
 import Input from '../../../components/UI/Input';
 
+import {
+  selectAllCheck,
+  toggleUserCheck,
+} from '../../../store/slices/adminAppoitments/adminAppoitments';
+
+import DeleteSelectedAppoitment from '../../../components/UI/admin/DeleteAppoitment';
+
 const OnlineRecording: FC = () => {
-  const { appointmentArr, isLoading, user } = useAppSelector(
+  const { appointmentArr, isLoading, user, isChecked } = useAppSelector(
     state => state.appoitment
   );
   const [search, setSearch] = useState('');
   const [debounced] = useDebounce(search, 1000);
   const [activeOption, setActiveOption] = useState('Онлайн-запись');
-  const [openModal, setOpenModal] = useState(true);
-
+  const dispatch = useAppDispatch();
   const handleOptionClick = (option: string) => {
     setActiveOption(option);
   };
-  const handlerSelectCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.checked);
+  const handlerSelectCheck = (e: ChangeEvent<HTMLInputElement>, id: number) => {
+    const checked = e.target.checked;
+    dispatch(
+      changeStatusOnline({
+        isProceeded: checked,
+        value: search,
+        id,
+      })
+    );
   };
-  console.log(appointmentArr);
-  const dispatch = useAppDispatch();
   const isOnlineRecordingActive = activeOption === 'Онлайн-запись';
-
-  const toggleModal = () => setOpenModal(prev => !prev);
 
   useEffect(() => {
     if (debounced) {
@@ -50,9 +57,31 @@ const OnlineRecording: FC = () => {
     dispatch(getAppoitments());
   }, [dispatch]);
 
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: number | string
+  ) => {
+    const searchUser = user.find(user => user.id === id);
+
+    if (searchUser && searchUser.isProcessed) {
+      dispatch(
+        toggleUserCheck({
+          id,
+          isChecked: event.target.checked,
+        })
+      );
+    }
+  };
+
+  const handleSelectAll = (e: ChangeEvent<HTMLInputElement>) => {
+    const newChecked = e.target.checked;
+    dispatch(selectAllCheck(newChecked));
+  };
+
+  console.log(user);
   const TableOne: any[] = [
     {
-      header: ({ table }: any) => (
+      header: () => (
         <div
           style={{
             display: 'flex',
@@ -60,21 +89,26 @@ const OnlineRecording: FC = () => {
             gap: '5px',
             cursor: 'pointer',
           }}>
-          <Checkbox />
-          <Delete />
+          <Checkbox onChange={handleSelectAll} checked={isChecked} />
+          <DeleteSelectedAppoitment
+            deleteFn={deleteOnline}
+            value={search}
+            variant="appotment"
+          />
         </div>
       ),
       accessorKey: 'select',
       cell: ({ row }: any) => (
         <Checkbox
-          onChange={handlerSelectCheck}
-          checked={row.original.status === 'COMPLETED'}
+          checked={row.original.isChecked}
+          onChange={e => handleCheckboxChange(e, Number(row.original.id))}
         />
       ),
     },
     {
       header: '№',
       accessorKey: 'id',
+      accessorFn: (_, index) => index + 1,
     },
     {
       header: 'Имя и фамилия',
@@ -110,17 +144,22 @@ const OnlineRecording: FC = () => {
     {
       header: 'Обработан',
       accessorKey: 'statuss',
-      cell: () => (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-          }}>
-          <Checkbox />
-        </div>
-      ),
+      cell: ({ row }: any) => {
+        return (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}>
+            <Checkbox
+              checked={row.original.isProcessed}
+              onChange={e => handlerSelectCheck(e, Number(row.original.id))}
+            />
+          </div>
+        );
+      },
     },
     {
       header: 'Action',
@@ -139,7 +178,7 @@ const OnlineRecording: FC = () => {
             name={row.original.patientFullName}
             variant=""
             value={search}
-            isProcessed={row.original.status === 'COMPLETED'}
+            isProcessed={row.original.isProcessed}
           />
         </div>
       ),

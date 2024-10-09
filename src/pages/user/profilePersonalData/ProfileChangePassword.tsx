@@ -9,6 +9,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { putChangePersonalPassword } from '../../../store/slices/userApplication/userThunk';
 import LoadingComponent from '../../../utils/helpers/LoadingComponents';
+import { useNavigate } from 'react-router-dom';
 
 type FormValues = {
   oldPassword: string;
@@ -22,15 +23,19 @@ const ProfileChangePassword = () => {
     (state: RootState) => state.userApplicationSlice
   );
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
+    reset,
   } = useForm<FormValues>();
 
   const onSubmit = ({ oldPassword, newPassword }: FormValues) => {
-    dispatch(putChangePersonalPassword({ oldPassword, newPassword }));
+    dispatch(putChangePersonalPassword({ oldPassword, newPassword,reset,navigate }));
+
   };
 
   return (
@@ -101,7 +106,7 @@ const ProfileChangePassword = () => {
         </Box>
 
         <ButtonContainer>
-          <MyButton fullWidth type="button">
+          <MyButton onClick={() => navigate(-1)} fullWidth type="button">
             назад
           </MyButton>
           <Button type="submit">Редактировать</Button>

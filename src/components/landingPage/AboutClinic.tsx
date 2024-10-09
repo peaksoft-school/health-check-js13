@@ -36,9 +36,9 @@ const AboutClinic = () => (
           пациентов.
         </Typography>
       </StyledText>
-      <StyledTextIcon fontFamily={'Manrope,sans-serif'}>
+      {/* <StyledTextIcon fontFamily={'Manrope,sans-serif'}>
         Читать подробнее о клинике <img src={Podrovnee} alt="" />
-      </StyledTextIcon>
+      </StyledTextIcon> */}
     </StyledImageContainerText>
 
     <StyledBox>
@@ -81,6 +81,8 @@ const StyledContainer = styled(Box)`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 1200px;
+  min-width: 1200px;
   margin: 1.25rem auto;
 `;
 

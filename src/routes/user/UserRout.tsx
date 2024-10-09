@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Contacts from '../../pages/contacts/Contacts';
 import Doctor from '../../pages/doctors/Doctors';
 import InnerDoctorPage from '../../pages/doctors/InnerDoctorPage';
@@ -27,7 +28,11 @@ export const USER_ROUTES = [
     children: [
       {
         index: true,
-        element: <ServiceClinic />,
+        element: (
+          <Suspense>
+            <ServiceClinic />
+          </Suspense>
+        ),
       },
       {
         path: ':id/service',
