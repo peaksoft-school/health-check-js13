@@ -30,8 +30,9 @@ interface EntryProps {
 const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
   const dispatch = useAppDispatch();
   const { selectSpesialist } = useAppSelector(state => state.siteBarMenu);
-
-  const { user } = useAppSelector(state => state.appoitment);
+  const { allPersonalData } = useAppSelector(
+    state => state.userApplicationSlice
+  );
 
   const [constinue, setConstinue] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -43,6 +44,11 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
     watch,
   } = useForm<FormData>({
     mode: 'onChange',
+    defaultValues: {
+      name: allPersonalData.firstName || '',
+      email: allPersonalData.email || '',
+      phone: allPersonalData.phoneNumber || '',
+    },
   });
 
   const name = watch('name');
@@ -83,7 +89,6 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
     handleContinueClick();
   };
 
-  console.log(user);
   return (
     <>
       {isSubmitted ? (
@@ -111,14 +116,10 @@ const Entry: FC<EntryProps> = ({ handleContinueClick, handleClose }) => {
 
               <LabelStyle htmlFor="num">Номер телефона</LabelStyle>
               <InputStyle
-                type="tel"
+                type="tell"
                 id="num"
                 {...register('phone', {
                   required: 'Введите номер телефона',
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: 'Только цифры',
-                  },
                 })}
               />
               {errors.phone && (
