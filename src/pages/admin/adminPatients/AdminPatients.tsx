@@ -57,6 +57,13 @@ const AdminPatients = () => {
     {
       header: 'Дата сдачи',
       accessorKey: 'date',
+      cell: ({ row }: any) => {
+        const { date } = row.original;
+        if (date) {
+          return <div>{date}</div>;
+        }
+        return <div>Пока нет даты</div>;
+      },
     },
     {
       header: 'Действия',

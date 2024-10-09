@@ -95,7 +95,7 @@ const AdminSpecialist = () => {
       header: 'Расписание до',
       accessorKey: 'scheduleUntil',
       cell: ({ row }) => {
-        const { scheduleUntil, department } = row.original;
+        const { scheduleUntil } = row.original;
         if (scheduleUntil) {
           return <div>{scheduleUntil}</div>;
         }
