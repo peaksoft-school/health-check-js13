@@ -11,12 +11,10 @@ const Doctor = () => {
   const dispatch = useAppDispatch();
   const { doctors, isLoading } = useAppSelector(state => state.doctor);
 
-  // Обработка навигации на внутреннюю страницу
   const goInnerPage = (id: number) => {
     navigate(`${id}/infoDoctor`);
   };
 
-  // Перевод названий департаментов
   const translateDepartment: Record<string, string> = {
     CARDIOLOGY: 'Кардиология',
     DERMATOLOGY: 'Дерматология',
@@ -47,8 +45,6 @@ const Doctor = () => {
     return acc;
   }, {} as Record<string, any[]>);
 
-  console.log(doctors);
-
   return (
     <Container>
       <StyledBox>
@@ -67,7 +63,9 @@ const Doctor = () => {
 
         {Object.keys(groupedDoctors).map(department => (
           <StyledBlock key={department}>
-            <Typography className="titlebig">
+            <Typography
+              className="titlebig"
+              id={translateDepartment[department]}>
               {translateDepartment[department]}
             </Typography>
             <Box className="inBlock">
