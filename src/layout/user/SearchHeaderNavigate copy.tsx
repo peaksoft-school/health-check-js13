@@ -1,76 +1,62 @@
 import { Autocomplete, InputAdornment, styled, TextField } from '@mui/material';
 import { useState } from 'react';
 import SearchIcon from '../../assets/icons/SearchIcon.svg';
-import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import { useNavigate } from 'react-router-dom';
-import { searchGlobalThunk } from '../../store/globalSeach/searchThunk';
 
 interface SearchItem {
-  id: number;
-  patientFullName: string;
-  phoneNumber: string;
-  email: string;
-  position: string;
-  doctorFullName: string;
-  dateAndTime: string;
-  status: string;
+  doctorName: string;
+  href: string;
 }
+
+const doctorsData: SearchItem[] = [
+  { doctorName: 'Нурсламs Абдумаликовs', href: 'doctors/15/infoDoctor' },
+  { doctorName: 'Петрdddd Петровdddd', href: 'doctors/2/infoDoctor' },
+  { doctorName: 'Анна Сидорова', href: 'doctors/3/infoDoctor' },
+  { doctorName: 'Кутман Кубанычбеков', href: 'doctors/19/infoDoctor' },
+  { doctorName: 'Антон 1 Смирнов', href: 'doctors/10/infoDoctor' },
+  { doctorName: 'Дмитрий Козлов', href: 'doctors/4/infoDoctor' },
+  { doctorName: 'Нурслам 1 Абдумаликовa', href: 'doctors/17/infoDoctor' },
+  { doctorName: 'Ольга Михайлова', href: 'doctors/6/infoDoctor' },
+  { doctorName: 'Игорь Васильев', href: 'doctors/7/infoDoctor' },
+  { doctorName: 'Мария Павлова', href: 'doctors/8/infoDoctor' },
+  { doctorName: 'Станислав Кузнецов', href: 'doctors/9/infoDoctor' },
+  { doctorName: 'Кардиология', href: 'doctors' },
+  { doctorName: 'Неврология', href: 'doctors' },
+  { doctorName: 'Ортопедия', href: 'doctors' },
+  { doctorName: 'Психиатрия', href: 'doctors' },
+  { doctorName: 'Урология', href: 'doctors' },
+  { doctorName: 'Гинекология', href: 'doctors' },
+  { doctorName: 'Гастроэнтерология', href: 'doctors' },
+];
 
 const Search = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { searchAllData } = useAppSelector(state => state.globalSearchAll) as {
-    searchAllData: SearchItem[];
-  };
-
   const [query, setQuery] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (query.trim()) {
-      dispatch(searchGlobalThunk(query));
-      const foundItem = searchAllData.find(
-        item =>
-          item.doctorFullName.toLowerCase().includes(query.toLowerCase()) ||
-          item.position.toLowerCase().includes(query.toLowerCase())
+      const foundItem = doctorsData.find(item =>
+        item.doctorName.toLowerCase().includes(query.toLowerCase())
       );
 
       if (foundItem) {
-        const completedQuery = foundItem.doctorFullName
-          .toLowerCase()
-          .includes(query.toLowerCase())
-          ? foundItem.doctorFullName
-          : foundItem.position;
-
-        setQuery(completedQuery); // Дополняем введённое значение
-        handleSelection(completedQuery); // Переходим по результату
+        setQuery(foundItem.doctorName);
+        handleSelection(foundItem);
       } else {
-        console.log('No match found');
+        console.log('Совпадений не найдено');
       }
     }
   };
 
-  const handleSelection = (value: string) => {
-    const foundItem = searchAllData.find(
-      item => item.doctorFullName === value || item.position === value
-    );
-
-    if (foundItem) {
-      if (foundItem.position === value) {
-        navigate('doctors');
-      } else if (foundItem.doctorFullName === value) {
-        navigate('doctors');
-      }
-    } else {
-      console.log('No match found');
-    }
+  const handleSelection = (selectedItem: SearchItem) => {
+    navigate(selectedItem.href);
   };
 
-  const newArray = searchAllData.flatMap(item => [
-    { title: item.doctorFullName },
-    { title: item.position },
-  ]);
+  const newArray = doctorsData.map(item => ({
+    title: item.doctorName,
+  }));
 
   return (
     <ContentInput onSubmit={handleSearch}>
@@ -84,7 +70,10 @@ const Search = () => {
           const selectedValue =
             typeof value === 'string' ? value : value?.title || '';
           setQuery(selectedValue);
-          handleSelection(selectedValue);
+          const foundItem = doctorsData.find(
+            item => item.doctorName === selectedValue
+          );
+          if (foundItem) handleSelection(foundItem);
         }}
         onInputChange={(e, newValue) => setQuery(newValue)}
         renderInput={params => (
@@ -92,7 +81,7 @@ const Search = () => {
             {...params}
             value={query}
             variant="outlined"
-            placeholder="Поиск в Google или введите URL"
+            placeholder="Поиск по врачам"
             fullWidth
             InputProps={{
               ...params.InputProps,
@@ -127,7 +116,6 @@ const Input = styled(TextField)(() => ({
     borderRadius: '1.5rem',
     height: '2.5rem',
     backgroundColor: '#F3F1F1',
-    // padding: '20px',
     padding: '0 20px 0 11px',
     '@media (max-width: 767px)': {
       width: '100%',

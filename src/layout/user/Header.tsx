@@ -9,7 +9,7 @@ import Medcheck from '../../assets/images/HEALTHCHECK.png';
 import Button from '../../components/UI/Button';
 import AuthDropdown from '../../components/UI/menuItem/AuthDropdown';
 import { Text } from '../../utils/constants/landingPageConstants';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/customHooks';
 import Close from '../../assets/icons/CloseIcon.svg';
@@ -22,54 +22,15 @@ import SidebarMenu from '../../pages/user/modalWindows/SidebarMenu';
 import Search from './SearchHeaderNavigate copy';
 
 const Header = () => {
-  const [showBoxContent, setShowBoxContent] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
   const [openModal, setIsOpenThreeModal] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const navigate = useNavigate();
   const { role } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
-  const handleScroll = () => {
-    const scrollTop = pageYOffset || document.documentElement.scrollTop;
-
-    if (scrollTop > lastScrollTop) {
-      setShowBoxContent(false);
-    } else {
-      setShowBoxContent(true);
-    }
-
-    setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollTop]);
-
   const toggleSidebar = () => {
     setOpenSidebar(open => !open);
   };
-
-  useEffect(() => {
-    const handleScrolled = () => {
-      if (scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScrolled);
-
-    return () => {
-      window.removeEventListener('scroll', handleScrolled);
-    };
-  }, []);
 
   const navigateSignUp = () => navigate('sign-up');
   const navigateSignIn = () => navigate('sign-in');
@@ -93,7 +54,7 @@ const Header = () => {
         <Box className="container">
           <Content>
             <ContentCardsFunc>
-              <ContentCards className={scrolled ? 'scrolled' : ''}>
+              <ContentCards>
                 <ContentNom>
                   <ALink
                     target="_blank"
